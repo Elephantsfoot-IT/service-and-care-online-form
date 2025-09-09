@@ -95,7 +95,7 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
             />
             <div className="relative z-10 flex flex-col items-center">
               <span>Basic</span>
-              <span className="text-xs">3 services</span>
+              <span className="text-xs">Req. 3 services</span>
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
@@ -144,7 +144,7 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
           >
             <div className="relative z-10 flex flex-col items-center">
               <span className="">Essential</span>
-              <span className="text-xs">4 services</span>
+              <span className="text-xs">Req. 4 services</span>
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
@@ -202,7 +202,7 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
             />
             <div className="relative z-10 flex flex-col items-center">
               <span>Pro</span>
-              <span className="text-xs">6 services</span>
+              <span className="text-xs">Req. 6 services</span>
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
