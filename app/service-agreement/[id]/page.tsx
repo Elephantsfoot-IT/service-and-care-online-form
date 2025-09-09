@@ -1,6 +1,7 @@
 "use client";
 import IncentiveCard from "@/components/service-agreement/incentive-card";
 import IncentiveTable from "@/components/service-agreement/incentive-table";
+import VibrantIncentiveCard from "@/components/service-agreement/vibrant-incentive-card";
 import { Button } from "@/components/ui/button";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import React, { useState } from "react";
@@ -35,7 +36,7 @@ function SeriveAgreement() {
 
   return (
     <div className="flex flex-row ">
-      <div className="min-h-screen w-[500px] bg-[#fcbd2a] sticky top-0 left-0 hidden md:flex"></div>
+      {/* <div className="min-h-screen w-[500px] bg-[#fcbd2a] sticky top-0 left-0 hidden md:flex"></div> */}
       <div className="w-full h-[200vh] px-6">
         <div className="my-20 max-w-screen-xl w-full mx-auto ">
           <div className="min-h-[200px]">
@@ -87,6 +88,25 @@ function SeriveAgreement() {
           <div className="w-full mt-4 -mx-4 px-4 overflow-x-auto overflow-y-visible">
             <div className="min-w-md flex flex-row gap-6 ">
               <IncentiveCard currentTier={currentTier} />
+            </div>
+          </div>
+
+
+          <div className="flex items-center gap-1 my-6">
+            <Button onClick={removeService} className="w-10 h-10">
+              <MinusIcon></MinusIcon>
+            </Button>
+            <Button variant="outline" className="w-10 h-10">
+              {serviceCount}
+            </Button>
+            <Button onClick={addService} className="w-10 h-10">
+              <PlusIcon></PlusIcon>
+            </Button>
+          </div>
+
+          <div className="w-full mt-4 -mx-4 px-4 overflow-x-auto overflow-y-visible">
+            <div className="min-w-md flex flex-row gap-6 ">
+              <VibrantIncentiveCard currentTier={currentTier} />
             </div>
           </div>
         </div>

@@ -6,14 +6,14 @@ interface IncentiveCardProps {
   currentTier: string;
 }
 
-function IncentiveCard({ currentTier }: IncentiveCardProps) {
+function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
   return (
     <div className="flex flex-row gap-6 w-full py-10 items-center">
       <div
         className={cn(
           "rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] h-fit appear-up fade-up-200 flex flex-col",
           currentTier === "basic"
-            ? "shadow-xl bg-gradient-to-tr from-neutral-300/50 to-neutral-300/10 border border-neutral-300 ring-2 ring-neutral-300 "
+            ? "shadow-xl bg-gradient-to-br from-neutral-300  to-neutral-300/70 "
             : "border border-neutral-100 "
         )}
       >
@@ -23,9 +23,7 @@ function IncentiveCard({ currentTier }: IncentiveCardProps) {
 
         <div className="text-xl font-medium text-left">Basic</div>
 
-        {currentTier === "basic" ||
-        currentTier === "essential" ||
-        currentTier === "pro" ? (
+        {currentTier === "basic" || currentTier === "essential" || currentTier === "pro" ? (
           <>
             <div className="text-3xl font-semibold text-foreground mt-2">
               Eligible
@@ -64,7 +62,7 @@ function IncentiveCard({ currentTier }: IncentiveCardProps) {
         className={cn(
           " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] h-fit appear-up fade-up-300 flex flex-col",
           currentTier === "essential"
-            ? "shadow-xl bg-gradient-to-tr from-yellow-300/50  to-yellow-300/10 border border-[#ffdb01] ring-2 ring-[#ffdb01] text-black"
+            ? "shadow-xl bg-gradient-to-tl from-yellow-300  to-[#ffdb01] border border-transparent text-black"
             : "border border-neutral-100"
         )}
       >
@@ -129,7 +127,7 @@ function IncentiveCard({ currentTier }: IncentiveCardProps) {
         className={cn(
           " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] h-fit appear-up fade-up-400 flex flex-col",
           currentTier === "pro"
-            ? "shadow-xl bg-gradient-to-tr from-blue-400/50  to-blue-500/10 border border-[#1e60ad] ring-2 ring-[#1e60ad] "
+            ? "shadow-xl bg-gradient-to-br from-[#1e60ad] to-blue-600 text-white border border-transparent"
             : "border border-neutral-100"
         )}
       >
@@ -196,4 +194,4 @@ function IncentiveCard({ currentTier }: IncentiveCardProps) {
   );
 }
 
-export default IncentiveCard;
+export default VibrantIncentiveCard;
