@@ -8,10 +8,10 @@ interface IncentiveCardProps {
 
 function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
   return (
-    <div className="flex flex-row gap-6 w-full py-10 items-center">
+    <div className="flex sm:flex-row flex-col gap-6 w-full py-10 items-center">
       <div
         className={cn(
-          "rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] h-fit appear-up fade-up-200 flex flex-col",
+          "rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-200 flex flex-col",
           currentTier === "basic"
             ? "shadow-xl bg-gradient-to-tl from-neutral-300 to-neutral-200 to-neutral-200 "
             : "border border-neutral-100 "
@@ -23,7 +23,9 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
 
         <div className="text-xl font-medium text-left">Basic</div>
 
-        {currentTier === "basic" || currentTier === "essential" || currentTier === "pro" ? (
+        {currentTier === "basic" ||
+        currentTier === "essential" ||
+        currentTier === "pro" ? (
           <>
             <div className="text-3xl font-semibold text-foreground mt-2">
               Eligible
@@ -60,7 +62,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
       </div>
       <div
         className={cn(
-          " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] h-fit appear-up fade-up-300 flex flex-col",
+          " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-300 flex flex-col",
           currentTier === "essential"
             ? "shadow-xl bg-gradient-to-tl from-[#f5c644] via-[#ffdb01] to-[#ffdb01] border border-transparent text-black"
             : "border border-neutral-100"
@@ -125,7 +127,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
       </div>
       <div
         className={cn(
-          " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] h-fit appear-up fade-up-400 flex flex-col",
+          " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-400 flex flex-col",
           currentTier === "pro"
             ? "shadow-xl bg-gradient-to-tl from-[#1e60ad] via-[#0079d1]  to-[#0079d1] text-white border border-transparent"
             : "border border-neutral-100"

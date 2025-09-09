@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { CheckIcon, LockKeyholeIcon, LockKeyholeOpenIcon } from "lucide-react";
+import { CheckIcon, LockKeyholeIcon } from "lucide-react";
 import { Button } from "../ui/button";
 
 interface IncentiveTableProps {
@@ -68,7 +68,7 @@ function IncentiveTable({ currentTier }: IncentiveTableProps) {
             <div className="pointer-events-none absolute inset-0 z-0 border-2 border-neutral-300 bg-neutral-300/5" />
           )}
           {(currentTier === "essential" || currentTier === "pro") && (
-           <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-50/40" />
+            <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-50/40" />
           )}
 
           <div
@@ -112,7 +112,6 @@ function IncentiveTable({ currentTier }: IncentiveTableProps) {
                   <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
                 </Button>
               )}{" "}
-            
           </div>
         </div>
 
@@ -122,7 +121,7 @@ function IncentiveTable({ currentTier }: IncentiveTableProps) {
             <div className="pointer-events-none absolute inset-0 z-30 border-2 border-[#ffdb01] bg-[#ffdb01]/5" />
           )}
           {currentTier === "pro" && (
-           <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-50/40" />
+            <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-50/40" />
           )}
 
           <div
@@ -162,7 +161,6 @@ function IncentiveTable({ currentTier }: IncentiveTableProps) {
                 <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
               </Button>
             )}
-            
           </div>
         </div>
 
@@ -223,7 +221,6 @@ function IncentiveTable({ currentTier }: IncentiveTableProps) {
                 <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
               </Button>
             )}
-            
           </div>
         </div>
       </div>

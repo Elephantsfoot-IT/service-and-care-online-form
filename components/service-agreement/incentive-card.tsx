@@ -11,7 +11,7 @@ function IncentiveCard({ currentTier }: IncentiveCardProps) {
     <div className="flex flex-row gap-6 w-full py-10 items-center">
       <div
         className={cn(
-          "rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] h-fit appear-up fade-up-200 flex flex-col",
+          "rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-200 flex flex-col",
           currentTier === "basic"
             ? "shadow-xl bg-gradient-to-tr from-neutral-300/50 to-neutral-300/10 border border-neutral-300 ring-2 ring-neutral-300 "
             : "border border-neutral-100 "
@@ -62,7 +62,7 @@ function IncentiveCard({ currentTier }: IncentiveCardProps) {
       </div>
       <div
         className={cn(
-          " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] h-fit appear-up fade-up-300 flex flex-col",
+          " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-300 flex flex-col",
           currentTier === "essential"
             ? "shadow-xl bg-gradient-to-tr from-yellow-300/50  to-yellow-300/10 border border-[#ffdb01] ring-2 ring-[#ffdb01] text-black"
             : "border border-neutral-100"
@@ -127,7 +127,7 @@ function IncentiveCard({ currentTier }: IncentiveCardProps) {
       </div>
       <div
         className={cn(
-          " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] h-fit appear-up fade-up-400 flex flex-col",
+          " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-400 flex flex-col",
           currentTier === "pro"
             ? "shadow-xl bg-gradient-to-tr from-blue-400/50  to-blue-500/10 border border-[#1e60ad] ring-2 ring-[#1e60ad] "
             : "border border-neutral-100"

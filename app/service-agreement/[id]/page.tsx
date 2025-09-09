@@ -4,8 +4,7 @@ import IncentiveTable from "@/components/service-agreement/incentive-table";
 import VibrantIncentiveCard from "@/components/service-agreement/vibrant-incentive-card";
 import { Button } from "@/components/ui/button";
 import { MinusIcon, PlusIcon } from "lucide-react";
-import React, { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function SeriveAgreement() {
   const [serviceCount, setServiceCount] = useState<number>(0);
@@ -85,12 +84,7 @@ function SeriveAgreement() {
             </Button>
           </div>
 
-          <div className="w-full mt-4 -mx-4 px-4 overflow-x-auto overflow-y-visible">
-            <div className="min-w-md flex flex-row gap-6 ">
-              <IncentiveCard currentTier={currentTier} />
-            </div>
-          </div>
-
+          <IncentiveCard currentTier={currentTier} />
 
           <div className="flex items-center gap-1 my-6">
             <Button onClick={removeService} className="w-10 h-10">
@@ -104,11 +98,7 @@ function SeriveAgreement() {
             </Button>
           </div>
 
-          <div className="w-full mt-4 -mx-4 px-4 overflow-x-auto overflow-y-visible">
-            <div className="min-w-md flex flex-row gap-6 ">
-              <VibrantIncentiveCard currentTier={currentTier} />
-            </div>
-          </div>
+          <VibrantIncentiveCard currentTier={currentTier} />
         </div>
       </div>
     </div>
