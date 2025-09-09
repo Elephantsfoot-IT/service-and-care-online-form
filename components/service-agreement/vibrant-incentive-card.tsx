@@ -13,7 +13,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
         className={cn(
           "rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-200 flex flex-col",
           currentTier === "basic"
-            ? "shadow-xl bg-gradient-to-tl from-neutral-300 to-neutral-200 to-neutral-200 "
+            ? "shadow-xl bg-gradient-to-tl from-neutral-300 from-[1%] to-neutral-200 to-neutral-200 "
             : "border border-neutral-100 "
         )}
       >
@@ -64,7 +64,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
         className={cn(
           " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-300 flex flex-col",
           currentTier === "essential"
-            ? "shadow-xl bg-gradient-to-tl from-[#f5c644] via-[#ffdb01] to-[#ffdb01] border border-transparent text-black"
+            ? "shadow-xl bg-gradient-to-tl from-[#f5c644] from-[1%] via-[#ffdb01] to-[#ffdb01] border border-transparent text-black"
             : "border border-neutral-100"
         )}
       >
@@ -129,7 +129,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
         className={cn(
           " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-400 flex flex-col",
           currentTier === "pro"
-            ? "shadow-xl bg-gradient-to-tl from-[#1e60ad] via-[#0079d1]  to-[#0079d1] text-white border border-transparent"
+            ? "shadow-xl bg-gradient-to-tl from-[#1e60ad] from-[1%] via-[#0079d1]  to-[#0079d1] text-white border border-transparent"
             : "border border-neutral-100"
         )}
       >
