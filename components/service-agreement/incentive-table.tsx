@@ -4,9 +4,10 @@ import { Button } from "../ui/button";
 
 interface IncentiveTableProps {
   currentTier: string;
+  serviceCount: number;
 }
 
-function IncentiveTable({ currentTier }: IncentiveTableProps) {
+function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
   return (
     <div className="flex flex-col gap-6 fade-up w-full">
       {/* <div className="w-full grid grid-cols-6 mb-4">
@@ -68,7 +69,7 @@ function IncentiveTable({ currentTier }: IncentiveTableProps) {
             <div className="pointer-events-none absolute inset-0 z-0 border-2 border-neutral-300 bg-neutral-300/5" />
           )}
           {(currentTier === "essential" || currentTier === "pro") && (
-            <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-50/40" />
+            <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-300/20" />
           )}
 
           <div
@@ -77,15 +78,15 @@ function IncentiveTable({ currentTier }: IncentiveTableProps) {
               currentTier === "basic" && "bg-neutral-300 tier-header"
             )}
           >
-            {/* <div
+            <div
             className={cn(
-              "bg-neutral-300 h-full z-0 absolute left-0 transition-all duration-300",
+              "bg-neutral-300/20 h-full z-0 absolute left-0 transition-all duration-300",
               serviceCount === 0 && "w-0",
               serviceCount === 1 && "w-1/3",
               serviceCount === 2 && "w-2/3",
               serviceCount === 3 && "w-full bg-transparent"
             )}
-          /> */}
+          />
             <div className="relative z-10 flex flex-col items-center">
               <span>Basic</span>
               <span className="text-xs">3+ services</span>
@@ -121,7 +122,7 @@ function IncentiveTable({ currentTier }: IncentiveTableProps) {
             <div className="pointer-events-none absolute inset-0 z-30 border-2 border-[#ffdb01] bg-[#ffdb01]/5" />
           )}
           {currentTier === "pro" && (
-            <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-50/40" />
+            <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-300/20" />
           )}
 
           <div
@@ -167,7 +168,7 @@ function IncentiveTable({ currentTier }: IncentiveTableProps) {
         {/* Pro tier */}
         <div className="col-span-1 border-r border-neutral-200 border-solid transition-all duration-300 relative">
           {currentTier === "pro" && (
-            <div className="pointer-events-none absolute inset-0 z-30 border-2 border-[#1e60ad] bg-[#1e60ad]/5" />
+            <div className="pointer-events-none absolute inset-0 z-30 border-2 border-[#1e60ad] bg-blue-400/5" />
           )}
 
           <div
@@ -176,15 +177,15 @@ function IncentiveTable({ currentTier }: IncentiveTableProps) {
               currentTier === "pro" && "bg-[#1e60ad] text-white tier-header"
             )}
           >
-            {/* <div
+            <div
             className={cn(
-              "bg-[#ffdb01] h-full z-0 absolute left-0 transition-all duration-300",
+              "bg-neutral-300/20 h-full z-0 absolute left-0 transition-all duration-300",
               serviceCount < 5 && "w-0",
               serviceCount === 5 && "w-1/2",
               serviceCount === 6 && "w-full bg-transparent"
               
             )}
-          /> */}
+          />
             <div className="relative z-10 flex flex-col items-center">
               <span>Pro</span>
               <span className="text-xs">6+ services</span>
