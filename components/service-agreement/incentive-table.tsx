@@ -112,12 +112,7 @@ function IncentiveTable({ currentTier }: IncentiveTableProps) {
                   <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
                 </Button>
               )}{" "}
-            {currentTier === "basic" && (
-              <div className="fade-up flex flex-row items-center gap-2 text-sm">
-                <LockKeyholeOpenIcon className="size-4.5 text-neutral-500"></LockKeyholeOpenIcon>{" "}
-                Unlocked
-              </div>
-            )}
+            
           </div>
         </div>
 
@@ -167,12 +162,7 @@ function IncentiveTable({ currentTier }: IncentiveTableProps) {
                 <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
               </Button>
             )}
-            {currentTier === "essential" && (
-              <div className="fade-up flex flex-row items-center gap-2 text-sm">
-                <LockKeyholeOpenIcon className="size-4.5 text-neutral-500"></LockKeyholeOpenIcon>{" "}
-                Unlocked
-              </div>
-            )}
+            
           </div>
         </div>
 
@@ -233,12 +223,7 @@ function IncentiveTable({ currentTier }: IncentiveTableProps) {
                 <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
               </Button>
             )}
-            {currentTier == "pro" && (
-              <div className="fade-up flex flex-row items-center gap-2 text-sm">
-                <LockKeyholeOpenIcon className="size-4.5 text-neutral-500"></LockKeyholeOpenIcon>{" "}
-                Unlocked
-              </div>
-            )}
+            
           </div>
         </div>
       </div>
