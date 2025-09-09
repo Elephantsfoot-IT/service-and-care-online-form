@@ -64,7 +64,7 @@ function IncentiveCard({ currentTier }: IncentiveCardProps) {
         className={cn(
           " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-300 flex flex-col",
           currentTier === "essential"
-            ? "shadow-xl bg-gradient-to-tr from-yellow-300/50  to-yellow-300/10 border border-[#ffdb01] ring-2 ring-[#ffdb01] text-black"
+            ? "shadow-xl bg-gradient-to-tr from-yellow-300/50  to-yellow-300/10 from-[50%] border border-[#ffdb01] ring-2 ring-[#ffdb01] text-black"
             : "border border-neutral-100"
         )}
       >
@@ -129,7 +129,7 @@ function IncentiveCard({ currentTier }: IncentiveCardProps) {
         className={cn(
           " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-400 flex flex-col",
           currentTier === "pro"
-            ? "shadow-xl bg-gradient-to-tr from-blue-400/50  to-blue-500/10 border border-[#1e60ad] ring-2 ring-[#1e60ad] "
+            ? "shadow-xl bg-gradient-to-tr from-blue-400/50  to-blue-500/10 from-[40%] border border-[#1e60ad] ring-2 ring-[#1e60ad] "
             : "border border-neutral-100"
         )}
       >
