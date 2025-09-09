@@ -129,7 +129,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
         className={cn(
           " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-400 flex flex-col",
           currentTier === "pro"
-            ? "shadow-xl bg-gradient-to-br from-[#1e60ad]  via-[#1e60ad]/90  to-[#1e60ad]/80 text-white border border-transparent"
+            ? "shadow-xl bg-gradient-to-br from-[#1e60ad]  via-[#1e60ad]/95  to-[#1e60ad]/90 text-white border border-transparent"
             : "border border-neutral-100"
         )}
       >
