@@ -1,6 +1,12 @@
 import { cn } from "@/lib/utils";
-import { CheckIcon, LockKeyholeIcon } from "lucide-react";
+import {
+  CheckCircle,
+  CheckCircle2Icon,
+  CheckIcon,
+  LockKeyholeIcon,
+} from "lucide-react";
 import { Button } from "../ui/button";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
 interface IncentiveTableProps {
   currentTier: string;
@@ -9,7 +15,7 @@ interface IncentiveTableProps {
 
 function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
   return (
-    <div className="flex flex-col gap-6 fade-up w-full">
+    <div className="flex flex-col gap-6 fade-up w-full text-sm">
       {/* <div className="w-full grid grid-cols-6 mb-4">
         <div className="col-span-3"></div>
         <div
@@ -33,7 +39,7 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
         </div>
       </div> */}
 
-      <div className="w-full grid grid-cols-6">
+      <div className="w-full grid grid-cols-9">
         {/* Incentives column */}
         <div className="col-span-3  border-neutral-200 border-solid">
           <div className="h-16 border-b border-neutral-200 border-solid font-medium flex justify-start items-center px-2 tex">
@@ -64,9 +70,9 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
         </div>
 
         {/* Basic tier */}
-        <div className="col-span-1 border-l border-r border-neutral-200 border-solid transition-all duration-300 relative">
+        <div className="col-span-2  border-solid transition-all duration-300 relative">
           {currentTier === "basic" && (
-            <div className="pointer-events-none absolute inset-0 z-0 border-2 border-neutral-300 bg-neutral-300/5" />
+            <div className="pointer-events-none absolute inset-0 z-0 border-2 border-neutral-300 bg-neutral-300/20" />
           )}
           {(currentTier === "essential" || currentTier === "pro") && (
             <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-300/20" />
@@ -79,27 +85,27 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
             )}
           >
             <div
-            className={cn(
-              "bg-neutral-300/20 h-full z-0 absolute left-0 transition-all duration-300",
-              serviceCount === 0 && "w-0",
-              serviceCount === 1 && "w-1/3",
-              serviceCount === 2 && "w-2/3",
-              serviceCount === 3 && "w-full bg-transparent"
-            )}
-          />
+              className={cn(
+                "bg-neutral-300/40 h-full z-0 absolute left-0 transition-all duration-300",
+                serviceCount === 0 && "w-0",
+                serviceCount === 1 && "w-1/3",
+                serviceCount === 2 && "w-2/3",
+                serviceCount === 3 && "w-full bg-transparent"
+              )}
+            />
             <div className="relative z-10 flex flex-col items-center">
               <span>Basic</span>
-              <span className="text-xs">3+ services</span>
+              <span className="text-xs">3 services</span>
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-5 text-green-600" />
+          <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-5 text-green-600" />
+          <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-5 text-green-600" />
+          <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center"></div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center"></div>
@@ -109,15 +115,18 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
             {currentTier !== "basic" &&
               currentTier !== "essential" &&
               currentTier !== "pro" && (
-                <Button className="bg-neutral-300 text-black hover:bg-neutral-300/90 cursor-pointer fade-up ">
+                <Button className="bg-neutral-300 text-black hover:bg-neutral-300/90 cursor-pointer ">
                   <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
                 </Button>
-              )}{" "}
+              )}
+              {currentTier === "basic" && (
+              <div className="font-medium">Eligible</div>
+            )}
           </div>
         </div>
 
         {/* Essential tier */}
-        <div className="col-span-1 border-r border-neutral-200 border-solid transition-all duration-300 relative">
+        <div className="col-span-2  border-solid transition-all duration-300 relative">
           {currentTier === "essential" && (
             <div className="pointer-events-none absolute inset-0 z-30 border-2 border-[#ffdb01] bg-[#ffdb01]/5" />
           )}
@@ -127,100 +136,108 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
 
           <div
             className={cn(
-              "h-16 border-b border-neutral-200 border-solid font-medium flex justify-center items-center relative transition-all duration-300",
-              currentTier === "essential" &&
-                "bg-[#ffdb01] text-black tier-header"
+              "h-16 border-solid font-medium flex justify-center items-center relative transition-all duration-300",
+              currentTier === "essential"
+                ? "bg-[#ffdb01] text-black tier-header border-b-[#ffdb01]"
+                : " border-b border-neutral-200"
             )}
           >
             <div className="relative z-10 flex flex-col items-center">
               <span className="">Essential</span>
-              <span className="text-xs">4-5 services</span>
+              <span className="text-xs">4 services</span>
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-5 text-green-600" />
+          <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-5 text-green-600" />
+          <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-5 text-green-600" />
+          <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-5 text-green-600" />
+          <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
             10%
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-5 text-green-600" />
+          <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-b flex justify-center items-center"></div>
           <div className="h-14 border-none flex justify-center items-center">
             {currentTier !== "essential" && currentTier !== "pro" && (
-              <Button className="bg-[#ffdb01] text-black hover:bg-[#ffdb01]/90 cursor-pointer fade-up tier-header">
+              <Button className="bg-[#ffdb01] text-black hover:bg-[#ffdb01]/90 cursor-pointer tier-header">
                 <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
               </Button>
+            )}
+            {currentTier === "essential" && (
+              <div className="font-medium">Eligible</div>
             )}
           </div>
         </div>
 
         {/* Pro tier */}
-        <div className="col-span-1 border-r border-neutral-200 border-solid transition-all duration-300 relative">
+        <div className="col-span-2  border-solid transition-all duration-300 relative">
           {currentTier === "pro" && (
             <div className="pointer-events-none absolute inset-0 z-30 border-2 border-[#1e60ad] bg-blue-400/5" />
           )}
 
           <div
             className={cn(
-              "h-16 border-b border-neutral-200 border-solid font-medium flex justify-center items-center relative transition-all duration-300",
-              currentTier === "pro" && "bg-[#1e60ad] text-white tier-header"
+              "h-16 border-solid font-medium flex justify-center items-center relative transition-all duration-300",
+              currentTier === "pro"
+                ? "bg-[#1e60ad] text-white tier-header border-b-[#1e60ad]"
+                : "border-b border-neutral-200"
             )}
           >
             <div
-            className={cn(
-              "bg-neutral-300/20 h-full z-0 absolute left-0 transition-all duration-300",
-              serviceCount < 5 && "w-0",
-              serviceCount === 5 && "w-1/2",
-              serviceCount === 6 && "w-full bg-transparent"
-              
-            )}
-          />
+              className={cn(
+                "bg-neutral-300/40 h-full z-0 absolute left-0 transition-all duration-300",
+                serviceCount < 5 && "w-0",
+                serviceCount === 5 && "w-1/2",
+                serviceCount === 6 && "w-full bg-transparent"
+              )}
+            />
             <div className="relative z-10 flex flex-col items-center">
               <span>Pro</span>
-              <span className="text-xs">6+ services</span>
+              <span className="text-xs">6 services</span>
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-5 text-green-600" />
+            <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-5 text-green-600" />
+            <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-5 text-green-600" />
+            <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-5 text-green-600" />
+            <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
             15%
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-5 text-green-600" />
+            <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-b flex justify-center items-center">
-            <CheckIcon className="size-5 text-green-600" />
+            <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-none flex justify-center items-center">
             {currentTier != "pro" && (
               <Button
                 className={cn(
-                  "relative bg-[#1e60ad] text-white hover:bg-[#1e60ad]/90 cursor-pointer fade-up"
+                  "relative bg-[#1e60ad] text-white hover:bg-[#1e60ad]/90 cursor-pointer"
                 )}
               >
                 <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
               </Button>
+            )}
+            {currentTier === "pro" && (
+              <div className="font-medium">Eligible</div>
             )}
           </div>
         </div>
