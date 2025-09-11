@@ -95,7 +95,7 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
             />
             <div className="relative z-10 flex flex-col items-center">
               <span className="text-base">Basic</span>
-              <span className="text-xs text-neutral-600">Req. 3 services</span>
+              <span className={cn("text-xs ",currentTier === "basic" ? "text-neutral-700" : "text-neutral-600") }>Req. 3 services</span>
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
@@ -112,13 +112,13 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center"></div>
           <div className="h-14 border-b flex justify-center items-center"></div>
           <div className="h-14 border-none flex justify-center items-center">
-            {currentTier !== "basic" &&
+            {/* {currentTier !== "basic" &&
               currentTier !== "essential" &&
               currentTier !== "pro" && (
                 <Button className="bg-neutral-300 text-black hover:bg-neutral-300/90 cursor-pointer ">
                   <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
                 </Button>
-              )}
+              )} */}
               {currentTier === "basic" && (
               <div className="font-medium">Eligible</div>
             )}
@@ -144,7 +144,7 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
           >
             <div className="relative z-10 flex flex-col items-center">
               <span className="text-base">Essential</span>
-              <span className="text-xs text-neutral-600">Req. 4 services</span>
+              <span className={cn("text-xs ",currentTier === "essential" ? "text-neutral-700" : "text-neutral-600") }>Req. 4 services</span>
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
@@ -167,11 +167,11 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
           </div>
           <div className="h-14 border-b flex justify-center items-center"></div>
           <div className="h-14 border-none flex justify-center items-center">
-            {currentTier !== "essential" && currentTier !== "pro" && (
+            {/* {currentTier !== "essential" && currentTier !== "pro" && (
               <Button className="bg-[#ffdb01] text-black hover:bg-[#ffdb01]/90 cursor-pointer tier-header">
                 <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
               </Button>
-            )}
+            )} */}
             {currentTier === "essential" && (
               <div className="font-medium">Eligible</div>
             )}
@@ -202,7 +202,7 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
             />
             <div className="relative z-10 flex flex-col items-center">
               <span className="text-base">Pro</span>
-              <span className="text-xs text-neutral-600">Req. 6 services</span>
+              <span className={cn("text-xs ",currentTier === "pro" ? "text-white" : "text-neutral-600") }>Req. 6 services</span>
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
@@ -227,7 +227,7 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
             <CheckCircleIcon className="size-6 text-green-600" />
           </div>
           <div className="h-14 border-none flex justify-center items-center">
-            {currentTier != "pro" && (
+            {/* {currentTier != "pro" && (
               <Button
                 className={cn(
                   "relative bg-[#1e60ad] text-white hover:bg-[#1e60ad]/90 cursor-pointer"
@@ -235,7 +235,7 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
               >
                 <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
               </Button>
-            )}
+            )} */}
             {currentTier === "pro" && (
               <div className="font-medium">Eligible</div>
             )}
