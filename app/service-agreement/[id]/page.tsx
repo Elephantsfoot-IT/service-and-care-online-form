@@ -1,12 +1,19 @@
 "use client";
 import IncentiveTable from "@/components/service-agreement/incentive-table";
+import { ServiceFrequency } from "@/components/service-agreement/service-frequency";
 import { Button } from "@/components/ui/button";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-
+type Option = "quarterly" | "six-monthly" | "yearly";
+type MaybeOption = Option | null;
 function SeriveAgreement() {
   const [serviceCount, setServiceCount] = useState<number>(0);
   const [currentTier, setCurrentTier] = useState<string>("");
+
+  const [chuteCleaningFrequency, setChuteCleaningFrequency] =
+    useState<MaybeOption>();
+  const [equipmentMaintenanceFrequency, setEquipmentMaintenanceFrequency] =
+    useState<MaybeOption>();
 
   useEffect(() => {
     if (serviceCount <= 2) {
@@ -37,8 +44,76 @@ function SeriveAgreement() {
       </div> */}
       <div className="w-full h-[200vh] px-6">
         <div className="my-20 max-w-screen-xl w-full mx-auto ">
-          <div className="text-4xl font-medium text-[#1e60ad]">Services</div>
-          
+          <div className="min-h-[200px] flex flex-col gap-10 my-10">
+            <div className="border border-neutral-200 shadow overflow-hidden ">
+              <div className="flex flex-row items-end justify-between gap-4 border-b border-neutral-200  px-6 py-4 bg-neutral-50">
+                <div>
+                  <div className="text-lg font-medium ">Chutes Cleaning</div>
+                  <div className="text-neutral-500">
+                    Professional cleaning of waste chutes and disposal systems
+                  </div>
+                </div>
+                {/* <div className="text-right">
+                  <div className="text-neutral-500">Total</div>
+                <div className="text-3xl font-medium">$3,300.00</div>
+                </div> */}
+              </div>
+              <div className="px-6 py-4 mt-2">
+                <ServiceFrequency
+                  value={chuteCleaningFrequency}
+                  onChange={setChuteCleaningFrequency}
+                  serviceKey="chute-cleaning"
+                ></ServiceFrequency>
+              </div>
+              <div className="flex flex-col  divide-y divide-neutral-200  text-sm px-6 py-4">
+                <div className="grid grid-cols-6 gap-2  ">
+                  <div className=" col-span-3 px-4 py-2 font-medium">Sites</div>
+                  <div className=" col-span-1 px-4 py-2 font-medium">
+                    No. Chutes
+                  </div>
+                  <div className=" col-span-1 px-4 py-2 font-medium">Level</div>
+                  <div className="font-medium col-span-1 text-right px-4 py-2  font-medium">
+                    Price{" "}
+                    <span className="font-normal text-neutral-600">
+                      (per chute, excl. GST)
+                    </span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-6 gap-2  ">
+                  <div className=" col-span-3 px-4 py-2">Darlinghurst</div>
+                  <div className=" col-span-1 px-4 py-2">1</div>
+                  <div className=" col-span-1 px-4 py-2">Up to 10 Levels</div>
+                  <div className="font-medium col-span-1 text-right px-4 py-2 ">
+                    $650.00
+                  </div>
+                </div>
+                <div className="grid grid-cols-6 gap-2  ">
+                  <div className="col-span-3 px-4 py-2 ">Wahroonga</div>
+                  <div className=" col-span-1 px-4 py-2">1</div>
+                  <div className=" col-span-1 px-4 py-2">Up to 10 Levels</div>
+                  <div className="font-medium col-span-1 text-right px-4 py-2 ">
+                    $950.00
+                  </div>
+                </div>
+                <div className="grid grid-cols-6 gap-2  ">
+                  <div className="col-span-3 px-4 py-2 ">Miranda ACH</div>
+                  <div className=" col-span-1 px-4 py-2">1</div>
+                  <div className=" col-span-1 px-4 py-2">Up to 10 Levels</div>
+                  <div className="font-medium col-span-1 text-right px-4 py-2 ">
+                    $690.00
+                  </div>
+                </div>
+                <div className="grid grid-cols-6 gap-2  ">
+                  <div className=" col-span-3 px-4 py-2 ">Miranda Mason</div>
+                  <div className=" col-span-1 px-4 py-2">1</div>
+                  <div className=" col-span-1 px-4 py-2">Up to 10 Levels</div>
+                  <div className="font-medium col-span-1 text-right px-4 py-2 ">
+                    $690.00
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div className="flex flex-col gap-2 ">
             <div className="text-4xl font-medium text-[#1e60ad]">
@@ -75,171 +150,3 @@ function SeriveAgreement() {
 }
 
 export default SeriveAgreement;
-
-
-
-// <div className="min-h-[200px] flex flex-col gap-10 my-10">
-//             <div className="">
-//               <div className="flex flex-row items-start gap-4">
-//                 <div>
-//                   <div className="text-lg font-medium ">Chute Cleaning</div>
-//                   <div className="text-neutral-500">
-//                     Professional cleaning of waste chutes and disposal systems
-//                   </div>
-//                 </div>
-//               </div>
-//               <div className="mt-4">
-//                 <ServiceFrequency></ServiceFrequency>
-//               </div>
-//               <div className="flex flex-col  divide-y divide-neutral-200 mt-4 text-sm">
-//                 <div className="grid grid-cols-6 gap-2  ">
-//                   <div className=" col-span-3 px-4 py-2 font-medium">Sites</div>
-//                   <div className=" col-span-1 px-4 py-2 font-medium">
-//                     No. Chutes
-//                   </div>
-//                   <div className=" col-span-1 px-4 py-2 font-medium">Level</div>
-//                   <div className="font-medium col-span-1 text-right px-4 py-2  font-medium">
-//                     Price{" "}
-//                     <span className="font-normal text-neutral-600">
-//                       (per chute, excl. GST)
-//                     </span>
-//                   </div>
-//                 </div>
-//                 <div className="grid grid-cols-6 gap-2  ">
-//                   <div className=" col-span-3 px-4 py-2">Darlinghurst</div>
-//                   <div className=" col-span-1 px-4 py-2">1</div>
-//                   <div className=" col-span-1 px-4 py-2">Up to 10 Levels</div>
-//                   <div className="font-medium col-span-1 text-right px-4 py-2 ">
-//                     $650.00
-//                   </div>
-//                 </div>
-//                 <div className="grid grid-cols-6 gap-2  ">
-//                   <div className="col-span-3 px-4 py-2 ">Wahroonga</div>
-//                   <div className=" col-span-1 px-4 py-2">1</div>
-//                   <div className=" col-span-1 px-4 py-2">Up to 10 Levels</div>
-//                   <div className="font-medium col-span-1 text-right px-4 py-2 ">
-//                     $950.00
-//                   </div>
-//                 </div>
-//                 <div className="grid grid-cols-6 gap-2  ">
-//                   <div className="col-span-3 px-4 py-2 ">Miranda ACH</div>
-//                   <div className=" col-span-1 px-4 py-2">1</div>
-//                   <div className=" col-span-1 px-4 py-2">Up to 10 Levels</div>
-//                   <div className="font-medium col-span-1 text-right px-4 py-2 ">
-//                     $690.00
-//                   </div>
-//                 </div>
-//                 <div className="grid grid-cols-6 gap-2  ">
-//                   <div className=" col-span-3 px-4 py-2 ">Miranda Mason</div>
-//                   <div className=" col-span-1 px-4 py-2">1</div>
-//                   <div className=" col-span-1 px-4 py-2">Up to 10 Levels</div>
-//                   <div className="font-medium col-span-1 text-right px-4 py-2 ">
-//                     $690.00
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//             <div className="">
-//               <div className="flex flex-row items-start gap-4">
-//                 <div>
-//                   <div className="text-lg font-medium ">
-//                     Equipment Maintenance
-//                   </div>
-//                   <div className="text-neutral-500">
-//                     Regular maintenance and servicing of waste management
-//                     equipment
-//                   </div>
-//                 </div>
-//               </div>
-//               <div className="mt-4">
-//                 <ServiceFrequency></ServiceFrequency>
-//               </div>
-//               <div className="flex flex-col  mt-4 text-sm divide-y divide-neutral-200">
-//                 <div className="grid grid-cols-6 gap-2  ">
-//                   <div className=" col-span-3 px-4 py-2 font-medium">Sites</div>
-
-//                   <div className=" col-span-2 px-4 py-2 font-medium">
-//                     Equipment
-//                   </div>
-//                   <div className="font-medium col-span-1 text-right px-4 py-2  font-medium">
-//                     Price{" "}
-//                     <span className="font-normal text-neutral-600">
-//                       (excl. GST)
-//                     </span>
-//                   </div>
-//                 </div>
-//                 <div className="grid grid-cols-6 gap-2  ">
-//                   <div className=" col-span-3 px-4 py-2">Darlinghurst</div>
-
-//                   <div className=" col-span-2 px-4 py-2 ">
-//                     LINEAR W/ COMPACTOR
-//                   </div>
-//                   <div className="font-medium col-span-1 text-right px-4 py-2  font-medium">
-//                     $300.00
-//                   </div>
-//                 </div>
-//                 <div className="grid grid-cols-6 gap-2  ">
-//                   <div className=" col-span-3 px-4 py-2">Wahroonga</div>
-
-//                   <div className=" col-span-2 px-4 py-2 ">
-//                     LINEAR W/ COMPACTOR
-//                   </div>
-//                   <div className="font-medium col-span-1 text-right px-4 py-2  font-medium">
-//                     $450.00
-//                   </div>
-//                 </div>
-//                 <div className="grid grid-cols-6 gap-2  ">
-//                   <div className=" col-span-3 px-4 py-2">Wahroonga</div>
-
-//                   <div className=" col-span-2 px-4 py-2 ">EDIVERTER</div>
-//                   <div className="font-medium col-span-1 text-right px-4 py-2  font-medium">
-//                     $450.00
-//                   </div>
-//                 </div>
-//                 <div className="grid grid-cols-6 gap-2 ">
-//                   <div className=" col-span-3 px-4 py-2">Wahroonga</div>
-
-//                   <div className=" col-span-2 px-4 py-2 ">LINEAR</div>
-//                   <div className="font-medium col-span-1 text-right px-4 py-2  font-medium">
-//                     $450.00
-//                   </div>
-//                 </div>
-//                 <div className="grid grid-cols-6 gap-2  ">
-//                   <div className=" col-span-3 px-4 py-2">Miranda ACH</div>
-
-//                   <div className=" col-span-2 px-4 py-2 ">
-//                     LINEAR W/ COMPACTOR
-//                   </div>
-//                   <div className="font-medium col-span-1 text-right px-4 py-2  font-medium">
-//                     $300.00
-//                   </div>
-//                 </div>
-//                 <div className="grid grid-cols-6 gap-2  ">
-//                   <div className=" col-span-3 px-4 py-2">Miranda ACH</div>
-
-//                   <div className=" col-span-2 px-4 py-2 ">EDIVERTER</div>
-//                   <div className="font-medium col-span-1 text-right px-4 py-2  font-medium">
-//                     $300.00
-//                   </div>
-//                 </div>
-//                 <div className="grid grid-cols-6 gap-2  ">
-//                   <div className=" col-span-3 px-4 py-2">Miranda Mason</div>
-
-//                   <div className=" col-span-2 px-4 py-2 ">
-//                     LINEAR W/ COMPACTOR
-//                   </div>
-//                   <div className="font-medium col-span-1 text-right px-4 py-2  font-medium">
-//                     $300.00
-//                   </div>
-//                 </div>
-//                 <div className="grid grid-cols-6 gap-2  ">
-//                   <div className=" col-span-3 px-4 py-2">Miranda Mason</div>
-
-//                   <div className=" col-span-2 px-4 py-2 ">EDIVERTER</div>
-//                   <div className="font-medium col-span-1 text-right px-4 py-2  font-medium">
-//                     $300.00
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
