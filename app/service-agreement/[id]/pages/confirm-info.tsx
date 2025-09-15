@@ -18,6 +18,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import ServiceAndCareTerms from "@/components/terms-and-conditions/service-and-care-terms";
+import { Landmark } from "lucide-react";
 
 const SummitFormSchema = z.object({
   signFullName: z.string().min(1, { message: "Name cannot be empty" }),
@@ -95,17 +96,74 @@ function ConfirmInfo() {
   }, [state.signFullName, state.signTitle, state.conditionAgree]);
 
   return (
-    <div
-      ref={containerRef}
-      className="my-20 max-w-screen-md w-full mx-auto"
-    >
-      <Label className="text-3xl mb-1">
-        Review and Submit
-      </Label>
+    <div ref={containerRef} className="my-20 max-w-screen-md w-full mx-auto">
+      <Label className="text-3xl mb-1">Review and Submit</Label>
       <span className="text-lg mb-10 text-neutral-500">
         Please review your selected services and the information you’ve
         provided.
       </span>
+
+      <div className="p-4 flex flex-col gap-2  mt-4 mb-6 border border-neutral-100 rounded-md shadow-sm">
+        <div className="flex flex-row space-x-4 items-center">
+          
+          <Label className="text-lg break-words text-efg-dark-blue">
+            Billing Details
+          </Label>
+          <Button
+            variant="ghost"
+            className="text-sm ml-auto"
+            onClick={() => {
+              state.setPage(2);
+            }}
+          >
+            Edit
+          </Button>
+        </div>
+
+        <div className="flex flex-col ">
+          <div className="flex flex-col space-y-4 bg-neutral-100 p-4 rounded-md">
+            <div className="flex flex-col space-y-1 ">
+              <Label className="text-neutral-500 text-xs">Full Name</Label>
+              <span className="text-sm break-words">
+                {state.accountFirstName} {state.accountLastName}
+              </span>
+            </div>
+
+            <div className="flex flex-col space-y-1 w-1/2">
+              <Label className="text-neutral-500 text-xs">Accounts Mobile</Label>
+              {state.accountMobile ? (
+                <span className="text-sm break-words">
+                  {state.accountMobile}
+                </span>
+              ) : (
+                <span className="text-sm break-words">N/A</span>
+              )}
+            </div>
+            <div className="flex flex-col space-y-1 w-1/2">
+              <Label className="text-neutral-500 text-xs">Accounts Office Phone</Label>
+              {state.accountPhone ? (
+                <span className="text-sm break-words">
+                  {state.accountPhone}
+                </span>
+              ) : (
+                <span className="text-sm break-words">N/A</span>
+              )}
+            </div>
+
+            <div className="flex flex-col space-y-1 ">
+              <Label className="text-neutral-500 text-xs">Accounts Email Address</Label>
+              {state.accountEmail ? (
+                <span className="text-sm break-words">
+                  {state.accountEmail}
+                </span>
+              ) : (
+                <span className="text-sm break-words">N/A</span>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div>
         <Label className="text-lg font-medium text-efg-dark-blue">
           Terms and Conditions
@@ -114,7 +172,7 @@ function ConfirmInfo() {
           Please take a moment to carefully scroll through and review our Terms
           and Conditions before proceeding.
         </span>
-        <div className="p-6 border border-neutral-100 rounded-md shadow-sm w-full aspect-video overflow-y-auto mt-2 mb-4">
+        <div className="p-6 border border-neutral-100 rounded-md shadow-sm w-full max-h-[400px] overflow-y-auto mt-2 mb-4">
           <ServiceAndCareTerms />
         </div>
         <Form {...form}>
@@ -128,7 +186,7 @@ function ConfirmInfo() {
                     <Checkbox
                       id="terms"
                       checked={field.value}
-                      className="data-[state=checked]:bg-efg-yellow data-[state=checked]:border-efg-yellow data-[state=checked]:text-black cursor-pointer"
+                      className="efg-checkbox"
                       onCheckedChange={(value: boolean) => {
                         field.onChange(value);
                         state.updateFieldBoolean("conditionAgree", value);
@@ -220,7 +278,11 @@ function ConfirmInfo() {
         >
           Back
         </Button>
-        <Button onClick={onSubmit} className="mt-10 w-fit cursor-pointer" variant="efg">
+        <Button
+          onClick={onSubmit}
+          className="mt-10 w-fit cursor-pointer"
+          variant="efg"
+        >
           Submit
         </Button>
       </div>

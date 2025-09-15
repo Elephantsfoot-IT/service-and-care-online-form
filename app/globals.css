@@ -222,3 +222,12 @@
 
 
 
+
+
+.efg-checkbox {
+  @apply data-[state=checked]:bg-efg-yellow data-[state=checked]:border-efg-yellow data-[state=checked]:text-black cursor-pointer;
+}
+
+.efg-input {
+  @apply focus-visible:ring-efg-yellow/50 focus-visible:border-efg-yellow;
+}
