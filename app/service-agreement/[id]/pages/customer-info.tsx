@@ -70,7 +70,8 @@ const billingSchema = z
     postalCountry: z.string(),
   })
   .superRefine((data, ctx) => {
-    const hasAnyPhone = Boolean(data.accountPhone) || Boolean(data.accountMobile);
+    const hasAnyPhone =
+      Boolean(data.accountPhone) || Boolean(data.accountMobile);
     if (!hasAnyPhone) {
       const message =
         "At least one contact number (Office Phone or Mobile Phone) must be provided.";
@@ -115,7 +116,6 @@ function CustomerInformation() {
     form.handleSubmit((data) => {
       state.setPage(3);
     })();
-    
   };
 
   useEffect(() => {
@@ -167,7 +167,7 @@ function CustomerInformation() {
   }, []);
 
   return (
-    <div className="flex flex-col my-20 max-w-screen-md w-full mx-auto">
+    <div className="flex flex-col my-12 max-w-screen-sm w-full mx-auto">
       <Label className="text-3xl mb-1 text-efg-dark-blue">
         Billing Details
       </Label>
@@ -305,9 +305,7 @@ function CustomerInformation() {
           </div>
 
           <div>
-            <Label className=" text-sm mb-2">
-              Postal Address 
-            </Label>
+            <Label className=" text-sm mb-2">Postal Address</Label>
             {/* <div className="flex items-center space-x-2 my-4">
               <Checkbox
                 checked={state.sameAddres}
@@ -331,7 +329,10 @@ function CustomerInformation() {
           </div>
 
           <div className="flex flex-col space-y-4">
-            <Label className="text-sm">Use This Contact For <span className="text-neutral-500 text-xs">(optional)</span></Label>
+            <Label className="text-sm">
+              Use This Contact For{" "}
+              <span className="text-neutral-500 text-xs">(optional)</span>
+            </Label>
             <div className="ml-2 flex flex-row gap-2">
               <div className="w-1/2 flex flex-col space-y-4">
                 <FormField
@@ -618,6 +619,17 @@ function CustomerInformation() {
           </div>
         </form>
       </Form>
+
+      <div className="my-14">
+        <hr className="border-neutral-200"></hr>
+      </div>
+
+      <Label className="text-3xl mb-1 text-efg-dark-blue">
+        Additional Contacts
+      </Label>
+      <span className="text-lg mb-10 text-neutral-500 mb-6">
+        Add extra contacts for quotes, jobs, invoices, or statements. (optional)
+      </span>
       <div className="flex flex-row gap-2 justify-end">
         <Button
           variant="secondary"

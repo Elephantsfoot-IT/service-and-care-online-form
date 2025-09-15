@@ -7,6 +7,7 @@ import CustomerInformation from "./pages/customer-info";
 import ServicesForm from "./pages/service";
 import SiteInfo from "./pages/site-info";
 import { scrollToTop } from "@/lib/utils";
+import ServiceAgreementProgress from "@/components/service-agreement/service-agreement-progress";
 
 function ServiceAgreement() {
   const state = useServiceAgreementStore();
@@ -30,10 +31,12 @@ function ServiceAgreement() {
 
   return (
     <div className="bg-white flex flex-col min-h-screen">
+      
       <div
         id="content"
         className="w-full flex flex-col items-center px-[1rem] font-sans my-20 bg-white  mx-auto flex-grow"
       >
+       {state.page >= 2 && <ServiceAgreementProgress ></ServiceAgreementProgress>}
         {state.page === 1 && (
           <div
             className={`${
