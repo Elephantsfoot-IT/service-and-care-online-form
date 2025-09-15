@@ -304,7 +304,7 @@ function CustomerInformation() {
                     />
                   </FormControl>
                   <FormMessage />
-                  <FormDescription>
+                  <FormDescription className="mt-2 ml-1">
                     Your 11-digit ABN will be verified using the ABN lookup
                     service.
                   </FormDescription>
