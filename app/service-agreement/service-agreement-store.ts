@@ -44,7 +44,7 @@ export interface ServiceAgreementStore {
 export const useServiceAgreementStore = create<ServiceAgreementStore>(
   (set) => ({
     /* ---------- State ---------- */
-    page: 4,
+    page: 1,
 
     // Signature & agreement
     signFullName: "",
