@@ -23,7 +23,7 @@ function CustomerInformation() {
         >
           Back
         </Button>
-        <Button onClick={handleSubmit} className="mt-10 w-fit cursor-pointer">
+        <Button onClick={handleSubmit} className="mt-10 w-fit cursor-pointer" variant="efg">
           Continue <ArrowRightIcon />
         </Button>
       </div>

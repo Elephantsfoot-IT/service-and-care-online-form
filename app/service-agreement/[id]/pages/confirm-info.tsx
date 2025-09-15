@@ -114,7 +114,7 @@ function ConfirmInfo() {
           Please take a moment to carefully scroll through and review our Terms
           and Conditions before proceeding.
         </span>
-        <div className="p-6 border border-neutral-100 rounded-md shadow-sm h-[400px] overflow-y-auto mt-2 mb-4">
+        <div className="p-6 border border-neutral-100 rounded-md shadow-sm w-full aspect-video overflow-y-auto mt-2 mb-4">
           <ServiceAndCareTerms />
         </div>
         <Form {...form}>
@@ -128,6 +128,7 @@ function ConfirmInfo() {
                     <Checkbox
                       id="terms"
                       checked={field.value}
+                      className="data-[state=checked]:bg-efg-yellow data-[state=checked]:border-efg-yellow data-[state=checked]:text-black cursor-pointer"
                       onCheckedChange={(value: boolean) => {
                         field.onChange(value);
                         state.updateFieldBoolean("conditionAgree", value);
@@ -219,7 +220,7 @@ function ConfirmInfo() {
         >
           Back
         </Button>
-        <Button onClick={onSubmit} className="mt-10 w-fit cursor-pointer">
+        <Button onClick={onSubmit} className="mt-10 w-fit cursor-pointer" variant="efg">
           Submit
         </Button>
       </div>

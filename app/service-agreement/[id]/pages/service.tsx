@@ -315,7 +315,7 @@ function ServicesForm() {
       </div>
 
       <div className="w-full flex justify-end mt-16">
-        <Button className="cursor-pointer" onClick={goNext}>Continue <ArrowRightIcon></ArrowRightIcon></Button>
+        <Button variant="efg" className="cursor-pointer" onClick={goNext}>Continue <ArrowRightIcon></ArrowRightIcon></Button>
       </div>
     </div>
   );

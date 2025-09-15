@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { EraserIcon } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import SignaturePad from "signature_pad";
 
 interface SignaturePropTypes {
@@ -18,6 +18,10 @@ const SignaturePadComponent = ({
 }: SignaturePropTypes) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const signaturePadRef = useRef<SignaturePad | null>(null);
+
+  const height = useMemo(() => {
+    return (parentWidth/16)*9;
+  }, [parentWidth]);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -103,7 +107,7 @@ const SignaturePadComponent = ({
       <canvas
         ref={canvasRef}
         width={parentWidth}
-        height={350}
+        height={height}
         className="border border-neutral-200 rounded-md shadow"
         onClick={trimSignature}
       ></canvas>
