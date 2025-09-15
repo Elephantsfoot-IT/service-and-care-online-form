@@ -227,7 +227,7 @@ function ServicesForm() {
   ]);
 
   return (
-    <div className="my-20 max-w-screen-xl w-full mx-auto px-6">
+    <div className="my-20 max-w-screen-xl w-full mx-auto">
       <div className="min-h-[200px] flex flex-col gap-10 my-20">
         {/* map all services with unique pricing */}
         {SERVICES.map((svc) => {

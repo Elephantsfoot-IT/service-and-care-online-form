@@ -97,9 +97,9 @@ function ConfirmInfo() {
   return (
     <div
       ref={containerRef}
-      className="my-20 max-w-screen-md w-full mx-auto px-6"
+      className="my-20 max-w-screen-md w-full mx-auto"
     >
-      <Label className="text-3xl mb-1 text-efg-blue ">
+      <Label className="text-3xl mb-1">
         Review and Submit
       </Label>
       <span className="text-lg mb-10 text-neutral-500">

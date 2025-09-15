@@ -12,7 +12,7 @@ export default function SiteInfo() {
     state.setPage(4);
   };
   return (
-    <div className="my-20 max-w-screen-md w-full mx-auto px-6">
+    <div className="my-20 max-w-screen-md w-full mx-auto">
       <div className="flex flex-row gap-2 justify-end">
         <Button
           variant="secondary"
