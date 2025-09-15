@@ -1,6 +1,6 @@
 const ServiceAndCareTerms = () => {
   return (
-    <div className="space-y-4 text-sm">
+    <div className="space-y-2 text-sm">
       <div className="text-sm">
         Normal working hours are defined as 8:30am to 4:30pm Monday through
         Friday inclusive, excluding public holidays, Saturdays and Sundays.
