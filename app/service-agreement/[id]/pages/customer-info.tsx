@@ -168,7 +168,7 @@ function CustomerInformation() {
 
   return (
     <div className="flex flex-col my-12 max-w-screen-sm w-full mx-auto">
-      <Label className="text-3xl mb-1 text-efg-dark-blue">
+      <Label className="text-2xl mb-1 text-efg-dark-blue">
         Billing Details
       </Label>
       <span className="text-lg mb-10 text-neutral-500 mb-6">
@@ -624,7 +624,7 @@ function CustomerInformation() {
         <hr className="border-neutral-200"></hr>
       </div>
 
-      <Label className="text-3xl mb-1 text-efg-dark-blue">
+      <Label className="text-2xl mb-1 text-efg-dark-blue">
         Additional Contacts
       </Label>
       <span className="text-lg mb-10 text-neutral-500 mb-6">

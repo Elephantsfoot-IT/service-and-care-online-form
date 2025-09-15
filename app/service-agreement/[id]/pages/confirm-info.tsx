@@ -102,7 +102,7 @@ function ConfirmInfo() {
 
   return (
     <div ref={containerRef} className="my-12 max-w-screen-sm w-full mx-auto">
-      <Label className="text-3xl mb-1">Review and Submit</Label>
+      <Label className="text-2xl mb-1">Review and Submit</Label>
       <span className="text-lg mb-10 text-neutral-500">
         Please review your selected services and the information you’ve
         provided.

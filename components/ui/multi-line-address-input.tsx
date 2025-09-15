@@ -171,7 +171,7 @@ function MultiLineAddressInput<T extends FieldValues>({
               isOpen ? "block" : "hidden"
             )}
           >
-            <CommandList className="rounded-lg ring-1 ring-slate-200">
+            <CommandList className={cn("rounded-lg", options.length > 0 ? "ring-1 ring-slate-200" : "")}>
               {options.length > 0 ? (
                 <CommandGroup heading="Suggestions">
                   {options.map((option) => {
@@ -203,8 +203,10 @@ function MultiLineAddressInput<T extends FieldValues>({
           </div>
         </div>
       </CommandPrimitive>
-      {/* CITY */}
-      <FormField
+
+      <div className="grid grid-cols-2 gap-2">
+        {/* CITY */}
+        <FormField
           control={control}
           name={fieldNames.city}
           render={({ field }) => (
@@ -226,9 +228,6 @@ function MultiLineAddressInput<T extends FieldValues>({
             </FormItem>
           )}
         />
-      <div className="grid grid-cols-3 gap-2">
-        
-
         {/* STATE */}
         <FormField
           control={control}
@@ -296,7 +295,7 @@ function MultiLineAddressInput<T extends FieldValues>({
         />
 
         {/* COUNTRY */}
-      <FormField
+        <FormField
           control={control}
           name={fieldNames.country}
           render={() => (
@@ -309,7 +308,7 @@ function MultiLineAddressInput<T extends FieldValues>({
           )}
         />
       </div>
-      
+
       <FormDescription className="text-sm">
         You can either select an address from the suggestions or manually adjust
         it to match your exact location.
