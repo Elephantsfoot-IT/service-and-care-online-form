@@ -1,7 +1,7 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
-import { ArrowRightIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -11,15 +11,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import MultiLineAddressInput from "@/components/ui/multi-line-address-input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowRightIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
 
-const baseFormSchema = z
+const billingSchema = z
   .object({
     accountFirstName: z
       .string()
@@ -56,6 +57,16 @@ const baseFormSchema = z
     PrimaryInvoiceContact: z.boolean(),
     PrimaryJobContact: z.boolean(),
     PrimaryQuoteContact: z.boolean(),
+
+    postalStreetAddress: z
+      .string()
+      .min(1, { message: "Postal street address cannot be empty" }),
+    postalCity: z.string().min(1, { message: "Postal city cannot be empty" }),
+    postalState: z.string().min(1, { message: "Postal state cannot be empty" }),
+    postalPostcode: z.string().regex(/^\d{4}$/, {
+      message: "Business postcode must be exactly 4 digits",
+    }),
+    postalCountry: z.string(),
   })
   .refine((data) => data.accountPhone || data.accountMobile, {
     message:
@@ -63,9 +74,11 @@ const baseFormSchema = z
     path: ["accountMobile"], // Highlight this field (optional)
   });
 
+type CustomerInformationFormType = z.infer<typeof billingSchema>;
+
 function CustomerInformation() {
-  const form = useForm<z.infer<typeof baseFormSchema>>({
-    resolver: zodResolver(baseFormSchema), // Dyn
+  const form = useForm<z.infer<typeof billingSchema>>({
+    resolver: zodResolver(billingSchema), // Dyn
     mode: "onChange", // Trigger validation on change
     defaultValues: {
       accountFirstName: "",
@@ -81,6 +94,11 @@ function CustomerInformation() {
       PrimaryInvoiceContact: false,
       PrimaryJobContact: false,
       PrimaryQuoteContact: false,
+      postalStreetAddress: "",
+      postalCity: "",
+      postalState: "",
+      postalPostcode: "",
+      postalCountry: "",
     },
   });
 
@@ -106,16 +124,44 @@ function CustomerInformation() {
     form.setValue("PrimaryInvoiceContact", state.PrimaryInvoiceContact);
     form.setValue("PrimaryJobContact", state.PrimaryJobContact);
     form.setValue("PrimaryQuoteContact", state.PrimaryQuoteContact);
-  }, [state.accountFirstName, state.accountLastName, state.accountEmail, state.accountPhone, state.accountMobile, state.QuoteContact, state.JobContact, state.InvoiceContact, state.StatementContact, state.PrimaryStatementContact, state.PrimaryInvoiceContact, state.PrimaryJobContact, state.PrimaryQuoteContact]);
+    form.setValue("postalStreetAddress", state.postalStreetAddress);
+    form.setValue("postalCity", state.postalCity);
+    form.setValue("postalState", state.postalState);
+    form.setValue("postalPostcode", state.postalPostcode);
+    form.setValue("postalCountry", state.postalCountry);
+  }, [
+    state.accountFirstName,
+    state.accountLastName,
+    state.accountEmail,
+    state.accountPhone,
+    state.accountMobile,
+    state.QuoteContact,
+    state.JobContact,
+    state.InvoiceContact,
+    state.StatementContact,
+    state.PrimaryStatementContact,
+    state.PrimaryInvoiceContact,
+    state.PrimaryJobContact,
+    state.PrimaryQuoteContact,
+    state.postalStreetAddress,
+    state.postalCity,
+    state.postalState,
+    state.postalPostcode,
+    state.postalCountry,
+  ]);
 
- 
+  function handleChange(field: string, value: string): void {
+    state.updateField(field, value);
+  }
+
   return (
     <div className="flex flex-col my-20 max-w-screen-md w-full mx-auto">
       <Label className="text-3xl mb-1 text-efg-dark-blue">
         Billing Details
       </Label>
       <span className="text-lg mb-10 text-neutral-500 mb-6">
-      Please supply the billing information associated with this service agreement.
+        Please supply the billing information associated with this service
+        agreement.
       </span>
       <Form {...form}>
         <form className="flex flex-col gap-6">
@@ -239,11 +285,38 @@ function CustomerInformation() {
                 </FormControl>
                 <FormMessage />
                 <FormDescription>
-                  We will send the signed service agreement document to this email address.
+                  We will send the signed service agreement document to this
+                  email address.
                 </FormDescription>
               </FormItem>
             )}
           />
+
+          <div>
+            <Label className="custom-label text-sm mb-2">
+              Postal Address <span className="text-red-500">*</span>
+            </Label>
+            {/* <div className="flex items-center space-x-2 my-4">
+              <Checkbox
+                checked={state.sameAddres}
+                onCheckedChange={handleCheckboxChange}
+              />
+              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-neutral-600">
+                Use Company Address
+              </label>
+            </div> */}
+            <MultiLineAddressInput<CustomerInformationFormType>
+              fieldNames={{
+                street: "postalStreetAddress",
+                city: "postalCity",
+                state: "postalState",
+                postcode: "postalPostcode",
+                country: "postalCountry",
+              }}
+              handleChange={handleChange}
+              stateSelectValue={state.postalState}
+            />
+          </div>
 
           <div className="flex flex-col space-y-4">
             <Label className="custom-label text-sm">Use This Contact For</Label>

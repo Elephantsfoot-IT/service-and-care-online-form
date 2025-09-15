@@ -105,7 +105,6 @@ function ConfirmInfo() {
 
       <div className="p-4 flex flex-col gap-2  mt-4 mb-6 border border-neutral-100 rounded-md shadow-sm">
         <div className="flex flex-row space-x-4 items-center">
-          
           <Label className="text-lg break-words text-efg-dark-blue">
             Billing Details
           </Label>
@@ -121,16 +120,23 @@ function ConfirmInfo() {
         </div>
 
         <div className="flex flex-col ">
-          <div className="flex flex-col space-y-4 bg-neutral-100 p-4 rounded-md">
-            <div className="flex flex-col space-y-1 ">
-              <Label className="text-neutral-500 text-xs">Full Name</Label>
-              <span className="text-sm break-words">
-                {state.accountFirstName} {state.accountLastName}
-              </span>
+          <div className="flex flex-col space-y-2 bg-neutral-100 p-4 rounded-md">
+            <div className="flex flex-row space-x-4 sm:flex-col sm:space-y-2 space-x-0 w-full">
+              <div className="flex-1 flex flex-col space-y-1 ">
+                <Label className="text-neutral-500 text-xs">First Name</Label>
+                <span className="text-sm break-words">
+                  {state.accountFirstName}
+                </span>
+              </div>
+              <div className=" flex-1 flex flex-col space-y-1 ">
+                <Label className="text-neutral-500 text-xs">Last Name</Label>
+                <span className="text-sm break-words">
+                  {state.accountLastName}
+                </span>
+              </div>
             </div>
-
             <div className="flex flex-col space-y-1 w-1/2">
-              <Label className="text-neutral-500 text-xs">Accounts Mobile</Label>
+              <Label className="text-neutral-500 text-xs">Mobile Phone</Label>
               {state.accountMobile ? (
                 <span className="text-sm break-words">
                   {state.accountMobile}
@@ -140,7 +146,7 @@ function ConfirmInfo() {
               )}
             </div>
             <div className="flex flex-col space-y-1 w-1/2">
-              <Label className="text-neutral-500 text-xs">Accounts Office Phone</Label>
+              <Label className="text-neutral-500 text-xs">Office Phone</Label>
               {state.accountPhone ? (
                 <span className="text-sm break-words">
                   {state.accountPhone}
@@ -151,13 +157,27 @@ function ConfirmInfo() {
             </div>
 
             <div className="flex flex-col space-y-1 ">
-              <Label className="text-neutral-500 text-xs">Accounts Email Address</Label>
+              <Label className="text-neutral-500 text-xs">Email Address</Label>
               {state.accountEmail ? (
                 <span className="text-sm break-words">
                   {state.accountEmail}
                 </span>
               ) : (
                 <span className="text-sm break-words">N/A</span>
+              )}
+            </div>
+            <div className="flex flex-col space-y-1">
+              <Label className="text-neutral-500">Postal Address</Label>
+              {state.postalStreetAddress &&
+              state.postalCity &&
+              state.postalState &&
+              state.postalPostcode ? (
+                <span className="text-base break-words">
+                  {state.postalStreetAddress}, {state.postalCity}{" "}
+                  {state.postalState} {state.postalPostcode}, Australia
+                </span>
+              ) : (
+                <span className="text-base break-words">N/A</span>
               )}
             </div>
           </div>

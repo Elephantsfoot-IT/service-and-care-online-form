@@ -27,6 +27,11 @@ export interface ServiceAgreementStore {
   PrimaryJobContact: boolean;
   PrimaryInvoiceContact: boolean;
   PrimaryStatementContact: boolean;
+  postalStreetAddress: string;
+  postalCity: string;
+  postalState: string;
+  postalPostcode: string;
+  postalCountry: string;
 
   /* ---------- Actions ---------- */
   setPage: (page: number) => void;
@@ -54,6 +59,11 @@ export const useServiceAgreementStore = create<ServiceAgreementStore>(
     accountEmail: "",
     accountPhone: "",
     accountMobile: "",
+    postalStreetAddress: "",
+    postalCity: "",
+    postalState: "",
+    postalPostcode: "",
+    postalCountry: "",
 
     // Contact preferences
     QuoteContact: false,
@@ -93,6 +103,10 @@ export const useServiceAgreementStore = create<ServiceAgreementStore>(
         accountEmail: "",
         accountPhone: "",
         accountMobile: "",
+        postalCity: "",
+        postalState: "",
+        postalPostcode: "",
+        postalCountry: "",
 
         // Contact preferences
         QuoteContact: false,
