@@ -232,5 +232,5 @@
 }
 
 .efg-input {
-  @apply focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none border-neutral-200;
+  @apply focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none border-neutral-200 ;
 }

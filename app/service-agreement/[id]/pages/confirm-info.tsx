@@ -120,52 +120,62 @@ function ConfirmInfo() {
         </div>
 
         <div className="flex flex-col ">
-          <div className="flex flex-col space-y-2 bg-neutral-100 p-4 rounded-md">
-            <div className="flex flex-row space-x-4 sm:flex-col sm:space-y-2 space-x-0 w-full">
+          <div className="flex flex-col space-y-4 bg-neutral-50 p-4 rounded-md">
+            <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 w-full">
               <div className="flex-1 flex flex-col space-y-1 ">
-                <Label className="text-neutral-500 text-xs">First Name</Label>
-                <span className="text-sm break-words">
-                  {state.accountFirstName}
-                </span>
+                <Label className="text-neutral-500 text-sm">First Name</Label>
+                {state.accountFirstName ? (
+                  <span className="text-base break-words">
+                    {state.accountFirstName}
+                  </span>
+                ) : (
+                  <span className="text-base break-words">N/A</span>
+                )}
               </div>
               <div className=" flex-1 flex flex-col space-y-1 ">
-                <Label className="text-neutral-500 text-xs">Last Name</Label>
-                <span className="text-sm break-words">
-                  {state.accountLastName}
-                </span>
+                <Label className="text-neutral-500 text-sm">Last Name</Label>
+                {state.accountLastName ? (
+                  <span className="text-base break-words">
+                    {state.accountLastName}
+                  </span>
+                ) : (
+                  <span className="text-base break-words">N/A</span>
+                )}
               </div>
             </div>
-            <div className="flex flex-col space-y-1 w-1/2">
-              <Label className="text-neutral-500 text-xs">Mobile Phone</Label>
-              {state.accountMobile ? (
-                <span className="text-sm break-words">
-                  {state.accountMobile}
-                </span>
-              ) : (
-                <span className="text-sm break-words">N/A</span>
-              )}
-            </div>
-            <div className="flex flex-col space-y-1 w-1/2">
-              <Label className="text-neutral-500 text-xs">Office Phone</Label>
-              {state.accountPhone ? (
-                <span className="text-sm break-words">
-                  {state.accountPhone}
-                </span>
-              ) : (
-                <span className="text-sm break-words">N/A</span>
-              )}
-            </div>
-
             <div className="flex flex-col space-y-1 ">
-              <Label className="text-neutral-500 text-xs">Email Address</Label>
+              <Label className="text-neutral-500 text-sm">Email Address</Label>
               {state.accountEmail ? (
-                <span className="text-sm break-words">
+                <span className="text-base break-words">
                   {state.accountEmail}
                 </span>
               ) : (
-                <span className="text-sm break-words">N/A</span>
+                <span className="text-base break-words">N/A</span>
               )}
             </div>
+            <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 w-full">
+              <div className="flex flex-col space-y-1 w-1/2">
+                <Label className="text-neutral-500 text-sm">Mobile Phone</Label>
+                {state.accountMobile ? (
+                  <span className="text-base break-words">
+                    {state.accountMobile}
+                  </span>
+                ) : (
+                  <span className="text-base break-words">N/A</span>
+                )}
+              </div>
+              <div className="flex flex-col space-y-1 w-1/2">
+                <Label className="text-neutral-500 text-sm">Office Phone</Label>
+                {state.accountPhone ? (
+                  <span className="text-base break-words">
+                    {state.accountPhone}
+                  </span>
+                ) : (
+                  <span className="text-sm break-words">N/A</span>
+                )}
+              </div>
+            </div>
+
             <div className="flex flex-col space-y-1">
               <Label className="text-neutral-500">Postal Address</Label>
               {state.postalStreetAddress &&
@@ -240,6 +250,7 @@ function ConfirmInfo() {
                         field.onChange(e);
                         state.updateField("signFullName", e.target.value);
                       }}
+                      className="efg-input"
                     />
                   </FormControl>
                   <FormMessage />
@@ -263,6 +274,7 @@ function ConfirmInfo() {
                         field.onChange(e);
                         state.updateField("signTitle", e.target.value);
                       }}
+                      className="efg-input"
                     />
                   </FormControl>
                   <FormMessage />

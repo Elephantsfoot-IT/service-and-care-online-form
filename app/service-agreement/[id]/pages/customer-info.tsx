@@ -213,56 +213,6 @@ function CustomerInformation() {
               )}
             />
           </div>
-
-          <FormField
-            control={form.control}
-            name="accountMobile"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="custom-label text-sm">
-                  Mobile Phone
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    maxLength={13}
-                    {...field}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      state.updateField("accountMobile", e.target.value);
-                    }}
-                    className="efg-input"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="accountPhone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="custom-label text-sm">
-                  Office Phone
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder=""
-                    maxLength={13}
-                    {...field}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      state.updateField("accountPhone", e.target.value);
-                    }}
-                    className="efg-input"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
           <FormField
             control={form.control}
             name="accountEmail"
@@ -291,6 +241,56 @@ function CustomerInformation() {
               </FormItem>
             )}
           />
+          <div className="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-2">
+            <FormField
+              control={form.control}
+              name="accountMobile"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel className="custom-label text-sm">
+                    Mobile Phone
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      maxLength={13}
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        state.updateField("accountMobile", e.target.value);
+                      }}
+                      className="efg-input"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="accountPhone"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel className="custom-label text-sm">
+                    Office Phone
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder=""
+                      maxLength={13}
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        state.updateField("accountPhone", e.target.value);
+                      }}
+                      className="efg-input"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <div>
             <Label className="custom-label text-sm mb-2">
