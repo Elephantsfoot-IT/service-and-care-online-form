@@ -1,7 +1,9 @@
 'use client'
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Button } from "@/components/ui/button";
+import { scrollToTop } from "@/lib/utils";
 import { ArrowRightIcon } from "lucide-react";
+import { useEffect } from "react";
 
 export default function SiteInfo() {
   const state = useServiceAgreementStore();
@@ -11,9 +13,16 @@ export default function SiteInfo() {
   const handleSubmit = () => {
     state.setPage(4);
   };
+  useEffect(() => {
+    scrollToTop();
+  }, []);   
   return (
     <div className="my-20 max-w-screen-md w-full mx-auto">
+      <div className="my-10 min-h-[200vh] bg-neutral-50">
+       
+      </div>
       <div className="flex flex-row gap-2 justify-end">
+
         <Button
           variant="secondary"
           onClick={goBack}

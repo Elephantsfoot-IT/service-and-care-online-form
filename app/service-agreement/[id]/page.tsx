@@ -6,6 +6,7 @@ import ConfirmInfo from "./pages/confirm-info";
 import CustomerInformation from "./pages/customer-info";
 import ServicesForm from "./pages/service";
 import SiteInfo from "./pages/site-info";
+import { scrollToTop } from "@/lib/utils";
 
 function ServiceAgreement() {
   const state = useServiceAgreementStore();
@@ -24,6 +25,8 @@ function ServiceAgreement() {
       fadeIn4: state.page === 4,
     });
   }, [state.page]);
+
+
 
   return (
     <div className="bg-white flex flex-col min-h-screen">

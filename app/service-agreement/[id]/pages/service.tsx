@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useServiceAgreementStore } from "../../service-agreement-store";
+import { scrollToTop } from "@/lib/utils";
 
 type Option = "quarterly" | "six-monthly" | "yearly";
 type MaybeOption = Option | null;
@@ -226,9 +227,12 @@ function ServicesForm() {
     binCleaningFrequency,
   ]);
 
+  useEffect(() => {
+    scrollToTop();
+  }, []);
   return (
     <div className="my-20 max-w-screen-xl w-full mx-auto">
-      <div className="min-h-[200px] flex flex-col gap-10 my-20">
+      <div className="flex flex-col gap-10 my-20">
         {/* map all services with unique pricing */}
         {SERVICES.map((svc) => {
           const freq = getFrequency(svc.key);

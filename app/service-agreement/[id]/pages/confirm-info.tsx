@@ -19,6 +19,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import ServiceAndCareTerms from "@/components/terms-and-conditions/service-and-care-terms";
 import { Landmark } from "lucide-react";
+import { scrollToTop } from "@/lib/utils";
 
 const SummitFormSchema = z.object({
   signFullName: z.string().min(1, { message: "Name cannot be empty" }),
@@ -94,6 +95,10 @@ function ConfirmInfo() {
     form.setValue("signTitle", state.signTitle);
     form.setValue("conditionAgree", state.conditionAgree);
   }, [state.signFullName, state.signTitle, state.conditionAgree]);
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <div ref={containerRef} className="my-20 max-w-screen-md w-full mx-auto">

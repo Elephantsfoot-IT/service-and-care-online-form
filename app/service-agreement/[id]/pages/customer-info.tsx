@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import MultiLineAddressInput from "@/components/ui/multi-line-address-input";
+import { scrollToTop } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRightIcon } from "lucide-react";
 import { useEffect } from "react";
@@ -160,6 +161,10 @@ function CustomerInformation() {
   function handleChange(field: string, value: string): void {
     state.updateField(field, value);
   }
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <div className="flex flex-col my-20 max-w-screen-md w-full mx-auto">
