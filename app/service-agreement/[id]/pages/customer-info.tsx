@@ -71,7 +71,7 @@ const billingSchema = z
   .refine((data) => data.accountPhone || data.accountMobile, {
     message:
       "At least one contact number (Office Phone or Mobile Phone) must be provided.",
-    path: ["accountMobile"], // Highlight this field (optional)
+    path: [""], // Highlight this field (optional)
   });
 
 type CustomerInformationFormType = z.infer<typeof billingSchema>;

@@ -157,7 +157,6 @@ function MultiLineAddressInput<T extends FieldValues>({
                     {...field}
                     value={field.value as string}
                     disabled={disabled}
-
                   />
                 </FormControl>
                 <FormMessage />
@@ -204,110 +203,115 @@ function MultiLineAddressInput<T extends FieldValues>({
           </div>
         </div>
       </CommandPrimitive>
-
-      {/* CITY */}
-      <FormField
-        control={control}
-        name={fieldNames.city}
-        render={({ field }) => (
-          <FormItem>
-            <FormControl>
-              <Input
-                placeholder="City"
-                {...field}
-                onChange={(e) => {
-                  field.onChange(e);
-                  handleChange(fieldNames.city, e.target.value);
-                }}
-                value={field.value as string}
-                disabled={disabled}
-                className="efg-input"
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
-      {/* STATE */}
-      <FormField
-        control={control}
-        name={fieldNames.state}
-        render={({ field }) => (
-          <FormItem>
-            <Select
-              value={stateSelectValue}
-              onValueChange={(e) => {
-                field.onChange(e);
-                handleChange(fieldNames.state, e);
-              }}
-            >
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+        {/* CITY */}
+        <FormField
+          control={control}
+          name={fieldNames.city}
+          render={({ field }) => (
+            <FormItem className="flex-1">
               <FormControl>
-                <SelectTrigger size="default" className="w-full focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none" disabled={disabled} >
-                  <SelectValue
-                    placeholder={
-                      <span className="text-neutral-500">State</span>
-                    }
-                  />
-                </SelectTrigger>
+                <Input
+                  placeholder="City"
+                  {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleChange(fieldNames.city, e.target.value);
+                  }}
+                  value={field.value as string}
+                  disabled={disabled}
+                  className="efg-input"
+                />
               </FormControl>
-              <SelectContent className="border border-neutral-200">
-                {["NSW", "VIC", "QLD", "SA", "WA", "TAS", "ACT", "NT"].map(
-                  (state) => (
-                    <SelectItem key={state} value={state}>
-                      {state}
-                    </SelectItem>
-                  )
-                )}
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      {/* POSTCODE */}
-      <FormField
-        control={control}
-        name={fieldNames.postcode}
-        render={({ field }) => (
-          <FormItem>
-            <FormControl>
-              <Input
-                placeholder="Postcode"
-                {...field}
-                maxLength={4}
-                onChange={(e) => {
+        {/* STATE */}
+        <FormField
+          control={control}
+          name={fieldNames.state}
+          render={({ field }) => (
+            <FormItem className="flex-1">
+              <Select
+                value={stateSelectValue}
+                onValueChange={(e) => {
                   field.onChange(e);
-                  handleChange(fieldNames.postcode, e.target.value);
+                  handleChange(fieldNames.state, e);
                 }}
-                value={field.value as string}
-                disabled={disabled}
-                className="efg-input"
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+              >
+                <FormControl>
+                  <SelectTrigger
+                    size="default"
+                    className="w-full focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none"
+                    disabled={disabled}
+                  >
+                    <SelectValue
+                      placeholder={
+                        <span className="text-neutral-500">State</span>
+                      }
+                    />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent className="border border-neutral-200">
+                  {["NSW", "VIC", "QLD", "SA", "WA", "TAS", "ACT", "NT"].map(
+                    (state) => (
+                      <SelectItem key={state} value={state}>
+                        {state}
+                      </SelectItem>
+                    )
+                  )}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      {/* COUNTRY */}
-      <FormField
-        control={control}
-        name={fieldNames.country}
-        render={() => (
-          <FormItem>
-            <FormControl>
-              <Input disabled value="Australia" />
-            </FormControl>
-            <FormMessage />
-            <FormDescription className="text-sm">
-              You can either select an address from the suggestions or manually
-              adjust it to match your exact location.
-            </FormDescription>
-          </FormItem>
-        )}
-      />
+        {/* POSTCODE */}
+        <FormField
+          control={control}
+          name={fieldNames.postcode}
+          render={({ field }) => (
+            <FormItem className="flex-1">
+              <FormControl>
+                <Input
+                  placeholder="Postcode"
+                  {...field}
+                  maxLength={4}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleChange(fieldNames.postcode, e.target.value);
+                  }}
+                  value={field.value as string}
+                  disabled={disabled}
+                  className="efg-input"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* COUNTRY */}
+        <FormField
+          control={control}
+          name={fieldNames.country}
+          render={() => (
+            <FormItem className="flex-1">
+              <FormControl>
+                <Input disabled value="Australia" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+      <FormDescription className="text-sm">
+        You can either select an address from the suggestions or manually adjust
+        it to match your exact location.
+      </FormDescription>
     </div>
   );
 }
