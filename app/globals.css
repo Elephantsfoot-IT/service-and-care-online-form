@@ -228,9 +228,9 @@
 
 
 .efg-checkbox {
-  @apply data-[state=checked]:bg-efg-yellow data-[state=checked]:border-efg-yellow data-[state=checked]:text-black cursor-pointer;
+  @apply data-[state=checked]:bg-efg-yellow data-[state=checked]:border-efg-yellow data-[state=checked]:text-neutral-800 cursor-pointer focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none;
 }
 
 .efg-input {
-  @apply focus-visible:ring-efg-yellow/50 focus-visible:border-efg-yellow;
+  @apply focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none border-neutral-200;
 }

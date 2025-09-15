@@ -55,7 +55,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
           Priority Booking
         </div>
         {currentTier === "" && (
-          <Button className="bg-neutral-300 text-black hover:bg-neutral-300/90 cursor-pointer w-full mt-auto mb-8">
+          <Button className="bg-neutral-300 text-neutral-800 hover:bg-neutral-300/90 cursor-pointer w-full mt-auto mb-8">
             <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
           </Button>
         )}
@@ -64,7 +64,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
         className={cn(
           " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-300 flex flex-col",
           currentTier === "essential"
-            ? "shadow-xl bg-gradient-to-br from-[#ffdb01] via-[#ffdb01]/80 to-[#ffdb01]/70 border border-transparent text-black"
+            ? "shadow-xl bg-gradient-to-br from-[#ffdb01] via-[#ffdb01]/80 to-[#ffdb01]/70 border border-transparent text-neutral-800"
             : "border border-neutral-100"
         )}
       >
@@ -120,7 +120,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
           Service Pricing Discounts
         </div>
         {currentTier !== "essential" && currentTier !== "pro" && (
-          <Button className="bg-[#ffdb01] text-black hover:bg-[#ffdb01]/90 cursor-pointer w-full mt-auto mb-8 tier-header">
+          <Button className="bg-[#ffdb01] text-neutral-800 hover:bg-[#ffdb01]/90 cursor-pointer w-full mt-auto mb-8 tier-header">
             <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
           </Button>
         )}

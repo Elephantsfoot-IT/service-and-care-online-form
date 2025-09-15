@@ -34,26 +34,26 @@ const STYLES: Record<
     solid: "bg-neutral-300",
     tint: "bg-neutral-300/20",
     divide: "divide-neutral-300",
-    color: "text-black",
+    color: "text-neutral-800",
     subtext1Color: "text-neutral-600",
     subtext1SelectedColor: "text-neutral-600",
     subtext2Color: "text-neutral-600",
     subtext2SelectedColor: "text-neutral-800",
     checkbox:
-      "data-[state=checked]:bg-transparent data-[state=checked]:border-transparent data-[state=checked]:text-black shadow-none",
+      "data-[state=checked]:bg-transparent data-[state=checked]:border-transparent data-[state=checked]:text-neutral-800 shadow-none",
   },
   "six-monthly": {
     border: "border-[#ffdb01]",
     solid: "bg-[#ffdb01]",
     tint: "bg-[#ffdb01]/20",
     divide: "divide-[#ffdb01]",
-    color: "text-black",
+    color: "text-neutral-800",
     subtext1Color: "text-neutral-600",
     subtext1SelectedColor: "black",
     subtext2Color: "text-neutral-800",
     subtext2SelectedColor: "text-neutral-800",
     checkbox:
-      "data-[state=checked]:bg-transparent data-[state=checked]:border-transparent data-[state=checked]:text-black shadow-none",
+      "data-[state=checked]:bg-transparent data-[state=checked]:border-transparent data-[state=checked]:text-neutral-800 shadow-none",
   },
   quarterly: {
     border: "border-[#1e60ad]",
@@ -82,7 +82,7 @@ const SELECT_BTN: Record<Option, { base: string; selected: string }> = {
     // secondary outline (accented) when unselected
     base: "border border-neutral-300 text-neutral-800 hover:bg-neutral-100",
     // filled when selected
-    selected: "bg-[#ffdb01] text-black border-[#ffdb01]",
+    selected: "bg-[#ffdb01] text-neutral-800 border-[#ffdb01]",
   },
   quarterly: {
     // primary: filled even when unselected (drives selection)

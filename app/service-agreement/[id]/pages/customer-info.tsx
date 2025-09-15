@@ -164,7 +164,7 @@ function CustomerInformation() {
         agreement.
       </span>
       <Form {...form}>
-        <form className="flex flex-col gap-6">
+        <form className="flex flex-col gap-8">
           <div className="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-2">
             <FormField
               control={form.control}

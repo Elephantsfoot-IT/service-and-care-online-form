@@ -138,7 +138,7 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
             className={cn(
               "h-18 border-solid font-medium flex justify-center items-center relative transition-all duration-300 ",
               currentTier === "essential"
-                ? "bg-[#ffdb01] text-black tier-header border-b-[#ffdb01]"
+                ? "bg-[#ffdb01] text-neutral-800 tier-header border-b-[#ffdb01]"
                 : " border-b border-neutral-200"
             )}
           >
