@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import SignaturePadComponent from "@/components/ui/signature-pad";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { Label } from "@/components/ui/label";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -28,46 +28,71 @@ const SummitFormSchema = z.object({
 });
 
 function ConfirmInfo() {
+  /** 1) Refs */
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  /** 2) External state (store/selectors) */
+  const state = useServiceAgreementStore();
+
+  /** 3) Form */
   const form = useForm<z.infer<typeof SummitFormSchema>>({
     resolver: zodResolver(SummitFormSchema),
-    mode: "onChange", // Trigger validation on change
+    mode: "onChange",
     defaultValues: {
       signFullName: "",
       signTitle: "",
       conditionAgree: false,
     },
   });
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [parentWidth, setParentWidth] = useState(0);
-  const getAuthDate = () => {
+
+  /** 4) Local component state */
+  const [parentWidth, setParentWidth] = useState<number>(0);
+
+  /** 5) Derived values (memoized) */
+  const authDate = useMemo(() => {
     const date = new Date();
     return date.toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
       year: "numeric",
     });
-  };
+  }, []);
+
+  /** 6) Callbacks / handlers (stable) */
+  const goBack = useCallback(() => {
+    state.setPage(3);
+  }, [state.setPage]);
+
+  const onSubmit = useCallback(
+    form.handleSubmit((values) => {
+      // Example: sync to store; adjust as needed
+      // continue flow (e.g., next page)
+      // setTrimmedDataURL(trimmedDataURL) // if you need to persist signature image etc.
+    }),
+    [form, state.setPage]
+  );
+
+  /** 7) Effects */
   useEffect(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
+    if (!containerRef.current || typeof ResizeObserver === "undefined") return;
+
+    const ro = new ResizeObserver((entries) => {
       for (const entry of entries) {
         setParentWidth(entry.contentRect.width);
       }
     });
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current);
-      setParentWidth(containerRef.current.offsetWidth);
-    }
-    return () => {
-      resizeObserver.disconnect();
-    };
+
+    ro.observe(containerRef.current);
+    setParentWidth(containerRef.current.offsetWidth);
+
+    return () => ro.disconnect();
   }, []);
 
-  const { setPage, setTrimmedDataURL, trimmedDataURL } =
-    useServiceAgreementStore();
-  const goBack = () => {
-    setPage(3);
-  };
-  const handleSubmit = () => {};
+  useEffect(() => {
+    form.setValue("signFullName", state.signFullName);
+    form.setValue("signTitle", state.signTitle);
+    form.setValue("conditionAgree", state.conditionAgree);
+  }, [state.signFullName, state.signTitle, state.conditionAgree]);
 
   return (
     <div
@@ -103,7 +128,10 @@ function ConfirmInfo() {
                     <Checkbox
                       id="terms"
                       checked={field.value}
-                      onCheckedChange={field.onChange} // Sync state
+                      onCheckedChange={(value: boolean) => {
+                        field.onChange(value);
+                        state.updateFieldBoolean("conditionAgree", value);
+                      }} // Sync state
                     />
                     <label
                       htmlFor="terms"
@@ -131,6 +159,7 @@ function ConfirmInfo() {
                       {...field}
                       onChange={(e) => {
                         field.onChange(e);
+                        state.updateField("signFullName", e.target.value);
                       }}
                     />
                   </FormControl>
@@ -153,6 +182,7 @@ function ConfirmInfo() {
                       {...field}
                       onChange={(e) => {
                         field.onChange(e);
+                        state.updateField("signTitle", e.target.value);
                       }}
                     />
                   </FormControl>
@@ -167,15 +197,13 @@ function ConfirmInfo() {
             Signature <span className="text-red-500">*</span>
           </span>
 
-          <span className="ml-auto text-sm  text-neutral-600">
-            {getAuthDate()}
-          </span>
+          <span className="ml-auto text-sm text-neutral-500">{authDate}</span>
         </Label>
         <div className="mt-2">
           <SignaturePadComponent
             parentWidth={parentWidth}
-            setTrimmedDataURL={setTrimmedDataURL}
-            trimmedDataURL={trimmedDataURL}
+            setTrimmedDataURL={state.setTrimmedDataURL}
+            trimmedDataURL={state.trimmedDataURL}
           />
           <div className="text-sm text-neutral-500 mt-1">
             Please use your mouse (on desktop) or your finger (on phone or
@@ -191,7 +219,7 @@ function ConfirmInfo() {
         >
           Back
         </Button>
-        <Button onClick={handleSubmit} className="mt-10 w-fit cursor-pointer">
+        <Button onClick={onSubmit} className="mt-10 w-fit cursor-pointer">
           Submit
         </Button>
       </div>

@@ -124,10 +124,10 @@ function formatMoney(n: number) {
 function ServicesForm() {
   const [serviceCount, setServiceCount] = useState<number>(0);
   const [currentTier, setCurrentTier] = useState<string>("");
-  const { setPage } = useServiceAgreementStore();
+  const state = useServiceAgreementStore();
 
   const goNext = () => {
-    setPage(2);
+    state.setPage(2);
   };
 
   // one piece of state per service’s frequency (keeps your existing ServiceFrequency API)

@@ -6,12 +6,12 @@ import { useServiceAgreementStore } from "@/app/service-agreement/service-agreem
 import { ArrowRightIcon } from "lucide-react";
 
 function CustomerInformation() {
-  const { setPage } = useServiceAgreementStore();
+  const state = useServiceAgreementStore();
   const goBack = () => {
-    setPage(1);
+    state.setPage(1);
   };
   const handleSubmit = () => {
-    setPage(3);
+    state.setPage(3);
   };
   return (
     <div className="my-20 max-w-screen-md w-full mx-auto px-6">
