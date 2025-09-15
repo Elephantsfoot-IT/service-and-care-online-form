@@ -155,7 +155,7 @@ export function ServiceFrequency({
             <Label
               htmlFor={id}
               className={cn(
-                "col-span-1 flex flex-col cursor-pointer border transition-shadow overflow-hidden rounded-none h-full", // keep your square look if desired
+                "col-span-1 flex flex-col cursor-pointer border transition-shadow overflow-hidden rounded-lg h-full", // keep your square look if desired
                 "hover:shadow-sm",
                 isChecked && `${s.border} ${s.tint}`
               )}

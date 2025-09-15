@@ -251,7 +251,7 @@ function CustomerInformation() {
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
                 <FormLabel className="text-sm w-full md:w-1/3">
-                  Registered Company Type<span className="text-red-500">*</span>
+                  Company type<span className="text-red-500">*</span>
                 </FormLabel>
                 <div className="w-full md:w-2/3">
                   <Select
@@ -320,13 +320,13 @@ function CustomerInformation() {
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
                 {form.watch("companyType") != "Strata management" && (
                   <FormLabel className="custom-label text-sm w-full md:w-1/3">
-                    Registered Company Name
+                    Company name
                     <span className="text-red-500">*</span>
                   </FormLabel>
                 )}
                 {form.watch("companyType") === "Strata management" && (
                   <FormLabel className="custom-label text-sm w-full md:w-1/3">
-                    Strata Plan Number (CTS/SP/OC){" "}
+                    Strata plan number (CTS/SP/OC)
                     <span className="text-red-500">*</span>
                   </FormLabel>
                 )}
@@ -346,6 +346,12 @@ function CustomerInformation() {
                     />
                   </FormControl>
                   <FormMessage />
+                  {form.watch("companyType") === "Strata management" && (
+                    <FormDescription className="mt-2 ml-1">
+                      Enter your strata plan number with its prefix, e.g.{" "}
+                      <b>CTS 123456</b>, <b>SP 123456</b>, or <b>OC 123456</b>.
+                    </FormDescription>
+                  )}
                 </div>
               </FormItem>
             )}
@@ -353,7 +359,7 @@ function CustomerInformation() {
           <hr className="border-neutral-300 border-dashed "></hr>
           <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
             <Label className="custom-label mb-2 text-sm w-full md:w-1/3">
-              Company Address <span className="text-red-500">*</span>
+              Company address <span className="text-red-500">*</span>
             </Label>
             <div className="w-full md:w-2/3">
               <MultiLineAddressInput<CustomerInformationFormType>

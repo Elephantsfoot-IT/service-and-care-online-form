@@ -29,7 +29,6 @@ function ServiceAgreement() {
 
   return (
     <div className="bg-white flex flex-col min-h-screen">
-      
       <div
         id="content"
         className="w-full flex flex-col items-center px-6 font-sans pt-40 pb-20 bg-white mx-auto flex-grow gap-8"

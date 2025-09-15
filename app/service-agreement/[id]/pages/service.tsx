@@ -241,7 +241,7 @@ function ServicesForm() {
           return (
             <div
               key={svc.key}
-              className="border border-neutral-200 shadow overflow-hidden "
+              className="border border-neutral-200 shadow rounded-lg overflow-hidden "
             >
               <div className="flex flex-row items-end justify-between gap-4 border-b border-neutral-200 px-6 py-4 bg-neutral-50">
                 <div>
