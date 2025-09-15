@@ -124,6 +124,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  :root {
+    font-family: var(--font-roboto), sans-serif;
+  }
 }
 
 .tier-header {
