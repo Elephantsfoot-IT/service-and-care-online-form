@@ -203,9 +203,8 @@ function MultiLineAddressInput<T extends FieldValues>({
           </div>
         </div>
       </CommandPrimitive>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-        {/* CITY */}
-        <FormField
+      {/* CITY */}
+      <FormField
           control={control}
           name={fieldNames.city}
           render={({ field }) => (
@@ -227,6 +226,8 @@ function MultiLineAddressInput<T extends FieldValues>({
             </FormItem>
           )}
         />
+      <div className="grid grid-cols-3 gap-2">
+        
 
         {/* STATE */}
         <FormField
@@ -295,7 +296,7 @@ function MultiLineAddressInput<T extends FieldValues>({
         />
 
         {/* COUNTRY */}
-        <FormField
+      <FormField
           control={control}
           name={fieldNames.country}
           render={() => (
@@ -308,6 +309,7 @@ function MultiLineAddressInput<T extends FieldValues>({
           )}
         />
       </div>
+      
       <FormDescription className="text-sm">
         You can either select an address from the suggestions or manually adjust
         it to match your exact location.
