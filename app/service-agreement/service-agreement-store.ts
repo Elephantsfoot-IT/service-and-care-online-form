@@ -32,6 +32,15 @@ export interface ServiceAgreementStore {
   postalState: string;
   postalPostcode: string;
   postalCountry: string;
+  businessStreetAddress: string;
+  businessCity: string;
+  businessPostcode: string;
+  businessState: string;
+  companyName: string;
+  abn: string;
+  companyType: string;
+  setSameAddress: (sameAddres: boolean) => void;
+  sameAddres: boolean;
 
   /* ---------- Actions ---------- */
   setPage: (page: number) => void;
@@ -74,6 +83,16 @@ export const useServiceAgreementStore = create<ServiceAgreementStore>(
     PrimaryJobContact: false,
     PrimaryInvoiceContact: false,
     PrimaryStatementContact: false,
+    businessStreetAddress: "",
+    businessCity: "",
+    businessPostcode: "",
+    businessState: "",
+    companyName: "",
+    abn: "",
+    companyType: "",
+    sameAddres: false,
+    setSameAddress: (sameAddres) => set({ sameAddres: sameAddres }),
+    
 
     /* ---------- Actions ---------- */
     setPage: (page) => set({ page }),
@@ -117,6 +136,15 @@ export const useServiceAgreementStore = create<ServiceAgreementStore>(
         PrimaryJobContact: false,
         PrimaryInvoiceContact: false,
         PrimaryStatementContact: false,
+
+        // Billing details
+        businessStreetAddress: "",
+        businessCity: "",
+        businessPostcode: "",
+        businessState: "",
+        companyName: "",
+        abn: "",
+        companyType: "",
       }),
   })
 );

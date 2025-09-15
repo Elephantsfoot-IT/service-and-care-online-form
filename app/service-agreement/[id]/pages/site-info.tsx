@@ -3,7 +3,7 @@ import { useServiceAgreementStore } from "@/app/service-agreement/service-agreem
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { scrollToTop } from "@/lib/utils";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useEffect } from "react";
 
 export default function SiteInfo() {
@@ -18,25 +18,26 @@ export default function SiteInfo() {
     scrollToTop();
   }, []);
   return (
-    <div className="my-12 max-w-screen-sm w-full mx-auto flex flex-col ">
+    <div className=" max-w-screen-md w-full mx-auto flex flex-col ">
       <Label className="text-2xl mb-1 text-efg-dark-blue ">
         Site Information
       </Label>
+
       <span className="text-lg mb-10 text-neutral-500 mb-6">
         Provide the site information associated with this service agreement.
       </span>
-     
-      <div className="flex flex-row gap-2 justify-end">
+
+      <div className="flex flex-row gap-2 justify-between mt-10">
         <Button
-          variant="secondary"
+          variant="outline"
           onClick={goBack}
-          className="mt-10 w-fit cursor-pointer"
+          className=" w-fit cursor-pointer"
         >
-          Back
+          <ArrowLeftIcon></ArrowLeftIcon> Back
         </Button>
         <Button
           onClick={handleSubmit}
-          className="mt-10 w-fit cursor-pointer"
+          className=" w-[200px] cursor-pointer"
           variant="efg"
         >
           Continue <ArrowRightIcon />

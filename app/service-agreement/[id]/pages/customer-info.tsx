@@ -14,9 +14,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import MultiLineAddressInput from "@/components/ui/multi-line-address-input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { scrollToTop } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -49,6 +56,27 @@ const billingSchema = z
       })
       .optional()
       .or(z.literal("")),
+
+    companyName: z.string().min(1, "This field cannot be empty"),
+    abn: z.string().regex(/^\d{11}$/, {
+      message:
+        "ABN must be exactly 11 digits with no spaces or special characters.",
+    }),
+
+    companyType: z.string().min(1, "Company type cannot be empty"),
+    businessStreetAddress: z
+      .string()
+      .min(1, { message: "Business street address cannot be empty" }),
+    businessCity: z
+      .string()
+      .min(1, { message: "Business city cannot be empty" }),
+    businessState: z
+      .string()
+      .min(1, { message: "Business state cannot be empty" }),
+    businessPostcode: z.string().regex(/^\d{4}$/, {
+      message: "Business postcode must be exactly 4 digits",
+    }),
+    businessCountry: z.string(),
 
     QuoteContact: z.boolean(),
     JobContact: z.boolean(),
@@ -87,6 +115,15 @@ function CustomerInformation() {
     resolver: zodResolver(billingSchema), // Dyn
     mode: "onChange", // Trigger validation on change
     defaultValues: {
+      companyName: "",
+      abn: "",
+      companyType: "",
+      businessStreetAddress: "",
+      businessCity: "",
+      businessState: "",
+      businessPostcode: "",
+      businessCountry: "",
+
       accountFirstName: "",
       accountLastName: "",
       accountEmail: "",
@@ -137,6 +174,13 @@ function CustomerInformation() {
     form.setValue("postalState", state.postalState);
     form.setValue("postalPostcode", state.postalPostcode);
     form.setValue("postalCountry", state.postalCountry);
+    form.setValue("companyName", state.companyName);
+    form.setValue("abn", state.abn);
+    form.setValue("companyType", state.companyType);
+    form.setValue("businessStreetAddress", state.businessStreetAddress);
+    form.setValue("businessCity", state.businessCity);
+    form.setValue("businessState", state.businessState);
+    form.setValue("businessPostcode", state.businessPostcode);
   }, [
     state.accountFirstName,
     state.accountLastName,
@@ -156,6 +200,13 @@ function CustomerInformation() {
     state.postalState,
     state.postalPostcode,
     state.postalCountry,
+    state.companyName,
+    state.abn,
+    state.companyType,
+    state.businessStreetAddress,
+    state.businessCity,
+    state.businessState,
+    state.businessPostcode,
   ]);
 
   function handleChange(field: string, value: string): void {
@@ -166,102 +217,267 @@ function CustomerInformation() {
     scrollToTop();
   }, []);
 
+  const handleCheckboxChange = (checked: boolean) => {
+    if (checked) {
+      form.setValue("postalStreetAddress", state.businessStreetAddress);
+      form.setValue("postalCity", state.businessCity);
+      form.setValue("postalPostcode", state.businessPostcode);
+      form.setValue("postalState", state.businessState);
+      handleChange("postalStreetAddress", state.businessStreetAddress);
+      handleChange("postalCity", state.businessCity);
+      handleChange("postalPostcode", state.businessPostcode);
+      handleChange("postalState", state.businessState);
+    }
+    state.setSameAddress(checked);
+  };
+
   return (
-    <div className="flex flex-col my-12 max-w-screen-sm w-full mx-auto">
-      <Label className="text-2xl mb-1 text-efg-dark-blue">
-        Billing Details
-      </Label>
-      <span className="text-lg mb-10 text-neutral-500 mb-6">
-        Please supply the billing information associated with this service
-        agreement.
-      </span>
+    <div className="flex flex-col  max-w-screen-md w-full mx-auto">
       <Form {...form}>
-        <form className="flex flex-col gap-10">
-          <div className="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-2">
-            <FormField
-              control={form.control}
-              name="accountFirstName"
-              render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel className=" text-sm" htmlFor="accountFirstName">
-                    First Name
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Legal First Name"
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        state.updateField("accountFirstName", e.target.value);
-                      }}
-                      className="efg-input"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="accountLastName"
-              render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel className=" text-sm" htmlFor="accountLastName">
-                    Last Name
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Legal Last Name"
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        state.updateField("accountLastName", e.target.value);
-                      }}
-                      className="efg-input"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <form className="flex flex-col gap-6 ">
+          <div className="flex flex-col  mt-10">
+            <Label className="text-xl mb-1 text-efg-dark-blue">
+              Company Details
+            </Label>
+
+            <span className="text-base  text-neutral-500 font-normal">
+              Please provide information about your company.
+            </span>
           </div>
+          <hr className="border-neutral-300 border-dashed "></hr>
+          <FormField
+            control={form.control}
+            name="companyType"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
+                <FormLabel className="text-sm w-full md:w-1/3">
+                  Registered Company Type<span className="text-red-500">*</span>
+                </FormLabel>
+                <div className="w-full md:w-2/3">
+                  <Select
+                    onValueChange={(e) => {
+                      field.onChange(e);
+                      if (e == "Other") {
+                        handleChange("strataPlanNumber", "");
+                      }
+                      handleChange("companyType", e);
+                    }}
+                    value={state.companyType}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="border border-neutral-200">
+                      <SelectItem value="Strata management">
+                        Strata management
+                      </SelectItem>
+                      <SelectItem value="Other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
+          <hr className="border-neutral-300 border-dashed "></hr>
+
+          <FormField
+            control={form.control}
+            name="abn"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
+                <FormLabel className="text-sm w-full md:w-1/3">
+                  ABN<span className="text-red-500">*</span>
+                </FormLabel>
+                <div className="w-full md:w-2/3">
+                  <FormControl>
+                    <Input
+                      placeholder="11 222 333 444"
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        handleChange("abn", e.target.value);
+                        // handleABNchange(e.target.value);
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                  <FormDescription>
+                    Your 11-digit ABN will be verified using the ABN lookup
+                    service.
+                  </FormDescription>
+                </div>
+              </FormItem>
+            )}
+          />
+          <hr className="border-neutral-300 border-dashed "></hr>
+          <FormField
+            control={form.control}
+            name="companyName"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
+                {form.watch("companyType") != "Strata management" && (
+                  <FormLabel className="custom-label text-sm w-full md:w-1/3">
+                    Registered Company Name
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                )}
+                {form.watch("companyType") === "Strata management" && (
+                  <FormLabel className="custom-label text-sm w-full md:w-1/3">
+                    Strata Plan Number (CTS/SP/OC){" "}
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                )}
+                <div className="w-full md:w-2/3">
+                  <FormControl>
+                    <Input
+                      placeholder={
+                        form.watch("companyType") === "Strata management"
+                          ? "CTS / SP / OC 112233"
+                          : ""
+                      }
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        handleChange("companyName", e.target.value);
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
+          <hr className="border-neutral-300 border-dashed "></hr>
+          <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
+            <Label className="custom-label mb-2 text-sm w-full md:w-1/3">
+              Company Address <span className="text-red-500">*</span>
+            </Label>
+            <div className="w-full md:w-2/3">
+              <MultiLineAddressInput<CustomerInformationFormType>
+                fieldNames={{
+                  street: "businessStreetAddress",
+                  city: "businessCity",
+                  state: "businessState",
+                  postcode: "businessPostcode",
+                  country: "businessCountry",
+                }}
+                handleChange={handleChange}
+                stateSelectValue={state.businessState}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col  mt-10">
+            <Label className="text-xl mb-1 text-efg-dark-blue">
+              Billing Details
+            </Label>
+
+            <span className="text-base  text-neutral-500 font-normal">
+              Please supply the billing information associated with this service
+              agreement.
+            </span>
+          </div>
+
+          <hr className="border-neutral-300 border-dashed "></hr>
+          <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
+            <Label className="w-full md:w-1/3 text-sm">
+              Full name<span className="text-red-500">*</span>
+            </Label>
+            <div className="w-full md:w-2/3 flex flex-row  space-x-2">
+              <FormField
+                control={form.control}
+                name="accountFirstName"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormControl>
+                      <Input
+                        placeholder="First Name"
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          state.updateField("accountFirstName", e.target.value);
+                        }}
+                        className="efg-input"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="accountLastName"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormControl>
+                      <Input
+                        placeholder="Last Name"
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          state.updateField("accountLastName", e.target.value);
+                        }}
+                        className="efg-input"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+
+          <hr className="border-neutral-300 border-dashed "></hr>
           <FormField
             control={form.control}
             name="accountEmail"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel className=" text-sm" htmlFor="accountEmail">
-                  Email Address
+              <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
+                <FormLabel
+                  className="text-sm w-full md:w-1/3"
+                  htmlFor="accountEmail"
+                >
+                  Email address<span className="text-red-500">*</span>
                 </FormLabel>
-                <FormControl>
-                  <Input
-                    prefix="+61"
-                    placeholder="you@example.com"
-                    {...field}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      state.updateField("accountEmail", e.target.value);
-                    }}
-                    className="efg-input"
-                  />
-                </FormControl>
-                <FormMessage />
-                <FormDescription>
-                  We will send the signed service agreement document to this
-                  email address.
-                </FormDescription>
+                <div className="w-full md:w-2/3">
+                  <FormControl>
+                    <Input
+                      prefix="+61"
+                      placeholder="you@example.com"
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        state.updateField("accountEmail", e.target.value);
+                      }}
+                      className="efg-input"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                  <FormDescription className="ml-1 mt-2">
+                    We will send the signed service agreement document to this
+                    email address.
+                  </FormDescription>
+                </div>
               </FormItem>
             )}
           />
-          <div className="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-2">
-            <FormField
-              control={form.control}
-              name="accountMobile"
-              render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel className=" text-sm" htmlFor="accountMobile">
-                    Mobile Phone
-                  </FormLabel>
+          <hr className="border-neutral-300 border-dashed "></hr>
+
+          <FormField
+            control={form.control}
+            name="accountMobile"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
+                <FormLabel
+                  className=" text-sm w-full md:w-1/3"
+                  htmlFor="accountMobile"
+                >
+                  Mobile phone
+                </FormLabel>
+                <div className="w-full md:w-2/3">
                   <FormControl>
                     <Input
                       maxLength={13}
@@ -274,18 +490,23 @@ function CustomerInformation() {
                     />
                   </FormControl>
                   <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="accountPhone"
-              render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel className=" text-sm" htmlFor="accountPhone">
-                    Office Phone
-                  </FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+          <hr className="border-neutral-300 border-dashed "></hr>
+          <FormField
+            control={form.control}
+            name="accountPhone"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
+                <FormLabel
+                  className="text-sm w-full md:w-1/3"
+                  htmlFor="accountPhone"
+                >
+                  Office phone
+                </FormLabel>
+                <div className="w-full md:w-2/3">
                   <FormControl>
                     <Input
                       placeholder=""
@@ -299,171 +520,80 @@ function CustomerInformation() {
                     />
                   </FormControl>
                   <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+                </div>
+              </FormItem>
+            )}
+          />
 
-          <div>
-            <Label className=" text-sm mb-2">Postal Address</Label>
-            {/* <div className="flex items-center space-x-2 my-4">
-              <Checkbox
-                checked={state.sameAddres}
-                onCheckedChange={handleCheckboxChange}
-              />
-              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-neutral-600">
-                Use Company Address
-              </label>
-            </div> */}
-            <MultiLineAddressInput<CustomerInformationFormType>
-              fieldNames={{
-                street: "postalStreetAddress",
-                city: "postalCity",
-                state: "postalState",
-                postcode: "postalPostcode",
-                country: "postalCountry",
-              }}
-              handleChange={handleChange}
-              stateSelectValue={state.postalState}
-            />
-          </div>
+          <hr className="border-neutral-300 border-dashed "></hr>
 
-          <div className="flex flex-col space-y-4">
-            <Label className="text-sm">
-              Use This Contact For{" "}
-              <span className="text-neutral-500 text-xs">(optional)</span>
+          <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
+            <Label className=" text-sm mb-2 w-full md:w-1/3">
+              Postal address<span className="text-red-500">*</span>
             </Label>
-            <div className="ml-2 flex flex-row gap-2">
-              <div className="w-1/2 flex flex-col space-y-4">
-                <FormField
-                  control={form.control}
-                  name="QuoteContact"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center space-x-2 ">
-                        <Checkbox
-                          id="QuoteContact"
-                          className="efg-checkbox"
-                          checked={field.value}
-                          onCheckedChange={(checked: boolean) => {
-                            field.onChange(checked);
-                            state.updateFieldBoolean("QuoteContact", checked);
-                            if (!checked) {
-                              form.setValue("PrimaryQuoteContact", false);
-                              state.updateFieldBoolean(
-                                "PrimaryQuoteContact",
-                                false
-                              );
-                            }
-                          }}
-                        />
-                        <label
-                          htmlFor="QuoteContact"
-                          className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          Quote
-                        </label>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+
+            <div className="w-full md:w-2/3">
+              <div className="flex items-center space-x-2 mb-4">
+                <Checkbox
+                  checked={state.sameAddres}
+                  onCheckedChange={handleCheckboxChange}
+                  className="efg-checkbox"
                 />
+                <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-neutral-600">
+                  Use Company Address
+                </label>
               </div>
-              {form.watch("QuoteContact") && (
-                <div className="w-1/2 flex flex-col space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="PrimaryQuoteContact"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="flex items-center space-x-2 ">
-                          <Checkbox
-                            className="efg-checkbox"
-                            id="PrimaryQuoteContact"
-                            checked={field.value}
-                            onCheckedChange={(checked: boolean) => {
-                              field.onChange(checked);
-                              state.updateFieldBoolean(
-                                "PrimaryQuoteContact",
-                                checked
-                              );
-                            }}
-                          />
-                          <label
-                            htmlFor="PrimaryQuoteContact"
-                            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                          >
-                            Primary
-                          </label>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              )}
+              <MultiLineAddressInput<CustomerInformationFormType>
+                fieldNames={{
+                  street: "postalStreetAddress",
+                  city: "postalCity",
+                  state: "postalState",
+                  postcode: "postalPostcode",
+                  country: "postalCountry",
+                }}
+                handleChange={handleChange}
+                stateSelectValue={state.postalState}
+                disabled={state.sameAddres}
+              />
             </div>
-            <div className="ml-2 flex flex-row gap-2">
-              <div className="w-1/2 flex flex-col space-y-4">
-                <FormField
-                  control={form.control}
-                  name="JobContact"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center space-x-2 ">
-                        <Checkbox
-                          className="efg-checkbox"
-                          id="JobContact"
-                          checked={field.value}
-                          onCheckedChange={(checked: boolean) => {
-                            field.onChange(checked);
-                            state.updateFieldBoolean("JobContact", checked);
-                            if (!checked) {
-                              form.setValue("PrimaryJobContact", false);
-                              state.updateFieldBoolean(
-                                "PrimaryJobContact",
-                                false
-                              );
-                            }
-                          }}
-                        />
-                        <label
-                          htmlFor="JobContact"
-                          className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          Job
-                        </label>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              {form.watch("JobContact") && (
+          </div>
+
+          <hr className="border-neutral-300 border-dashed "></hr>
+
+          <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
+            <Label className="text-sm w-full md:w-1/3">
+              Use this contact for
+            </Label>
+            <div className="w-full md:w-2/3 flex flex-col gap-4">
+              <div className=" flex flex-row gap-2">
                 <div className="w-1/2 flex flex-col space-y-4">
                   <FormField
                     control={form.control}
-                    name="PrimaryJobContact"
+                    name="QuoteContact"
                     render={({ field }) => (
                       <FormItem>
                         <div className="flex items-center space-x-2 ">
                           <Checkbox
+                            id="QuoteContact"
                             className="efg-checkbox"
-                            id="PrimaryJobContact"
                             checked={field.value}
                             onCheckedChange={(checked: boolean) => {
                               field.onChange(checked);
-                              state.updateFieldBoolean(
-                                "PrimaryJobContact",
-                                checked
-                              );
+                              state.updateFieldBoolean("QuoteContact", checked);
+                              if (!checked) {
+                                form.setValue("PrimaryQuoteContact", false);
+                                state.updateFieldBoolean(
+                                  "PrimaryQuoteContact",
+                                  false
+                                );
+                              }
                             }}
                           />
                           <label
-                            htmlFor="PrimaryJobContact"
+                            htmlFor="QuoteContact"
                             className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                           >
-                            Primary
+                            Quote
                           </label>
                         </div>
                         <FormMessage />
@@ -471,69 +601,69 @@ function CustomerInformation() {
                     )}
                   />
                 </div>
-              )}
-            </div>
-            <div className="ml-2 flex flex-row gap-2">
-              <div className="w-1/2 flex flex-col space-y-4">
-                <FormField
-                  control={form.control}
-                  name="InvoiceContact"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center space-x-2 ">
-                        <Checkbox
-                          className="efg-checkbox"
-                          id="InvoiceContact"
-                          checked={field.value}
-                          onCheckedChange={(checked: boolean) => {
-                            field.onChange(checked);
-                            state.updateFieldBoolean("InvoiceContact", checked);
-                            if (!checked) {
-                              form.setValue("PrimaryInvoiceContact", false);
-                              state.updateFieldBoolean(
-                                "PrimaryInvoiceContact",
-                                false
-                              );
-                            }
-                          }}
-                        />
-                        <label
-                          htmlFor="InvoiceContact"
-                          className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          Invoice
-                        </label>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {form.watch("QuoteContact") && (
+                  <div className="w-1/2 flex flex-col space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="PrimaryQuoteContact"
+                      render={({ field }) => (
+                        <FormItem>
+                          <div className="flex items-center space-x-2 ">
+                            <Checkbox
+                              className="efg-checkbox"
+                              id="PrimaryQuoteContact"
+                              checked={field.value}
+                              onCheckedChange={(checked: boolean) => {
+                                field.onChange(checked);
+                                state.updateFieldBoolean(
+                                  "PrimaryQuoteContact",
+                                  checked
+                                );
+                              }}
+                            />
+                            <label
+                              htmlFor="PrimaryQuoteContact"
+                              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                              Primary
+                            </label>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                )}
               </div>
-              {form.watch("InvoiceContact") && (
+              <div className=" flex flex-row gap-2">
                 <div className="w-1/2 flex flex-col space-y-4">
                   <FormField
                     control={form.control}
-                    name="PrimaryInvoiceContact"
+                    name="JobContact"
                     render={({ field }) => (
                       <FormItem>
                         <div className="flex items-center space-x-2 ">
                           <Checkbox
                             className="efg-checkbox"
-                            id="PrimaryInvoiceContact"
+                            id="JobContact"
                             checked={field.value}
                             onCheckedChange={(checked: boolean) => {
                               field.onChange(checked);
-                              state.updateFieldBoolean(
-                                "PrimaryInvoiceContact",
-                                checked
-                              );
+                              state.updateFieldBoolean("JobContact", checked);
+                              if (!checked) {
+                                form.setValue("PrimaryJobContact", false);
+                                state.updateFieldBoolean(
+                                  "PrimaryJobContact",
+                                  false
+                                );
+                              }
                             }}
                           />
                           <label
-                            htmlFor="PrimaryInvoiceContact"
+                            htmlFor="JobContact"
                             className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                           >
-                            Primary
+                            Job
                           </label>
                         </div>
                         <FormMessage />
@@ -541,72 +671,72 @@ function CustomerInformation() {
                     )}
                   />
                 </div>
-              )}
-            </div>
-            <div className="ml-2 flex flex-row gap-2">
-              <div className="w-1/2 flex flex-col space-y-4">
-                <FormField
-                  control={form.control}
-                  name="StatementContact"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center space-x-2 ">
-                        <Checkbox
-                          className="efg-checkbox"
-                          id="StatementContact"
-                          checked={field.value}
-                          onCheckedChange={(checked: boolean) => {
-                            field.onChange(checked);
-                            state.updateFieldBoolean(
-                              "StatementContact",
-                              checked
-                            );
-                            if (!checked) {
-                              form.setValue("PrimaryStatementContact", false);
-                              state.updateFieldBoolean(
-                                "PrimaryStatementContact",
-                                false
-                              );
-                            }
-                          }}
-                        />
-                        <label
-                          htmlFor="StatementContact"
-                          className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          Statement
-                        </label>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {form.watch("JobContact") && (
+                  <div className="w-1/2 flex flex-col space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="PrimaryJobContact"
+                      render={({ field }) => (
+                        <FormItem>
+                          <div className="flex items-center space-x-2 ">
+                            <Checkbox
+                              className="efg-checkbox"
+                              id="PrimaryJobContact"
+                              checked={field.value}
+                              onCheckedChange={(checked: boolean) => {
+                                field.onChange(checked);
+                                state.updateFieldBoolean(
+                                  "PrimaryJobContact",
+                                  checked
+                                );
+                              }}
+                            />
+                            <label
+                              htmlFor="PrimaryJobContact"
+                              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                              Primary
+                            </label>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                )}
               </div>
-              {form.watch("StatementContact") && (
+              <div className=" flex flex-row gap-2">
                 <div className="w-1/2 flex flex-col space-y-4">
                   <FormField
                     control={form.control}
-                    name="PrimaryStatementContact"
+                    name="InvoiceContact"
                     render={({ field }) => (
                       <FormItem>
                         <div className="flex items-center space-x-2 ">
                           <Checkbox
                             className="efg-checkbox"
-                            id="PrimaryStatementContact"
+                            id="InvoiceContact"
                             checked={field.value}
                             onCheckedChange={(checked: boolean) => {
                               field.onChange(checked);
                               state.updateFieldBoolean(
-                                "PrimaryStatementContact",
+                                "InvoiceContact",
                                 checked
                               );
+                              if (!checked) {
+                                form.setValue("PrimaryInvoiceContact", false);
+                                state.updateFieldBoolean(
+                                  "PrimaryInvoiceContact",
+                                  false
+                                );
+                              }
                             }}
                           />
                           <label
-                            htmlFor="PrimaryStatementContact"
+                            htmlFor="InvoiceContact"
                             className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                           >
-                            Primary
+                            Invoice
                           </label>
                         </div>
                         <FormMessage />
@@ -614,33 +744,125 @@ function CustomerInformation() {
                     )}
                   />
                 </div>
-              )}
+                {form.watch("InvoiceContact") && (
+                  <div className="w-1/2 flex flex-col space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="PrimaryInvoiceContact"
+                      render={({ field }) => (
+                        <FormItem>
+                          <div className="flex items-center space-x-2 ">
+                            <Checkbox
+                              className="efg-checkbox"
+                              id="PrimaryInvoiceContact"
+                              checked={field.value}
+                              onCheckedChange={(checked: boolean) => {
+                                field.onChange(checked);
+                                state.updateFieldBoolean(
+                                  "PrimaryInvoiceContact",
+                                  checked
+                                );
+                              }}
+                            />
+                            <label
+                              htmlFor="PrimaryInvoiceContact"
+                              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                              Primary
+                            </label>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className=" flex flex-row gap-2">
+                <div className="w-1/2 flex flex-col space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="StatementContact"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex items-center space-x-2 ">
+                          <Checkbox
+                            className="efg-checkbox"
+                            id="StatementContact"
+                            checked={field.value}
+                            onCheckedChange={(checked: boolean) => {
+                              field.onChange(checked);
+                              state.updateFieldBoolean(
+                                "StatementContact",
+                                checked
+                              );
+                              if (!checked) {
+                                form.setValue("PrimaryStatementContact", false);
+                                state.updateFieldBoolean(
+                                  "PrimaryStatementContact",
+                                  false
+                                );
+                              }
+                            }}
+                          />
+                          <label
+                            htmlFor="StatementContact"
+                            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            Statement
+                          </label>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                {form.watch("StatementContact") && (
+                  <div className="w-1/2 flex flex-col space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="PrimaryStatementContact"
+                      render={({ field }) => (
+                        <FormItem>
+                          <div className="flex items-center space-x-2 ">
+                            <Checkbox
+                              className="efg-checkbox"
+                              id="PrimaryStatementContact"
+                              checked={field.value}
+                              onCheckedChange={(checked: boolean) => {
+                                field.onChange(checked);
+                                state.updateFieldBoolean(
+                                  "PrimaryStatementContact",
+                                  checked
+                                );
+                              }}
+                            />
+                            <label
+                              htmlFor="PrimaryStatementContact"
+                              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                              Primary
+                            </label>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </form>
       </Form>
 
-      <div className="my-14">
-        <hr className="border-neutral-200"></hr>
-      </div>
-
-      <Label className="text-2xl mb-1 text-efg-dark-blue">
-        Additional Contacts
-      </Label>
-      <span className="text-lg mb-10 text-neutral-500 mb-6">
-        Add extra contacts for quotes, jobs, invoices, or statements. (optional)
-      </span>
-      <div className="flex flex-row gap-2 justify-end">
-        <Button
-          variant="secondary"
-          onClick={goBack}
-          className="mt-10 w-fit cursor-pointer"
-        >
-          Back
+      <div className="flex flex-row gap-2 justify-between mt-20">
+        <Button variant="outline" onClick={goBack} className="cursor-pointer">
+          <ArrowLeftIcon></ArrowLeftIcon> Back
         </Button>
         <Button
           onClick={handleSubmit}
-          className="mt-10 w-fit cursor-pointer"
+          className=" w-[200px] cursor-pointer"
           variant="efg"
         >
           Continue <ArrowRightIcon />

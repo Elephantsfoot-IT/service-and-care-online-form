@@ -1,12 +1,8 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
-import SignaturePadComponent from "@/components/ui/signature-pad";
-import { useEffect, useRef, useState, useMemo, useCallback } from "react";
-import { Label } from "@/components/ui/label";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import ServiceAndCareTerms from "@/components/terms-and-conditions/service-and-care-terms";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -15,11 +11,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import ServiceAndCareTerms from "@/components/terms-and-conditions/service-and-care-terms";
-import { Landmark } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import SignaturePadComponent from "@/components/ui/signature-pad";
 import { scrollToTop } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeftIcon } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const SummitFormSchema = z.object({
   signFullName: z.string().min(1, { message: "Name cannot be empty" }),
@@ -101,8 +101,9 @@ function ConfirmInfo() {
   }, []);
 
   return (
-    <div ref={containerRef} className="my-12 max-w-screen-sm w-full mx-auto">
+    <div ref={containerRef} className=" max-w-screen-md w-full mx-auto">
       <Label className="text-2xl mb-1">Review and Submit</Label>
+
       <span className="text-lg mb-10 text-neutral-500">
         Please review your selected services and the information you’ve
         provided.
@@ -239,59 +240,65 @@ function ConfirmInfo() {
               )}
             />
 
+            <hr className="border-neutral-300 border-dashed "></hr>
+
             <FormField
               control={form.control}
               name="signFullName"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="">
-                    Full Name
+                <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
+                  <FormLabel className="w-full md:w-1/3">
+                    Full Name<span className="text-red-500">*</span>
                   </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Legal Full Name"
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        state.updateField("signFullName", e.target.value);
-                      }}
-                      className="efg-input"
-                    />
-                  </FormControl>
-                  <FormMessage />
+                  <div className="w-full md:w-2/3">
+                    <FormControl>
+                      <Input
+                        placeholder="Legal Full Name"
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          state.updateField("signFullName", e.target.value);
+                        }}
+                        className="efg-input "
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </div>
                 </FormItem>
               )}
             />
+            <hr className="border-neutral-300 border-dashed "></hr>
 
             <FormField
               control={form.control}
               name="signTitle"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="">
-                    Titles
+                <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
+                  <FormLabel className="w-full md:w-1/3">
+                    Titles<span className="text-red-500">*</span>
                   </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="CEO, Manager, Partner, ..."
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        state.updateField("signTitle", e.target.value);
-                      }}
-                      className="efg-input"
-                    />
-                  </FormControl>
-                  <FormMessage />
+                  <div className="w-full md:w-2/3">
+                    <FormControl>
+                      <Input
+                        placeholder="CEO, Manager, Partner, ..."
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          state.updateField("signTitle", e.target.value);
+                        }}
+                        className="efg-input"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </div>
                 </FormItem>
               )}
             />
           </form>
         </Form>
+        <hr className="border-neutral-300 border-dashed mt-4"></hr>
         <Label className="w-full flex flex-row justify-between items-end mt-4">
-          <span className=" text-sm">
-            Signature 
-          </span>
+          <span className=" text-sm">Signature</span>
 
           <span className="ml-auto text-sm text-neutral-500">{authDate}</span>
         </Label>
@@ -301,23 +308,24 @@ function ConfirmInfo() {
             setTrimmedDataURL={state.setTrimmedDataURL}
             trimmedDataURL={state.trimmedDataURL}
           />
-          <div className="text-sm text-neutral-500 mt-1">
-            Please use your mouse (on desktop) or your finger (on phone or
-            tablet) to draw your signature in the box
+          <div className="text-sm text-neutral-500 mt-2">
+            By providing your electronic signature and initials, you acknowledge
+            that they are legally binding, equivalent to a physical signature,
+            and signify your agreement to the terms and conditions.
           </div>
         </div>
       </div>
-      <div className="flex flex-row gap-2 justify-end">
+      <div className="flex flex-row gap-2 justify-between mt-10">
         <Button
-          variant="secondary"
+          variant="outline"
           onClick={goBack}
-          className="mt-10 w-fit cursor-pointer"
+          className=" w-fit cursor-pointer"
         >
-          Back
+          <ArrowLeftIcon></ArrowLeftIcon> Back
         </Button>
         <Button
           onClick={onSubmit}
-          className="mt-10 w-fit cursor-pointer"
+          className=" w-[200px] cursor-pointer"
           variant="efg"
         >
           Submit
