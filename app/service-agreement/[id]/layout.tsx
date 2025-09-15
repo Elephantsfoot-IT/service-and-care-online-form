@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <title>
         Service Agreement
       </title>
-      <div className="relative text-neutral-800">{children}</div>{" "}
+      <div className="relative text-neutral-700">{children}</div>{" "}
     </>
   );
 }

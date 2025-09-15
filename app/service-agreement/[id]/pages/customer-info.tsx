@@ -240,7 +240,7 @@ function CustomerInformation() {
               Company Details
             </Label>
 
-            <span className="text-base  text-neutral-500 font-normal">
+            <span className="text-lg  text-neutral-500 font-normal">
               Please provide information about your company.
             </span>
           </div>
@@ -250,7 +250,7 @@ function CustomerInformation() {
             name="companyType"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
-                <FormLabel className="text-sm w-full md:w-1/3">
+                <FormLabel className="text-base w-full md:w-1/3">
                   Company type<span className="text-red-500">*</span>
                 </FormLabel>
                 <div className="w-full md:w-2/3">
@@ -288,7 +288,7 @@ function CustomerInformation() {
             name="abn"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
-                <FormLabel className="text-sm w-full md:w-1/3">
+                <FormLabel className="text-base w-full md:w-1/3">
                   ABN<span className="text-red-500">*</span>
                 </FormLabel>
                 <div className="w-full md:w-2/3">
@@ -319,13 +319,13 @@ function CustomerInformation() {
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
                 {form.watch("companyType") != "Strata management" && (
-                  <FormLabel className="custom-label text-sm w-full md:w-1/3">
+                  <FormLabel className="custom-label text-base w-full md:w-1/3">
                     Company name
                     <span className="text-red-500">*</span>
                   </FormLabel>
                 )}
                 {form.watch("companyType") === "Strata management" && (
-                  <FormLabel className="custom-label text-sm w-full md:w-1/3">
+                  <FormLabel className="custom-label text-base w-full md:w-1/3">
                     Strata plan number (CTS/SP/OC)
                     <span className="text-red-500">*</span>
                   </FormLabel>
@@ -358,7 +358,7 @@ function CustomerInformation() {
           />
           <hr className="border-neutral-300 border-dashed "></hr>
           <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
-            <Label className="custom-label mb-2 text-sm w-full md:w-1/3">
+            <Label className="custom-label mb-2 text-base w-full md:w-1/3">
               Company address <span className="text-red-500">*</span>
             </Label>
             <div className="w-full md:w-2/3">
@@ -376,12 +376,12 @@ function CustomerInformation() {
             </div>
           </div>
 
-          <div className="flex flex-col  mt-10">
+          <div className="flex flex-col mt-20">
             <Label className="text-xl mb-1 text-efg-dark-blue">
               Billing Details
             </Label>
 
-            <span className="text-base  text-neutral-500 font-normal">
+            <span className="text-lg  text-neutral-500 font-normal">
               Please supply the billing information associated with this service
               agreement.
             </span>
@@ -389,7 +389,7 @@ function CustomerInformation() {
 
           <hr className="border-neutral-300 border-dashed "></hr>
           <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
-            <Label className="w-full md:w-1/3 text-sm">
+            <Label className="w-full md:w-1/3 text-base">
               Full name<span className="text-red-500">*</span>
             </Label>
             <div className="w-full md:w-2/3 flex flex-row  space-x-2">
@@ -443,7 +443,7 @@ function CustomerInformation() {
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
                 <FormLabel
-                  className="text-sm w-full md:w-1/3"
+                  className="text-base w-full md:w-1/3"
                   htmlFor="accountEmail"
                 >
                   Email address<span className="text-red-500">*</span>
@@ -478,7 +478,7 @@ function CustomerInformation() {
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
                 <FormLabel
-                  className=" text-sm w-full md:w-1/3"
+                  className=" text-base w-full md:w-1/3"
                   htmlFor="accountMobile"
                 >
                   Mobile phone
@@ -507,7 +507,7 @@ function CustomerInformation() {
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
                 <FormLabel
-                  className="text-sm w-full md:w-1/3"
+                  className="text-base w-full md:w-1/3"
                   htmlFor="accountPhone"
                 >
                   Office phone
@@ -534,7 +534,7 @@ function CustomerInformation() {
           <hr className="border-neutral-300 border-dashed "></hr>
 
           <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
-            <Label className=" text-sm mb-2 w-full md:w-1/3">
+            <Label className=" text-base mb-2 w-full md:w-1/3">
               Postal address<span className="text-red-500">*</span>
             </Label>
 
@@ -545,7 +545,7 @@ function CustomerInformation() {
                   onCheckedChange={handleCheckboxChange}
                   className="efg-checkbox"
                 />
-                <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-neutral-600">
+                <label className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-neutral-600">
                   Use Company Address
                 </label>
               </div>
@@ -567,7 +567,7 @@ function CustomerInformation() {
           <hr className="border-neutral-300 border-dashed "></hr>
 
           <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
-            <Label className="text-sm w-full md:w-1/3">
+            <Label className="text-base w-full md:w-1/3">
               Use this contact for
             </Label>
             <div className="w-full md:w-2/3 flex flex-col gap-4">
@@ -597,7 +597,7 @@ function CustomerInformation() {
                           />
                           <label
                             htmlFor="QuoteContact"
-                            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            className="text-base leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                           >
                             Quote
                           </label>
@@ -629,7 +629,7 @@ function CustomerInformation() {
                             />
                             <label
                               htmlFor="PrimaryQuoteContact"
-                              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              className="text-base leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             >
                               Primary
                             </label>
@@ -667,7 +667,7 @@ function CustomerInformation() {
                           />
                           <label
                             htmlFor="JobContact"
-                            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            className="text-base leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                           >
                             Job
                           </label>
@@ -699,7 +699,7 @@ function CustomerInformation() {
                             />
                             <label
                               htmlFor="PrimaryJobContact"
-                              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              className="text-base leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             >
                               Primary
                             </label>
@@ -740,7 +740,7 @@ function CustomerInformation() {
                           />
                           <label
                             htmlFor="InvoiceContact"
-                            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            className="text-base leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                           >
                             Invoice
                           </label>
@@ -772,7 +772,7 @@ function CustomerInformation() {
                             />
                             <label
                               htmlFor="PrimaryInvoiceContact"
-                              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              className="text-base leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             >
                               Primary
                             </label>
@@ -813,7 +813,7 @@ function CustomerInformation() {
                           />
                           <label
                             htmlFor="StatementContact"
-                            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            className="text-base leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                           >
                             Statement
                           </label>
@@ -845,7 +845,7 @@ function CustomerInformation() {
                             />
                             <label
                               htmlFor="PrimaryStatementContact"
-                              className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              className="text-base leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                             >
                               Primary
                             </label>

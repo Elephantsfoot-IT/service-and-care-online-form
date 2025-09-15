@@ -102,7 +102,7 @@ function ConfirmInfo() {
 
   return (
     <div ref={containerRef} className=" max-w-screen-md w-full mx-auto">
-      <Label className="text-2xl mb-1">Review and Submit</Label>
+      <Label className="text-xl mb-1">Review and Submit</Label>
 
       <span className="text-lg mb-10 text-neutral-500">
         Please review your selected services and the information you’ve
@@ -261,11 +261,11 @@ function ConfirmInfo() {
         </div>
       </div>
 
-      <div>
-        <Label className="text-lg font-medium text-efg-dark-blue">
+      <div className="mt-20">
+        <Label className="text-xl font-medium text-efg-dark-blue">
           Terms and Conditions
         </Label>
-        <span className="text-sm text-neutral-500 mb-2">
+        <span className="text-base text-neutral-500 mb-2">
           Please take a moment to carefully scroll through and review our Terms
           and Conditions before proceeding.
         </span>
@@ -308,7 +308,7 @@ function ConfirmInfo() {
               name="signFullName"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
-                  <FormLabel className="w-full md:w-1/3">
+                  <FormLabel className="w-full md:w-1/3 text-base">
                     Full Name<span className="text-red-500">*</span>
                   </FormLabel>
                   <div className="w-full md:w-2/3">
@@ -335,7 +335,7 @@ function ConfirmInfo() {
               name="signTitle"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6 ">
-                  <FormLabel className="w-full md:w-1/3">
+                  <FormLabel className="w-full md:w-1/3 text-base">
                     Titles<span className="text-red-500">*</span>
                   </FormLabel>
                   <div className="w-full md:w-2/3">
@@ -359,7 +359,7 @@ function ConfirmInfo() {
         </Form>
         <hr className="border-neutral-300 border-dashed mt-4"></hr>
         <Label className="w-full flex flex-row justify-between items-end mt-4">
-          <span className=" text-sm">Signature</span>
+          <span className=" text-base">Signature</span>
 
           <span className="ml-auto text-sm text-neutral-500">{authDate}</span>
         </Label>
