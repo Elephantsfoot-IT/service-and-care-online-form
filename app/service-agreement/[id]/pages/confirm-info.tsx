@@ -239,8 +239,8 @@ function ConfirmInfo() {
               name="signFullName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="custom-label">
-                    Full Name<span className="text-red-500">*</span>
+                  <FormLabel className="">
+                    Full Name
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -263,8 +263,8 @@ function ConfirmInfo() {
               name="signTitle"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="custom-label">
-                    Titles<span className="text-red-500">*</span>
+                  <FormLabel className="">
+                    Titles
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -284,8 +284,8 @@ function ConfirmInfo() {
           </form>
         </Form>
         <Label className="w-full flex flex-row justify-between items-end mt-4">
-          <span className="custom-label text-sm">
-            Signature <span className="text-red-500">*</span>
+          <span className=" text-sm">
+            Signature 
           </span>
 
           <span className="ml-auto text-sm text-neutral-500">{authDate}</span>

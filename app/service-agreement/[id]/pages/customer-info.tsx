@@ -68,10 +68,14 @@ const billingSchema = z
     }),
     postalCountry: z.string(),
   })
-  .refine((data) => data.accountPhone || data.accountMobile, {
-    message:
-      "At least one contact number (Office Phone or Mobile Phone) must be provided.",
-    path: [""], // Highlight this field (optional)
+  .superRefine((data, ctx) => {
+    const hasAnyPhone = Boolean(data.accountPhone) || Boolean(data.accountMobile);
+    if (!hasAnyPhone) {
+      const message =
+        "At least one contact number (Office Phone or Mobile Phone) must be provided.";
+      ctx.addIssue({ code: "custom", message, path: ["accountMobile"] });
+      ctx.addIssue({ code: "custom", message, path: ["accountPhone"] });
+    }
   });
 
 type CustomerInformationFormType = z.infer<typeof billingSchema>;
@@ -107,7 +111,10 @@ function CustomerInformation() {
     state.setPage(1);
   };
   const handleSubmit = () => {
-    state.setPage(3);
+    form.handleSubmit((data) => {
+      state.setPage(3);
+    })();
+    
   };
 
   useEffect(() => {
@@ -164,15 +171,15 @@ function CustomerInformation() {
         agreement.
       </span>
       <Form {...form}>
-        <form className="flex flex-col gap-8">
+        <form className="flex flex-col gap-10">
           <div className="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-2">
             <FormField
               control={form.control}
               name="accountFirstName"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel className="custom-label text-sm">
-                    First Name<span className="text-red-500">*</span>
+                  <FormLabel className=" text-sm" htmlFor="accountFirstName">
+                    First Name
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -194,8 +201,8 @@ function CustomerInformation() {
               name="accountLastName"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel className="custom-label text-sm">
-                    Last Name<span className="text-red-500">*</span>
+                  <FormLabel className=" text-sm" htmlFor="accountLastName">
+                    Last Name
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -218,8 +225,8 @@ function CustomerInformation() {
             name="accountEmail"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="custom-label text-sm">
-                  Email Address<span className="text-red-500">*</span>
+                <FormLabel className=" text-sm" htmlFor="accountEmail">
+                  Email Address
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -247,7 +254,7 @@ function CustomerInformation() {
               name="accountMobile"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel className="custom-label text-sm">
+                  <FormLabel className=" text-sm" htmlFor="accountMobile">
                     Mobile Phone
                   </FormLabel>
                   <FormControl>
@@ -271,7 +278,7 @@ function CustomerInformation() {
               name="accountPhone"
               render={({ field }) => (
                 <FormItem className="flex-1">
-                  <FormLabel className="custom-label text-sm">
+                  <FormLabel className=" text-sm" htmlFor="accountPhone">
                     Office Phone
                   </FormLabel>
                   <FormControl>
@@ -293,8 +300,8 @@ function CustomerInformation() {
           </div>
 
           <div>
-            <Label className="custom-label text-sm mb-2">
-              Postal Address <span className="text-red-500">*</span>
+            <Label className=" text-sm mb-2">
+              Postal Address 
             </Label>
             {/* <div className="flex items-center space-x-2 my-4">
               <Checkbox
@@ -319,7 +326,7 @@ function CustomerInformation() {
           </div>
 
           <div className="flex flex-col space-y-4">
-            <Label className="custom-label text-sm">Use This Contact For</Label>
+            <Label className="text-sm">Use This Contact For <span className="text-neutral-500 text-xs">(optional)</span></Label>
             <div className="ml-2 flex flex-row gap-2">
               <div className="w-1/2 flex flex-col space-y-4">
                 <FormField
