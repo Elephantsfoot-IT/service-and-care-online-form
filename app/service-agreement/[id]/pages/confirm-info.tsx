@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import ServiceAndCareTerms from "@/components/terms-and-conditions/service-and-care-terms";
 
 const SummitFormSchema = z.object({
   signFullName: z.string().min(1, { message: "Name cannot be empty" }),
@@ -81,6 +82,16 @@ function ConfirmInfo() {
         provided.
       </span>
       <div>
+        <Label className="text-lg font-medium text-efg-dark-blue">
+          Terms and Conditions
+        </Label>
+        <span className="text-sm text-neutral-500 mb-2">
+          Please take a moment to carefully scroll through and review our Terms
+          and Conditions before proceeding.
+        </span>
+        <div className="p-6 border border-neutral-100 rounded-md shadow-sm h-[400px] overflow-y-auto mt-2 mb-4">
+          <ServiceAndCareTerms />
+        </div>
         <Form {...form}>
           <form className="space-y-4">
             <FormField
@@ -167,9 +178,9 @@ function ConfirmInfo() {
             trimmedDataURL={trimmedDataURL}
           />
           <div className="text-sm text-neutral-500 mt-1">
-              Please use your mouse (on desktop) or your finger (on phone or
-              tablet) to draw your signature in the box
-            </div>
+            Please use your mouse (on desktop) or your finger (on phone or
+            tablet) to draw your signature in the box
+          </div>
         </div>
       </div>
       <div className="flex flex-row gap-2 justify-end">

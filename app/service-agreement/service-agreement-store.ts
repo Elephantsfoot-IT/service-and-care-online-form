@@ -10,7 +10,7 @@ export interface ServiceAgreementStore {
 
 export const useServiceAgreementStore = create<ServiceAgreementStore>(
   (set) => ({
-    page: 1,
+    page: 4,
     setPage: (page) => set({ page: page }),
 
     trimmedDataURL: undefined,
