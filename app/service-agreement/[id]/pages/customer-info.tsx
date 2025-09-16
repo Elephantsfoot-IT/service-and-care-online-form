@@ -74,7 +74,7 @@ export default function CustomerDetails() {
         <form className="flex flex-col gap-6">
           <div className="flex flex-col">
             <Label className="text-xl mb-1 text-efg-dark-blue">Company Details</Label>
-            <span className="text-lg text-neutral-500 font-normal">Please provide information about your company.</span>
+            <span className="text-base text-neutral-500 font-normal">Please provide information about your company.</span>
           </div>
 
           <hr className="border-neutral-300 border-dashed" />
@@ -84,7 +84,7 @@ export default function CustomerDetails() {
             name="companyType"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel className="text-base w-full md:w-1/3">
+                <FormLabel className="text-sm w-full md:w-1/3">
                   Company type<span className="text-red-500">*</span>
                 </FormLabel>
                 <div className="w-full md:w-2/3">
@@ -118,7 +118,7 @@ export default function CustomerDetails() {
             name="abn"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel className="text-base w-full md:w-1/3">
+                <FormLabel className="text-sm w-full md:w-1/3">
                   ABN<span className="text-red-500">*</span>
                 </FormLabel>
                 <div className="w-full md:w-2/3">
@@ -151,7 +151,7 @@ export default function CustomerDetails() {
               const isStrata = form.watch("companyType") === "Strata management";
               return (
                 <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                  <FormLabel className="text-base w-full md:w-1/3">
+                  <FormLabel className="text-sm w-full md:w-1/3">
                     {isStrata ? "Strata plan number (CTS/SP/OC)" : "Company name"}
                     <span className="text-red-500">*</span>
                   </FormLabel>
@@ -183,7 +183,7 @@ export default function CustomerDetails() {
           <hr className="border-neutral-300 border-dashed" />
 
           <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-            <Label className="mb-2 text-base w-full md:w-1/3">
+            <Label className="mb-2 text-sm w-full md:w-1/3">
               Company address <span className="text-red-500">*</span>
             </Label>
             <div className="w-full md:w-2/3">

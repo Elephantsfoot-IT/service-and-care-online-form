@@ -23,7 +23,7 @@ export default function SiteInfo() {
       Site Details
       </Label>
 
-      <span className="text-lg mb-10 text-neutral-500 mb-6">
+      <span className="text-base mb-10 text-neutral-500 mb-6">
         Provide the site information associated with this service agreement.
       </span>
 

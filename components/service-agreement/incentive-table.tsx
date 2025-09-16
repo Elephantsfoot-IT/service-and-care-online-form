@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { CheckIcon, MinusIcon } from "lucide-react";
+import {  CheckCircleIcon, CheckCircle2Icon, MinusIcon } from "lucide-react";
 
 interface IncentiveTableProps {
   currentTier: string;
@@ -12,28 +12,28 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
       <div className="w-full grid grid-cols-9">
         {/* Incentives column */}
         <div className="col-span-3  border-neutral-200 border-solid">
-          <div className="h-18 border-b border-neutral-200 border-solid font-medium flex justify-start items-center px-2 tex">
-            Incentives
+          <div className="h-18 border-b border-neutral-200 border-solid font-medium flex justify-start items-center px-2 ">
+            
           </div>
-          <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4">
+          <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4 font-medium">
             Price Lock Guarantee (24 Months)
           </div>
-          <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4">
+          <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4 font-medium">
             Priority Response Within 8 Hours
           </div>
-          <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4">
+          <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4 font-medium">
             Priority Booking
           </div>
-          <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4">
+          <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4 font-medium">
             Flexible 21-Day Payment Terms
           </div>
-          <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4">
+          <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4 font-medium">
             Discounts on Parts
           </div>
-          <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4">
+          <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4 font-medium">
             Service Pricing Discounts
           </div>
-          <div className="h-14 border-b flex justify-start items-center px-4">
+          <div className="h-14 border-b flex justify-start items-center px-4 font-medium">
             Complimentary Odour Control (First 3 Months)
           </div>
           <div className="h-14 border-none flex justify-start items-center px-4"></div>
@@ -67,9 +67,9 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
               <span className="text-base">Basic</span>
               <span
                 className={cn(
-                  "text-xs ",
+                  "text-sm ",
                   currentTier === "basic"
-                    ? "text-neutral-700"
+                    ? "text-neutral-800"
                     : "text-neutral-600"
                 )}
               >
@@ -78,25 +78,25 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-4 text-green-600" />
+            <CheckCircle2Icon className="size-4.5 text-neutral-800" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-4 text-green-600" />
+            <CheckCircle2Icon className="size-4.5 text-neutral-800" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-4 text-green-600" />
+            <CheckCircle2Icon className="size-4.5 text-neutral-800" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <MinusIcon className="size-5 text-neutral-400"></MinusIcon>
+            <MinusIcon className="size-4.5 text-neutral-300"></MinusIcon>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <MinusIcon className="size-5 text-neutral-400"></MinusIcon>
+            <MinusIcon className="size-4.5 text-neutral-300"></MinusIcon>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <MinusIcon className="size-5 text-neutral-400"></MinusIcon>
+            <MinusIcon className="size-4.5 text-neutral-300"></MinusIcon>
           </div>
           <div className="h-14 border-b flex justify-center items-center">
-            <MinusIcon className="size-5 text-neutral-400"></MinusIcon>
+            <MinusIcon className="size-4.5 text-neutral-300"></MinusIcon>
           </div>
           <div className="h-14 border-none flex justify-center items-center">
             {/* {currentTier !== "basic" &&
@@ -133,9 +133,9 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
               <span className="text-base">Essential</span>
               <span
                 className={cn(
-                  "text-xs ",
+                  "text-sm ",
                   currentTier === "essential"
-                    ? "text-neutral-700"
+                    ? "text-neutral-800"
                     : "text-neutral-600"
                 )}
               >
@@ -144,25 +144,25 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-4 text-green-600" />
+            <CheckCircle2Icon className="size-4.5 text-neutral-800" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-4 text-green-600" />
+            <CheckCircle2Icon className="size-4.5 text-neutral-800" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-4 text-green-600" />
+            <CheckCircle2Icon className="size-4.5 text-neutral-800" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-4 text-green-600" />
+            <CheckCircle2Icon className="size-4.5 text-neutral-800" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
             10%
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-4 text-green-600" />
+            <CheckCircle2Icon className="size-4.5 text-neutral-800" />
           </div>
           <div className="h-14 border-b flex justify-center items-center">
-            <MinusIcon className="size-5 text-neutral-400"></MinusIcon>
+            <MinusIcon className="size-4.5 text-neutral-300"></MinusIcon>
           </div>
           <div className="h-14 border-none flex justify-center items-center">
             {/* {currentTier !== "essential" && currentTier !== "pro" && (
@@ -202,7 +202,7 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
               <span className="text-base">Pro</span>
               <span
                 className={cn(
-                  "text-xs ",
+                  "text-sm ",
                   currentTier === "pro" ? "text-white" : "text-neutral-600"
                 )}
               >
@@ -211,25 +211,25 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-4 text-green-600" />
+            <CheckCircle2Icon className="size-4.5 text-neutral-800" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-4 text-green-600" />
+            <CheckCircle2Icon className="size-4.5 text-neutral-800" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-4 text-green-600" />
+            <CheckCircle2Icon className="size-4.5 text-neutral-800" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-4 text-green-600" />
+            <CheckCircle2Icon className="size-4.5 text-neutral-800" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
             15%
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckIcon className="size-4 text-green-600" />
+            <CheckCircle2Icon className="size-4.5 text-neutral-800" />
           </div>
           <div className="h-14 border-b flex justify-center items-center">
-            <CheckIcon className="size-4 text-green-600" />
+            <CheckCircle2Icon className="size-4.5 text-neutral-800" />
           </div>
           <div className="h-14 border-none flex justify-center items-center">
             {/* {currentTier != "pro" && (

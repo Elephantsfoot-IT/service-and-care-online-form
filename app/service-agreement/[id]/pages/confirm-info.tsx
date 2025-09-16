@@ -109,7 +109,7 @@ export default function TermsAndSignature() {
       </span>
       <hr className="border-neutral-300 border-dashed my-6" />
 
-      <Label className="text-base  ">Terms and Conditions</Label>
+      <Label className="text-sm  ">Terms and Conditions</Label>
       {/* Terms box */}
       <div className="p-6 border border-neutral-100 rounded-md shadow-sm w-full max-h-[400px] overflow-y-auto mt-2 mb-4">
         <ServiceAndCareTerms />
@@ -135,7 +135,7 @@ export default function TermsAndSignature() {
                   />
                   <label
                     htmlFor="terms"
-                    className="text-base font-medium leading-none"
+                    className="text-sm font-medium leading-none"
                   >
                     Accept terms and conditions
                   </label>
@@ -152,7 +152,7 @@ export default function TermsAndSignature() {
             name="signFullName"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel className="w-full md:w-1/3 text-base">
+                <FormLabel className="w-full md:w-1/3 text-sm">
                   Full name<span className="text-red-500">*</span>
                 </FormLabel>
                 <div className="w-full md:w-2/3">
@@ -180,7 +180,7 @@ export default function TermsAndSignature() {
             name="signTitle"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel className="w-full md:w-1/3 text-base">
+                <FormLabel className="w-full md:w-1/3 text-sm">
                   Title<span className="text-red-500">*</span>
                 </FormLabel>
                 <div className="w-full md:w-2/3">
@@ -207,7 +207,7 @@ export default function TermsAndSignature() {
 
       {/* Signature */}
       <Label className="w-full flex flex-row justify-between items-end mt-4">
-        <span className="text-base">Signature</span>
+        <span className="text-sm">Signature</span>
         <span className="ml-auto text-sm text-neutral-500">{authDate}</span>
       </Label>
       <div className="mt-2">

@@ -6,6 +6,7 @@ import { ArrowRightIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useServiceAgreementStore } from "../../service-agreement-store";
 import { scrollToTop } from "@/lib/utils";
+import { Label } from "@/components/ui/label";
 
 type Option = "quarterly" | "six-monthly" | "yearly";
 type MaybeOption = Option | null;
@@ -298,10 +299,10 @@ function ServicesForm() {
       </div>
 
       {/* Exclusive benefits header */}
-      <div className="flex flex-col gap-2 items-center">
-        <div className="text-4xl font-medium text-[#1e60ad]">
+      <div className="flex flex-col mt-20">
+        <Label className="text-xl font-medium ">
           Exclusive Benefits
-        </div>
+        </Label>
         <span className="text-lg text-neutral-600">
           Enjoy our exclusive benefits when you choose additional services with
           us.
@@ -309,7 +310,7 @@ function ServicesForm() {
       </div>
 
       {/* Incentive table */}
-      <div className="w-full overflow-x-auto mt-6">
+      <div className="w-full overflow-x-auto mt-4 ">
         <div className="w-full min-w-[820px]">
           <IncentiveTable
             currentTier={currentTier}
