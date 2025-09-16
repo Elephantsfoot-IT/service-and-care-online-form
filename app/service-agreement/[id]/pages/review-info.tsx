@@ -26,7 +26,7 @@ export default function ReviewInfo() {
       {/* Company Details */}
       <div className="p-4 flex flex-col gap-2 mt-4 mb-6 border border-neutral-100 rounded-md shadow-sm">
         <div className="flex flex-row space-x-4 items-center">
-          <Label className="text-lg break-words text-efg-dark-blue">Company Details</Label>
+          <Label className="text-lg break-words ">Company Details</Label>
           <Button
             variant="ghost"
             className="text-sm ml-auto"
@@ -67,7 +67,7 @@ export default function ReviewInfo() {
       {/* Billing Details */}
       <div className="p-4 flex flex-col gap-2 mt-4 mb-6 border border-neutral-100 rounded-md shadow-sm">
         <div className="flex flex-row space-x-4 items-center">
-          <Label className="text-lg break-words text-efg-dark-blue">Billing Details</Label>
+          <Label className="text-lg break-words ">Billing Details</Label>
           <Button
             variant="ghost"
             className="text-sm ml-auto"

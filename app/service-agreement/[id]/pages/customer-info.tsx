@@ -73,7 +73,7 @@ export default function CustomerDetails() {
       <Form {...form}>
         <form className="flex flex-col gap-6">
           <div className="flex flex-col">
-            <Label className="text-xl mb-1 text-efg-dark-blue">Company Details</Label>
+            <Label className="text-xl mb-1 ">Company Details</Label>
             <span className="text-base text-neutral-500 font-normal">Please provide information about your company.</span>
           </div>
 

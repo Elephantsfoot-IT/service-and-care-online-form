@@ -19,7 +19,7 @@ export default function SiteInfo() {
   }, []);
   return (
     <div className=" w-full mx-auto flex flex-col ">
-      <Label className="text-xl mb-1 text-efg-dark-blue ">
+      <Label className="text-xl mb-1  ">
       Site Details
       </Label>
 

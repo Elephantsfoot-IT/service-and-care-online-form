@@ -101,7 +101,7 @@ export default function TermsAndSignature() {
 
   return (
     <div ref={containerRef} className="w-full mx-auto">
-      <Label className="text-xl font-medium text-efg-dark-blue">
+      <Label className="text-xl font-medium ">
         Sign Agreement
       </Label>
       <span className="text-base text-neutral-500 mb-2">

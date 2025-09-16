@@ -1,3 +1,4 @@
+import { AdditionalContact } from "@/lib/interface";
 import { create } from "zustand";
 
 export interface ServiceAgreementStore {
@@ -41,6 +42,8 @@ export interface ServiceAgreementStore {
   companyType: string;
   setSameAddress: (sameAddres: boolean) => void;
   sameAddres: boolean;
+  additionalContacts: AdditionalContact[];
+  setAdditionalContacts: (additionalContacts: AdditionalContact[]) => void;
 
   /* ---------- Actions ---------- */
   setPage: (page: number) => void;
@@ -53,7 +56,7 @@ export interface ServiceAgreementStore {
 export const useServiceAgreementStore = create<ServiceAgreementStore>(
   (set) => ({
     /* ---------- State ---------- */
-    page: 1,
+    page: 4,
 
     // Signature & agreement
     signFullName: "",
@@ -92,6 +95,9 @@ export const useServiceAgreementStore = create<ServiceAgreementStore>(
     companyType: "",
     sameAddres: false,
     setSameAddress: (sameAddres) => set({ sameAddres: sameAddres }),
+
+    additionalContacts: [],
+    setAdditionalContacts: (additionalContacts) => set({ additionalContacts }),
     
 
     /* ---------- Actions ---------- */
@@ -145,6 +151,7 @@ export const useServiceAgreementStore = create<ServiceAgreementStore>(
         companyName: "",
         abn: "",
         companyType: "",
+        additionalContacts: [],
       }),
   })
 );

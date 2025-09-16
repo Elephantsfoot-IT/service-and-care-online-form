@@ -7,7 +7,7 @@ import { useServiceAgreementStore } from "@/app/service-agreement/service-agreem
 export default function Sider() {
   const state = useServiceAgreementStore();
   return (
-    <aside className="hidden xl:flex fixed left-0 top-[80px] z-[99] w-[400px] h-[calc(100vh-80px)] border-r border-neutral-200 flex flex-col ">
+    <aside className="hidden xl:flex fixed left-0 top-[80px] z-[99] w-[400px] h-[calc(100vh-80px)] flex flex-col ">
       {state.page >= 2 && (
         <div className="p-10 pt-20">
           <FormVerticalProgress />

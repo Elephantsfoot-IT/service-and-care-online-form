@@ -138,7 +138,7 @@ export default function BillingDetails() {
       <Form {...form}>
         <form className="flex flex-col gap-6">
           <div className="flex flex-col ">
-            <Label className="text-xl mb-1 text-efg-dark-blue">Billing Details</Label>
+            <Label className="text-xl mb-1 ">Billing Details</Label>
             <span className="text-base text-neutral-500 font-normal">
               Please supply the billing information associated with this service agreement.
             </span>
