@@ -130,7 +130,7 @@ const AdditionalcontactForm = React.forwardRef<AdditionalContactFormHandle, Addi
     };
 
     return (
-      <div ref={rootRef} className="flex flex-col w-full mx-auto p-6 lg:p-10  rounded-md shadow-xs border border-neutral-200">
+      <div ref={rootRef} className="flex flex-col w-full mx-auto p-6 lg:p-10  shadow-xs border border-neutral-200 rounded-md shadow-sm">
         <Form {...ContactForm}>
           <form className="flex flex-col gap-6">
             {/* Heading */}
@@ -193,6 +193,56 @@ const AdditionalcontactForm = React.forwardRef<AdditionalContactFormHandle, Addi
                 />
               </div>
             </div>
+
+            <hr className="border-neutral-300 border-dashed" />
+
+            {/* Position */}
+            <FormField
+              control={ContactForm.control}
+              name="Position"
+              render={({ field }) => (
+                <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
+                  <FormLabel className="text-sm w-full md:w-1/3">Position</FormLabel>
+                  <div className="w-full md:w-2/3">
+                    <FormControl>
+                      <Input
+                        className="efg-input"
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          update("Position")(e.target.value);
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </div>
+                </FormItem>
+              )}
+            />
+
+            {/* Department */}
+            <FormField
+              control={ContactForm.control}
+              name="Department"
+              render={({ field }) => (
+                <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
+                  <FormLabel className="text-sm w-full md:w-1/3">Department</FormLabel>
+                  <div className="w-full md:w-2/3">
+                    <FormControl>
+                      <Input
+                        className="efg-input"
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          update("Department")(e.target.value);
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </div>
+                </FormItem>
+              )}
+            />
 
             <hr className="border-neutral-300 border-dashed" />
 
@@ -274,55 +324,7 @@ const AdditionalcontactForm = React.forwardRef<AdditionalContactFormHandle, Addi
               )}
             />
 
-            <hr className="border-neutral-300 border-dashed" />
-
-            {/* Position */}
-            <FormField
-              control={ContactForm.control}
-              name="Position"
-              render={({ field }) => (
-                <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                  <FormLabel className="text-sm w-full md:w-1/3">Position</FormLabel>
-                  <div className="w-full md:w-2/3">
-                    <FormControl>
-                      <Input
-                        className="efg-input"
-                        {...field}
-                        onChange={(e) => {
-                          field.onChange(e);
-                          update("Position")(e.target.value);
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </div>
-                </FormItem>
-              )}
-            />
-
-            {/* Department */}
-            <FormField
-              control={ContactForm.control}
-              name="Department"
-              render={({ field }) => (
-                <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                  <FormLabel className="text-sm w-full md:w-1/3">Department</FormLabel>
-                  <div className="w-full md:w-2/3">
-                    <FormControl>
-                      <Input
-                        className="efg-input"
-                        {...field}
-                        onChange={(e) => {
-                          field.onChange(e);
-                          update("Department")(e.target.value);
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </div>
-                </FormItem>
-              )}
-            />
+            
 
             <hr className="border-neutral-300 border-dashed" />
 

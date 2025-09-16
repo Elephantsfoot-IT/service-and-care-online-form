@@ -111,7 +111,7 @@ export default function TermsAndSignature() {
 
       <Label className="text-sm  ">Terms and Conditions</Label>
       {/* Terms box */}
-      <div className="p-6 border border-neutral-100 rounded-md shadow-sm w-full max-h-[400px] overflow-y-auto mt-2 mb-4">
+      <div className="p-6 border border-neutral-200 rounded-md shadow-xs w-full max-h-[500px] overflow-y-auto mt-2 mb-4">
         <ServiceAndCareTerms />
       </div>
       
@@ -137,7 +137,7 @@ export default function TermsAndSignature() {
                     htmlFor="terms"
                     className="text-sm font-medium leading-none"
                   >
-                    Accept terms and conditions
+                    Accept terms and conditions <span className="text-red-500">*</span>
                   </label>
                 </div>
                 <FormMessage />
@@ -206,10 +206,10 @@ export default function TermsAndSignature() {
       <hr className="border-neutral-300 border-dashed mt-4" />
 
       {/* Signature */}
-      <Label className="w-full flex flex-row justify-between items-end mt-4">
-        <span className="text-sm">Signature</span>
+      <div className="w-full flex flex-row justify-between items-end mt-4">
+        <Label className="text-sm">Signature <span className="text-red-500">*</span></Label>
         <span className="ml-auto text-sm text-neutral-500">{authDate}</span>
-      </Label>
+      </div>
       <div className="mt-2">
         <SignaturePadComponent
           parentWidth={parentWidth}

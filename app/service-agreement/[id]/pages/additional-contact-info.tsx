@@ -105,10 +105,10 @@ export default function AdditionalContactInfo() {
 
       {state.additionalContacts.length === 0 ? (
         <div
-          onClick={handleAddContact}
-          className="text-sm w-full h-40 bg-neutral-50 rounded-md flex justify-center items-center gap-2 hover:underline cursor-pointer"
+        
+          className="text-sm w-full h-40 bg-neutral-50 rounded-md flex justify-center items-center gap-2"
         >
-          <PlusIcon className="size-4" /> Add Contact
+        No Contact
         </div>
       ) : (
         <div className="flex flex-col gap-10">
