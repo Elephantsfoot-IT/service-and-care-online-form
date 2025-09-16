@@ -1,13 +1,5 @@
 import { roboto } from "@/lib/font";
-import type { Metadata } from "next";
 import "./globals.css";
-
-
-
-export const metadata: Metadata = {
-  title: "EFG Service and Care",
-  description: "Service and Care Online Form",
-};
 
 export default function RootLayout({
   children,
@@ -16,7 +8,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={roboto.variable}>
+      
       <head>
+      <title>Service & Care</title>
         <link
           rel="icon"
           type="image/svg+xml"

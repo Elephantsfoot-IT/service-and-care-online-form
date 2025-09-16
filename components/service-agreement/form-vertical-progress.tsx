@@ -18,7 +18,7 @@ function FormVerticalProgress() {
         <div
           className={cn(
             "flex flex-row items-center gap-4 transition-all duration-300",
-            state.page === 2 ? "opacity-100" : "opacity-50"
+            state.page === 2 ? "opacity-100" : "opacity-40"
           )}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
@@ -39,7 +39,7 @@ function FormVerticalProgress() {
         <div
           className={cn(
             "flex flex-row items-center gap-4 transition-all duration-300",
-            state.page === 3 ? "opacity-100" : "opacity-50"
+            state.page === 3 ? "opacity-100" : "opacity-40"
           )}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
@@ -60,7 +60,7 @@ function FormVerticalProgress() {
         <div
           className={cn(
             "flex flex-row items-center gap-4 transition-all duration-300",
-            state.page === 4 ? "opacity-100" : "opacity-50"
+            state.page === 4 ? "opacity-100" : "opacity-40"
           )}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
@@ -81,7 +81,7 @@ function FormVerticalProgress() {
         <div
           className={cn(
             "flex flex-row items-center gap-4 transition-all duration-300",
-            state.page === 5 ? "opacity-100" : "opacity-50"
+            state.page === 5 ? "opacity-100" : "opacity-40"
           )}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
@@ -102,7 +102,7 @@ function FormVerticalProgress() {
         <div
           className={cn(
             "flex flex-row items-center gap-4 transition-all duration-300",
-            state.page === 6 ? "opacity-100" : "opacity-50"
+            state.page === 6 ? "opacity-100" : "opacity-40"
           )}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
@@ -123,7 +123,7 @@ function FormVerticalProgress() {
         <div
           className={cn(
             "flex flex-row items-center gap-4 transition-all duration-300",
-            state.page === 7 ? "opacity-100" : "opacity-50"
+            state.page === 7 ? "opacity-100" : "opacity-40"
           )}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
