@@ -130,7 +130,7 @@ const AdditionalcontactForm = React.forwardRef<AdditionalContactFormHandle, Addi
     };
 
     return (
-      <div ref={rootRef} className="flex flex-col w-full mx-auto p-4 md:p-6 2xl:p-10  shadow-xs border border-neutral-200 rounded-md shadow-sm">
+      <div ref={rootRef} className="flex flex-col w-full mx-auto p-4 md:p-6 2xl:p-8  shadow-xs border border-neutral-200 rounded-md shadow-sm">
         <Form {...ContactForm}>
           <form className="flex flex-col gap-6">
             {/* Heading */}

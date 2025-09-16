@@ -111,7 +111,7 @@ export default function TermsAndSignature() {
 
       <Label className="text-sm  ">Terms and Conditions</Label>
       {/* Terms box */}
-      <div className="p-4 md:p-6 2xl:p-10 border border-neutral-200 rounded-md shadow-xs w-full max-h-[500px] overflow-y-auto mt-2 mb-4">
+      <div className="p-4 md:p-6 2xl:p-8 border border-neutral-200 rounded-md shadow-xs w-full max-h-[500px] overflow-y-auto mt-2 mb-4">
         <ServiceAndCareTerms />
       </div>
       
