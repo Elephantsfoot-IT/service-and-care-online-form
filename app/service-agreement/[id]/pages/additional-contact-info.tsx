@@ -8,6 +8,7 @@ import { scrollToTop } from "@/lib/utils";
 import { ArrowLeftIcon, ArrowRightIcon, PlusIcon } from "lucide-react";
 import AdditionalcontactForm, { AdditionalContactFormHandle } from "@/components/service-agreement/additional-contact-form";
 import { AdditionalContact } from "@/lib/interface";
+import { toast } from "sonner";
 
 export default function AdditionalContactInfo() {
   const state = useServiceAgreementStore();
@@ -53,6 +54,7 @@ export default function AdditionalContactInfo() {
     state.setAdditionalContacts(state.additionalContacts.filter((c) => c.id !== id));
     // Clean the ref
     delete formRefs.current[id];
+    toast.success("Contact deleted successfully");
   };
 
   const handleAddContact = () => {
