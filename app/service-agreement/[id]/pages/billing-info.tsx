@@ -6,7 +6,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import MultiLineAddressInput from "@/components/ui/multi-line-address-input";
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon, LandmarkIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -138,6 +138,9 @@ export default function BillingDetails() {
       <Form {...form}>
         <form className="flex flex-col gap-6">
           <div className="flex flex-col ">
+          <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">
+              <LandmarkIcon className="size-6 text-neutral-600"></LandmarkIcon>
+            </div>
             <Label className="text-xl mb-1 ">Billing Details</Label>
             <span className="text-base text-neutral-500 font-normal">
               Please supply the billing information associated with this service agreement.

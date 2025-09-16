@@ -3,7 +3,7 @@ import { useServiceAgreementStore } from "@/app/service-agreement/service-agreem
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { scrollToTop } from "@/lib/utils";
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon, ListCheckIcon } from "lucide-react";
 import { useEffect } from "react";
 
 export default function ReviewInfo() {
@@ -18,6 +18,9 @@ export default function ReviewInfo() {
 
   return (
     <div className="w-full mx-auto">
+      <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">
+        <ListCheckIcon className="size-6 text-neutral-600"></ListCheckIcon>
+      </div>
       <Label className="text-xl mb-1">Review Details</Label>
       <span className="text-lg mb-10 text-neutral-500">
         Please review your selected services and the information you’ve
@@ -228,7 +231,6 @@ export default function ReviewInfo() {
                     </span>
                   </div>
                 </div>
-                
               </div>
             </div>
           </div>

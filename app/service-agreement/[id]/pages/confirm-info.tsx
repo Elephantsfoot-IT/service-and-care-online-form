@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label";
 import SignaturePadComponent from "@/components/ui/signature-pad";
 import { scrollToTop } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon, SignatureIcon } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -101,6 +101,9 @@ export default function TermsAndSignature() {
 
   return (
     <div ref={containerRef} className="w-full mx-auto">
+      <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">
+              <SignatureIcon className="size-5 text-neutral-600"></SignatureIcon>
+            </div>
       <Label className="text-xl font-medium ">
         Sign Agreement
       </Label>

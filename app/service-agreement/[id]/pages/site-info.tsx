@@ -3,7 +3,7 @@ import { useServiceAgreementStore } from "@/app/service-agreement/service-agreem
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { scrollToTop } from "@/lib/utils";
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon, MapPinIcon } from "lucide-react";
 import { useEffect } from "react";
 
 export default function SiteInfo() {
@@ -19,9 +19,10 @@ export default function SiteInfo() {
   }, []);
   return (
     <div className=" w-full mx-auto flex flex-col ">
-      <Label className="text-xl mb-1  ">
-      Site Details
-      </Label>
+      <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">
+        <MapPinIcon className="size-6 text-neutral-600"></MapPinIcon>
+      </div>
+      <Label className="text-xl mb-1  ">Site Details</Label>
 
       <span className="text-base mb-10 text-neutral-500 mb-6">
         Provide the site information associated with this service agreement.

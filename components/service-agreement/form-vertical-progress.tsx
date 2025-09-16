@@ -17,9 +17,10 @@ function FormVerticalProgress() {
       <div className="fade-right fade-right-100">
         <div
           className={cn(
-            "flex flex-row items-center gap-4 transition-all duration-300",
+            "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
             state.page === 2 ? "opacity-100" : "opacity-40"
           )}
+          onClick={() => state.setPage(2)}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
             <BriefcaseBusinessIcon className="size-4.5 text-neutral-600"></BriefcaseBusinessIcon>
@@ -38,9 +39,10 @@ function FormVerticalProgress() {
       <div className="fade-right fade-right-200">
         <div
           className={cn(
-            "flex flex-row items-center gap-4 transition-all duration-300",
+            "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
             state.page === 3 ? "opacity-100" : "opacity-40"
           )}
+          onClick={() => state.setPage(3)}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
             <LandmarkIcon className="size-4.5 text-neutral-600"></LandmarkIcon>
@@ -59,9 +61,10 @@ function FormVerticalProgress() {
       <div className="fade-right fade-right-300">
         <div
           className={cn(
-            "flex flex-row items-center gap-4 transition-all duration-300",
+            "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
             state.page === 4 ? "opacity-100" : "opacity-40"
           )}
+          onClick={() => state.setPage(4)}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
             <UsersIcon className="size-4.5 text-neutral-600"></UsersIcon>
@@ -80,9 +83,10 @@ function FormVerticalProgress() {
       <div className="fade-right fade-right-400">
         <div
           className={cn(
-            "flex flex-row items-center gap-4 transition-all duration-300",
+            "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
             state.page === 5 ? "opacity-100" : "opacity-40"
           )}
+          onClick={() => state.setPage(5)}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
             <MapPinIcon className="size-4.5 text-neutral-600"></MapPinIcon>
@@ -101,9 +105,10 @@ function FormVerticalProgress() {
       <div className="fade-right fade-right-500">
         <div
           className={cn(
-            "flex flex-row items-center gap-4 transition-all duration-300",
+            "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
             state.page === 6 ? "opacity-100" : "opacity-40"
           )}
+          onClick={() => state.setPage(6)}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
             <ListCheckIcon className="size-4.5 text-neutral-600"></ListCheckIcon>
@@ -122,9 +127,10 @@ function FormVerticalProgress() {
       <div className="fade-right fade-right-600">
         <div
           className={cn(
-            "flex flex-row items-center gap-4 transition-all duration-300",
+            "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer ",
             state.page === 7 ? "opacity-100" : "opacity-40"
           )}
+          onClick={() => state.setPage(7)}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
             <SignatureIcon className="size-4.5 text-neutral-600"></SignatureIcon>

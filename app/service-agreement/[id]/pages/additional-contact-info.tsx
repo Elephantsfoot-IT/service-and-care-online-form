@@ -5,8 +5,15 @@ import { useServiceAgreementStore } from "@/app/service-agreement/service-agreem
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { scrollToTop } from "@/lib/utils";
-import { ArrowLeftIcon, ArrowRightIcon, PlusIcon } from "lucide-react";
-import AdditionalcontactForm, { AdditionalContactFormHandle } from "@/components/service-agreement/additional-contact-form";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  PlusIcon,
+  UsersIcon,
+} from "lucide-react";
+import AdditionalcontactForm, {
+  AdditionalContactFormHandle,
+} from "@/components/service-agreement/additional-contact-form";
 import { AdditionalContact } from "@/lib/interface";
 import { toast } from "sonner";
 
@@ -14,18 +21,21 @@ export default function AdditionalContactInfo() {
   const state = useServiceAgreementStore();
 
   // Keep a map of refs keyed by contact id
-  const formRefs = useRef<Record<string, AdditionalContactFormHandle | null>>({});
+  const formRefs = useRef<Record<string, AdditionalContactFormHandle | null>>(
+    {}
+  );
 
-  const setFormRef = (id: string) => (instance: AdditionalContactFormHandle | null) => {
-    formRefs.current[id] = instance;
-  };
+  const setFormRef =
+    (id: string) => (instance: AdditionalContactFormHandle | null) => {
+      formRefs.current[id] = instance;
+    };
 
   const goBack = () => state.setPage(3);
 
   const handleSubmit = async () => {
     // Validate all child forms before continuing
     const refs = state.additionalContacts
-      .map(c => formRefs.current[c.id!])
+      .map((c) => formRefs.current[c.id!])
       .filter(Boolean) as AdditionalContactFormHandle[];
 
     if (refs.length === 0) {
@@ -33,7 +43,7 @@ export default function AdditionalContactInfo() {
       return;
     }
 
-    const results = await Promise.all(refs.map(r => r.validate()));
+    const results = await Promise.all(refs.map((r) => r.validate()));
     const allValid = results.every(Boolean);
 
     if (!allValid) {
@@ -51,7 +61,9 @@ export default function AdditionalContactInfo() {
   };
 
   const handleDelete = (id: string) => {
-    state.setAdditionalContacts(state.additionalContacts.filter((c) => c.id !== id));
+    state.setAdditionalContacts(
+      state.additionalContacts.filter((c) => c.id !== id)
+    );
     // Clean the ref
     delete formRefs.current[id];
     toast.success("Contact deleted successfully");
@@ -88,9 +100,13 @@ export default function AdditionalContactInfo() {
 
   return (
     <div className="w-full mx-auto flex flex-col">
+      <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">
+        <UsersIcon className="size-6 text-neutral-600"></UsersIcon>
+      </div>
       <Label className="text-xl mb-1">Additional Contacts</Label>
       <span className="text-base text-neutral-500 mb-6">
-        Provide optional additional contacts for your business as needed. (Optional)
+        Provide optional additional contacts for your business as needed.
+        (Optional)
       </span>
 
       <div className="flex justify-end mb-2">
@@ -104,18 +120,15 @@ export default function AdditionalContactInfo() {
       </div>
 
       {state.additionalContacts.length === 0 ? (
-        <div
-        
-          className="text-sm w-full h-40 bg-neutral-50 rounded-md flex justify-center items-center gap-2"
-        >
-        No Contact
+        <div className="text-sm w-full h-40 bg-neutral-50 rounded-md flex justify-center items-center gap-2">
+          No Contact
         </div>
       ) : (
         <div className="flex flex-col gap-10">
           {state.additionalContacts.map((contact, index) => (
             <AdditionalcontactForm
               key={contact.id}
-              ref={setFormRef(contact.id!)}            // <-- capture child handle
+              ref={setFormRef(contact.id!)} // <-- capture child handle
               contact={contact}
               index={index}
               handleDelete={handleDelete}
@@ -126,10 +139,18 @@ export default function AdditionalContactInfo() {
       )}
 
       <div className="flex flex-row gap-2 justify-between mt-10">
-        <Button variant="outline" onClick={goBack} className="w-fit cursor-pointer">
+        <Button
+          variant="outline"
+          onClick={goBack}
+          className="w-fit cursor-pointer"
+        >
           <ArrowLeftIcon /> Back
         </Button>
-        <Button onClick={handleSubmit} className="w-[200px] cursor-pointer" variant="efg">
+        <Button
+          onClick={handleSubmit}
+          className="w-[200px] cursor-pointer"
+          variant="efg"
+        >
           Continue <ArrowRightIcon />
         </Button>
       </div>
