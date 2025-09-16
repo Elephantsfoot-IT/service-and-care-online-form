@@ -34,6 +34,16 @@ function ServiceAgreement() {
     });
   }, [state.page]);
 
+
+  useEffect(() => {
+    const next = state.page ?? 0;
+    const cur  = state.progress ?? 0;
+  
+    if (next > cur) {
+      state.setProgress(next);
+    }
+  }, [state.page, state.progress]);
+
   return (
     <div className="w-full flex flex-col items-center font-sans pt-20 pb-20 bg-white flex-grow gap-8 max-w-screen-lg mx-auto">
       {/* {state.page >= 2 && <ServiceAgreementProgress ></ServiceAgreementProgress>} */}

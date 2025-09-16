@@ -4,6 +4,7 @@ import { create } from "zustand";
 export interface ServiceAgreementStore {
   /* ---------- State ---------- */
   page: number;
+  progress:number
 
   // Signature & agreement
   signFullName: string;
@@ -47,6 +48,7 @@ export interface ServiceAgreementStore {
 
   /* ---------- Actions ---------- */
   setPage: (page: number) => void;
+  setProgress: (progress: number) => void;
   setTrimmedDataURL: (trimmedDataURL: string | undefined) => void;
   updateField: (field: string, value: string) => void;
   updateFieldBoolean: (field: string, value: boolean) => void;
@@ -56,7 +58,9 @@ export interface ServiceAgreementStore {
 export const useServiceAgreementStore = create<ServiceAgreementStore>(
   (set) => ({
     /* ---------- State ---------- */
-    page: 4,
+    page: 1,
+    progress: 1,
+    setProgress : (progress) => set({ progress }),
 
     // Signature & agreement
     signFullName: "",
@@ -116,6 +120,7 @@ export const useServiceAgreementStore = create<ServiceAgreementStore>(
     reset: () =>
       set({
         page: 1, // Signature & agreement
+        progress: 1,
         signFullName: "",
         signTitle: "",
         conditionAgree: false,

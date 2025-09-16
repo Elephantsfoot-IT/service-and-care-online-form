@@ -12,6 +12,13 @@ import { cn } from "@/lib/utils";
 
 function FormVerticalProgress() {
   const state = useServiceAgreementStore();
+
+  const goToPage = (page: number) => {
+    if (page > state.progress) {
+      return;
+    }
+    state.setPage(page);
+  }
   return (
     <div className="flex flex-col gap-6 ">
       <div className="fade-right fade-right-100">
@@ -20,7 +27,7 @@ function FormVerticalProgress() {
             "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
             state.page === 2 ? "opacity-100" : "opacity-40"
           )}
-          onClick={() => state.setPage(2)}
+          onClick={() => goToPage(2)}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
             <BriefcaseBusinessIcon className="size-4.5 text-neutral-600"></BriefcaseBusinessIcon>
@@ -42,7 +49,7 @@ function FormVerticalProgress() {
             "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
             state.page === 3 ? "opacity-100" : "opacity-40"
           )}
-          onClick={() => state.setPage(3)}
+          onClick={() => goToPage(3)}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
             <LandmarkIcon className="size-4.5 text-neutral-600"></LandmarkIcon>
@@ -64,7 +71,7 @@ function FormVerticalProgress() {
             "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
             state.page === 4 ? "opacity-100" : "opacity-40"
           )}
-          onClick={() => state.setPage(4)}
+          onClick={() => goToPage(4)}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
             <UsersIcon className="size-4.5 text-neutral-600"></UsersIcon>
@@ -86,7 +93,7 @@ function FormVerticalProgress() {
             "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
             state.page === 5 ? "opacity-100" : "opacity-40"
           )}
-          onClick={() => state.setPage(5)}
+          onClick={() => goToPage(5)}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
             <MapPinIcon className="size-4.5 text-neutral-600"></MapPinIcon>
@@ -108,7 +115,7 @@ function FormVerticalProgress() {
             "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
             state.page === 6 ? "opacity-100" : "opacity-40"
           )}
-          onClick={() => state.setPage(6)}
+          onClick={() => goToPage(6)}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
             <ListCheckIcon className="size-4.5 text-neutral-600"></ListCheckIcon>
@@ -130,7 +137,7 @@ function FormVerticalProgress() {
             "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer ",
             state.page === 7 ? "opacity-100" : "opacity-40"
           )}
-          onClick={() => state.setPage(7)}
+          onClick={() => goToPage(7)}
         >
           <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
             <SignatureIcon className="size-4.5 text-neutral-600"></SignatureIcon>
