@@ -177,39 +177,42 @@
   animation-delay: var(--fade-delay, 0s); /* Default to 0s if not set */
 }
 
-@keyframes fadeUP {
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+
   }
 }
 
-.fade-up {
+.fade-in {
   @apply opacity-0;
-  animation: fadeUP 1s forwards;
+  animation: fadeIn 1s forwards;
   animation-delay: var(--fade-delay, 0s); /* Default to 0s if not set */
 }
 
-.fade-up-100 {
+.fade-in-100 {
   --fade-delay: 0.1s;
 }
-.fade-up-200 {
+.fade-in-200 {
   --fade-delay: 0.2s;
 }
-.fade-up-300 {
+.fade-in-300 {
   --fade-delay: 0.3s;
 }
-.fade-up-400 {
+.fade-in-400 {
   --fade-delay: 0.4s;
 }
-.fade-up-500 {
+.fade-in-500 {
   --fade-delay: 0.5s;
 }
-.fade-up-1000 {
+.fade-in-600 {
+  --fade-delay: 0.6s;
+}
+.fade-in-1000 {
   --fade-delay: 1s;
 }
 
@@ -224,13 +227,57 @@
 
 
 
-
-
-
 .efg-checkbox {
   @apply data-[state=checked]:bg-efg-yellow data-[state=checked]:border-efg-yellow data-[state=checked]:text-neutral-800 cursor-pointer focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none;
 }
 
 .efg-input {
   @apply focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none border-neutral-200 ;
+}
+
+.eft-select-trigger{
+  @apply focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none border-neutral-200 ;
+}
+
+
+
+@keyframes fadeRight {
+  from {
+    opacity: 0;
+   
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+
+    transform: translateX(0);
+  }
+}
+
+.fade-right {
+  @apply opacity-0;
+  animation: fadeRight 1s forwards;
+  animation-delay: var(--fade-delay, 0s); /* Default to 0s if not set */
+}
+
+.fade-right-100 {
+  --fade-delay: 0.1s;
+}
+.fade-right-200 {
+  --fade-delay: 0.2s;
+}
+.fade-right-300 {
+  --fade-delay: 0.3s;
+}
+.fade-right-400 {
+  --fade-delay: 0.4s;
+}
+.fade-right-500 {
+  --fade-delay: 0.5s;
+}
+.fade-right-600 {
+  --fade-delay: 0.6s;
+}
+.fade-right-1000 {
+  --fade-delay: 1s;
 }

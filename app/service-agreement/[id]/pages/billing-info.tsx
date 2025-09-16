@@ -165,6 +165,7 @@ export default function BillingDetails() {
                           field.onChange(e);
                           onChange("accountFirstName", e.target.value);
                         }}
+                         className="efg-input"
                       />
                     </FormControl>
                     <FormMessage />
@@ -184,6 +185,7 @@ export default function BillingDetails() {
                           field.onChange(e);
                           onChange("accountLastName", e.target.value);
                         }}
+                         className="efg-input"
                       />
                     </FormControl>
                     <FormMessage />
@@ -213,6 +215,7 @@ export default function BillingDetails() {
                         field.onChange(e);
                         onChange("accountEmail", e.target.value);
                       }}
+                       className="efg-input"
                     />
                   </FormControl>
                   <FormMessage />
@@ -244,6 +247,7 @@ export default function BillingDetails() {
                         field.onChange(e);
                         onChange("accountMobile", e.target.value);
                       }}
+                       className="efg-input"
                     />
                   </FormControl>
                   <FormMessage />
@@ -271,6 +275,7 @@ export default function BillingDetails() {
                         field.onChange(e);
                         onChange("accountPhone", e.target.value);
                       }}
+                         className="efg-input"
                     />
                   </FormControl>
                   <FormMessage />

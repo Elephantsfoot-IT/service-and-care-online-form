@@ -1,12 +1,5 @@
 import { cn } from "@/lib/utils";
-import {
-  CheckCircle,
-  CheckCircle2Icon,
-  CheckIcon,
-  LockKeyholeIcon,
-} from "lucide-react";
-import { Button } from "../ui/button";
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import { CheckIcon, MinusIcon } from "lucide-react";
 
 interface IncentiveTableProps {
   currentTier: string;
@@ -15,30 +8,7 @@ interface IncentiveTableProps {
 
 function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
   return (
-    <div className="flex flex-col gap-6 fade-up w-full text-sm">
-      {/* <div className="w-full grid grid-cols-6 mb-4">
-        <div className="col-span-3"></div>
-        <div
-          className={cn(
-            "col-span-3 h-8 bg-neutral-200  overflow-hidden ",
-      
-          )}
-        >
-          <div
-            className={cn(
-              "h-full  transition-all duration-300",
-              serviceCount === 0 && "w-[0%] bg-[#ffdb01]",
-              serviceCount === 1 && "w-[11.1%] bg-[#ffdb01]",
-              serviceCount === 2 && "w-[22.2%] bg-[#ffdb01]",
-              serviceCount === 3 && "w-[33.3%] bg-[#ffdb01]",
-              serviceCount === 4 && "w-[66.7%] bg-[#ffdb01]",
-              serviceCount === 5 && "w-[83.3%] bg-[#ffdb01]",
-              serviceCount === 6 && "w-[100%] bg-[#ffdb01]"
-            )}
-          ></div>
-        </div>
-      </div> */}
-
+    <div className="flex flex-col gap-6 w-full text-sm">
       <div className="w-full grid grid-cols-9">
         {/* Incentives column */}
         <div className="col-span-3  border-neutral-200 border-solid">
@@ -95,22 +65,39 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
             />
             <div className="relative z-10 flex flex-col items-center">
               <span className="text-base">Basic</span>
-              <span className={cn("text-xs ",currentTier === "basic" ? "text-neutral-700" : "text-neutral-600") }>Req. 3 services</span>
+              <span
+                className={cn(
+                  "text-xs ",
+                  currentTier === "basic"
+                    ? "text-neutral-700"
+                    : "text-neutral-600"
+                )}
+              >
+                Req. 3 services
+              </span>
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-          <CheckCircleIcon className="size-6 text-green-600" />
+            <CheckIcon className="size-4 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-          <CheckCircleIcon className="size-6 text-green-600" />
+            <CheckIcon className="size-4 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-          <CheckCircleIcon className="size-6 text-green-600" />
+            <CheckIcon className="size-4 text-green-600" />
           </div>
-          <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center"></div>
-          <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center"></div>
-          <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center"></div>
-          <div className="h-14 border-b flex justify-center items-center"></div>
+          <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
+            <MinusIcon className="size-5 text-neutral-400"></MinusIcon>
+          </div>
+          <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
+            <MinusIcon className="size-5 text-neutral-400"></MinusIcon>
+          </div>
+          <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
+            <MinusIcon className="size-5 text-neutral-400"></MinusIcon>
+          </div>
+          <div className="h-14 border-b flex justify-center items-center">
+            <MinusIcon className="size-5 text-neutral-400"></MinusIcon>
+          </div>
           <div className="h-14 border-none flex justify-center items-center">
             {/* {currentTier !== "basic" &&
               currentTier !== "essential" &&
@@ -119,7 +106,7 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
                   <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
                 </Button>
               )} */}
-              {currentTier === "basic" && (
+            {currentTier === "basic" && (
               <div className="font-medium">Eligible</div>
             )}
           </div>
@@ -144,28 +131,39 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
           >
             <div className="relative z-10 flex flex-col items-center">
               <span className="text-base">Essential</span>
-              <span className={cn("text-xs ",currentTier === "essential" ? "text-neutral-700" : "text-neutral-600") }>Req. 4 services</span>
+              <span
+                className={cn(
+                  "text-xs ",
+                  currentTier === "essential"
+                    ? "text-neutral-700"
+                    : "text-neutral-600"
+                )}
+              >
+                Req. 4 services
+              </span>
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-          <CheckCircleIcon className="size-6 text-green-600" />
+            <CheckIcon className="size-4 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-          <CheckCircleIcon className="size-6 text-green-600" />
+            <CheckIcon className="size-4 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-          <CheckCircleIcon className="size-6 text-green-600" />
+            <CheckIcon className="size-4 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-          <CheckCircleIcon className="size-6 text-green-600" />
+            <CheckIcon className="size-4 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
             10%
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-          <CheckCircleIcon className="size-6 text-green-600" />
+            <CheckIcon className="size-4 text-green-600" />
           </div>
-          <div className="h-14 border-b flex justify-center items-center"></div>
+          <div className="h-14 border-b flex justify-center items-center">
+            <MinusIcon className="size-5 text-neutral-400"></MinusIcon>
+          </div>
           <div className="h-14 border-none flex justify-center items-center">
             {/* {currentTier !== "essential" && currentTier !== "pro" && (
               <Button className="bg-[#ffdb01] text-black hover:bg-[#ffdb01]/90 cursor-pointer tier-header">
@@ -202,29 +200,36 @@ function IncentiveTable({ currentTier, serviceCount }: IncentiveTableProps) {
             />
             <div className="relative z-10 flex flex-col items-center">
               <span className="text-base">Pro</span>
-              <span className={cn("text-xs ",currentTier === "pro" ? "text-white" : "text-neutral-600") }>Req. 6 services</span>
+              <span
+                className={cn(
+                  "text-xs ",
+                  currentTier === "pro" ? "text-white" : "text-neutral-600"
+                )}
+              >
+                Req. 6 services
+              </span>
             </div>
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckCircleIcon className="size-6 text-green-600" />
+            <CheckIcon className="size-4 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckCircleIcon className="size-6 text-green-600" />
+            <CheckIcon className="size-4 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckCircleIcon className="size-6 text-green-600" />
+            <CheckIcon className="size-4 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckCircleIcon className="size-6 text-green-600" />
+            <CheckIcon className="size-4 text-green-600" />
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
             15%
           </div>
           <div className="h-14 border-b border-neutral-200 border-solid flex justify-center items-center">
-            <CheckCircleIcon className="size-6 text-green-600" />
+            <CheckIcon className="size-4 text-green-600" />
           </div>
           <div className="h-14 border-b flex justify-center items-center">
-            <CheckCircleIcon className="size-6 text-green-600" />
+            <CheckIcon className="size-4 text-green-600" />
           </div>
           <div className="h-14 border-none flex justify-center items-center">
             {/* {currentTier != "pro" && (

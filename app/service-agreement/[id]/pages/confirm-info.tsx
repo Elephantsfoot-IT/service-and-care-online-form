@@ -62,7 +62,7 @@ export default function TermsAndSignature() {
 
   /** Handlers */
   const goBack = useCallback(() => {
-    state.setPage(5); // back to Review page
+    state.setPage(6); // back to Review page
   }, [state]);
 
   const onSubmit = useCallback(
@@ -102,7 +102,7 @@ export default function TermsAndSignature() {
   return (
     <div ref={containerRef} className="w-full mx-auto">
       <Label className="text-xl font-medium text-efg-dark-blue">
-        Sign agreement
+        Sign Agreement
       </Label>
       <span className="text-base text-neutral-500 mb-2">
         Read the Terms and Conditions and sign the agreement.

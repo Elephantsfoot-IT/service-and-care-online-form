@@ -3,7 +3,7 @@ import { useServiceAgreementStore } from "@/app/service-agreement/service-agreem
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { scrollToTop } from "@/lib/utils";
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import { ArrowLeftIcon } from "lucide-react";
 import { useEffect } from "react";
 
 export default function ReviewInfo() {
@@ -13,12 +13,12 @@ export default function ReviewInfo() {
     scrollToTop();
   }, []);
 
-  const goBack = () => state.setPage(4);   // back to Site Info
-  const goNext = () => state.setPage(6);   // forward to Terms & Signature
+  const goBack = () => state.setPage(5);   // back to Site Info
+  const goNext = () => state.setPage(7);   // forward to Terms & Signature
 
   return (
     <div className="w-full mx-auto">
-      <Label className="text-xl mb-1">Review Information</Label>
+      <Label className="text-xl mb-1">Review Details</Label>
       <span className="text-lg mb-10 text-neutral-500">
         Please review your selected services and the information you’ve provided.
       </span>

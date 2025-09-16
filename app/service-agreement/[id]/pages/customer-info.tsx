@@ -96,7 +96,7 @@ export default function CustomerDetails() {
                     }}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="w-full eft-select-trigger">
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
@@ -130,6 +130,7 @@ export default function CustomerDetails() {
                         field.onChange(e);
                         onChange("abn", e.target.value);
                       }}
+                      className="efg-input"
                     />
                   </FormControl>
                   <FormMessage />
@@ -163,6 +164,7 @@ export default function CustomerDetails() {
                           field.onChange(e);
                           onChange("companyName", e.target.value);
                         }}
+                        className="efg-input"
                       />
                     </FormControl>
                     <FormMessage />

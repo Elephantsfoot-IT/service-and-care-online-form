@@ -6,13 +6,13 @@ import { scrollToTop } from "@/lib/utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useEffect } from "react";
 
-export default function SiteInfo() {
+export default function AdditionalContactInfo() {
   const state = useServiceAgreementStore();
   const goBack = () => {
-    state.setPage(4);
+    state.setPage(3);
   };
   const handleSubmit = () => {
-    state.setPage(6);
+    state.setPage(5);
   };
   useEffect(() => {
     scrollToTop();
@@ -20,11 +20,11 @@ export default function SiteInfo() {
   return (
     <div className=" w-full mx-auto flex flex-col ">
       <Label className="text-xl mb-1 text-efg-dark-blue ">
-      Site Details
+      Additional Contacts
       </Label>
 
       <span className="text-lg mb-10 text-neutral-500 mb-6">
-        Provide the site information associated with this service agreement.
+        Provide the additional contacts associated with this service agreement.
       </span>
 
       <div className="flex flex-row gap-2 justify-between mt-10">
