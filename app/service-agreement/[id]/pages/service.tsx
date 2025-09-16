@@ -231,7 +231,7 @@ function ServicesForm() {
     scrollToTop();
   }, []);
   return (
-    <div className=" max-w-screen-xl w-full mx-auto">
+    <div className=" w-full mx-auto">
       <div className="flex flex-col gap-10 my-20">
         {/* map all services with unique pricing */}
         {SERVICES.map((svc) => {

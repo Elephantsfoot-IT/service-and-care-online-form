@@ -9,17 +9,17 @@ import { useEffect } from "react";
 export default function SiteInfo() {
   const state = useServiceAgreementStore();
   const goBack = () => {
-    state.setPage(2);
+    state.setPage(3);
   };
   const handleSubmit = () => {
-    state.setPage(4);
+    state.setPage(5);
   };
   useEffect(() => {
     scrollToTop();
   }, []);
   return (
-    <div className=" max-w-screen-md w-full mx-auto flex flex-col ">
-      <Label className="text-2xl mb-1 text-efg-dark-blue ">
+    <div className=" w-full mx-auto flex flex-col ">
+      <Label className="text-xl mb-1 text-efg-dark-blue ">
         Site Information
       </Label>
 

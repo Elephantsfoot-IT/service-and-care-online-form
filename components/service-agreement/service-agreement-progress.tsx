@@ -5,7 +5,7 @@ function ServiceAgreementProgress() {
   const state = useServiceAgreementStore();
   return (
     <>
-      <div className="w-full max-w-screen-md flex flex-row gap-2 ">
+      <div className="w-fullflex flex-row gap-2 ">
         <div onClick={() => state.setPage(2)} className="flex-1">
           <div
             className={cn(
