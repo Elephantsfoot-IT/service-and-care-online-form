@@ -1,10 +1,10 @@
-import { AdditionalContact } from "@/lib/interface";
+import { AdditionalContact, ServiceAgreement } from "@/lib/interface";
 import { create } from "zustand";
 
 export interface ServiceAgreementStore {
   /* ---------- State ---------- */
   page: number;
-  progress:number
+  progress: number;
 
   // Signature & agreement
   signFullName: string;
@@ -45,6 +45,8 @@ export interface ServiceAgreementStore {
   sameAddres: boolean;
   additionalContacts: AdditionalContact[];
   setAdditionalContacts: (additionalContacts: AdditionalContact[]) => void;
+  serviceAgreement: ServiceAgreement | null;
+  setServiceAgreement: (sa: ServiceAgreement | null) => void;
 
   /* ---------- Actions ---------- */
   setPage: (page: number) => void;
@@ -60,7 +62,7 @@ export const useServiceAgreementStore = create<ServiceAgreementStore>(
     /* ---------- State ---------- */
     page: 1,
     progress: 1,
-    setProgress : (progress) => set({ progress }),
+    setProgress: (progress) => set({ progress }),
 
     // Signature & agreement
     signFullName: "",
@@ -102,7 +104,8 @@ export const useServiceAgreementStore = create<ServiceAgreementStore>(
 
     additionalContacts: [],
     setAdditionalContacts: (additionalContacts) => set({ additionalContacts }),
-    
+    serviceAgreement: null,
+    setServiceAgreement: (sa) => set({ serviceAgreement: sa }),
 
     /* ---------- Actions ---------- */
     setPage: (page) => set({ page }),
