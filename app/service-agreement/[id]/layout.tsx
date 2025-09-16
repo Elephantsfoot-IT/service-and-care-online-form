@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Sider />
       {/* Push content below fixed header, and to the right of fixed sidebar on xl+ */}
       <main className="pt-[88px] xl:pl-[400px]">
-        <div className="px-6 xl:px-20 text-neutral-700 ">{children}</div>
+        <div className="px-4 xl:px-20 text-neutral-700 ">{children}</div>
       </main>
       <Toaster />
     </>
