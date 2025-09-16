@@ -24,12 +24,12 @@ function FormVerticalProgress() {
       <div className="fade-right fade-right-100">
         <div
           className={cn(
-            "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
+            "flex flex-row items-center gap-4 transition-all duration-200 cursor-pointer",
             state.page === 2 ? "opacity-100" : "opacity-40"
           )}
           onClick={() => goToPage(2)}
         >
-          <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
+          <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs">
             <BriefcaseBusinessIcon className="size-4.5 text-neutral-600"></BriefcaseBusinessIcon>
           </div>
           <div
@@ -46,12 +46,12 @@ function FormVerticalProgress() {
       <div className="fade-right fade-right-200">
         <div
           className={cn(
-            "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
+            "flex flex-row items-center gap-4 transition-all duration-200 cursor-pointer",
             state.page === 3 ? "opacity-100" : "opacity-40"
           )}
           onClick={() => goToPage(3)}
         >
-          <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
+          <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs">
             <LandmarkIcon className="size-4.5 text-neutral-600"></LandmarkIcon>
           </div>
           <div
@@ -68,12 +68,12 @@ function FormVerticalProgress() {
       <div className="fade-right fade-right-300">
         <div
           className={cn(
-            "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
+            "flex flex-row items-center gap-4 transition-all duration-200 cursor-pointer",
             state.page === 4 ? "opacity-100" : "opacity-40"
           )}
           onClick={() => goToPage(4)}
         >
-          <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
+          <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs">
             <UsersIcon className="size-4.5 text-neutral-600"></UsersIcon>
           </div>
           <div
@@ -90,12 +90,12 @@ function FormVerticalProgress() {
       <div className="fade-right fade-right-400">
         <div
           className={cn(
-            "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
+            "flex flex-row items-center gap-4 transition-all duration-200 cursor-pointer",
             state.page === 5 ? "opacity-100" : "opacity-40"
           )}
           onClick={() => goToPage(5)}
         >
-          <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
+          <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs">
             <MapPinIcon className="size-4.5 text-neutral-600"></MapPinIcon>
           </div>
           <div
@@ -112,12 +112,12 @@ function FormVerticalProgress() {
       <div className="fade-right fade-right-500">
         <div
           className={cn(
-            "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer",
+            "flex flex-row items-center gap-4 transition-all duration-200 cursor-pointer",
             state.page === 6 ? "opacity-100" : "opacity-40"
           )}
           onClick={() => goToPage(6)}
         >
-          <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
+          <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs">
             <ListCheckIcon className="size-4.5 text-neutral-600"></ListCheckIcon>
           </div>
           <div
@@ -134,12 +134,12 @@ function FormVerticalProgress() {
       <div className="fade-right fade-right-600">
         <div
           className={cn(
-            "flex flex-row items-center gap-4 transition-all duration-300 cursor-pointer ",
+            "flex flex-row items-center gap-4 transition-all duration-200 cursor-pointer ",
             state.page === 7 ? "opacity-100" : "opacity-40"
           )}
           onClick={() => goToPage(7)}
         >
-          <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow">
+          <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs">
             <SignatureIcon className="size-4.5 text-neutral-600"></SignatureIcon>
           </div>
           <div
