@@ -1,41 +1,62 @@
 "use client";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
-import SiteForm from "@/components/service-agreement/site-form";
+import SiteForm, { SiteFormHandle } from "@/components/service-agreement/site-form";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { ServiceAgreement, Site } from "@/lib/interface";
+import { Site } from "@/lib/interface";
 import { scrollToTop } from "@/lib/utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
-import { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 export default function SiteInfo() {
   const state = useServiceAgreementStore();
-  const goBack = () => {
-    state.setPage(4);
-  };
-  const handleSubmit = () => {
+
+  const goBack = () => state.setPage(4);
+
+  // Refs to child SiteForms keyed by site id
+  const formRefs = useRef<Record<string, SiteFormHandle | null>>({});
+  const setSiteRef =
+    (id: string) => (instance: SiteFormHandle | null) => {
+      formRefs.current[id] = instance;
+    };
+
+  const handleSubmit = async () => {
+    // Validate all sites (fields + contacts)
+    const sites = state.serviceAgreement?.sites ?? [];
+    const refs = sites
+      .map((s) => formRefs.current[s.simpro_site_id])
+      .filter(Boolean) as SiteFormHandle[];
+
+    if (refs.length === 0) {
+      state.setPage(6);
+      return;
+    }
+
+    const results = await Promise.all(refs.map((r) => r.validate()));
+    const allValid = results.every(Boolean);
+    if (!allValid) return; // stay on page; child forms scrolled into view
+
     state.setPage(6);
   };
+
   useEffect(() => {
     scrollToTop();
   }, []);
 
-  if (state.serviceAgreement?.sites.length == 0) {
+  if (!state.serviceAgreement || state.serviceAgreement?.sites.length === 0) {
     return null;
   }
+
   const handleEditSites = (siteId: string, patch: Partial<Site>) => {
     const prev = useServiceAgreementStore.getState().serviceAgreement;
     if (!prev) return;
 
     const nextSites = (prev.sites ?? []).map((site: Site) => {
       const currentId = site.simpro_site_id;
-
       if (currentId !== siteId) return site;
 
-      // Start with a shallow merge
       const merged: Site = { ...site, ...patch };
 
-      // Deep-merge site_address if provided
       if (patch.site_address) {
         merged.site_address = {
           ...site.site_address,
@@ -43,7 +64,6 @@ export default function SiteInfo() {
         };
       }
 
-      // If site_contacts provided in patch, use it as-is (you can enforce min/max elsewhere)
       if (patch.site_contacts) {
         merged.site_contacts = [...patch.site_contacts];
       }
@@ -51,7 +71,9 @@ export default function SiteInfo() {
       return merged;
     });
 
-    useServiceAgreementStore.getState().setServiceAgreement({ ...prev, sites: nextSites });
+    useServiceAgreementStore
+      .getState()
+      .setServiceAgreement({ ...prev, sites: nextSites });
   };
 
   return (
@@ -65,7 +87,12 @@ export default function SiteInfo() {
 
       <div className="flex flex-col gap-10">
         {state.serviceAgreement?.sites.map((site) => (
-          <SiteForm key={site.simpro_site_id} site={site} handleEditSites={handleEditSites} />
+          <SiteForm
+            key={site.simpro_site_id}
+            ref={setSiteRef(site.simpro_site_id)}
+            site={site}
+            handleEditSites={handleEditSites}
+          />
         ))}
       </div>
 
@@ -75,7 +102,7 @@ export default function SiteInfo() {
           onClick={goBack}
           className=" w-fit cursor-pointer"
         >
-          <ArrowLeftIcon></ArrowLeftIcon> Back
+          <ArrowLeftIcon /> Back
         </Button>
         <Button
           onClick={handleSubmit}

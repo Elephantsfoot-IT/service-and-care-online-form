@@ -33,8 +33,8 @@ interface SiteContactFormProps {
 
 const FormSchema = z
   .object({
-    GivenName: z.string().min(1, { message: "Given name cannot be empty" }),
-    FamilyName: z.string().min(1, { message: "Family name cannot be empty" }),
+    GivenName: z.string().min(1, { message: "First name required" }),
+    FamilyName: z.string().min(1, { message: "Last name required" }),
     Email: z.string(), // allow empty
     WorkPhone: z.string(),
     CellPhone: z.string(),
