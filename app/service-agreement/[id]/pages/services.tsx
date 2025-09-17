@@ -188,10 +188,10 @@ function ServicesForm() {
             with us.
           </span>
         </div>
-        <div className="w-full overflow-x-auto flex flex-col gap-4">
-          <div className="w-full min-w-[820px] scroll-mt-[140px]">
+  
+          <div className="overflow-x-auto p-1">
             <IncentiveTable  serviceCount={numberOfServices} />
-          </div>
+      
         </div>
       </section>
 
