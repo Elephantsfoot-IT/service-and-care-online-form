@@ -2,7 +2,15 @@
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import MultiLineAddressInput from "@/components/ui/multi-line-address-input";
@@ -15,20 +23,28 @@ import { scrollToTop } from "@/lib/utils";
 
 const billingSchema = z
   .object({
-    accountFirstName: z.string().min(1, { message: "First name cannot be empty" }),
-    accountLastName: z.string().min(1, { message: "Last name cannot be empty" }),
-    accountEmail: z.string().email({ message: "Please enter a valid email address." }),
+    accountFirstName: z
+      .string()
+      .min(1, { message: "First name cannot be empty" }),
+    accountLastName: z
+      .string()
+      .min(1, { message: "Last name cannot be empty" }),
+    accountEmail: z
+      .string()
+      .email({ message: "Please enter a valid email address." }),
     accountPhone: z
       .string()
       .regex(/^[+]?[0-9]+$/, {
-        message: "Phone number can only contain digits and an optional '+' at the beginning.",
+        message:
+          "Phone number can only contain digits and an optional '+' at the beginning.",
       })
       .optional()
       .or(z.literal("")),
     accountMobile: z
       .string()
       .regex(/^(\+614|04)\d{8}$/, {
-        message: "Phone number must start with '04' or '+614' and contain 8 digits after that.",
+        message:
+          "Phone number must start with '04' or '+614' and contain 8 digits after that.",
       })
       .optional()
       .or(z.literal("")),
@@ -40,16 +56,24 @@ const billingSchema = z
     PrimaryInvoiceContact: z.boolean(),
     PrimaryJobContact: z.boolean(),
     PrimaryQuoteContact: z.boolean(),
-    postalStreetAddress: z.string().min(1, { message: "Postal street address cannot be empty" }),
+    postalStreetAddress: z
+      .string()
+      .min(1, { message: "Postal street address cannot be empty" }),
     postalCity: z.string().min(1, { message: "Postal city cannot be empty" }),
     postalState: z.string().min(1, { message: "Postal state cannot be empty" }),
-    postalPostcode: z.string().regex(/^\d{4}$/, { message: "Business postcode must be exactly 4 digits" }),
+    postalPostcode: z
+      .string()
+      .regex(/^\d{4}$/, {
+        message: "Business postcode must be exactly 4 digits",
+      }),
     postalCountry: z.string(),
   })
   .superRefine((data, ctx) => {
-    const hasAnyPhone = Boolean(data.accountPhone) || Boolean(data.accountMobile);
+    const hasAnyPhone =
+      Boolean(data.accountPhone) || Boolean(data.accountMobile);
     if (!hasAnyPhone) {
-      const message = "At least one contact number (Office phone or Mobile phone) must be provided.";
+      const message =
+        "At least one contact number (Office phone or Mobile phone) must be provided.";
       ctx.addIssue({ code: "custom", message, path: ["accountMobile"] });
       ctx.addIssue({ code: "custom", message, path: ["accountPhone"] });
     }
@@ -108,8 +132,12 @@ export default function BillingDetails() {
     scrollToTop();
   }, []); // eslint-disable-line
 
-  const onChange = (field: keyof BillingDetailsFormType, value: string | boolean) => {
-    if (typeof value === "boolean") state.updateFieldBoolean(field as string, value);
+  const onChange = (
+    field: keyof BillingDetailsFormType,
+    value: string | boolean
+  ) => {
+    if (typeof value === "boolean")
+      state.updateFieldBoolean(field as string, value);
     else state.updateField(field as string, value);
   };
 
@@ -127,10 +155,10 @@ export default function BillingDetails() {
     }
   };
 
-  const goBack = () => state.setPage(2);         // back to CustomerDetails
+  const goBack = () => state.setPage(2); // back to CustomerDetails
   const goNext = () =>
     form.handleSubmit(() => {
-      state.setPage(4);                           // forward to SiteInfo
+      state.setPage(4); // forward to SiteInfo
     })();
 
   return (
@@ -138,12 +166,13 @@ export default function BillingDetails() {
       <Form {...form}>
         <form className="flex flex-col gap-6">
           <div className="flex flex-col ">
-          <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">
+            <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">
               <LandmarkIcon className="size-6 text-neutral-600"></LandmarkIcon>
             </div>
             <Label className="text-xl mb-1 ">Billing Details</Label>
             <span className="text-base text-neutral-500 font-normal">
-              Please supply the billing information associated with this service agreement.
+              Please supply the billing information associated with this service
+              agreement.
             </span>
           </div>
 
@@ -168,7 +197,7 @@ export default function BillingDetails() {
                           field.onChange(e);
                           onChange("accountFirstName", e.target.value);
                         }}
-                         className="efg-input"
+                        className="efg-input"
                       />
                     </FormControl>
                     <FormMessage />
@@ -188,7 +217,7 @@ export default function BillingDetails() {
                           field.onChange(e);
                           onChange("accountLastName", e.target.value);
                         }}
-                         className="efg-input"
+                        className="efg-input"
                       />
                     </FormControl>
                     <FormMessage />
@@ -206,7 +235,10 @@ export default function BillingDetails() {
             name="accountEmail"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel className="text-sm w-full md:w-1/3" htmlFor="accountEmail">
+                <FormLabel
+                  className="text-sm w-full md:w-1/3"
+                  htmlFor="accountEmail"
+                >
                   Email address<span className="text-red-500">*</span>
                 </FormLabel>
                 <div className="w-full md:w-2/3">
@@ -218,12 +250,13 @@ export default function BillingDetails() {
                         field.onChange(e);
                         onChange("accountEmail", e.target.value);
                       }}
-                       className="efg-input"
+                      className="efg-input"
                     />
                   </FormControl>
                   <FormMessage />
                   <FormDescription className="ml-1 mt-2">
-                    We will send the signed service agreement document to this email address.
+                    We will send the signed service agreement document to this
+                    email address.
                   </FormDescription>
                 </div>
               </FormItem>
@@ -238,7 +271,10 @@ export default function BillingDetails() {
             name="accountMobile"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel className="text-sm w-full md:w-1/3" htmlFor="accountMobile">
+                <FormLabel
+                  className="text-sm w-full md:w-1/3"
+                  htmlFor="accountMobile"
+                >
                   Mobile phone
                 </FormLabel>
                 <div className="w-full md:w-2/3">
@@ -250,7 +286,7 @@ export default function BillingDetails() {
                         field.onChange(e);
                         onChange("accountMobile", e.target.value);
                       }}
-                       className="efg-input"
+                      className="efg-input"
                     />
                   </FormControl>
                   <FormMessage />
@@ -266,7 +302,10 @@ export default function BillingDetails() {
             name="accountPhone"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel className="text-sm w-full md:w-1/3" htmlFor="accountPhone">
+                <FormLabel
+                  className="text-sm w-full md:w-1/3"
+                  htmlFor="accountPhone"
+                >
                   Office phone
                 </FormLabel>
                 <div className="w-full md:w-2/3">
@@ -278,7 +317,7 @@ export default function BillingDetails() {
                         field.onChange(e);
                         onChange("accountPhone", e.target.value);
                       }}
-                         className="efg-input"
+                      className="efg-input"
                     />
                   </FormControl>
                   <FormMessage />
@@ -301,7 +340,9 @@ export default function BillingDetails() {
                   onCheckedChange={(c: boolean) => handleCopyCompanyToPostal(c)}
                   className="efg-checkbox"
                 />
-                <label className="text-sm font-medium text-neutral-600">Use Company Address</label>
+                <label className="text-sm font-medium text-neutral-600">
+                  Use Company Address
+                </label>
               </div>
               <MultiLineAddressInput<BillingDetailsFormType>
                 fieldNames={{
@@ -311,7 +352,9 @@ export default function BillingDetails() {
                   postcode: "postalPostcode",
                   country: "postalCountry",
                 }}
-                handleChange={(f, v) => onChange(f as keyof BillingDetailsFormType, v)}
+                handleChange={(f, v) =>
+                  onChange(f as keyof BillingDetailsFormType, v)
+                }
                 stateSelectValue={state.postalState}
                 disabled={state.sameAddres}
               />
@@ -322,58 +365,38 @@ export default function BillingDetails() {
 
           {/* Use this contact for */}
           <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-            <Label className="text-sm w-full md:w-1/3">Use this contact for</Label>
-            <div className="w-full md:w-2/3 flex flex-col gap-4">
-              {/* Quote */}
-              <div className="flex flex-row gap-2">
-                <div className="w-1/2">
-                  <FormField
-                    control={form.control}
-                    name="QuoteContact"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="QuoteContact"
-                            className="efg-checkbox"
-                            checked={field.value}
-                            onCheckedChange={(checked: boolean) => {
-                              field.onChange(checked);
-                              onChange("QuoteContact", checked);
-                              if (!checked) {
-                                form.setValue("PrimaryQuoteContact", false);
-                                onChange("PrimaryQuoteContact", false);
-                              }
-                            }}
-                          />
-                          <label htmlFor="QuoteContact" className="text-sm leading-none">
-                            Quote
-                          </label>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                {form.watch("QuoteContact") && (
+            <Label className="text-sm w-full md:w-1/3">
+              Use this contact for
+            </Label>
+            <div className="w-full md:w-2/3 flex flex-col">
+              <div className="w-full flex flex-col gap-4">
+                {/* Quote */}
+                <div className="flex flex-row gap-2">
                   <div className="w-1/2">
                     <FormField
                       control={form.control}
-                      name="PrimaryQuoteContact"
+                      name="QuoteContact"
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex items-center space-x-2">
                             <Checkbox
-                              id="PrimaryQuoteContact"
+                              id="QuoteContact"
                               className="efg-checkbox"
                               checked={field.value}
                               onCheckedChange={(checked: boolean) => {
                                 field.onChange(checked);
-                                onChange("PrimaryQuoteContact", checked);
+                                onChange("QuoteContact", checked);
+                                if (!checked) {
+                                  form.setValue("PrimaryQuoteContact", false);
+                                  onChange("PrimaryQuoteContact", false);
+                                }
                               }}
                             />
-                            <label htmlFor="PrimaryQuoteContact" className="text-sm leading-none">
-                              Primary
+                            <label
+                              htmlFor="QuoteContact"
+                              className="text-sm leading-none"
+                            >
+                              Quote
                             </label>
                           </div>
                           <FormMessage />
@@ -381,59 +404,65 @@ export default function BillingDetails() {
                       )}
                     />
                   </div>
-                )}
-              </div>
+                  {form.watch("QuoteContact") && (
+                    <div className="w-1/2">
+                      <FormField
+                        control={form.control}
+                        name="PrimaryQuoteContact"
+                        render={({ field }) => (
+                          <FormItem>
+                            <div className="flex items-center space-x-2">
+                              <Checkbox
+                                id="PrimaryQuoteContact"
+                                className="efg-checkbox"
+                                checked={field.value}
+                                onCheckedChange={(checked: boolean) => {
+                                  field.onChange(checked);
+                                  onChange("PrimaryQuoteContact", checked);
+                                }}
+                              />
+                              <label
+                                htmlFor="PrimaryQuoteContact"
+                                className="text-sm leading-none"
+                              >
+                                Primary
+                              </label>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  )}
+                </div>
 
-              {/* Job */}
-              <div className="flex flex-row gap-2">
-                <div className="w-1/2">
-                  <FormField
-                    control={form.control}
-                    name="JobContact"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="JobContact"
-                            className="efg-checkbox"
-                            checked={field.value}
-                            onCheckedChange={(checked: boolean) => {
-                              field.onChange(checked);
-                              onChange("JobContact", checked);
-                              if (!checked) {
-                                form.setValue("PrimaryJobContact", false);
-                                onChange("PrimaryJobContact", false);
-                              }
-                            }}
-                          />
-                          <label htmlFor="JobContact" className="text-sm leading-none">
-                            Job
-                          </label>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                {form.watch("JobContact") && (
+                {/* Job */}
+                <div className="flex flex-row gap-2">
                   <div className="w-1/2">
                     <FormField
                       control={form.control}
-                      name="PrimaryJobContact"
+                      name="JobContact"
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex items-center space-x-2">
                             <Checkbox
-                              id="PrimaryJobContact"
+                              id="JobContact"
                               className="efg-checkbox"
                               checked={field.value}
                               onCheckedChange={(checked: boolean) => {
                                 field.onChange(checked);
-                                onChange("PrimaryJobContact", checked);
+                                onChange("JobContact", checked);
+                                if (!checked) {
+                                  form.setValue("PrimaryJobContact", false);
+                                  onChange("PrimaryJobContact", false);
+                                }
                               }}
                             />
-                            <label htmlFor="PrimaryJobContact" className="text-sm leading-none">
-                              Primary
+                            <label
+                              htmlFor="JobContact"
+                              className="text-sm leading-none"
+                            >
+                              Job
                             </label>
                           </div>
                           <FormMessage />
@@ -441,59 +470,65 @@ export default function BillingDetails() {
                       )}
                     />
                   </div>
-                )}
-              </div>
+                  {form.watch("JobContact") && (
+                    <div className="w-1/2">
+                      <FormField
+                        control={form.control}
+                        name="PrimaryJobContact"
+                        render={({ field }) => (
+                          <FormItem>
+                            <div className="flex items-center space-x-2">
+                              <Checkbox
+                                id="PrimaryJobContact"
+                                className="efg-checkbox"
+                                checked={field.value}
+                                onCheckedChange={(checked: boolean) => {
+                                  field.onChange(checked);
+                                  onChange("PrimaryJobContact", checked);
+                                }}
+                              />
+                              <label
+                                htmlFor="PrimaryJobContact"
+                                className="text-sm leading-none"
+                              >
+                                Primary
+                              </label>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  )}
+                </div>
 
-              {/* Invoice */}
-              <div className="flex flex-row gap-2">
-                <div className="w-1/2">
-                  <FormField
-                    control={form.control}
-                    name="InvoiceContact"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="InvoiceContact"
-                            className="efg-checkbox"
-                            checked={field.value}
-                            onCheckedChange={(checked: boolean) => {
-                              field.onChange(checked);
-                              onChange("InvoiceContact", checked);
-                              if (!checked) {
-                                form.setValue("PrimaryInvoiceContact", false);
-                                onChange("PrimaryInvoiceContact", false);
-                              }
-                            }}
-                          />
-                          <label htmlFor="InvoiceContact" className="text-sm leading-none">
-                            Invoice
-                          </label>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                {form.watch("InvoiceContact") && (
+                {/* Invoice */}
+                <div className="flex flex-row gap-2">
                   <div className="w-1/2">
                     <FormField
                       control={form.control}
-                      name="PrimaryInvoiceContact"
+                      name="InvoiceContact"
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex items-center space-x-2">
                             <Checkbox
-                              id="PrimaryInvoiceContact"
+                              id="InvoiceContact"
                               className="efg-checkbox"
                               checked={field.value}
                               onCheckedChange={(checked: boolean) => {
                                 field.onChange(checked);
-                                onChange("PrimaryInvoiceContact", checked);
+                                onChange("InvoiceContact", checked);
+                                if (!checked) {
+                                  form.setValue("PrimaryInvoiceContact", false);
+                                  onChange("PrimaryInvoiceContact", false);
+                                }
                               }}
                             />
-                            <label htmlFor="PrimaryInvoiceContact" className="text-sm leading-none">
-                              Primary
+                            <label
+                              htmlFor="InvoiceContact"
+                              className="text-sm leading-none"
+                            >
+                              Invoice
                             </label>
                           </div>
                           <FormMessage />
@@ -501,59 +536,68 @@ export default function BillingDetails() {
                       )}
                     />
                   </div>
-                )}
-              </div>
+                  {form.watch("InvoiceContact") && (
+                    <div className="w-1/2">
+                      <FormField
+                        control={form.control}
+                        name="PrimaryInvoiceContact"
+                        render={({ field }) => (
+                          <FormItem>
+                            <div className="flex items-center space-x-2">
+                              <Checkbox
+                                id="PrimaryInvoiceContact"
+                                className="efg-checkbox"
+                                checked={field.value}
+                                onCheckedChange={(checked: boolean) => {
+                                  field.onChange(checked);
+                                  onChange("PrimaryInvoiceContact", checked);
+                                }}
+                              />
+                              <label
+                                htmlFor="PrimaryInvoiceContact"
+                                className="text-sm leading-none"
+                              >
+                                Primary
+                              </label>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  )}
+                </div>
 
-              {/* Statement */}
-              <div className="flex flex-row gap-2">
-                <div className="w-1/2">
-                  <FormField
-                    control={form.control}
-                    name="StatementContact"
-                    render={({ field }) => (
-                      <FormItem>
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="StatementContact"
-                            className="efg-checkbox"
-                            checked={field.value}
-                            onCheckedChange={(checked: boolean) => {
-                              field.onChange(checked);
-                              onChange("StatementContact", checked);
-                              if (!checked) {
-                                form.setValue("PrimaryStatementContact", false);
-                                onChange("PrimaryStatementContact", false);
-                              }
-                            }}
-                          />
-                          <label htmlFor="StatementContact" className="text-sm leading-none">
-                            Statement
-                          </label>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                {form.watch("StatementContact") && (
+                {/* Statement */}
+                <div className="flex flex-row gap-2">
                   <div className="w-1/2">
                     <FormField
                       control={form.control}
-                      name="PrimaryStatementContact"
+                      name="StatementContact"
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex items-center space-x-2">
                             <Checkbox
-                              id="PrimaryStatementContact"
+                              id="StatementContact"
                               className="efg-checkbox"
                               checked={field.value}
                               onCheckedChange={(checked: boolean) => {
                                 field.onChange(checked);
-                                onChange("PrimaryStatementContact", checked);
+                                onChange("StatementContact", checked);
+                                if (!checked) {
+                                  form.setValue(
+                                    "PrimaryStatementContact",
+                                    false
+                                  );
+                                  onChange("PrimaryStatementContact", false);
+                                }
                               }}
                             />
-                            <label htmlFor="PrimaryStatementContact" className="text-sm leading-none">
-                              Primary
+                            <label
+                              htmlFor="StatementContact"
+                              className="text-sm leading-none"
+                            >
+                              Statement
                             </label>
                           </div>
                           <FormMessage />
@@ -561,8 +605,39 @@ export default function BillingDetails() {
                       )}
                     />
                   </div>
-                )}
+                  {form.watch("StatementContact") && (
+                    <div className="w-1/2">
+                      <FormField
+                        control={form.control}
+                        name="PrimaryStatementContact"
+                        render={({ field }) => (
+                          <FormItem>
+                            <div className="flex items-center space-x-2">
+                              <Checkbox
+                                id="PrimaryStatementContact"
+                                className="efg-checkbox"
+                                checked={field.value}
+                                onCheckedChange={(checked: boolean) => {
+                                  field.onChange(checked);
+                                  onChange("PrimaryStatementContact", checked);
+                                }}
+                              />
+                              <label
+                                htmlFor="PrimaryStatementContact"
+                                className="text-sm leading-none"
+                              >
+                                Primary
+                              </label>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
+              <p className="text-sm text-muted-foreground mt-4 ml-1">Set the communications this contact receives.</p>
             </div>
           </div>
         </form>
@@ -572,7 +647,11 @@ export default function BillingDetails() {
         <Button variant="outline" onClick={goBack} className="cursor-pointer">
           <ArrowLeftIcon /> Back
         </Button>
-        <Button onClick={goNext} className="w-[200px] cursor-pointer" variant="efg">
+        <Button
+          onClick={goNext}
+          className="w-[200px] cursor-pointer"
+          variant="efg"
+        >
           Continue <ArrowRightIcon />
         </Button>
       </div>

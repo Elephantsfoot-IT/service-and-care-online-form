@@ -331,7 +331,8 @@ const AdditionalcontactForm = React.forwardRef<AdditionalContactFormHandle, Addi
             {/* Use this contact for */}
             <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
               <Label className="text-sm w-full md:w-1/3">Use this contact for</Label>
-              <div className="w-full md:w-2/3 flex flex-col gap-4">
+              <div className="w-full md:w-2/3 flex flex-col">
+              <div className="flex flex-col gap-4">
                 {/* Quote */}
                 <div className="flex flex-row gap-2">
                   <div className="w-1/2">
@@ -561,6 +562,9 @@ const AdditionalcontactForm = React.forwardRef<AdditionalContactFormHandle, Addi
                 </div>
 
               </div>
+              <p className="text-sm text-muted-foreground mt-4 ml-1">Set the communications this contact receives.</p>
+              </div>
+              
             </div>
           </form>
         </Form>
