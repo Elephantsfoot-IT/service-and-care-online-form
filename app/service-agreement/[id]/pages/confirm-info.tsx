@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import SignaturePadComponent from "@/components/ui/signature-pad";
 import { scrollToTop } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 /* ------------------------------ Schema ------------------------------ */
 const TermsSchema = z.object({
@@ -37,7 +38,7 @@ const TermsSchema = z.object({
 export default function TermsAndSignature() {
   /** Refs */
   const containerRef = useRef<HTMLDivElement>(null);
-
+  const router = useRouter();
   /** Store */
   const state = useServiceAgreementStore();
 
@@ -76,6 +77,8 @@ export default function TermsAndSignature() {
       state.updateField("signTitle", values.signTitle);
       state.updateFieldBoolean("conditionAgree", values.conditionAgree);
       // e.g., state.submitAgreement()
+      state.reset();
+      router.push(`/service-agreement/success`);
     }),
     [form, state]
   );
