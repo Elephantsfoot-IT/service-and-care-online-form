@@ -1,13 +1,17 @@
 // hooks/useScrollSpy.ts
 import { useEffect, useState } from "react";
 
-type Options = { offset?: number };
+type Options = { offset?: number; disabled?: boolean };
 
-export function useScrollSpy(ids: string[], { offset = 120 }: Options = {}) {
+export function useScrollSpy(
+  ids: string[],
+  { offset = 140, disabled = false }: { offset?: number; disabled?: boolean } = {}
+) {
   const [activeId, setActiveId] = useState<string | null>(ids[0] ?? null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (disabled) return;      
 
     const getActive = () => {
       const scrollY = window.scrollY + offset;
@@ -46,7 +50,7 @@ export function useScrollSpy(ids: string[], { offset = 120 }: Options = {}) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [ids, offset]);
+  }, [ids.join(","), offset, disabled]);
 
   return activeId;
 }

@@ -14,32 +14,22 @@ import { Suspense } from "react";
 import Header from "@/components/header";
 import Sider from "@/components/sider";
 import { Loader2Icon } from "lucide-react";
-import { ServiceAgreement } from "@/lib/interface";
+import { SECTION_IDS, ServiceAgreement } from "@/lib/interface";
 import { useScrollSpy } from "@/components/service-agreement/scroll-spy";
-
-
-const SECTION_IDS = [
-  "chute-cleaning",
-  "waste-room-pressure-clean",
-  "hopper-door-inspection",
-  "bin-cleaning",
-  "equipment-preventative-maintenance",
-  "odour-control",
-] as const;
+import { useRef } from "react";
+import { fastScrollToEl } from "@/lib/utils";
 
 function ServiceAgreementComponent({ id }: { id: string }) {
+  // Store / query
   const state = useServiceAgreementStore();
-  const { data, isLoading, error, refetch } = useServiceAgreement(id);
   const setServiceAgreement = useServiceAgreementStore(
     (s) => s.setServiceAgreement
   );
-  const activeId = useScrollSpy(SECTION_IDS as unknown as string[], { offset: 140 }); // buffer near top
+  const { data, isLoading, error, refetch } = useServiceAgreement(id);
 
-  useEffect(() => {
-    if (data) setServiceAgreement(data as ServiceAgreement);
-    // optional: clear when unmounting/leaving the page
-    return () => setServiceAgreement(null);
-  }, [data, setServiceAgreement]);
+  // Refs / state
+  const [manualActive, setManualActive] = useState<string | null>(null);
+  const clearTimerRef = useRef<number | null>(null);
 
   const [fadeInStates, setFadeInStates] = useState({
     fadeIn1: false,
@@ -50,6 +40,43 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     fadeIn6: false,
     fadeIn7: false,
   });
+
+  // Derived values
+  // Disable scroll spy while we're doing a programmatic scroll
+  const spiedId = useScrollSpy(SECTION_IDS as unknown as string[], {
+    offset: 140,
+    disabled: !!manualActive,
+  });
+  const activeId = manualActive ?? spiedId;
+
+  // Callbacks
+  const onJump = (sectionId: string) => {
+    setManualActive(sectionId); // set active immediately (for instant highlight)
+
+    const el = document.getElementById(sectionId);
+    if (!el) return;
+
+    fastScrollToEl(el as HTMLElement, { offset: 140, duration: 220 }); // fast
+    // after scroll finishes, release manual lock so scroll-spy resumes control
+    if (clearTimerRef.current) window.clearTimeout(clearTimerRef.current);
+    clearTimerRef.current = window.setTimeout(() => {
+      setManualActive(null);
+    }, 250); // a bit longer than duration
+  };
+
+  // Effects
+  useEffect(
+    () => () => {
+      if (clearTimerRef.current) window.clearTimeout(clearTimerRef.current);
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (data) setServiceAgreement(data as ServiceAgreement);
+    // optional: clear when unmounting/leaving the page
+    return () => setServiceAgreement(null);
+  }, [data, setServiceAgreement]);
 
   useEffect(() => {
     setFadeInStates({
@@ -72,10 +99,11 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     }
   }, [state.page, state.progress]);
 
+  // Early returns
   if (isLoading) {
     return (
       <div className="w-full min-h-screen flex items-center justify-center">
-        <Loader2Icon className="size-20 animate-spin text-efg-yellow"></Loader2Icon>
+        <Loader2Icon className="size-20 animate-spin text-efg-yellow" />
       </div>
     );
   }
@@ -86,7 +114,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
   return (
     <>
       <Header />
-      {activeId && <Sider activeId={activeId} />}
+      {activeId && <Sider activeId={activeId} onJump={onJump} />}
       <div className="pt-[88px] xl:pl-[400px]">
         <div className="px-4 xl:px-20 text-neutral-700 ">
           <div className="w-full flex flex-col items-center font-sans pt-20 pb-20 bg-white flex-grow gap-8 max-w-screen-lg mx-auto">

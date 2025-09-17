@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
 import { scrollToTop } from "@/lib/utils";
 import { useServiceAgreementStore } from "../../service-agreement-store";
+import IncentiveTable from "@/components/service-agreement/incentive-table";
 
 function ServicesForm() {
   const state = useServiceAgreementStore();
@@ -23,7 +24,7 @@ function ServicesForm() {
     title,
     desc,
   }) => (
-    <section id={id} className="flex flex-col gap-6 scroll-mt-[140px] pt-6">
+    <section id={id} className="flex flex-col gap-6 scroll-mt-[140px] ">
       <div className="flex flex-col ">
         <Label className="text-xl font-medium">{title}</Label>
         <span className="text-base text-neutral-500">{desc}</span>
@@ -39,7 +40,7 @@ function ServicesForm() {
   );
 
   return (
-    <div className="flex flex-col gap-16">
+    <div className="flex flex-col gap-16 ">
       <Section
         id="chute-cleaning"
         title="Chute Cleaning"
@@ -70,6 +71,20 @@ function ServicesForm() {
         title="Odour Control"
         desc="Targeted odour management to keep shared areas fresh."
       />
+      <div>
+        <div className="flex flex-col ">
+          <Label className="text-xl font-medium">Exclusive Benefits</Label>
+          <span className="text-base text-neutral-500">
+            Enjoy our exclusive benefits when you choose additional services
+            with us.
+          </span>
+        </div>
+        <div className="w-full overflow-x-auto mt-6 flex flex-col gap-4 ">
+          <div className="w-full min-w-[820px]">
+            <IncentiveTable currentTier={"essential"} serviceCount={4} />
+          </div>
+        </div>
+      </div>
 
       <div className="w-full flex justify-end mt-16">
         <Button
@@ -88,3 +103,25 @@ function ServicesForm() {
 }
 
 export default ServicesForm;
+
+// const chuteCleaning = getServices(
+//   state.serviceAgreement.sites,
+//   "chute_cleaning"
+// );
+// const wasteRoomPressureClean = getServices(
+//   state.serviceAgreement.sites,
+//   "waste_room_pressure_clean"
+// );
+// const selfClosingHooperDoorInspection = getServices(
+//   state.serviceAgreement.sites,
+//   "hopper_door_inspection"
+// );
+// const binCleaning = getServices(state.serviceAgreement.sites, "bin_cleaning");
+// const equipmentPreventativeMaintenance = getServices(
+//   state.serviceAgreement.sites,
+//   "equipment_maintenance"
+// );
+// const odourControl = getServices(
+//   state.serviceAgreement.sites,
+//   "odour_control"
+// );

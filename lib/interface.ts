@@ -108,3 +108,13 @@ export type Service =
   | WasteRoomPressureCleanService
   | OdourControlService
   | BinCleaningService;
+
+
+  export const SECTION_IDS = [
+    "chute-cleaning",
+    "waste-room-pressure-clean",
+    "hopper-door-inspection",
+    "bin-cleaning",
+    "equipment-preventative-maintenance",
+    "odour-control",
+  ] as const;
