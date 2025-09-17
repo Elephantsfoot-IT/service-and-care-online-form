@@ -19,9 +19,7 @@ export default function SiteInfo() {
   }, []);
   return (
     <div className=" w-full mx-auto flex flex-col ">
-      <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">
-        <MapPinIcon className="size-6 text-neutral-600"></MapPinIcon>
-      </div>
+   
       <Label className="text-xl mb-1  ">Site Details</Label>
 
       <span className="text-base mb-10 text-neutral-500 mb-6">

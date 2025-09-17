@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { options } from "@/lib/interface";
 import { scrollToTop } from "@/lib/utils";
 import { Label } from "@radix-ui/react-label";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon, InfoIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useServiceAgreementStore } from "../../service-agreement-store";
 import { useMemo } from "react";
@@ -34,7 +34,6 @@ function ServicesForm() {
     state.selfClosingHopperDoorInspectionFrequency,
     state.binCleaningFrequency,
   ]);
-  
 
   useEffect(() => {
     scrollToTop();
@@ -58,8 +57,20 @@ function ServicesForm() {
         id="chute-cleaning"
         className="flex flex-col gap-6 scroll-mt-[140px]"
       >
+        
         <div className="flex flex-col">
-          <Label className="text-xl font-medium">Chute Cleaning</Label>
+          <Label className="text-xl font-medium flex flex-row items-center gap-2">
+            Chute Cleaning{" "}
+            <a
+              href="https://www.elephantsfoot.com.au/chute-cleaning/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open help in a new tab"
+              className="inline-flex items-center"
+            >
+              <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
+            </a>
+          </Label>
           <span className="text-base text-neutral-500">
             Chute cleaning that removes grime, mould, and odours—keeping
             multi-storey buildings hygienic and safe.
@@ -70,7 +81,7 @@ function ServicesForm() {
           onChange={state.setChuteCleaningFrequency}
           options={options}
         />
-        <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
+        <div className="border border-neutral-200 h-[500px] w-full rounded-md shadow-xs" />
       </section>
 
       {/* Waste Room Pressure Clean */}
@@ -79,8 +90,17 @@ function ServicesForm() {
         className="flex flex-col gap-6 scroll-mt-[140px]"
       >
         <div className="flex flex-col">
-          <Label className="text-xl font-medium">
+          <Label className="text-xl font-medium flex flex-row items-center gap-2">
             Waste Room Pressure Clean
+            <a
+              href="https://www.elephantsfoot.com.au/waste-room-restoration/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open help in a new tab"
+              className="inline-flex items-center"
+            >
+              <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
+            </a>
           </Label>
           <span className="text-base text-neutral-500">
             High-pressure cleaning for hygienic, odour-free waste rooms.
@@ -91,7 +111,7 @@ function ServicesForm() {
           onChange={state.setWasteRoomCleaningFrequency}
           options={options}
         />
-        <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
+        <div className="border border-neutral-200 h-[500px] w-full rounded-md shadow-xs" />
       </section>
 
       {/* Self-Closing Hopper Door Inspection */}
@@ -100,8 +120,17 @@ function ServicesForm() {
         className="flex flex-col gap-6 scroll-mt-[140px]"
       >
         <div className="flex flex-col">
-          <Label className="text-xl font-medium">
+          <Label className="text-xl font-medium flex flex-row items-center gap-2">
             Self-Closing Hopper Door Inspection
+            <a
+              href="https://www.elephantsfoot.com.au/chute-door-inspection/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open help in a new tab"
+              className="inline-flex items-center"
+            >
+              <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
+            </a>
           </Label>
           <span className="text-base text-neutral-500">
             Chute-door inspections to ensure fire safety and compliance.
@@ -113,7 +142,7 @@ function ServicesForm() {
           options={options}
         />
 
-        <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
+        <div className="border border-neutral-200 h-[500px] w-full rounded-md shadow-xs" />
       </section>
 
       {/* Bin Cleaning */}
@@ -122,7 +151,18 @@ function ServicesForm() {
         className="flex flex-col gap-6 scroll-mt-[140px]"
       >
         <div className="flex flex-col">
-          <Label className="text-xl font-medium">Bin Cleaning</Label>
+          <Label className="text-xl font-medium flex flex-row items-center gap-2">
+            Bin Cleaning
+            <a
+              href="https://www.elephantsfoot.com.au/service-care/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open help in a new tab"
+              className="inline-flex items-center"
+            >
+              <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
+            </a>
+          </Label>
           <span className="text-base text-neutral-500">
             Thorough bin cleaning to reduce odours, pests, and bacteria.
           </span>
@@ -133,7 +173,7 @@ function ServicesForm() {
           options={options}
         />
 
-        <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
+        <div className="border border-neutral-200 h-[500px] w-full rounded-md shadow-xs" />
       </section>
 
       {/* Equipment Preventative Maintenance */}
@@ -142,8 +182,17 @@ function ServicesForm() {
         className="flex flex-col gap-6 scroll-mt-[140px]"
       >
         <div className="flex flex-col">
-          <Label className="text-xl font-medium">
+          <Label className="text-xl font-medium flex flex-row items-center gap-2">
             Equipment Preventative Maintenance
+            <a
+              href="https://www.elephantsfoot.com.au/preventative-maintenance/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open help in a new tab"
+              className="inline-flex items-center"
+            >
+              <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
+            </a>
           </Label>
           <span className="text-base text-neutral-500">
             Keep compactors and related equipment safe, compliant, and
@@ -156,7 +205,7 @@ function ServicesForm() {
           options={options}
         />
 
-        <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
+        <div className="border border-neutral-200 h-[500px] w-full rounded-md shadow-xs" />
       </section>
 
       {/* Odour Control */}
@@ -165,7 +214,18 @@ function ServicesForm() {
         className="flex flex-col gap-6 scroll-mt-[140px]"
       >
         <div className="flex flex-col">
-          <Label className="text-xl font-medium">Odour Control</Label>
+          <Label className="text-xl font-medium flex flex-row items-center gap-2">
+            Odour Control
+            <a
+              href="https://www.elephantsfoot.com.au/odour-management/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open help in a new tab"
+              className="inline-flex items-center"
+            >
+              <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
+            </a>
+          </Label>
           <span className="text-base text-neutral-500">
             Targeted odour management to keep shared areas fresh.
           </span>
@@ -176,7 +236,7 @@ function ServicesForm() {
           options={options.filter((option) => option.value === "quarterly")}
         />
 
-        <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
+        <div className="border border-neutral-200 h-[500px] w-full rounded-md shadow-xs" />
       </section>
 
       {/* Exclusive Benefits */}
@@ -188,16 +248,17 @@ function ServicesForm() {
             with us.
           </span>
         </div>
-  
-          <div className="overflow-x-auto p-1">
-            <IncentiveTable  serviceCount={numberOfServices} />
-      
+
+        <div className="overflow-x-auto p-1">
+          <IncentiveTable serviceCount={numberOfServices} />
         </div>
       </section>
 
-     {showError && <div className="text-destructive text-sm">
-      Choose at least 1 service to proceed.
-     </div>}
+      {showError && (
+        <div className="text-destructive text-sm">
+          Choose at least 1 service to proceed.
+        </div>
+      )}
 
       {/* Continue */}
       <div className="w-full flex justify-end mt-16">

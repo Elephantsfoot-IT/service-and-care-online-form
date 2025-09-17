@@ -17,7 +17,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
   return (
     <div className="flex flex-col gap-6 w-full text-sm leading-6 min-w-[820px]">
       {/* Rounded container to match app style */}
-      <div className="rounded-2xl border border-neutral-200 shadow-xs overflow-hidden">
+      <div className="rounded-md border border-neutral-200 shadow-xs overflow-hidden">
         <div className="w-full grid grid-cols-9">
           {/* Incentives column */}
           <div className="col-span-3 border-neutral-200 border-solid">

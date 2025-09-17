@@ -107,9 +107,7 @@ export default function AdditionalContactInfo() {
   /* JSX */
   return (
     <div className="w-full mx-auto flex flex-col">
-      <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">
-        <UsersIcon className="size-6 text-neutral-600"></UsersIcon>
-      </div>
+    
       <Label className="text-xl mb-1">Additional Contacts</Label>
       <span className="text-base text-neutral-500 mb-6">
         Provide optional additional contacts for your business as needed.

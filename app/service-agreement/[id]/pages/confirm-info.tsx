@@ -107,9 +107,7 @@ export default function TermsAndSignature() {
   /* ------------------------------ JSX ------------------------------ */
   return (
     <div ref={containerRef} className="w-full mx-auto">
-      <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">
-        <SignatureIcon className="size-5 text-neutral-600" />
-      </div>
+    
 
       <Label className="text-xl font-medium">Sign Agreement</Label>
       <span className="text-base text-neutral-500 mb-2">

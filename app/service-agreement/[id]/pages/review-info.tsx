@@ -25,9 +25,7 @@ export default function ReviewInfo() {
   /* JSX */
   return (
     <div className="w-full mx-auto">
-      <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">
-        <ListCheckIcon className="size-6 text-neutral-600"></ListCheckIcon>
-      </div>
+
       <Label className="text-xl mb-1">Review Details</Label>
       <span className="text-lg mb-10 text-neutral-500">
         Please review your selected services and the information you’ve
