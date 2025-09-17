@@ -118,3 +118,13 @@ export type Service =
     "equipment-preventative-maintenance",
     "odour-control",
   ] as const;
+
+
+export type Option = "quarterly" | "six-monthly" | "yearly";
+export type MaybeOption = Option | null;
+
+export const options: { label: string; value: Option; subtext: string;  recommended?: boolean }[] = [
+  { label: "Yearly",       value: "yearly",       subtext: "1 service per year" },
+  { label: "Six-Monthly",  value: "six-monthly",  subtext: "2 services per year"},
+  { label: "Quarterly",    value: "quarterly",    subtext: "4 services per year", recommended: true },
+];

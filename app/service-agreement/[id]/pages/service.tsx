@@ -313,7 +313,6 @@ function ServicesForm() {
       <div className="w-full overflow-x-auto mt-4 ">
         <div className="w-full min-w-[820px]">
           <IncentiveTable
-            currentTier={currentTier}
             serviceCount={serviceCount}
           />
         </div>

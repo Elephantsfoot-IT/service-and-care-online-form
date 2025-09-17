@@ -1,23 +1,46 @@
 // ServicesForm.tsx
 "use client";
-import { useEffect } from "react";
-import { Label } from "@radix-ui/react-label";
-import { Button } from "@/components/ui/button";
-import { ArrowRightIcon } from "lucide-react";
-import { scrollToTop } from "@/lib/utils";
-import { useServiceAgreementStore } from "../../service-agreement-store";
 import IncentiveTable from "@/components/service-agreement/incentive-table";
+import ServiceFrequency2 from "@/components/service-agreement/service-frequency-2";
+import { Button } from "@/components/ui/button";
+import { options } from "@/lib/interface";
+import { scrollToTop } from "@/lib/utils";
+import { Label } from "@radix-ui/react-label";
+import { ArrowRightIcon } from "lucide-react";
+import { useEffect } from "react";
+import { useServiceAgreementStore } from "../../service-agreement-store";
+import { useMemo } from "react";
 
 function ServicesForm() {
   const state = useServiceAgreementStore();
+
+  const numberOfServices = useMemo(() => {
+    const vals = [
+      state.chuteCleaningFrequency,
+      state.equipmentMaintenanceFrequency,
+      state.wasteRoomCleaningFrequency,
+      state.odourControlFrequency,
+      state.selfClosingHopperDoorInspectionFrequency,
+      state.binCleaningFrequency,
+    ];
+    return vals.filter((v): v is NonNullable<typeof v> => v != null).length;
+  }, [
+    state.chuteCleaningFrequency,
+    state.equipmentMaintenanceFrequency,
+    state.wasteRoomCleaningFrequency,
+    state.odourControlFrequency,
+    state.selfClosingHopperDoorInspectionFrequency,
+    state.binCleaningFrequency,
+  ]);
+  
 
   useEffect(() => {
     scrollToTop();
   }, []);
 
-  if (!state.serviceAgreement) return null;
-
   const goNext = () => state.setPage(2);
+
+  if (!state.serviceAgreement) return null;
 
   return (
     <div className="flex flex-col gap-16">
@@ -33,11 +56,11 @@ function ServicesForm() {
             multi-storey buildings hygienic and safe.
           </span>
         </div>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-        </div>
+        <ServiceFrequency2
+          value={state.chuteCleaningFrequency}
+          onChange={state.setChuteCleaningFrequency}
+          options={options}
+        />
         <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
       </section>
 
@@ -54,11 +77,11 @@ function ServicesForm() {
             High-pressure cleaning for hygienic, odour-free waste rooms.
           </span>
         </div>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-        </div>
+        <ServiceFrequency2
+          value={state.wasteRoomCleaningFrequency}
+          onChange={state.setWasteRoomCleaningFrequency}
+          options={options}
+        />
         <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
       </section>
 
@@ -75,11 +98,12 @@ function ServicesForm() {
             Chute-door inspections to ensure fire safety and compliance.
           </span>
         </div>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-        </div>
+        <ServiceFrequency2
+          value={state.selfClosingHopperDoorInspectionFrequency}
+          onChange={state.setSelfClosingHopperDoorInspectionFrequency}
+          options={options}
+        />
+
         <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
       </section>
 
@@ -94,11 +118,12 @@ function ServicesForm() {
             Thorough bin cleaning to reduce odours, pests, and bacteria.
           </span>
         </div>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-        </div>
+        <ServiceFrequency2
+          value={state.binCleaningFrequency}
+          onChange={state.setBinCleaningFrequency}
+          options={options}
+        />
+
         <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
       </section>
 
@@ -116,11 +141,12 @@ function ServicesForm() {
             efficient.
           </span>
         </div>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-        </div>
+        <ServiceFrequency2
+          value={state.equipmentMaintenanceFrequency}
+          onChange={state.setEquipmentMaintenanceFrequency}
+          options={options}
+        />
+
         <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
       </section>
 
@@ -135,11 +161,12 @@ function ServicesForm() {
             Targeted odour management to keep shared areas fresh.
           </span>
         </div>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-          <div className="bg-neutral-100 h-[100px] rounded-md" />
-        </div>
+        <ServiceFrequency2
+          value={state.odourControlFrequency}
+          onChange={state.setOdourControlFrequency}
+          options={options.filter((option) => option.value === "quarterly")}
+        />
+
         <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
       </section>
 
@@ -154,7 +181,7 @@ function ServicesForm() {
         </div>
         <div className="w-full overflow-x-auto flex flex-col gap-4">
           <div className="w-full min-w-[820px] scroll-mt-[140px]">
-            <IncentiveTable currentTier={"essential"} serviceCount={4} />
+            <IncentiveTable  serviceCount={numberOfServices} />
           </div>
         </div>
       </section>
