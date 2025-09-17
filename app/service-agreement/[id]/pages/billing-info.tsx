@@ -1,4 +1,12 @@
 "use client";
+
+/* ------------------------------ Imports ------------------------------ */
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeftIcon, ArrowRightIcon, LandmarkIcon } from "lucide-react";
+
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -14,13 +22,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import MultiLineAddressInput from "@/components/ui/multi-line-address-input";
-import { ArrowLeftIcon, ArrowRightIcon, LandmarkIcon } from "lucide-react";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { scrollToTop } from "@/lib/utils";
 
+/* ------------------------------ Schema/Types ------------------------------ */
 const billingSchema = z
   .object({
     accountFirstName: z
@@ -81,9 +85,12 @@ const billingSchema = z
 
 export type BillingDetailsFormType = z.infer<typeof billingSchema>;
 
+/* ------------------------------ Component ------------------------------ */
 export default function BillingDetails() {
+  /* ---------- Store ---------- */
   const state = useServiceAgreementStore();
 
+  /* ---------- Form ---------- */
   const form = useForm<BillingDetailsFormType>({
     resolver: zodResolver(billingSchema),
     mode: "onChange",
@@ -109,6 +116,7 @@ export default function BillingDetails() {
     },
   });
 
+  /* ---------- Effects ---------- */
   useEffect(() => {
     // hydrate from store
     form.setValue("accountFirstName", state.accountFirstName);
@@ -129,9 +137,13 @@ export default function BillingDetails() {
     form.setValue("postalState", state.postalState);
     form.setValue("postalPostcode", state.postalPostcode);
     form.setValue("postalCountry", state.postalCountry);
-    scrollToTop();
   }, []); // eslint-disable-line
 
+  useEffect(() => {
+    scrollToTop();
+  }, []);
+
+  /* ---------- Handlers ---------- */
   const onChange = (
     field: keyof BillingDetailsFormType,
     value: string | boolean
@@ -161,6 +173,7 @@ export default function BillingDetails() {
       state.setPage(4); // forward to SiteInfo
     })();
 
+  /* ---------- Render ---------- */
   return (
     <div className="flex flex-col w-full mx-auto">
       <Form {...form}>
@@ -637,7 +650,9 @@ export default function BillingDetails() {
                   )}
                 </div>
               </div>
-              <p className="text-sm text-muted-foreground mt-4 ml-1">Set the communications this contact receives.</p>
+              <p className="text-sm text-muted-foreground mt-4 ml-1">
+                Set the communications this contact receives.
+              </p>
             </div>
           </div>
         </form>

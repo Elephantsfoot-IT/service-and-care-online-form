@@ -1,6 +1,8 @@
 "use client";
+
+/* ------------------------------ Imports ------------------------------ */
+import { useEffect, useState, useRef } from "react";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
-import { useEffect, useState } from "react";
 import ConfirmInfo from "./pages/confirm-info";
 import CustomerInformation from "./pages/customer-info";
 import SiteInfo from "./pages/site-info";
@@ -16,18 +18,16 @@ import Sider from "@/components/sider";
 import { Loader2Icon } from "lucide-react";
 import { SECTION_IDS, ServiceAgreement } from "@/lib/interface";
 import { useScrollSpy } from "@/components/service-agreement/scroll-spy";
-import { useRef } from "react";
 import { fastScrollToEl } from "@/lib/utils";
 
+/* ------------------------------ Component ------------------------------ */
 function ServiceAgreementComponent({ id }: { id: string }) {
-  // Store / query
+  /* Store / Query */
   const state = useServiceAgreementStore();
-  const setServiceAgreement = useServiceAgreementStore(
-    (s) => s.setServiceAgreement
-  );
+  const setServiceAgreement = useServiceAgreementStore((s) => s.setServiceAgreement);
   const { data, isLoading, error, refetch } = useServiceAgreement(id);
 
-  // Refs / state
+  /* Refs / Local State */
   const [manualActive, setManualActive] = useState<string | null>(null);
   const clearTimerRef = useRef<number | null>(null);
 
@@ -41,7 +41,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     fadeIn7: false,
   });
 
-  // Derived values
+  /* Derived */
   // Disable scroll spy while we're doing a programmatic scroll
   const spiedId = useScrollSpy(SECTION_IDS as unknown as string[], {
     offset: 140,
@@ -49,7 +49,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
   });
   const activeId = manualActive ?? spiedId;
 
-  // Callbacks
+  /* Callbacks */
   const onJump = (sectionId: string) => {
     setManualActive(sectionId); // set active immediately (for instant highlight)
 
@@ -64,7 +64,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     }, 250); // a bit longer than duration
   };
 
-  // Effects
+  /* Effects */
   useEffect(
     () => () => {
       if (clearTimerRef.current) window.clearTimeout(clearTimerRef.current);
@@ -99,7 +99,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     }
   }, [state.page, state.progress]);
 
-  // Early returns
+  /* Early Returns */
   if (isLoading) {
     return (
       <div className="w-full min-h-screen flex items-center justify-center">
@@ -111,6 +111,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     return <div>Error: {error.message}</div>;
   }
 
+  /* Render */
   return (
     <>
       <Header />
@@ -121,69 +122,41 @@ function ServiceAgreementComponent({ id }: { id: string }) {
             {/* {state.page >= 2 && <ServiceAgreementProgress ></ServiceAgreementProgress>} */}
 
             {state.page === 1 && (
-              <div
-                className={`${
-                  fadeInStates.fadeIn1 ? "fade-in" : "opacity-0"
-                } w-full flex flex-col`}
-              >
-                <ServicesForm></ServicesForm>
+              <div className={`${fadeInStates.fadeIn1 ? "fade-in" : "opacity-0"} w-full flex flex-col`}>
+                <ServicesForm />
               </div>
             )}
             {state.page === 2 && (
-              <div
-                className={`${
-                  fadeInStates.fadeIn2 ? "fade-in" : "opacity-0"
-                } w-full flex flex-col`}
-              >
-                <CustomerInformation></CustomerInformation>
+              <div className={`${fadeInStates.fadeIn2 ? "fade-in" : "opacity-0"} w-full flex flex-col`}>
+                <CustomerInformation />
               </div>
             )}
             {state.page === 3 && (
-              <div
-                className={`${
-                  fadeInStates.fadeIn3 ? "fade-in" : "opacity-0"
-                } w-full flex flex-col`}
-              >
-                <BillingDetails></BillingDetails>
+              <div className={`${fadeInStates.fadeIn3 ? "fade-in" : "opacity-0"} w-full flex flex-col`}>
+                <BillingDetails />
               </div>
             )}
             {state.page === 4 && (
-              <div
-                className={`${
-                  fadeInStates.fadeIn4 ? "fade-in" : "opacity-0"
-                } w-full flex flex-col`}
-              >
-                <AdditionalContactInfo></AdditionalContactInfo>
+              <div className={`${fadeInStates.fadeIn4 ? "fade-in" : "opacity-0"} w-full flex flex-col`}>
+                <AdditionalContactInfo />
               </div>
             )}
 
             {state.page === 5 && (
-              <div
-                className={`${
-                  fadeInStates.fadeIn5 ? "fade-in" : "opacity-0"
-                } w-full flex flex-col`}
-              >
-                <SiteInfo></SiteInfo>
+              <div className={`${fadeInStates.fadeIn5 ? "fade-in" : "opacity-0"} w-full flex flex-col`}>
+                <SiteInfo />
               </div>
             )}
 
             {state.page === 6 && (
-              <div
-                className={`${
-                  fadeInStates.fadeIn6 ? "fade-in" : "opacity-0"
-                } w-full flex flex-col`}
-              >
-                <ReviewInfo></ReviewInfo>
+              <div className={`${fadeInStates.fadeIn6 ? "fade-in" : "opacity-0"} w-full flex flex-col`}>
+                <ReviewInfo />
               </div>
             )}
 
             {state.page === 7 && (
-              <div
-                className={`${
-                  fadeInStates.fadeIn7 ? "fade-in" : "opacity-0"
-                } w-full flex flex-col`}
-              >
-                <ConfirmInfo></ConfirmInfo>
+              <div className={`${fadeInStates.fadeIn7 ? "fade-in" : "opacity-0"} w-full flex flex-col`}>
+                <ConfirmInfo />
               </div>
             )}
           </div>
@@ -193,6 +166,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
   );
 }
 
+/* ------------------------------ Page Wrapper ------------------------------ */
 export default function ServiceAgreementPage() {
   const params = useParams();
   const id = params.id as string;

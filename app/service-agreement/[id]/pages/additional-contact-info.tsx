@@ -1,5 +1,6 @@
 "use client";
 
+/* ------------------------------ Imports ------------------------------ */
 import React, { useEffect, useMemo, useRef } from "react";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Button } from "@/components/ui/button";
@@ -17,9 +18,12 @@ import AdditionalcontactForm, {
 import { AdditionalContact } from "@/lib/interface";
 import { toast } from "sonner";
 
+/* ------------------------------ Component ------------------------------ */
 export default function AdditionalContactInfo() {
+  /* Store */
   const state = useServiceAgreementStore();
 
+  /* Refs */
   // Keep a map of refs keyed by contact id
   const formRefs = useRef<Record<string, AdditionalContactFormHandle | null>>(
     {}
@@ -30,6 +34,7 @@ export default function AdditionalContactInfo() {
       formRefs.current[id] = instance;
     };
 
+  /* Handlers */
   const goBack = () => state.setPage(3);
 
   const handleSubmit = async () => {
@@ -94,10 +99,12 @@ export default function AdditionalContactInfo() {
     ]);
   };
 
+  /* Effects */
   useEffect(() => {
     scrollToTop();
   }, []);
 
+  /* JSX */
   return (
     <div className="w-full mx-auto flex flex-col">
       <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">

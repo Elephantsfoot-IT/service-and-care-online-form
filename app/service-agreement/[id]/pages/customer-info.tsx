@@ -84,8 +84,13 @@ export default function CustomerDetails() {
     form.setValue("businessCity", state.businessCity);
     form.setValue("businessState", state.businessState);
     form.setValue("businessPostcode", state.businessPostcode);
-    scrollToTop();
   }, []); // eslint-disable-line
+
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
+
 
   const onChange = (field: keyof CustomerDetailsFormType, value: string) => {
     state.updateField(field as string, value);

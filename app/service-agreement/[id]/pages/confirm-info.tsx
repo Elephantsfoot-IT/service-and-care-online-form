@@ -1,4 +1,12 @@
 "use client";
+
+/* ------------------------------ Imports ------------------------------ */
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeftIcon, SignatureIcon } from "lucide-react";
+
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import ServiceAndCareTerms from "@/components/terms-and-conditions/service-and-care-terms";
 import { Button } from "@/components/ui/button";
@@ -15,12 +23,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import SignaturePadComponent from "@/components/ui/signature-pad";
 import { scrollToTop } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeftIcon, SignatureIcon } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
+/* ------------------------------ Schema ------------------------------ */
 const TermsSchema = z.object({
   signFullName: z.string().min(1, { message: "Name cannot be empty" }),
   signTitle: z.string().min(1, { message: "Title cannot be empty" }),
@@ -29,6 +33,7 @@ const TermsSchema = z.object({
   }),
 });
 
+/* ------------------------------ Component ------------------------------ */
 export default function TermsAndSignature() {
   /** Refs */
   const containerRef = useRef<HTMLDivElement>(null);
@@ -67,12 +72,9 @@ export default function TermsAndSignature() {
 
   const onSubmit = useCallback(
     form.handleSubmit((values) => {
-      // Persist to store (if you want)
       state.updateField("signFullName", values.signFullName);
       state.updateField("signTitle", values.signTitle);
       state.updateFieldBoolean("conditionAgree", values.conditionAgree);
-
-      // TODO: Trigger your final submit action or next step here
       // e.g., state.submitAgreement()
     }),
     [form, state]
@@ -96,21 +98,27 @@ export default function TermsAndSignature() {
     form.setValue("signFullName", state.signFullName);
     form.setValue("signTitle", state.signTitle);
     form.setValue("conditionAgree", state.conditionAgree);
-    scrollToTop();
-  }, [state.signFullName, state.signTitle, state.conditionAgree]); // hydrate + scroll
+  }, [state.signFullName, state.signTitle, state.conditionAgree, form]);
 
+  useEffect(() => {
+    scrollToTop();
+  }, []);
+
+  /* ------------------------------ JSX ------------------------------ */
   return (
     <div ref={containerRef} className="w-full mx-auto">
       <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">
-        <SignatureIcon className="size-5 text-neutral-600"></SignatureIcon>
+        <SignatureIcon className="size-5 text-neutral-600" />
       </div>
-      <Label className="text-xl font-medium ">Sign Agreement</Label>
+
+      <Label className="text-xl font-medium">Sign Agreement</Label>
       <span className="text-base text-neutral-500 mb-2">
         Read the Terms and Conditions and sign the agreement.
       </span>
+
       <hr className="border-neutral-300 border-dashed my-6" />
 
-      <Label className="text-sm  ">Terms and Conditions</Label>
+      <Label className="text-sm">Terms and Conditions</Label>
       {/* Terms box */}
       <div className="p-4 md:p-6 2xl:p-8 border border-neutral-200 rounded-md shadow-xs w-full max-h-[500px] overflow-y-auto mt-2 mb-4">
         <ServiceAndCareTerms />
@@ -134,12 +142,8 @@ export default function TermsAndSignature() {
                       state.updateFieldBoolean("conditionAgree", value);
                     }}
                   />
-                  <label
-                    htmlFor="terms"
-                    className="text-sm font-medium leading-none"
-                  >
-                    Accept terms and conditions{" "}
-                    <span className="text-red-500">*</span>
+                  <label htmlFor="terms" className="text-sm font-medium leading-none">
+                    Accept terms and conditions <span className="text-red-500">*</span>
                   </label>
                 </div>
                 <FormMessage />
@@ -221,26 +225,18 @@ export default function TermsAndSignature() {
           trimmedDataURL={state.trimmedDataURL}
         />
         <div className="text-sm text-neutral-500 mt-2">
-          By providing your electronic signature and initials, you acknowledge
-          that they are legally binding, equivalent to a physical signature, and
-          signify your agreement to the terms and conditions.
+          By providing your electronic signature and initials, you acknowledge that
+          they are legally binding, equivalent to a physical signature, and signify
+          your agreement to the terms and conditions.
         </div>
       </div>
 
       {/* Nav */}
       <div className="flex flex-row gap-2 justify-between mt-10">
-        <Button
-          variant="outline"
-          onClick={goBack}
-          className="w-fit cursor-pointer"
-        >
+        <Button variant="outline" onClick={goBack} className="w-fit cursor-pointer">
           <ArrowLeftIcon /> Back
         </Button>
-        <Button
-          onClick={onSubmit}
-          className="w-[200px] cursor-pointer"
-          variant="efg"
-        >
+        <Button onClick={onSubmit} className="w-[200px] cursor-pointer" variant="efg">
           Submit
         </Button>
       </div>

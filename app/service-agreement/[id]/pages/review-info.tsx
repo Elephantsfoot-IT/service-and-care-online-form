@@ -1,21 +1,28 @@
 "use client";
+
+/* ------------------------------ Imports ------------------------------ */
+import { useEffect } from "react";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { scrollToTop } from "@/lib/utils";
 import { ArrowLeftIcon, ListCheckIcon } from "lucide-react";
-import { useEffect } from "react";
 
+/* ------------------------------ Component ------------------------------ */
 export default function ReviewInfo() {
+  /* Store */
   const state = useServiceAgreementStore();
 
+  /* Handlers */
+  const goBack = () => state.setPage(5); // back to Site Info
+  const goNext = () => state.setPage(7); // forward to Terms & Signature
+
+  /* Effects */
   useEffect(() => {
     scrollToTop();
   }, []);
 
-  const goBack = () => state.setPage(5); // back to Site Info
-  const goNext = () => state.setPage(7); // forward to Terms & Signature
-
+  /* JSX */
   return (
     <div className="w-full mx-auto">
       <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">
