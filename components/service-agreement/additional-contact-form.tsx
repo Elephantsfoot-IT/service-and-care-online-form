@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useImperativeHandle, useRef } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -11,12 +11,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
+import { AdditionalContact } from "@/lib/interface";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { XIcon } from "lucide-react";
+import React, { useEffect, useImperativeHandle, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { AdditionalContact } from "@/lib/interface";
-import { Trash2Icon } from "lucide-react";
 import { Button } from "../ui/button";
 
 export type AdditionalContactFormHandle = {
@@ -167,26 +167,20 @@ const AdditionalcontactForm = React.forwardRef<
   return (
     <div
       ref={rootRef}
-      className="flex flex-col w-full mx-auto p-4 md:p-6 2xl:p-8 rounded-lg  border border-input shadow-xs"
+      className="flex flex-col w-full mx-auto rounded-lg  border border-input shadow-xs overflow-hidden"
     >
+      <div className="flex flex-row justify-between w-full items-center p-4 md:p-6 2xl:p-8 border-b border-input bg-neutral-50">
+        <Label className="text-base">Contact ({index + 1})</Label>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => handleDelete(contact.id!)}
+        >
+          <XIcon />
+        </Button>
+      </div>
       <Form {...ContactForm}>
-        <form className="flex flex-col gap-6">
-          {/* Heading */}
-          <div className="flex flex-row justify-between w-full items-center">
-            <Label className="text-base">
-              Additional Contact ({index + 1})
-            </Label>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => handleDelete(contact.id!)}
-            >
-              <Trash2Icon />
-            </Button>
-          </div>
-
-          <hr className="border-neutral-300 border-dashed" />
-
+        <form className="flex flex-col gap-6 p-4 md:p-6 2xl:p-8">
           {/* Full name */}
           <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
             <Label className="w-full md:w-1/3 text-sm">

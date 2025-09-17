@@ -162,7 +162,7 @@ export default function ReviewInfo() {
           >
             <div className="flex flex-row space-x-4 items-center">
               <Label className="text-lg break-words ">
-                Additional Contact ({index + 1})
+                Contact ({index + 1})
               </Label>
               <Button
                 variant="ghost"

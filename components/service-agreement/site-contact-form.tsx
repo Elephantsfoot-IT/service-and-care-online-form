@@ -11,12 +11,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { SiteContact } from "@/lib/interface";
-import { Trash2Icon } from "lucide-react";
+import { Trash2Icon, XIcon } from "lucide-react";
 import { Button } from "../ui/button";
 
 export type SiteContactFormHandle = {
@@ -27,16 +26,17 @@ export type SiteContactFormHandle = {
 interface SiteContactFormProps {
   contact: SiteContact; // includes: id: string
   index: number;
+  isPrimary?: boolean; // NEW: to block delete on primary
   handleDelete: (id: string) => void;
-  handleChange: (data: SiteContact) => void; // updates the store for this contact
+  handleChange: (data: SiteContact) => void; // updates parent/store for this contact
 }
 
 const FormSchema = z
   .object({
     GivenName: z.string().min(1, { message: "Given name cannot be empty" }),
     FamilyName: z.string().min(1, { message: "Family name cannot be empty" }),
-    Email: z.string(), // (you allowed empty email in your last snippet)
-    WorkPhone: z.string(), // (and empty phones)
+    Email: z.string(), // allow empty
+    WorkPhone: z.string(),
     CellPhone: z.string(),
     Position: z.string().optional().or(z.literal("")),
     Department: z.string().optional().or(z.literal("")),
@@ -50,7 +50,7 @@ const FormSchema = z
 const SiteContactForm = React.forwardRef<
   SiteContactFormHandle,
   SiteContactFormProps
->(({ contact, index, handleDelete, handleChange }, ref) => {
+>(({ contact, index, isPrimary = false, handleDelete, handleChange }, ref) => {
   const ContactForm = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     mode: "onChange",
@@ -70,7 +70,12 @@ const SiteContactForm = React.forwardRef<
     const fields = Object.keys(ContactForm.getValues()) as (keyof z.infer<
       typeof FormSchema
     >)[];
-    fields.forEach((f) => ContactForm.setValue(f, (contact as SiteContact)[f]));
+    fields.forEach((f) =>
+      ContactForm.setValue(
+        f,
+        (contact as SiteContact)[f] as SiteContact[keyof SiteContact]
+      )
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contact]);
 
@@ -80,7 +85,6 @@ const SiteContactForm = React.forwardRef<
     validate: async () => {
       const ok = await ContactForm.trigger();
       if (!ok) {
-        // Bring invalid form into view
         rootRef.current?.scrollIntoView({
           behavior: "smooth",
           block: "center",
@@ -103,21 +107,28 @@ const SiteContactForm = React.forwardRef<
   return (
     <div
       ref={rootRef}
-      className="flex flex-col w-full rounded-lg p-4 md:p-6 border border-input border-dashed"
+      className="flex flex-col w-full rounded-lg border border-input overflow-hidden"
     >
-      <Form {...ContactForm}>
-        <form className="flex flex-col gap-6">
-          {/* Heading */}
-          {/* <div className="flex flex-row justify-between w-full items-center">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => handleDelete(contact.id!)}
-            >
-              <Trash2Icon />
-            </Button>
-          </div> */}
+      {/* Heading */}
+      <div className="flex flex-row justify-between w-full items-center p-4 md:p-6 border-b border-input bg-neutral-50">
+        <Label className="text-base">
+          {isPrimary ? "Primary Contact" : `Contact (${index + 1})`}
+        </Label>
+        {!isPrimary &&<Button
+          variant="ghost"
+          size="icon"
+          onClick={() => !isPrimary && handleDelete(contact.id!)}
+          disabled={isPrimary}
+          title={
+            isPrimary ? "Primary contact cannot be deleted" : "Delete contact"
+          }
+        >
+          <XIcon />
+        </Button>}
+      </div>
 
+      <Form {...ContactForm}>
+        <form className="flex flex-col gap-6 p-4 md:p-6">
           {/* Full name */}
           <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
             <Label className="w-full md:w-1/3 text-sm">
@@ -300,8 +311,6 @@ const SiteContactForm = React.forwardRef<
               </FormItem>
             )}
           />
-
-          {/* Use this contact for */}
         </form>
       </Form>
     </div>

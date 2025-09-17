@@ -3,6 +3,7 @@ import { useServiceAgreementStore } from "@/app/service-agreement/service-agreem
 import SiteForm from "@/components/service-agreement/site-form";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { ServiceAgreement, Site } from "@/lib/interface";
 import { scrollToTop } from "@/lib/utils";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useEffect } from "react";
@@ -22,6 +23,37 @@ export default function SiteInfo() {
   if (state.serviceAgreement?.sites.length == 0) {
     return null;
   }
+  const handleEditSites = (siteId: string, patch: Partial<Site>) => {
+    const prev = useServiceAgreementStore.getState().serviceAgreement;
+    if (!prev) return;
+
+    const nextSites = (prev.sites ?? []).map((site: Site) => {
+      const currentId = site.simpro_site_id;
+
+      if (currentId !== siteId) return site;
+
+      // Start with a shallow merge
+      const merged: Site = { ...site, ...patch };
+
+      // Deep-merge site_address if provided
+      if (patch.site_address) {
+        merged.site_address = {
+          ...site.site_address,
+          ...patch.site_address,
+        };
+      }
+
+      // If site_contacts provided in patch, use it as-is (you can enforce min/max elsewhere)
+      if (patch.site_contacts) {
+        merged.site_contacts = [...patch.site_contacts];
+      }
+
+      return merged;
+    });
+
+    useServiceAgreementStore.getState().setServiceAgreement({ ...prev, sites: nextSites });
+  };
+
   return (
     <div className=" w-full mx-auto flex flex-col gap-10">
       <div className="flex flex-col">
@@ -33,7 +65,7 @@ export default function SiteInfo() {
 
       <div className="flex flex-col gap-10">
         {state.serviceAgreement?.sites.map((site) => (
-          <SiteForm key={site.simpro_site_id} site={site} />
+          <SiteForm key={site.simpro_site_id} site={site} handleEditSites={handleEditSites} />
         ))}
       </div>
 
