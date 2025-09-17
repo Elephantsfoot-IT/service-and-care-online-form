@@ -50,7 +50,7 @@ function SiteForm({ site }: { site: Site }) {
   );
 
   return (
-    <div className="flex flex-col w-full mx-auto p-4 md:p-6 2xl:p-8 border border-neutral-200  shadow-xs rounded-md gap-6">
+    <div className="flex flex-col w-full mx-auto p-4 md:p-6 2xl:p-8 border border-neutral-200 shadow-xs rounded-lg gap-6">
       <Form {...form}>
         <form className="flex flex-col gap-6">
           <Label className="text-base mb-1">{site.site_name}</Label>

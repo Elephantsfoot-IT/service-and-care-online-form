@@ -25,8 +25,8 @@ export default function SiteInfo() {
   return (
     <div className=" w-full mx-auto flex flex-col gap-10">
       <div className="flex flex-col">
-        <Label className="text-xl mb-1">Site Details</Label>
-        <span className="text-base text-neutral-500">
+        <Label className="text-2xl mb-1">Site Details</Label>
+        <span className="text-lg text-neutral-500">
           Provide the site information associated with this service agreement.
         </span>
       </div>

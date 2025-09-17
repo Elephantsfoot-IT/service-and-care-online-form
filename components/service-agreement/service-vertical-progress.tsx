@@ -35,11 +35,11 @@ function FormVerticalProgress({ activeId, onJump }: Props) {
             )}
             onClick={() => onJump?.(it.id)}
           >
-            <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs">
+            <div className="size-10 border border-neutral-200 rounded-lg flex items-center justify-center shadow-xs">
               <img src={it.img} alt={it.label} className="size-4.5" />
             </div>
             <div
-              className={cn("text-base ", activeId === it.id ? "underline" : "")}
+              className={cn("text-base ", activeId === it.id ? "underline font-medium" : "")}
             >
               <div className="text-base">{it.label}</div>
             </div>

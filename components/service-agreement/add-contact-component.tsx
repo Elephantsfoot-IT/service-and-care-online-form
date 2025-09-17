@@ -60,7 +60,7 @@ function AdditionalContactInfo() {
       {additionalContacts.length === 0 ? (
         <div
           onClick={handleAddContact}
-          className="text-sm w-full h-40 bg-neutral-50 rounded-md flex justify-center items-center gap-2 hover:underline cursor-pointer"
+          className="text-sm w-full h-40 bg-neutral-100 rounded-lg flex justify-center items-center gap-2 hover:underline cursor-pointer"
         >
           <PlusIcon className="size-4" /> Add Contact
         </div>

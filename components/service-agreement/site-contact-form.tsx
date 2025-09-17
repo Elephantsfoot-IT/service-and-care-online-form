@@ -103,7 +103,7 @@ const SiteContactForm = React.forwardRef<
   return (
     <div
       ref={rootRef}
-      className="flex flex-col w-full rounded-md p-4 md:p-6 border border-neutral-200 border-dashed"
+      className="flex flex-col w-full rounded-lg p-4 md:p-6 border border-neutral-200 border-dashed"
     >
       <Form {...ContactForm}>
         <form className="flex flex-col gap-6">

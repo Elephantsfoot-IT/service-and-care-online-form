@@ -34,7 +34,7 @@ export default function ReviewInfo() {
       </div>
 
       {/* Company Details */}
-      <div className="p-4 md:p-6 2xl:p-8 flex flex-col gap-2 border border-neutral-200 rounded-md shadow-xs">
+      <div className="p-4 md:p-6 2xl:p-8 flex flex-col gap-2 border border-neutral-200 rounded-lg shadow-xs">
         <div className="flex flex-row space-x-4 items-center">
           <Label className="text-lg break-words ">Company Details</Label>
           <Button
@@ -47,7 +47,7 @@ export default function ReviewInfo() {
         </div>
 
         <div className="flex flex-col">
-          <div className="flex flex-col space-y-4 rounded-md">
+          <div className="flex flex-col space-y-4 rounded-lg">
             <div className="flex flex-col space-y-1">
               <Label className="text-neutral-500 text-sm">
                 {state.companyType === "Other"
@@ -85,7 +85,7 @@ export default function ReviewInfo() {
       </div>
 
       {/* Billing Details */}
-      <div className="p-4 md:p-6 2xl:p-8 flex flex-col gap-2  border border-neutral-200 rounded-md shadow-xs">
+      <div className="p-4 md:p-6 2xl:p-8 flex flex-col gap-2  border border-neutral-200 rounded-lg shadow-xs">
         <div className="flex flex-row space-x-4 items-center">
           <Label className="text-lg break-words ">Billing Details</Label>
           <Button
@@ -98,7 +98,7 @@ export default function ReviewInfo() {
         </div>
 
         <div className="flex flex-col">
-          <div className="flex flex-col space-y-4 rounded-md">
+          <div className="flex flex-col space-y-4 rounded-lg">
             <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 w-full">
               <div className="flex-1 flex flex-col space-y-1">
                 <Label className="text-neutral-500 text-sm">First name</Label>
@@ -158,7 +158,7 @@ export default function ReviewInfo() {
         {state.additionalContacts.map((contact, index) => (
           <div
             key={contact.id}
-            className="p-4 md:p-6 2xl:p-8 flex flex-col gap-2 mt-4 mb-6 border border-neutral-200 rounded-md shadow-xs"
+            className="p-4 md:p-6 2xl:p-8 flex flex-col gap-2 mt-4 mb-6 border border-neutral-200 rounded-lg shadow-xs"
           >
             <div className="flex flex-row space-x-4 items-center">
               <Label className="text-lg break-words ">
@@ -174,7 +174,7 @@ export default function ReviewInfo() {
             </div>
 
             <div className="flex flex-col">
-              <div className="flex flex-col space-y-4 rounded-md">
+              <div className="flex flex-col space-y-4 rounded-lg">
                 <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 w-full">
                   <div className="flex-1 flex flex-col space-y-1">
                     <Label className="text-neutral-500 text-sm">

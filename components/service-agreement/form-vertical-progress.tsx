@@ -55,10 +55,10 @@ function FormVerticalProgress() {
                 isLocked ? "cursor-not-allowed" : "cursor-pointer"
               )}
             >
-              <div className="size-10 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs">
+              <div className="size-10 border border-neutral-200 rounded-lg flex items-center justify-center shadow-xs">
                 <Icon className="size-4.5 text-neutral-600" />
               </div>
-              <div className={cn("text-base", isActive && "underline")}>
+              <div className={cn("text-base", isActive && "underline font-medium")}>
                 {label}
               </div>
             </button>
