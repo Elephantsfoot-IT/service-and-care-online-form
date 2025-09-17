@@ -254,7 +254,7 @@ function MultiLineAddressInput<T extends FieldValues>({
                     />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent className="border border-neutral-200">
+                <SelectContent className="border border-input">
                   {["NSW", "VIC", "QLD", "SA", "WA", "TAS", "ACT", "NT"].map(
                     (state) => (
                       <SelectItem key={state} value={state}>

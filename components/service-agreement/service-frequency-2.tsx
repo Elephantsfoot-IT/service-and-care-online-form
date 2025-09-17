@@ -48,7 +48,7 @@ function ServiceFrequency2({ value, onChange, options }: Props) {
           <div
             key={option.value}
             className={cn(
-              "flex-1 border border-neutral-200 h-[100px] rounded-lg relative p-4 text-left transition-colors cursor-pointer shadow-xs",
+              "flex-1 border border-input h-[100px] rounded-lg relative p-4 text-left transition-colors cursor-pointer shadow-xs",
 
               selectedClasses
             )}

@@ -128,7 +128,7 @@ export default function CustomerDetails() {
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className="border border-neutral-200">
+                    <SelectContent className="border border-input">
                       <SelectItem value="Strata management">
                         Strata management
                       </SelectItem>

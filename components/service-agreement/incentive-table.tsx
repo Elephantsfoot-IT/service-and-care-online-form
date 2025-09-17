@@ -17,27 +17,27 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
   return (
     <div className="flex flex-col gap-6 w-full text-sm leading-6 min-w-[820px]">
       {/* Rounded container to match app style */}
-      <div className="rounded-lg border border-neutral-200 shadow-xs overflow-hidden">
+      <div className="rounded-lg border border-input shadow-xs overflow-hidden">
         <div className="w-full grid grid-cols-9">
           {/* Incentives column */}
-          <div className="col-span-3 border-neutral-200 border-solid">
-            <div className="h-18 border-b border-neutral-200 border-solid font-medium flex justify-start items-center px-2 " />
-            <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4 font-medium">
+          <div className="col-span-3 border-input border-solid">
+            <div className="h-18 border-b border-input border-solid font-medium flex justify-start items-center px-2 " />
+            <div className="h-14 border-b border-input border-solid flex justify-start items-center px-4 font-medium">
               Price Lock Guarantee (24 Months)
             </div>
-            <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4 font-medium">
+            <div className="h-14 border-b border-input border-solid flex justify-start items-center px-4 font-medium">
               Priority Response Within 8 Hours
             </div>
-            <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4 font-medium">
+            <div className="h-14 border-b border-input border-solid flex justify-start items-center px-4 font-medium">
               Priority Booking
             </div>
-            <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4 font-medium">
+            <div className="h-14 border-b border-input border-solid flex justify-start items-center px-4 font-medium">
               Flexible 21-Day Payment Terms
             </div>
-            <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4 font-medium">
+            <div className="h-14 border-b border-input border-solid flex justify-start items-center px-4 font-medium">
               Discounts on Parts
             </div>
-            <div className="h-14 border-b border-neutral-200 border-solid flex justify-start items-center px-4 font-medium">
+            <div className="h-14 border-b border-input border-solid flex justify-start items-center px-4 font-medium">
               Service Pricing Discounts
             </div>
             <div className="h-14 border-b flex justify-start items-center px-4 font-medium">
@@ -57,7 +57,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
 
             <div
               className={cn(
-                "h-18 border-b border-neutral-200 border-solid font-medium flex justify-center items-center relative transition-all duration-300 ",
+                "h-18 border-b border-input border-solid font-medium flex justify-center items-center relative transition-all duration-300 ",
                 currentTier === "basic" && "bg-neutral-200/60 tier-header"
               )}
             >
@@ -83,22 +83,22 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
               </div>
             </div>
 
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <CheckIcon className="size-4 text-neutral-800" />
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <CheckIcon className="size-4 text-neutral-800" />
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <CheckIcon className="size-4 text-neutral-800" />
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <MinusIcon className="size-4 text-neutral-300" />
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <MinusIcon className="size-4 text-neutral-300" />
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <MinusIcon className="size-4 text-neutral-300" />
             </div>
             <div className="h-14 border-b flex justify-center items-center">
@@ -120,7 +120,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                 "h-18 border-solid font-medium flex justify-center items-center relative transition-all duration-300 ",
                 currentTier === "essential"
                   ? "bg-[#ffdb01] text-neutral-800 tier-header border-b-[#ffdb01]"
-                  : "border-b border-neutral-200"
+                  : "border-b border-input"
               )}
             >
               <div className="relative z-10 flex flex-col items-center">
@@ -136,22 +136,22 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
               </div>
             </div>
 
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <CheckIcon className="size-4 text-neutral-800" />
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <CheckIcon className="size-4 text-neutral-800" />
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <CheckIcon className="size-4 text-neutral-800" />
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <CheckIcon className="size-4 text-neutral-800" />
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <span className="text-sm font-semibold">10%</span>
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <CheckIcon className="size-4 text-neutral-800" />
             </div>
             <div className="h-14 border-b flex justify-center items-center">
@@ -170,7 +170,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                 "h-18 border-solid font-medium flex justify-center items-center relative transition-all duration-300",
                 currentTier === "pro"
                   ? "bg-[#1e60ad] text-white tier-header border-b-[#1e60ad]"
-                  : "border-b border-neutral-200"
+                  : "border-b border-input"
               )}
             >
               <div
@@ -194,22 +194,22 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
               </div>
             </div>
 
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <CheckIcon className="size-4 text-neutral-800" />
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <CheckIcon className="size-4 text-neutral-800" />
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <CheckIcon className="size-4 text-neutral-800" />
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <CheckIcon className="size-4 text-neutral-800" />
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <span className="text-sm font-semibold">15%</span>
             </div>
-            <div className="h-14 border-b border-neutral-200 flex justify-center items-center">
+            <div className="h-14 border-b border-input flex justify-center items-center">
               <CheckIcon className="size-4 text-neutral-800" />
             </div>
             <div className="h-14 border-b flex justify-center items-center">

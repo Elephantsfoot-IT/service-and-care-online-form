@@ -81,7 +81,7 @@ function ServicesForm() {
           onChange={state.setChuteCleaningFrequency}
           options={options}
         />
-        <div className="border border-neutral-200 h-[500px] w-full rounded-lg shadow-xs" />
+        <div className="border border-input h-[500px] w-full rounded-lg shadow-xs" />
       </section>
 
       {/* Waste Room Pressure Clean */}
@@ -111,7 +111,7 @@ function ServicesForm() {
           onChange={state.setWasteRoomCleaningFrequency}
           options={options}
         />
-        <div className="border border-neutral-200 h-[500px] w-full rounded-lg shadow-xs" />
+        <div className="border border-input h-[500px] w-full rounded-lg shadow-xs" />
       </section>
 
       {/* Self-Closing Hopper Door Inspection */}
@@ -142,7 +142,7 @@ function ServicesForm() {
           options={options}
         />
 
-        <div className="border border-neutral-200 h-[500px] w-full rounded-lg shadow-xs" />
+        <div className="border border-input h-[500px] w-full rounded-lg shadow-xs" />
       </section>
 
       {/* Bin Cleaning */}
@@ -173,7 +173,7 @@ function ServicesForm() {
           options={options}
         />
 
-        <div className="border border-neutral-200 h-[500px] w-full rounded-lg shadow-xs" />
+        <div className="border border-input h-[500px] w-full rounded-lg shadow-xs" />
       </section>
 
       {/* Equipment Preventative Maintenance */}
@@ -205,7 +205,7 @@ function ServicesForm() {
           options={options}
         />
 
-        <div className="border border-neutral-200 h-[500px] w-full rounded-lg shadow-xs" />
+        <div className="border border-input h-[500px] w-full rounded-lg shadow-xs" />
       </section>
 
       {/* Odour Control */}
@@ -236,7 +236,7 @@ function ServicesForm() {
           options={options.filter((option) => option.value === "quarterly")}
         />
 
-        <div className="border border-neutral-200 h-[500px] w-full rounded-lg shadow-xs" />
+        <div className="border border-input h-[500px] w-full rounded-lg shadow-xs" />
       </section>
 
       {/* Exclusive Benefits */}

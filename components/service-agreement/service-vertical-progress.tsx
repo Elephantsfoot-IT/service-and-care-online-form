@@ -35,7 +35,7 @@ function FormVerticalProgress({ activeId, onJump }: Props) {
             )}
             onClick={() => onJump?.(it.id)}
           >
-            <div className="size-10 border border-neutral-200 rounded-lg flex items-center justify-center shadow-xs">
+            <div className="size-10 border border-input rounded-lg flex items-center justify-center shadow-xs">
               <img src={it.img} alt={it.label} className="size-4.5" />
             </div>
             <div
