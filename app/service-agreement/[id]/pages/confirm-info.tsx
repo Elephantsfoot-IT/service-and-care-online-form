@@ -102,11 +102,9 @@ export default function TermsAndSignature() {
   return (
     <div ref={containerRef} className="w-full mx-auto">
       <div className="size-12 border border-neutral-200 rounded-md flex items-center justify-center shadow-xs mb-4">
-              <SignatureIcon className="size-5 text-neutral-600"></SignatureIcon>
-            </div>
-      <Label className="text-xl font-medium ">
-        Sign Agreement
-      </Label>
+        <SignatureIcon className="size-5 text-neutral-600"></SignatureIcon>
+      </div>
+      <Label className="text-xl font-medium ">Sign Agreement</Label>
       <span className="text-base text-neutral-500 mb-2">
         Read the Terms and Conditions and sign the agreement.
       </span>
@@ -117,7 +115,7 @@ export default function TermsAndSignature() {
       <div className="p-4 md:p-6 2xl:p-8 border border-neutral-200 rounded-md shadow-xs w-full max-h-[500px] overflow-y-auto mt-2 mb-4">
         <ServiceAndCareTerms />
       </div>
-      
+
       {/* Consent + Sign */}
       <Form {...form}>
         <form className="space-y-4">
@@ -140,7 +138,8 @@ export default function TermsAndSignature() {
                     htmlFor="terms"
                     className="text-sm font-medium leading-none"
                   >
-                    Accept terms and conditions <span className="text-red-500">*</span>
+                    Accept terms and conditions{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                 </div>
                 <FormMessage />
@@ -210,7 +209,9 @@ export default function TermsAndSignature() {
 
       {/* Signature */}
       <div className="w-full flex flex-row justify-between items-end mt-4">
-        <Label className="text-sm">Signature <span className="text-red-500">*</span></Label>
+        <Label className="text-sm">
+          Signature <span className="text-red-500">*</span>
+        </Label>
         <span className="ml-auto text-sm text-neutral-500">{authDate}</span>
       </div>
       <div className="mt-2">

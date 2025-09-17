@@ -15,6 +15,17 @@ import Header from "@/components/header";
 import Sider from "@/components/sider";
 import { Loader2Icon } from "lucide-react";
 import { ServiceAgreement } from "@/lib/interface";
+import { useScrollSpy } from "@/components/service-agreement/scroll-spy";
+
+
+const SECTION_IDS = [
+  "chute-cleaning",
+  "waste-room-pressure-clean",
+  "hopper-door-inspection",
+  "bin-cleaning",
+  "equipment-preventative-maintenance",
+  "odour-control",
+] as const;
 
 function ServiceAgreementComponent({ id }: { id: string }) {
   const state = useServiceAgreementStore();
@@ -22,6 +33,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
   const setServiceAgreement = useServiceAgreementStore(
     (s) => s.setServiceAgreement
   );
+  const activeId = useScrollSpy(SECTION_IDS as unknown as string[], { offset: 140 }); // buffer near top
 
   useEffect(() => {
     if (data) setServiceAgreement(data as ServiceAgreement);
@@ -74,7 +86,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
   return (
     <>
       <Header />
-      <Sider />
+      {activeId && <Sider activeId={activeId} />}
       <div className="pt-[88px] xl:pl-[400px]">
         <div className="px-4 xl:px-20 text-neutral-700 ">
           <div className="w-full flex flex-col items-center font-sans pt-20 pb-20 bg-white flex-grow gap-8 max-w-screen-lg mx-auto">

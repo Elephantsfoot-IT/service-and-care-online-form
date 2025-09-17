@@ -34,7 +34,6 @@ export interface AdditionalContact {
 export interface ServiceAgreement {
   id: string;
   simpro_customer_id: string;
-  simpro_account_id: string;
   quote_for: string;
   created_at: string;
   status: string;

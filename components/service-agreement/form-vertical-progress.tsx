@@ -34,7 +34,7 @@ function FormVerticalProgress() {
           </div>
           <div
             className={cn(
-              "text-base font-medium",
+              "text-base ",
               state.page === 2 ? "underline" : ""
             )}
           >
@@ -56,7 +56,7 @@ function FormVerticalProgress() {
           </div>
           <div
             className={cn(
-              "text-base font-medium",
+              "text-base ",
               state.page === 3 ? "underline" : ""
             )}
           >
@@ -78,7 +78,7 @@ function FormVerticalProgress() {
           </div>
           <div
             className={cn(
-              "text-base font-medium",
+              "text-base ",
               state.page === 4 ? "underline" : ""
             )}
           >
@@ -100,7 +100,7 @@ function FormVerticalProgress() {
           </div>
           <div
             className={cn(
-              "text-base font-medium",
+              "text-base ",
               state.page === 5 ? "underline" : ""
             )}
           >
@@ -122,7 +122,7 @@ function FormVerticalProgress() {
           </div>
           <div
             className={cn(
-              "text-base font-medium",
+              "text-base ",
               state.page === 6 ? "underline" : ""
             )}
           >
@@ -144,7 +144,7 @@ function FormVerticalProgress() {
           </div>
           <div
             className={cn(
-              "text-base font-medium",
+              "text-base ",
               state.page === 7 ? "underline" : ""
             )}
           >
