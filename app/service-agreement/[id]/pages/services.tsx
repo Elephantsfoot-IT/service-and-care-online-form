@@ -10,9 +10,11 @@ import { ArrowRightIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useServiceAgreementStore } from "../../service-agreement-store";
 import { useMemo } from "react";
+import { useState } from "react";
 
 function ServicesForm() {
   const state = useServiceAgreementStore();
+  const [showError, setShowError] = useState(false);
 
   const numberOfServices = useMemo(() => {
     const vals = [
@@ -38,7 +40,14 @@ function ServicesForm() {
     scrollToTop();
   }, []);
 
-  const goNext = () => state.setPage(2);
+  const goNext = () => {
+    if (numberOfServices === 0) {
+      setShowError(true);
+    } else {
+      setShowError(false);
+      state.setPage(2);
+    }
+  };
 
   if (!state.serviceAgreement) return null;
 
@@ -185,6 +194,10 @@ function ServicesForm() {
           </div>
         </div>
       </section>
+
+     {showError && <div className="text-destructive text-sm">
+      Choose at least 1 service to proceed.
+     </div>}
 
       {/* Continue */}
       <div className="w-full flex justify-end mt-16">

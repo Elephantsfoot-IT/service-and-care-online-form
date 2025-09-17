@@ -36,7 +36,7 @@ function ServiceFrequency2({ value, onChange, options }: Props) {
           : "";
 
         const checkboxClasses = cn(
-          "absolute top-2 right-2 cursor-pointer focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none",
+          "absolute top-4 right-4 cursor-pointer focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none",
           // when selected, tint checkbox by tier
           isSelected &&
             (isHighTier
