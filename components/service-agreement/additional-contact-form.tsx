@@ -130,7 +130,7 @@ const AdditionalcontactForm = React.forwardRef<AdditionalContactFormHandle, Addi
     };
 
     return (
-      <div ref={rootRef} className="flex flex-col w-full mx-auto p-4 md:p-6 2xl:p-8  shadow-xs border border-neutral-200 rounded-md shadow-sm">
+      <div ref={rootRef} className="flex flex-col w-full mx-auto p-4 md:p-6 2xl:p-8 rounded-md  border border-neutral-200 shadow-xs">
         <Form {...ContactForm}>
           <form className="flex flex-col gap-6">
             {/* Heading */}
@@ -194,7 +194,7 @@ const AdditionalcontactForm = React.forwardRef<AdditionalContactFormHandle, Addi
               </div>
             </div>
 
-            <hr className="border-neutral-300 border-dashed" />
+
 
             {/* Position */}
             <FormField
@@ -244,7 +244,7 @@ const AdditionalcontactForm = React.forwardRef<AdditionalContactFormHandle, Addi
               )}
             />
 
-            <hr className="border-neutral-300 border-dashed" />
+          
 
             {/* Email */}
             <FormField
@@ -270,7 +270,7 @@ const AdditionalcontactForm = React.forwardRef<AdditionalContactFormHandle, Addi
               )}
             />
 
-            <hr className="border-neutral-300 border-dashed" />
+          
 
             {/* Mobile */}
             <FormField
@@ -297,7 +297,7 @@ const AdditionalcontactForm = React.forwardRef<AdditionalContactFormHandle, Addi
               )}
             />
 
-            <hr className="border-neutral-300 border-dashed" />
+       
 
             {/* Office */}
             <FormField
@@ -326,7 +326,7 @@ const AdditionalcontactForm = React.forwardRef<AdditionalContactFormHandle, Addi
 
             
 
-            <hr className="border-neutral-300 border-dashed" />
+         
 
             {/* Use this contact for */}
             <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">

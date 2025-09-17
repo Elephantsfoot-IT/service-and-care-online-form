@@ -31,6 +31,18 @@ export interface AdditionalContact {
   PrimaryQuoteContact: boolean;
 }
 
+
+export interface SiteContact{
+  id: string;
+  GivenName: string;
+  FamilyName: string;
+  Email: string;
+  WorkPhone: string;
+  CellPhone: string;
+  Position: string;
+  Department: string;
+}
+
 export interface ServiceAgreement {
   id: string;
   simpro_customer_id: string;
@@ -52,6 +64,7 @@ export interface Site {
   buildings: Building[];
   mode: "new" | "existing";
   site_address: Address;
+  site_contacts?: SiteContact[];
 }
 
 // src/lib/service-agreement/services.ts
@@ -128,3 +141,15 @@ export const options: { label: string; value: Option; subtext: string;  recommen
   { label: "Six-Monthly",  value: "six-monthly",  subtext: "2 services per year"},
   { label: "Quarterly",    value: "quarterly",    subtext: "4 services per year", recommended: true },
 ];
+
+
+export const defaultSiteContact: SiteContact = {
+  id: "",
+  GivenName: "",
+  FamilyName: "",
+  Email: "",
+  WorkPhone: "",
+  CellPhone: "",
+  Position: "",
+  Department: "",
+};
