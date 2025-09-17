@@ -23,14 +23,15 @@ export default function SiteInfo() {
     return null;
   }
   return (
-    <div className=" w-full mx-auto flex flex-col ">
-      <Label className="text-xl mb-1  ">Site Details</Label>
+    <div className=" w-full mx-auto flex flex-col gap-10">
+      <div className="flex flex-col">
+        <Label className="text-xl mb-1">Site Details</Label>
+        <span className="text-base text-neutral-500">
+          Provide the site information associated with this service agreement.
+        </span>
+      </div>
 
-      <span className="text-base mb-10 text-neutral-500 mb-6">
-        Provide the site information associated with this service agreement.
-      </span>
-
-      <div className="flex flex-col gap-14">
+      <div className="flex flex-col gap-10">
         {state.serviceAgreement?.sites.map((site) => (
           <SiteForm key={site.simpro_site_id} site={site} />
         ))}

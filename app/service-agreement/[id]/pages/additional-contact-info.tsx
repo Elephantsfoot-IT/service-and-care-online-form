@@ -106,23 +106,16 @@ export default function AdditionalContactInfo() {
 
   /* JSX */
   return (
-    <div className="w-full mx-auto flex flex-col">
-    
-      <Label className="text-xl mb-1">Additional Contacts</Label>
-      <span className="text-base text-neutral-500 mb-6">
-        Provide optional additional contacts for your business as needed.
-        (Optional)
-      </span>
-
-      <div className="flex justify-end mb-2">
-        <Button
-          disabled={state.additionalContacts.length >= 3}
-          onClick={handleAddContact}
-          variant="ghost"
-        >
-          <PlusIcon className="mr-1" /> Add Contact
-        </Button>
+    <div className="w-full mx-auto flex flex-col gap-10">
+      <div className="flex flex-col">
+        <Label className="text-2xl mb-1">Additional Contacts</Label>
+        <span className="text-lg text-neutral-500">
+          Provide optional additional contacts for your business as needed.
+          (Optional)
+        </span>
       </div>
+
+      
 
       {state.additionalContacts.length === 0 ? (
         <div className="text-sm w-full h-40 bg-neutral-50 rounded-md flex justify-center items-center gap-2">
@@ -142,6 +135,15 @@ export default function AdditionalContactInfo() {
           ))}
         </div>
       )}
+      <div className="flex justify-end">
+        <Button
+          disabled={state.additionalContacts.length >= 3}
+          onClick={handleAddContact}
+          variant="secondary"
+        >
+          <PlusIcon className="mr-1" /> Add Contact
+        </Button>
+      </div>
 
       <div className="flex flex-row gap-2 justify-between mt-10">
         <Button

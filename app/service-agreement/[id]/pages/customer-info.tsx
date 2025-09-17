@@ -33,12 +33,10 @@ import { scrollToTop } from "@/lib/utils";
 
 const customerSchema = z.object({
   companyType: z.string().min(1, "Company type cannot be empty"),
-  abn: z
-    .string()
-    .regex(/^\d{11}$/, {
-      message:
-        "ABN must be exactly 11 digits with no spaces or special characters.",
-    }),
+  abn: z.string().regex(/^\d{11}$/, {
+    message:
+      "ABN must be exactly 11 digits with no spaces or special characters.",
+  }),
   companyName: z.string().min(1, "This field cannot be empty"),
   businessStreetAddress: z
     .string()
@@ -47,11 +45,9 @@ const customerSchema = z.object({
   businessState: z
     .string()
     .min(1, { message: "Business state cannot be empty" }),
-  businessPostcode: z
-    .string()
-    .regex(/^\d{4}$/, {
-      message: "Business postcode must be exactly 4 digits",
-    }),
+  businessPostcode: z.string().regex(/^\d{4}$/, {
+    message: "Business postcode must be exactly 4 digits",
+  }),
   businessCountry: z.string(),
 });
 
@@ -86,11 +82,9 @@ export default function CustomerDetails() {
     form.setValue("businessPostcode", state.businessPostcode);
   }, []); // eslint-disable-line
 
-
   useEffect(() => {
     scrollToTop();
   }, []);
-
 
   const onChange = (field: keyof CustomerDetailsFormType, value: string) => {
     state.updateField(field as string, value);
@@ -103,19 +97,16 @@ export default function CustomerDetails() {
     })();
 
   return (
-    <div className="flex flex-col w-full mx-auto">
+    <div className="flex flex-col w-full mx-auto gap-10">
+      <div className="flex flex-col">
+        <Label className="text-2xl mb-1 ">Company Details</Label>
+        <span className="text-lg text-neutral-500 font-normal">
+          Please provide information about your company.
+        </span>
+      </div>
       <Form {...form}>
         <form className="flex flex-col gap-6">
-          <div className="flex flex-col">
         
-            <Label className="text-xl mb-1 ">Company Details</Label>
-            <span className="text-base text-neutral-500 font-normal">
-              Please provide information about your company.
-            </span>
-          </div>
-
-          <hr className="border-neutral-300 border-dashed" />
-
           <FormField
             control={form.control}
             name="companyType"
@@ -249,7 +240,7 @@ export default function CustomerDetails() {
         </form>
       </Form>
 
-      <div className="flex flex-row gap-2 justify-between mt-20">
+      <div className="flex flex-row gap-2 justify-between mt-10">
         <Button variant="outline" onClick={goBack} className="cursor-pointer">
           <ArrowLeftIcon /> Back
         </Button>

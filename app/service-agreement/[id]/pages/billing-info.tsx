@@ -65,11 +65,9 @@ const billingSchema = z
       .min(1, { message: "Postal street address cannot be empty" }),
     postalCity: z.string().min(1, { message: "Postal city cannot be empty" }),
     postalState: z.string().min(1, { message: "Postal state cannot be empty" }),
-    postalPostcode: z
-      .string()
-      .regex(/^\d{4}$/, {
-        message: "Business postcode must be exactly 4 digits",
-      }),
+    postalPostcode: z.string().regex(/^\d{4}$/, {
+      message: "Business postcode must be exactly 4 digits",
+    }),
     postalCountry: z.string(),
   })
   .superRefine((data, ctx) => {
@@ -175,20 +173,16 @@ export default function BillingDetails() {
 
   /* ---------- Render ---------- */
   return (
-    <div className="flex flex-col w-full mx-auto">
+    <div className="flex flex-col w-full mx-auto gap-10">
+      <div className="flex flex-col ">
+        <Label className="text-2xl mb-1 ">Billing Details</Label>
+        <span className="text-lg text-neutral-500 font-normal">
+          Please supply the billing information associated with this service
+          agreement.
+        </span>
+      </div>
       <Form {...form}>
         <form className="flex flex-col gap-6">
-          <div className="flex flex-col ">
-           
-            <Label className="text-xl mb-1 ">Billing Details</Label>
-            <span className="text-base text-neutral-500 font-normal">
-              Please supply the billing information associated with this service
-              agreement.
-            </span>
-          </div>
-
-          <hr className="border-neutral-300 border-dashed" />
-
           {/* Full name */}
           <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
             <Label className="w-full md:w-1/3 text-sm">
@@ -656,7 +650,7 @@ export default function BillingDetails() {
         </form>
       </Form>
 
-      <div className="flex flex-row gap-2 justify-between mt-20">
+      <div className="flex flex-row gap-2 justify-between mt-10">
         <Button variant="outline" onClick={goBack} className="cursor-pointer">
           <ArrowLeftIcon /> Back
         </Button>

@@ -109,30 +109,30 @@ export default function TermsAndSignature() {
 
   /* ------------------------------ JSX ------------------------------ */
   return (
-    <div ref={containerRef} className="w-full mx-auto">
-    
+    <div ref={containerRef} className="w-full mx-auto flex flex-col gap-10">
+      <div className="flex flex-col">
+        <Label className="text-2xl font-medium">Sign Agreement</Label>
+        <span className="text-lg text-neutral-500">
+          Read the Terms and Conditions and sign the agreement.
+        </span>
+      </div>
 
-      <Label className="text-xl font-medium">Sign Agreement</Label>
-      <span className="text-base text-neutral-500 mb-2">
-        Read the Terms and Conditions and sign the agreement.
-      </span>
-
-      <hr className="border-neutral-300 border-dashed my-6" />
-
-      <Label className="text-sm">Terms and Conditions</Label>
-      {/* Terms box */}
-      <div className="p-4 md:p-6 2xl:p-8 border border-neutral-200 rounded-md shadow-xs w-full max-h-[500px] overflow-y-auto mt-2 mb-4">
-        <ServiceAndCareTerms />
+      <div className="flex flex-col">
+        <Label className="text-sm">Terms and Conditions</Label>
+        {/* Terms box */}
+        <div className="p-4 md:p-6 2xl:p-8 border border-neutral-200 rounded-md shadow-xs w-full max-h-[500px] overflow-y-auto mt-2">
+          <ServiceAndCareTerms />
+        </div>
       </div>
 
       {/* Consent + Sign */}
       <Form {...form}>
-        <form className="space-y-4">
+        <form className="flex flex-col gap-6">
           <FormField
             control={form.control}
             name="conditionAgree"
             render={({ field }) => (
-              <FormItem className="py-4">
+              <FormItem className="">
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="terms"
@@ -143,8 +143,12 @@ export default function TermsAndSignature() {
                       state.updateFieldBoolean("conditionAgree", value);
                     }}
                   />
-                  <label htmlFor="terms" className="text-sm font-medium leading-none">
-                    Accept terms and conditions <span className="text-red-500">*</span>
+                  <label
+                    htmlFor="terms"
+                    className="text-sm font-medium leading-none"
+                  >
+                    Accept terms and conditions{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                 </div>
                 <FormMessage />
@@ -207,37 +211,47 @@ export default function TermsAndSignature() {
               </FormItem>
             )}
           />
+
+          <hr className="border-neutral-300 border-dashed" />
         </form>
       </Form>
 
-      <hr className="border-neutral-300 border-dashed mt-4" />
-
       {/* Signature */}
-      <div className="w-full flex flex-row justify-between items-end mt-4">
-        <Label className="text-sm">
-          Signature <span className="text-red-500">*</span>
-        </Label>
-        <span className="ml-auto text-sm text-neutral-500">{authDate}</span>
-      </div>
-      <div className="mt-2">
-        <SignaturePadComponent
-          parentWidth={parentWidth}
-          setTrimmedDataURL={state.setTrimmedDataURL}
-          trimmedDataURL={state.trimmedDataURL}
-        />
-        <div className="text-sm text-neutral-500 mt-2">
-          By providing your electronic signature and initials, you acknowledge that
-          they are legally binding, equivalent to a physical signature, and signify
-          your agreement to the terms and conditions.
+      <div>
+        <div className="w-full flex flex-row justify-between items-end">
+          <Label className="text-sm">
+            Signature <span className="text-red-500">*</span>
+          </Label>
+          <span className="ml-auto text-sm text-neutral-500">{authDate}</span>
+        </div>
+        <div className="mt-2">
+          <SignaturePadComponent
+            parentWidth={parentWidth}
+            setTrimmedDataURL={state.setTrimmedDataURL}
+            trimmedDataURL={state.trimmedDataURL}
+          />
+          <div className="text-sm text-neutral-500 mt-2">
+            By providing your electronic signature and initials, you acknowledge
+            that they are legally binding, equivalent to a physical signature,
+            and signify your agreement to the terms and conditions.
+          </div>
         </div>
       </div>
 
       {/* Nav */}
       <div className="flex flex-row gap-2 justify-between mt-10">
-        <Button variant="outline" onClick={goBack} className="w-fit cursor-pointer">
+        <Button
+          variant="outline"
+          onClick={goBack}
+          className="w-fit cursor-pointer"
+        >
           <ArrowLeftIcon /> Back
         </Button>
-        <Button onClick={onSubmit} className="w-[200px] cursor-pointer" variant="efg">
+        <Button
+          onClick={onSubmit}
+          className="w-[200px] cursor-pointer"
+          variant="efg"
+        >
           Submit
         </Button>
       </div>

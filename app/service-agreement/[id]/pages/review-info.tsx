@@ -24,16 +24,17 @@ export default function ReviewInfo() {
 
   /* JSX */
   return (
-    <div className="w-full mx-auto">
-
-      <Label className="text-xl mb-1">Review Details</Label>
-      <span className="text-lg mb-10 text-neutral-500">
-        Please review your selected services and the information you’ve
-        provided.
-      </span>
+    <div className="w-full mx-auto flex flex-col gap-10">
+      <div className="flex flex-col">
+        <Label className="text-2xl mb-1">Review Details</Label>
+        <span className="text-lg text-neutral-500">
+          Please review your selected services and the information you’ve
+          provided.
+        </span>
+      </div>
 
       {/* Company Details */}
-      <div className="p-4 md:p-6 2xl:p-8 flex flex-col gap-2 mt-4 mb-6 border border-neutral-200 rounded-md shadow-xs">
+      <div className="p-4 md:p-6 2xl:p-8 flex flex-col gap-2 border border-neutral-200 rounded-md shadow-xs">
         <div className="flex flex-row space-x-4 items-center">
           <Label className="text-lg break-words ">Company Details</Label>
           <Button
@@ -84,7 +85,7 @@ export default function ReviewInfo() {
       </div>
 
       {/* Billing Details */}
-      <div className="p-4 md:p-6 2xl:p-8 flex flex-col gap-2 mt-4 mb-6 border border-neutral-200 rounded-md shadow-xs">
+      <div className="p-4 md:p-6 2xl:p-8 flex flex-col gap-2  border border-neutral-200 rounded-md shadow-xs">
         <div className="flex flex-row space-x-4 items-center">
           <Label className="text-lg break-words ">Billing Details</Label>
           <Button
