@@ -19,73 +19,147 @@ function ServicesForm() {
 
   const goNext = () => state.setPage(2);
 
-  const Section: React.FC<{ id: string; title: string; desc: string }> = ({
-    id,
-    title,
-    desc,
-  }) => (
-    <section id={id} className="flex flex-col gap-6 scroll-mt-[140px] ">
-      <div className="flex flex-col ">
-        <Label className="text-xl font-medium">{title}</Label>
-        <span className="text-base text-neutral-500">{desc}</span>
-      </div>
-
-      <div className="grid grid-cols-3 gap-4">
-        <div className="bg-neutral-100 h-[100px] rounded-md " />
-        <div className="bg-neutral-100 h-[100px] rounded-md " />
-        <div className="bg-neutral-100 h-[100px] rounded-md " />
-      </div>
-      <div className="bg-neutral-100 h-[500px] w-full rounded-md " />
-    </section>
-  );
-
   return (
-    <div className="flex flex-col gap-16 ">
-      <Section
+    <div className="flex flex-col gap-16">
+      {/* Chute Cleaning */}
+      <section
         id="chute-cleaning"
-        title="Chute Cleaning"
-        desc="Chute cleaning that removes grime, mould, and odours—keeping multi-storey buildings hygienic and safe."
-      />
-      <Section
+        className="flex flex-col gap-6 scroll-mt-[140px]"
+      >
+        <div className="flex flex-col">
+          <Label className="text-xl font-medium">Chute Cleaning</Label>
+          <span className="text-base text-neutral-500">
+            Chute cleaning that removes grime, mould, and odours—keeping
+            multi-storey buildings hygienic and safe.
+          </span>
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+        </div>
+        <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
+      </section>
+
+      {/* Waste Room Pressure Clean */}
+      <section
         id="waste-room-pressure-clean"
-        title="Waste Room Pressure Clean"
-        desc="High-pressure cleaning for hygienic, odour-free waste rooms."
-      />
-      <Section
+        className="flex flex-col gap-6 scroll-mt-[140px]"
+      >
+        <div className="flex flex-col">
+          <Label className="text-xl font-medium">
+            Waste Room Pressure Clean
+          </Label>
+          <span className="text-base text-neutral-500">
+            High-pressure cleaning for hygienic, odour-free waste rooms.
+          </span>
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+        </div>
+        <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
+      </section>
+
+      {/* Self-Closing Hopper Door Inspection */}
+      <section
         id="hopper-door-inspection"
-        title="Self-Closing Hopper Door Inspection"
-        desc="Chute-door inspections to ensure fire safety and compliance."
-      />
-      <Section
+        className="flex flex-col gap-6 scroll-mt-[140px]"
+      >
+        <div className="flex flex-col">
+          <Label className="text-xl font-medium">
+            Self-Closing Hopper Door Inspection
+          </Label>
+          <span className="text-base text-neutral-500">
+            Chute-door inspections to ensure fire safety and compliance.
+          </span>
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+        </div>
+        <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
+      </section>
+
+      {/* Bin Cleaning */}
+      <section
         id="bin-cleaning"
-        title="Bin Cleaning"
-        desc="Thorough bin cleaning to reduce odours, pests, and bacteria."
-      />
-      <Section
+        className="flex flex-col gap-6 scroll-mt-[140px]"
+      >
+        <div className="flex flex-col">
+          <Label className="text-xl font-medium">Bin Cleaning</Label>
+          <span className="text-base text-neutral-500">
+            Thorough bin cleaning to reduce odours, pests, and bacteria.
+          </span>
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+        </div>
+        <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
+      </section>
+
+      {/* Equipment Preventative Maintenance */}
+      <section
         id="equipment-preventative-maintenance"
-        title="Equipment Preventative Maintenance"
-        desc="Keep compactors and related equipment safe, compliant, and efficient."
-      />
-      <Section
+        className="flex flex-col gap-6 scroll-mt-[140px]"
+      >
+        <div className="flex flex-col">
+          <Label className="text-xl font-medium">
+            Equipment Preventative Maintenance
+          </Label>
+          <span className="text-base text-neutral-500">
+            Keep compactors and related equipment safe, compliant, and
+            efficient.
+          </span>
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+        </div>
+        <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
+      </section>
+
+      {/* Odour Control */}
+      <section
         id="odour-control"
-        title="Odour Control"
-        desc="Targeted odour management to keep shared areas fresh."
-      />
-      <div>
-        <div className="flex flex-col ">
+        className="flex flex-col gap-6 scroll-mt-[140px]"
+      >
+        <div className="flex flex-col">
+          <Label className="text-xl font-medium">Odour Control</Label>
+          <span className="text-base text-neutral-500">
+            Targeted odour management to keep shared areas fresh.
+          </span>
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+          <div className="bg-neutral-100 h-[100px] rounded-md" />
+        </div>
+        <div className="bg-neutral-100 h-[500px] w-full rounded-md" />
+      </section>
+
+      {/* Exclusive Benefits */}
+      <section id="reward" className="flex flex-col gap-6 scroll-mt-[140px]">
+        <div className="flex flex-col">
           <Label className="text-xl font-medium">Exclusive Benefits</Label>
           <span className="text-base text-neutral-500">
             Enjoy our exclusive benefits when you choose additional services
             with us.
           </span>
         </div>
-        <div className="w-full overflow-x-auto mt-6 flex flex-col gap-4 ">
-          <div className="w-full min-w-[820px]">
+        <div className="w-full overflow-x-auto flex flex-col gap-4">
+          <div className="w-full min-w-[820px] scroll-mt-[140px]">
             <IncentiveTable currentTier={"essential"} serviceCount={4} />
           </div>
         </div>
-      </div>
+      </section>
 
+      {/* Continue */}
       <div className="w-full flex justify-end mt-16">
         <Button
           variant="efg"
@@ -95,33 +169,8 @@ function ServicesForm() {
           Continue <ArrowRightIcon />
         </Button>
       </div>
-
-      {/* Optionally expose activeId to a context/store if FormVerticalProgress renders elsewhere */}
-      {/* Or render the progress here and pass activeId as a prop */}
     </div>
   );
 }
 
 export default ServicesForm;
-
-// const chuteCleaning = getServices(
-//   state.serviceAgreement.sites,
-//   "chute_cleaning"
-// );
-// const wasteRoomPressureClean = getServices(
-//   state.serviceAgreement.sites,
-//   "waste_room_pressure_clean"
-// );
-// const selfClosingHooperDoorInspection = getServices(
-//   state.serviceAgreement.sites,
-//   "hopper_door_inspection"
-// );
-// const binCleaning = getServices(state.serviceAgreement.sites, "bin_cleaning");
-// const equipmentPreventativeMaintenance = getServices(
-//   state.serviceAgreement.sites,
-//   "equipment_maintenance"
-// );
-// const odourControl = getServices(
-//   state.serviceAgreement.sites,
-//   "odour_control"
-// );
