@@ -1,28 +1,399 @@
 "use client";
 
 /* ------------------------------ Imports ------------------------------ */
-import { useEffect } from "react";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { scrollToTop } from "@/lib/utils";
-import { ArrowLeftIcon, ListCheckIcon } from "lucide-react";
+import { ArrowLeftIcon } from "lucide-react";
+import { useEffect } from "react";
 
-/* ------------------------------ Component ------------------------------ */
-export default function ReviewInfo() {
-  /* Store */
+/* ------------------------------ Small helpers ------------------------------ */
+function Value({ children }: { children?: string | null }) {
+  const str = typeof children === "string" ? children.trim() : "";
+  if (!str) {
+    return (
+      <span className="text-neutral-400">
+        <span aria-hidden>—</span>
+        <span className="sr-only">Not provided</span>
+      </span>
+    );
+  }
+  return <>{str}</>;
+}
+
+function formatFullAddress(
+  street?: string,
+  city?: string,
+  state?: string,
+  postcode?: string,
+  country?: string
+) {
+  if (!street || !city || !state || !postcode || !country) return null;
+  return `${street}, ${city} ${state} ${postcode}, ${country}`;
+}
+
+/* ------------------------------ Section: Company ------------------------------ */
+function CompanyDetailsCard() {
+  const state = useServiceAgreementStore();
+  const fullBizAddress = formatFullAddress(
+    state.businessStreetAddress,
+    state.businessCity,
+    state.businessState,
+    state.businessPostcode,
+    "Australia"
+  );
+
+  return (
+    <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden">
+      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-50">
+        <Label className="text-lg">Company Details</Label>
+        <Button
+          variant="ghost"
+          className="text-sm ml-auto"
+          onClick={() => state.setPage(2)}
+        >
+          Edit
+        </Button>
+      </header>
+
+      <div className="p-4 md:p-6 space-y-4">
+        <div className="space-y-1">
+          <Label className="text-neutral-500 text-sm">
+            {state.companyType === "Other"
+              ? "Company name"
+              : "Strata plan number (CTS/SP/OC)"}
+          </Label>
+          <span className="text-base break-words">
+            <Value>{state.companyName}</Value>
+          </span>
+        </div>
+
+        <div className="space-y-1">
+          <Label className="text-neutral-500 text-sm">ABN</Label>
+          <span className="text-base break-words">
+            <Value>{state.abn}</Value>
+          </span>
+        </div>
+
+        <div className="space-y-1">
+          <Label className="text-neutral-500 text-sm">Business address</Label>
+          <span className="text-base break-words">
+            {fullBizAddress ? <>{fullBizAddress}</> : <Value />}
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------ Section: Billing ------------------------------ */
+function BillingDetailsCard() {
+  const state = useServiceAgreementStore();
+  const fullPostalAddress = formatFullAddress(
+    state.postalStreetAddress,
+    state.postalCity,
+    state.postalState,
+    state.postalPostcode,
+    "Australia"
+  );
+
+  return (
+    <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden">
+      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-50">
+        <Label className="text-lg">Billing Details</Label>
+        <Button
+          variant="ghost"
+          className="text-sm ml-auto"
+          onClick={() => state.setPage(3)}
+        >
+          Edit
+        </Button>
+      </header>
+
+      <div className="p-4 md:p-6 space-y-4">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex-1 space-y-1">
+            <Label className="text-neutral-500 text-sm">First name</Label>
+            <span className="text-base break-words">
+              <Value>{state.accountFirstName}</Value>
+            </span>
+          </div>
+          <div className="flex-1 space-y-1">
+            <Label className="text-neutral-500 text-sm">Last name</Label>
+            <span className="text-base break-words">
+              <Value>{state.accountLastName}</Value>
+            </span>
+          </div>
+        </div>
+
+        <div className="space-y-1">
+          <Label className="text-neutral-500 text-sm">Email address</Label>
+          <span className="text-base break-words">
+            <Value>{state.accountEmail}</Value>
+          </span>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex-1 space-y-1">
+            <Label className="text-neutral-500 text-sm">Mobile phone</Label>
+            <span className="text-base break-words">
+              <Value>{state.accountMobile}</Value>
+            </span>
+          </div>
+          <div className="flex-1 space-y-1">
+            <Label className="text-neutral-500 text-sm">Office phone</Label>
+            <span className="text-base break-words">
+              <Value>{state.accountPhone}</Value>
+            </span>
+          </div>
+        </div>
+
+        <div className="space-y-1">
+          <Label className="text-neutral-500 text-sm">Postal address</Label>
+          <span className="text-base break-words">
+            {fullPostalAddress ? <>{fullPostalAddress}</> : <Value />}
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------ Section: Additional Contacts ------------------------------ */
+function AdditionalContactsList() {
   const state = useServiceAgreementStore();
 
-  /* Handlers */
-  const goBack = () => state.setPage(5); // back to Site Info
-  const goNext = () => state.setPage(7); // forward to Terms & Signature
+  if (!state.additionalContacts?.length) return null;
 
-  /* Effects */
+  return (
+    <>
+      {state.additionalContacts.map((contact, index) => (
+        <section
+          key={contact.id}
+          className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden"
+        >
+          <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-50">
+            <Label className="text-lg">Contact ({index + 1})</Label>
+            <Button
+              variant="ghost"
+              className="text-sm ml-auto"
+              onClick={() => useServiceAgreementStore.getState().setPage(4)}
+            >
+              Edit
+            </Button>
+          </header>
+
+          <div className="p-4 md:p-6 space-y-4">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1 space-y-1">
+                <Label className="text-neutral-500 text-sm">First name</Label>
+                <span className="text-base break-words">
+                  <Value>{contact.GivenName}</Value>
+                </span>
+              </div>
+              <div className="flex-1 space-y-1">
+                <Label className="text-neutral-500 text-sm">Last name</Label>
+                <span className="text-base break-words">
+                  <Value>{contact.FamilyName}</Value>
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1 space-y-1">
+                <Label className="text-neutral-500 text-sm">Department</Label>
+                <span className="text-base break-words">
+                  <Value>{contact.Department}</Value>
+                </span>
+              </div>
+              <div className="flex-1 space-y-1">
+                <Label className="text-neutral-500 text-sm">Position</Label>
+                <span className="text-base break-words">
+                  <Value>{contact.Position}</Value>
+                </span>
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <Label className="text-neutral-500 text-sm">Email address</Label>
+              <span className="text-base break-words">
+                <Value>{contact.Email}</Value>
+              </span>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1 space-y-1">
+                <Label className="text-neutral-500 text-sm">Mobile phone</Label>
+                <span className="text-base break-words">
+                  <Value>{contact.CellPhone}</Value>
+                </span>
+              </div>
+              <div className="flex-1 space-y-1">
+                <Label className="text-neutral-500 text-sm">Office phone</Label>
+                <span className="text-base break-words">
+                  <Value>{contact.WorkPhone}</Value>
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+      ))}
+    </>
+  );
+}
+
+/* ------------------------------ Section: Sites & their Contacts ------------------------------ */
+function SitesSummaryList() {
+  const state = useServiceAgreementStore();
+  const sites = state.serviceAgreement?.sites ?? [];
+  if (!sites.length) return null;
+
+  return (
+    <>
+      {sites.map((site, idx) => {
+        const addr = formatFullAddress(
+          site.site_address?.Address,
+          site.site_address?.City,
+          site.site_address?.State,
+          site.site_address?.PostalCode,
+          site.site_address?.Country || "Australia"
+        );
+
+        return (
+          <section
+            key={site.simpro_site_id}
+            className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden"
+          >
+            <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-50">
+              <Label className="text-lg">Site ({idx + 1})</Label>
+              <Button
+                variant="ghost"
+                className="text-sm ml-auto"
+                onClick={() => state.setPage(5)}
+              >
+                Edit
+              </Button>
+            </header>
+
+            <div className="p-4 md:p-6 space-y-4">
+              <div className="space-y-1">
+                <Label className="text-neutral-500 text-sm">Site name</Label>
+                <span className="text-base break-words">
+                  <Value>{site.site_name}</Value>
+                </span>
+              </div>
+
+              <div className="space-y-1">
+                <Label className="text-neutral-500 text-sm">Address</Label>
+                <span className="text-base break-words">
+                  {addr ? <>{addr}</> : <Value />}
+                </span>
+              </div>
+
+              {!!site.site_contacts?.length && (
+                <div className="space-y-3">
+                  <Label className="text-neutral-500 text-sm">Contacts</Label>
+
+                  {site.site_contacts.map((c, i) => (
+                    <div
+                      key={c.id}
+                      className="border border-input rounded-lg overflow-hidden"
+                    >
+                      <div className="p-3 md:p-4 border-b border-input bg-neutral-50">
+                        <Label className="text-base">Contact ({i + 1})</Label>
+                      </div>
+
+                      <div className="p-3 md:p-4 space-y-4">
+                        <div className="flex flex-col sm:flex-row gap-4">
+                          <div className="flex-1 space-y-1">
+                            <Label className="text-neutral-500 text-sm">
+                              First name
+                            </Label>
+                            <span className="text-base break-words">
+                              <Value>{c.GivenName}</Value>
+                            </span>
+                          </div>
+                          <div className="flex-1 space-y-1">
+                            <Label className="text-neutral-500 text-sm">
+                              Last name
+                            </Label>
+                            <span className="text-base break-words">
+                              <Value>{c.FamilyName}</Value>
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row gap-4">
+                          <div className="flex-1 space-y-1">
+                            <Label className="text-neutral-500 text-sm">
+                              Department
+                            </Label>
+                            <span className="text-base break-words">
+                              <Value>{c.Department}</Value>
+                            </span>
+                          </div>
+                          <div className="flex-1 space-y-1">
+                            <Label className="text-neutral-500 text-sm">
+                              Position
+                            </Label>
+                            <span className="text-base break-words">
+                              <Value>{c.Position}</Value>
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <Label className="text-neutral-500 text-sm">
+                            Email address
+                          </Label>
+                          <span className="text-base break-words">
+                            <Value>{c.Email}</Value>
+                          </span>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row gap-4">
+                          <div className="flex-1 space-y-1">
+                            <Label className="text-neutral-500 text-sm">
+                              Mobile phone
+                            </Label>
+                            <span className="text-base break-words">
+                              <Value>{c.CellPhone}</Value>
+                            </span>
+                          </div>
+                          <div className="flex-1 space-y-1">
+                            <Label className="text-neutral-500 text-sm">
+                              Office phone
+                            </Label>
+                            <span className="text-base break-words">
+                              <Value>{c.WorkPhone}</Value>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+        );
+      })}
+    </>
+  );
+}
+
+/* ------------------------------ Page ------------------------------ */
+export default function ReviewInfo() {
+  const state = useServiceAgreementStore();
+
+  const goBack = () => state.setPage(5);
+  const goNext = () => state.setPage(7);
+
   useEffect(() => {
     scrollToTop();
   }, []);
 
-  /* JSX */
   return (
     <div className="w-full mx-auto flex flex-col gap-10">
       <div className="flex flex-col">
@@ -33,215 +404,10 @@ export default function ReviewInfo() {
         </span>
       </div>
 
-      {/* Company Details */}
-      <div className="p-4 md:p-6 2xl:p-8 flex flex-col gap-2 border border-input rounded-lg shadow-xs">
-        <div className="flex flex-row space-x-4 items-center">
-          <Label className="text-lg break-words ">Company Details</Label>
-          <Button
-            variant="ghost"
-            className="text-sm ml-auto"
-            onClick={() => state.setPage(2)} // go edit Customer/Company step
-          >
-            Edit
-          </Button>
-        </div>
-
-        <div className="flex flex-col">
-          <div className="flex flex-col space-y-4 rounded-lg">
-            <div className="flex flex-col space-y-1">
-              <Label className="text-neutral-500 text-sm">
-                {state.companyType === "Other"
-                  ? "Company name"
-                  : "Strata plan number (CTS/SP/OC)"}
-              </Label>
-              <span className="text-base break-words">
-                {state.companyName || "N/A"}
-              </span>
-            </div>
-
-            <div className="flex flex-col space-y-1">
-              <Label className="text-neutral-500 text-sm">ABN</Label>
-              <span className="text-base break-words">
-                {state.abn || "N/A"}
-              </span>
-            </div>
-
-            <div className="flex flex-col space-y-1">
-              <Label className="text-neutral-500">Business address</Label>
-              {state.businessStreetAddress &&
-              state.businessCity &&
-              state.businessPostcode &&
-              state.businessState ? (
-                <span className="text-base break-words">
-                  {state.businessStreetAddress}, {state.businessCity}{" "}
-                  {state.businessState} {state.businessPostcode}, Australia
-                </span>
-              ) : (
-                <span className="text-base break-words">N/A</span>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Billing Details */}
-      <div className="p-4 md:p-6 2xl:p-8 flex flex-col gap-2  border border-input rounded-lg shadow-xs">
-        <div className="flex flex-row space-x-4 items-center">
-          <Label className="text-lg break-words ">Billing Details</Label>
-          <Button
-            variant="ghost"
-            className="text-sm ml-auto"
-            onClick={() => state.setPage(3)} // go edit Billing step
-          >
-            Edit
-          </Button>
-        </div>
-
-        <div className="flex flex-col">
-          <div className="flex flex-col space-y-4 rounded-lg">
-            <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 w-full">
-              <div className="flex-1 flex flex-col space-y-1">
-                <Label className="text-neutral-500 text-sm">First name</Label>
-                <span className="text-base break-words">
-                  {state.accountFirstName || "N/A"}
-                </span>
-              </div>
-              <div className="flex-1 flex flex-col space-y-1">
-                <Label className="text-neutral-500 text-sm">Last name</Label>
-                <span className="text-base break-words">
-                  {state.accountLastName || "N/A"}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex flex-col space-y-1">
-              <Label className="text-neutral-500 text-sm">Email address</Label>
-              <span className="text-base break-words">
-                {state.accountEmail || "N/A"}
-              </span>
-            </div>
-
-            <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 w-full">
-              <div className="flex flex-col space-y-1 w-1/2">
-                <Label className="text-neutral-500 text-sm">Mobile phone</Label>
-                <span className="text-base break-words">
-                  {state.accountMobile || "N/A"}
-                </span>
-              </div>
-              <div className="flex flex-col space-y-1 w-1/2">
-                <Label className="text-neutral-500 text-sm">Office phone</Label>
-                <span className="text-base break-words">
-                  {state.accountPhone || "N/A"}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex flex-col space-y-1">
-              <Label className="text-neutral-500">Postal address</Label>
-              {state.postalStreetAddress &&
-              state.postalCity &&
-              state.postalState &&
-              state.postalPostcode ? (
-                <span className="text-base break-words">
-                  {state.postalStreetAddress}, {state.postalCity}{" "}
-                  {state.postalState} {state.postalPostcode}, Australia
-                </span>
-              ) : (
-                <span className="text-base break-words">N/A</span>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <>
-        {state.additionalContacts.map((contact, index) => (
-          <div
-            key={contact.id}
-            className="p-4 md:p-6 2xl:p-8 flex flex-col gap-2 mt-4 mb-6 border border-input rounded-lg shadow-xs"
-          >
-            <div className="flex flex-row space-x-4 items-center">
-              <Label className="text-lg break-words ">
-                Contact ({index + 1})
-              </Label>
-              <Button
-                variant="ghost"
-                className="text-sm ml-auto"
-                onClick={() => state.setPage(4)} // go edit Billing step
-              >
-                Edit
-              </Button>
-            </div>
-
-            <div className="flex flex-col">
-              <div className="flex flex-col space-y-4 rounded-lg">
-                <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 w-full">
-                  <div className="flex-1 flex flex-col space-y-1">
-                    <Label className="text-neutral-500 text-sm">
-                      First name
-                    </Label>
-                    <span className="text-base break-words">
-                      {contact.GivenName || "N/A"}
-                    </span>
-                  </div>
-                  <div className="flex-1 flex flex-col space-y-1">
-                    <Label className="text-neutral-500 text-sm">
-                      Last name
-                    </Label>
-                    <span className="text-base break-words">
-                      {contact.FamilyName || "N/A"}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 w-full">
-                  <div className="flex flex-col space-y-1 flex-1">
-                    <Label className="text-neutral-500 text-sm">
-                      Department
-                    </Label>
-                    <span className="text-base break-words">
-                      {contact.Department || "N/A"}
-                    </span>
-                  </div>
-                  <div className="flex flex-col space-y-1 flex-1">
-                    <Label className="text-neutral-500 text-sm">Position</Label>
-                    <span className="text-base break-words">
-                      {contact.Position || "N/A"}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex flex-col space-y-1">
-                  <Label className="text-neutral-500 text-sm">
-                    Email address
-                  </Label>
-                  <span className="text-base break-words">
-                    {contact.Email || "N/A"}
-                  </span>
-                </div>
-
-                <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 w-full">
-                  <div className="flex flex-col space-y-1 w-1/2">
-                    <Label className="text-neutral-500 text-sm">
-                      Mobile phone
-                    </Label>
-                    <span className="text-base break-words">
-                      {contact.CellPhone || "N/A"}
-                    </span>
-                  </div>
-                  <div className="flex flex-col space-y-1 w-1/2">
-                    <Label className="text-neutral-500 text-sm">
-                      Office phone
-                    </Label>
-                    <span className="text-base break-words">
-                      {contact.WorkPhone || "N/A"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </>
+      <CompanyDetailsCard />
+      <BillingDetailsCard />
+      <AdditionalContactsList />
+      <SitesSummaryList />
 
       {/* Nav */}
       <div className="flex flex-row gap-2 justify-between mt-10">
@@ -252,11 +418,7 @@ export default function ReviewInfo() {
         >
           <ArrowLeftIcon /> Back
         </Button>
-        <Button
-          onClick={goNext}
-          className="w-[200px] cursor-pointer"
-          variant="efg"
-        >
+        <Button onClick={goNext} className="w-[200px] cursor-pointer" variant="efg">
           Continue
         </Button>
       </div>
