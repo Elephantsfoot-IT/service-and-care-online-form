@@ -7,22 +7,22 @@ type Props = {
   onJump?: (id: string) => void; // <-- add this
 };
 const items = [
-  { id: "chute-cleaning", label: "Chute Cleaning" ,  img: '/service-icon/chute-clean.svg'},
+  { id: "chute_cleaning", label: "Chute Cleaning" ,  img: '/service-icon/chute-clean.svg'},
   {
-    id: "equipment-preventative-maintenance",
+    id: "equipment_maintenance",
     label: "Equipment Preventative Maintenance",
     img: '/service-icon/clipboard.svg',
   },
   {
-    id: "hopper-door-inspection",
+    id: "hopper_door_inspection",
     label: "Self-Closing Hooper Door Inspection",
     img: '/service-icon/door.svg',
   },
-  { id: "waste-room-pressure-clean", label: "Waste Room Pressure Clean"  , img: '/service-icon/tag.svg'},
+  { id: "waste_room_pressure_clean", label: "Waste Room Pressure Clean"  , img: '/service-icon/tag.svg'},
   
-  { id: "bin-cleaning", label: "Bin Cleaning" , img: '/service-icon/bin.svg'},
+  { id: "bin_cleaning", label: "Bin Cleaning" , img: '/service-icon/bin.svg'},
   
-  { id: "odour-control", label: "Odour Control" , img: '/service-icon/odour-control.svg'},
+  { id: "odour_control", label: "Odour Control" , img: '/service-icon/odour-control.svg'},
 ];
 
 function FormVerticalProgress({ activeId, onJump }: Props) {

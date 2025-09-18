@@ -193,7 +193,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </span>
       </div>
       {/* Chute Cleaning */}
-      <SectionShell id="chute-cleaning">
+      <SectionShell id="chute_cleaning">
         <SectionHeader
           title="Chute Cleaning"
           description="Chute cleaning that removes grime, mould, and odours—keeping multi-storey buildings hygienic and safe."
@@ -251,7 +251,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </div>
       </SectionShell>
       {/* Equipment Preventative Maintenance */}
-      <SectionShell id="equipment-preventative-maintenance">
+      <SectionShell id="equipment_maintenance">
         <SectionHeader
           title="Equipment Preventative Maintenance"
           description="Keep compactors and related equipment safe, compliant, and efficient."
@@ -313,7 +313,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       </SectionShell>
 
       {/* Self-Closing Hopper Door Inspection */}
-      <SectionShell id="hopper-door-inspection">
+      <SectionShell id="hopper_door_inspection">
         <SectionHeader
           title="Self-Closing Hopper Door Inspection"
           description="Chute-door inspections to ensure fire safety and compliance."
@@ -371,7 +371,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       </SectionShell>
 
       {/* Waste Room Pressure Clean */}
-      <SectionShell id="waste-room-pressure-clean">
+      <SectionShell id="waste_room_pressure_clean">
         <SectionHeader
           title="Waste Room Pressure Clean"
           description="High-pressure cleaning for hygienic, odour-free waste rooms."
@@ -429,7 +429,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       </SectionShell>
 
       {/* Bin Cleaning */}
-      <SectionShell id="bin-cleaning">
+      <SectionShell id="bin_cleaning">
         <SectionHeader
           title="Bin Cleaning"
           description="Thorough bin cleaning to reduce odours, pests, and bacteria."
@@ -487,7 +487,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       </SectionShell>
 
       {/* Odour Control */}
-      <SectionShell id="odour-control">
+      <SectionShell id="odour_control">
         <SectionHeader
           title="Odour Control"
           description="Targeted odour management to keep shared areas fresh."

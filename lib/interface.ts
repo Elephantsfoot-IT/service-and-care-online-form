@@ -72,8 +72,8 @@ export type ServiceType =
   | "equipment_maintenance"
   | "hopper_door_inspection"
   | "waste_room_pressure_clean"
-  | "odour_control"
-  | "bin_cleaning";
+  | "bin_cleaning"
+  | "odour_control";
 
 export type ServiceBase = { id: string; type: ServiceType };
 
@@ -122,12 +122,12 @@ export type Service =
   | BinCleaningService;
 
 export const SECTION_IDS = [
-  "chute-cleaning",
-  "equipment-preventative-maintenance",
-  "hopper-door-inspection",
-  "waste-room-pressure-clean",
-  "bin-cleaning",
-  "odour-control",
+  "chute_cleaning",
+  "equipment_maintenance",
+  "hopper_door_inspection",
+  "waste_room_pressure_clean",
+  "bin_cleaning",
+  "odour_control",
 ] as const;
 
 export type Option = "quarterly" | "six-monthly" | "yearly";
