@@ -39,6 +39,12 @@ function ServicesForm() {
     scrollToTop();
   }, []);
 
+  useEffect(() => {
+    if (numberOfServices > 0) {
+      setShowError(false);
+    }
+  }, [numberOfServices]);
+
   const goNext = () => {
     if (numberOfServices === 0) {
       setShowError(true);
@@ -47,6 +53,7 @@ function ServicesForm() {
       state.setPage(2);
     }
   };
+
 
   if (!state.serviceAgreement) return null;
 

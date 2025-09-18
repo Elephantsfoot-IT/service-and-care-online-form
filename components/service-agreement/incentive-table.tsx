@@ -50,7 +50,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
           {/* Basic tier */}
           <div className="col-span-2 transition-all duration-300 relative">
             {currentTier === "basic" && (
-              <div className="pointer-events-none absolute inset-0 z-0 border-2 border-neutral-300 bg-neutral-300/20" />
+              <div className="pointer-events-none absolute inset-0 z-0 border-2 border-neutral-300 bg-neutral-300/10" />
             )}
             {(currentTier === "essential" || currentTier === "pro") && (
               <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-300/10" />
@@ -61,7 +61,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
               className={cn(
                 "h-40 border-solid relative transition-all duration-300",
                 currentTier === "basic"
-                  ? "bg-neutral-200/60"
+                  ? "bg-neutral-200/40"
                   : "border-b border-input"
               )}
             >
@@ -103,9 +103,10 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                     currentTier != "pro" && (
                       <Button
                         size="sm"
+                        variant="outline"
                         className={cn(
-                          "mt-2 ",
-                          "bg-neutral-200/60 hover:bg-neutral-200/90 text-black w-full"
+                          "mt-2 w-full",
+                         
                         )}
                       >
                         Redeem
