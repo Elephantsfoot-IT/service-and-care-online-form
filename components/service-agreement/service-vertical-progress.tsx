@@ -1,34 +1,75 @@
 // FormVerticalProgress.tsx
 "use client";
-import { cn } from "@/lib/utils";
+import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
+import { GetServicesReturnTyped } from "@/lib/interface";
+import { cn, getServices } from "@/lib/utils";
 
 type Props = {
   activeId?: string | null;
-  onJump?: (id: string) => void; // <-- add this
+  onJump?: (id: string) => void;
 };
+
 const items = [
-  { id: "chute_cleaning", label: "Chute Cleaning" ,  img: '/service-icon/chute-clean.svg'},
-  {
-    id: "equipment_maintenance",
-    label: "Equipment Preventative Maintenance",
-    img: '/service-icon/clipboard.svg',
-  },
-  {
-    id: "hopper_door_inspection",
-    label: "Self-Closing Hooper Door Inspection",
-    img: '/service-icon/door.svg',
-  },
-  { id: "waste_room_pressure_clean", label: "Waste Room Pressure Clean"  , img: '/service-icon/tag.svg'},
-  
-  { id: "bin_cleaning", label: "Bin Cleaning" , img: '/service-icon/bin.svg'},
-  
-  { id: "odour_control", label: "Odour Control" , img: '/service-icon/odour-control.svg'},
-];
+  { id: "chute_cleaning", label: "Chute Cleaning", img: "/service-icon/chute-clean.svg" },
+  { id: "equipment_maintenance", label: "Equipment Preventative Maintenance", img: "/service-icon/clipboard.svg" },
+  { id: "hopper_door_inspection", label: "Self-Closing Hopper Door Inspection", img: "/service-icon/door.svg" }, // fixed typo
+  { id: "waste_room_pressure_clean", label: "Waste Room Pressure Clean", img: "/service-icon/tag.svg" },
+  { id: "bin_cleaning", label: "Bin Cleaning", img: "/service-icon/bin.svg" },
+  { id: "odour_control", label: "Odour Control", img: "/service-icon/odour-control.svg" },
+] as const;
 
 function FormVerticalProgress({ activeId, onJump }: Props) {
+  const state = useServiceAgreementStore();
+
+  // Pull details for each service (same as in ServicesForm)
+  const chuteCleaningDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "chute_cleaning"
+  ) as GetServicesReturnTyped<"chute_cleaning">;
+
+  const equipmentMaintenanceDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "equipment_maintenance"
+  ) as GetServicesReturnTyped<"equipment_maintenance">;
+
+  const selfClosingHopperDoorInspectionDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "hopper_door_inspection"
+  ) as GetServicesReturnTyped<"hopper_door_inspection">;
+
+  const wasteRoomCleaningDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "waste_room_pressure_clean"
+  ) as GetServicesReturnTyped<"waste_room_pressure_clean">;
+
+  const binCleaningDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "bin_cleaning"
+  ) as GetServicesReturnTyped<"bin_cleaning">;
+
+  const odourControlDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "odour_control"
+  ) as GetServicesReturnTyped<"odour_control">;
+
+  // Map each id to its item count
+  const counts: Record<string, number> = {
+    chute_cleaning: chuteCleaningDetails.items.length,
+    equipment_maintenance: equipmentMaintenanceDetails.items.length,
+    hopper_door_inspection: selfClosingHopperDoorInspectionDetails.items.length,
+    waste_room_pressure_clean: wasteRoomCleaningDetails.items.length,
+    bin_cleaning: binCleaningDetails.items.length,
+    odour_control: odourControlDetails.items.length,
+  };
+
+  // Only show items that have at least one detail row
+  const visibleItems = items.filter((it) => (counts[it.id] ?? 0) > 0);
+
+  if (visibleItems.length === 0) return null;
+
   return (
     <div className="flex flex-col gap-6">
-      {items.map((it, i) => (
+      {visibleItems.map((it, i) => (
         <div key={it.id} className={cn(`fade-right fade-right-${(i + 1) * 100}`)}>
           <div
             className={cn(
@@ -40,9 +81,7 @@ function FormVerticalProgress({ activeId, onJump }: Props) {
             <div className="size-10 border border-input rounded-lg flex items-center justify-center shadow-xs">
               <img src={it.img} alt={it.label} className="size-4.5" />
             </div>
-            <div
-              className={cn("text-base ", activeId === it.id ? "underline font-medium" : "")}
-            >
+            <div className={cn("text-base", activeId === it.id ? "underline font-medium" : "")}>
               <div className="text-base">{it.label}</div>
             </div>
           </div>
