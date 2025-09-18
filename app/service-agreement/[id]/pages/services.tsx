@@ -54,7 +54,6 @@ function ServicesForm() {
     }
   };
 
-
   if (!state.serviceAgreement) return null;
 
   return (
@@ -64,7 +63,6 @@ function ServicesForm() {
         id="chute-cleaning"
         className="flex flex-col gap-6 scroll-mt-[140px]"
       >
-        
         <div className="flex flex-col">
           <Label className="text-xl font-medium flex flex-row items-center gap-2">
             Chute Cleaning{" "}
@@ -249,13 +247,11 @@ function ServicesForm() {
       {/* Exclusive Benefits */}
       <section id="reward" className="flex flex-col gap-6 scroll-mt-[140px]">
         <div className="flex flex-col">
-          <Label className="text-xl font-medium">Exclusive Benefits</Label>
+          <Label className="text-xl font-medium">Complimentary Incentives</Label>
           <span className="text-base text-neutral-500">
-            Enjoy our exclusive benefits when you choose additional services
-            with us.
+          Add services to unlock and redeem complimentary incentives from us — at no extra cost.
           </span>
         </div>
-
         <div className="overflow-x-auto p-1">
           <IncentiveTable serviceCount={numberOfServices} />
         </div>

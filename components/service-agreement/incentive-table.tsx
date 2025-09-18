@@ -222,7 +222,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
           {/* Pro tier */}
           <div className="col-span-2 transition-all duration-300 relative">
             {currentTier === "pro" && (
-              <div className="pointer-events-none absolute inset-0 z-30 border-2 border-[#1e60ad] bg-blue-400/5" />
+              <div className="pointer-events-none absolute inset-0 z-30 border-2 border-[#1e60ad] bg-blue-400/5 rounded-br-lg" />
             )}
 
             {/* PRO */}
@@ -271,7 +271,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                         className={cn(
                           "font-medium leading-none text-3xl",
                           currentTier === "pro"
-                            ? "text-white/90"
+                            ? "text-white"
                             : "text-neutral-800"
                         )}
                       >
