@@ -71,6 +71,8 @@ export default function SiteInfo() {
       return merged;
     });
 
+    console.log("nextSites", nextSites);
+
     useServiceAgreementStore
       .getState()
       .setServiceAgreement({ ...prev, sites: nextSites });

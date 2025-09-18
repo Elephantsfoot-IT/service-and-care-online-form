@@ -18,7 +18,7 @@ import { ArrowRightIcon, InfoIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useServiceAgreementStore } from "../../service-agreement-store";
 
-/* ---------- Small, reusable building blocks ---------- */
+/* ---------- Small helpers (do NOT touch your service grids) ---------- */
 
 function SectionShell({
   id,
@@ -30,7 +30,7 @@ function SectionShell({
   return (
     <section
       id={id}
-      className="flex flex-col gap-6 scroll-mt-[140px] border border-input rounded-lg overflow-hidden"
+      className="flex flex-col gap-6 scroll-mt-[140px] border border-input rounded-lg overflow-hidden shadow-xs"
     >
       {children}
     </section>
@@ -67,57 +67,7 @@ function SectionHeader({
   );
 }
 
-function ServicesGrid<Row extends { site_name: string; price: string }>({
-  rows,
-  col2Label,
-  col3Label,
-  renderCol2,
-  renderCol3,
-}: {
-  rows: Row[];
-  col2Label?: string;
-  col3Label?: string;
-  renderCol2?: (row: Row) => React.ReactNode;
-  renderCol3?: (row: Row) => React.ReactNode;
-}) {
-  return (
-    <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
-      <div className="flex flex-col text-sm min-w-[500px]">
-        {/* Header */}
-        <div className="grid grid-cols-6 gap-2 border-b border-input">
-          <div className="col-span-2 px-4 py-2 font-medium">Sites</div>
-          <div className="col-span-1 px-4 py-2 font-medium">
-            {col2Label ?? ""}
-          </div>
-          <div className="col-span-2 px-4 py-2 font-medium">
-            {col3Label ?? ""}
-          </div>
-          <div className="col-span-1 text-right px-4 py-2 font-medium">
-            Price
-          </div>
-        </div>
-
-        {/* Rows */}
-        {rows.map((r, i) => (
-          <div key={i} className="grid grid-cols-6 gap-2 border-b border-input">
-            <div className="col-span-2 px-4 py-2">{r.site_name}</div>
-            <div className="col-span-1 px-4 py-2">
-              {renderCol2 ? renderCol2(r) : null}
-            </div>
-            <div className="col-span-2 px-4 py-2">
-              {renderCol3 ? renderCol3(r) : null}
-            </div>
-            <div className="col-span-1 text-right px-4 py-2 font-medium">
-              {formatMoney(getNumber(r.price))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* Pricing footer that also handles discount UI */
+/* ---------- Reusable footer for pricing (handles discount UI) ---------- */
 function PricingFooter({
   items,
   frequency,
@@ -134,8 +84,8 @@ function PricingFooter({
 
   return (
     <div className="flex flex-row justify-between items-start px-4 py-4 gap-20 w-[300px] ml-auto">
-      <div className="font-medium text-base">Annual cost:</div>
-      <div className="text-right flex flex-col items-end font-medium text-base">
+      <div className="font-medium text-sm">Annual cost:</div>
+      <div className="text-right flex flex-col items-end font-medium text-lg">
         <div
           className={
             onSale
@@ -156,7 +106,7 @@ function PricingFooter({
   );
 }
 
-/* --------------------------- Page component --------------------------- */
+/* ------------------------------- Page ------------------------------- */
 
 function ServicesForm() {
   const state = useServiceAgreementStore();
@@ -190,14 +140,14 @@ function ServicesForm() {
   }, [numberOfServices]);
 
   const goNext = () => {
-    if (numberOfServices === 0) setShowError(true);
-    else {
+    if (numberOfServices === 0) {
+      setShowError(true);
+    } else {
       setShowError(false);
       state.setPage(2);
     }
   };
 
-  // Fetch per-service details
   const chuteCleaningDetails = getServices(
     state.serviceAgreement?.sites ?? [],
     "chute_cleaning"
@@ -234,6 +184,14 @@ function ServicesForm() {
 
   return (
     <div className="flex flex-col gap-10">
+      <div className="flex flex-col">
+        <Label className="text-2xl mb-1 font-medium">
+          Build Your Service Plan
+        </Label>
+        <span className="text-lg text-neutral-500 font-normal">
+          Pick the services you need by setting a frequency.
+        </span>
+      </div>
       {/* Chute Cleaning */}
       <SectionShell id="chute-cleaning">
         <SectionHeader
@@ -249,19 +207,47 @@ function ServicesForm() {
             options={options}
           />
 
-          <ServicesGrid
-            rows={chuteCleaningDetails.items}
-            col2Label="Qty"
-            col3Label="Level"
-            renderCol2={(r) => r.chutes}
-            renderCol3={(r) => r.levels}
-          />
+          {/* Service grid (left intact) */}
+          <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
+            <div className="flex flex-col text-sm min-w-[500px]">
+              <div className="grid grid-cols-6 gap-2 border-b border-input">
+                <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
+                <div className="col-span-1 px-4 py-2 font-medium">Qty</div>
+                <div className="col-span-1 px-4 py-2 font-medium">Level</div>
+                <div className="col-span-1 text-right px-4 py-2 font-medium">
+                  Price
+                </div>
+              </div>
 
-          <PricingFooter
-            items={chuteCleaningDetails.items}
-            frequency={state.chuteCleaningFrequency}
-            discountPct={discount}
-          />
+              {chuteCleaningDetails.items.map((r, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-6 gap-2 border-b border-input"
+                >
+                  {r.building_name ? (
+                    <div className="col-span-3 px-4 py-2">
+                      <div>{r.building_name}</div>
+                      <div className="text-neutral-500">{r.site_name}</div>
+                    </div>
+                  ) : (
+                    <div className="col-span-1 px-4 py-2">{r.site_name}</div>
+                  )}
+
+                  <div className="col-span-1 px-4 py-2">{r.chutes}</div>
+                  <div className="col-span-1 px-4 py-2">{r.levels}</div>
+                  <div className="col-span-1 text-right px-4 py-2 font-medium">
+                    {formatMoney(getNumber(r.price))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <PricingFooter
+              items={chuteCleaningDetails.items}
+              frequency={state.chuteCleaningFrequency}
+              discountPct={discount}
+            />
+          </div>
         </div>
       </SectionShell>
 
@@ -280,18 +266,46 @@ function ServicesForm() {
             options={options}
           />
 
-          <ServicesGrid
-            rows={wasteRoomCleaningDetails.items}
-            col2Label=""
-            col3Label="Area"
-            renderCol3={(r) => r.area_label}
-          />
+          {/* Service grid (left intact) */}
+          <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
+            <div className="flex flex-col text-sm min-w-[500px]">
+              <div className="grid grid-cols-6 gap-2 border-b border-input">
+                <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
+                <div className="col-span-1 px-4 py-2 font-medium"></div>
+                <div className="col-span-1 px-4 py-2 font-medium">Area</div>
+                <div className="col-span-1 text-right px-4 py-2 font-medium">
+                  Price
+                </div>
+              </div>
 
-          <PricingFooter
-            items={wasteRoomCleaningDetails.items}
-            frequency={state.wasteRoomCleaningFrequency}
-            discountPct={discount}
-          />
+              {wasteRoomCleaningDetails.items.map((r, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-6 gap-2 border-b border-input"
+                >
+                  {r.building_name ? (
+                    <div className="col-span-3 px-4 py-2">
+                      <div>{r.building_name}</div>
+                      <div className="text-neutral-500">{r.site_name}</div>
+                    </div>
+                  ) : (
+                    <div className="col-span-1 px-4 py-2">{r.site_name}</div>
+                  )}
+                  <div className="col-span-1 px-4 py-2"></div>
+                  <div className="col-span-1 px-4 py-2">{r.area_label}</div>
+                  <div className="col-span-1 text-right px-4 py-2 font-medium">
+                    {formatMoney(getNumber(r.price))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <PricingFooter
+              items={wasteRoomCleaningDetails.items}
+              frequency={state.wasteRoomCleaningFrequency}
+              discountPct={discount}
+            />
+          </div>
         </div>
       </SectionShell>
 
@@ -310,13 +324,46 @@ function ServicesForm() {
             options={options}
           />
 
-          <ServicesGrid rows={selfClosingHopperDoorInspectionDetails.items} />
+          {/* Service grid (left intact) */}
+          <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
+            <div className="flex flex-col text-sm min-w-[500px]">
+              <div className="grid grid-cols-6 gap-2 border-b border-input">
+                <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
+                <div className="col-span-1 px-4 py-2 font-medium"></div>
+                <div className="col-span-1 px-4 py-2 font-medium"></div>
+                <div className="col-span-1 text-right px-4 py-2 font-medium">
+                  Price
+                </div>
+              </div>
 
-          <PricingFooter
-            items={selfClosingHopperDoorInspectionDetails.items}
-            frequency={state.selfClosingHopperDoorInspectionFrequency}
-            discountPct={discount}
-          />
+              {selfClosingHopperDoorInspectionDetails.items.map((r, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-6 gap-2 border-b border-input"
+                >
+                  {r.building_name ? (
+                    <div className="col-span-3 px-4 py-2">
+                      <div>{r.building_name}</div>
+                      <div className="text-neutral-500">{r.site_name}</div>
+                    </div>
+                  ) : (
+                    <div className="col-span-1 px-4 py-2">{r.site_name}</div>
+                  )}
+                  <div className="col-span-1 px-4 py-2"></div>
+                  <div className="col-span-1 px-4 py-2"></div>
+                  <div className="col-span-1 text-right px-4 py-2 font-medium">
+                    {formatMoney(getNumber(r.price))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <PricingFooter
+              items={selfClosingHopperDoorInspectionDetails.items}
+              frequency={state.selfClosingHopperDoorInspectionFrequency}
+              discountPct={discount}
+            />
+          </div>
         </div>
       </SectionShell>
 
@@ -335,13 +382,46 @@ function ServicesForm() {
             options={options}
           />
 
-          <ServicesGrid rows={binCleaningDetails.items} />
+          {/* Service grid (left intact) */}
+          <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
+            <div className="flex flex-col text-sm min-w-[500px]">
+              <div className="grid grid-cols-6 gap-2 border-b border-input">
+                <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
+                <div className="col-span-1 px-4 py-2 font-medium"></div>
+                <div className="col-span-1 px-4 py-2 font-medium"></div>
+                <div className="col-span-1 text-right px-4 py-2 font-medium">
+                  Price
+                </div>
+              </div>
 
-          <PricingFooter
-            items={binCleaningDetails.items}
-            frequency={state.binCleaningFrequency}
-            discountPct={discount}
-          />
+              {binCleaningDetails.items.map((r, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-6 gap-2 border-b border-input"
+                >
+                  {r.building_name ? (
+                    <div className="col-span-3 px-4 py-2">
+                      <div>{r.building_name}</div>
+                      <div className="text-neutral-500">{r.site_name}</div>
+                    </div>
+                  ) : (
+                    <div className="col-span-1 px-4 py-2">{r.site_name}</div>
+                  )}
+                  <div className="col-span-1 px-4 py-2"></div>
+                  <div className="col-span-1 px-4 py-2"></div>
+                  <div className="col-span-1 text-right px-4 py-2 font-medium">
+                    {formatMoney(getNumber(r.price))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <PricingFooter
+              items={binCleaningDetails.items}
+              frequency={state.binCleaningFrequency}
+              discountPct={discount}
+            />
+          </div>
         </div>
       </SectionShell>
 
@@ -360,17 +440,50 @@ function ServicesForm() {
             options={options}
           />
 
-          <ServicesGrid
-            rows={equipmentMaintenanceDetails.items}
-            col3Label="Equipment"
-            renderCol3={(r) => r.equipment_label}
-          />
+          {/* Service grid (left intact) */}
+          <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
+            <div className="flex flex-col text-sm min-w-[500px]">
+              <div className="grid grid-cols-6 gap-2 border-b border-input">
+                <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
+                <div className="col-span-1 px-4 py-2 font-medium"></div>
+                <div className="col-span-1 px-4 py-2 font-medium">
+                  Equipment
+                </div>
+                <div className="col-span-1 text-right px-4 py-2 font-medium">
+                  Price
+                </div>
+              </div>
 
-          <PricingFooter
-            items={equipmentMaintenanceDetails.items}
-            frequency={state.equipmentMaintenanceFrequency}
-            discountPct={discount}
-          />
+              {equipmentMaintenanceDetails.items.map((r, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-6 gap-2 border-b border-input"
+                >
+                  {r.building_name ? (
+                    <div className="col-span-3 px-4 py-2">
+                      <div>{r.building_name}</div>
+                      <div className="text-neutral-500">{r.site_name}</div>
+                    </div>
+                  ) : (
+                    <div className="col-span-1 px-4 py-2">{r.site_name}</div>
+                  )}
+                  <div className="col-span-1 px-4 py-2"></div>
+                  <div className="col-span-1 px-4 py-2">
+                    {r.equipment_label}
+                  </div>
+                  <div className="col-span-1 text-right px-4 py-2 font-medium">
+                    {formatMoney(getNumber(r.price))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <PricingFooter
+              items={equipmentMaintenanceDetails.items}
+              frequency={state.equipmentMaintenanceFrequency}
+              discountPct={discount}
+            />
+          </div>
         </div>
       </SectionShell>
 
@@ -389,22 +502,58 @@ function ServicesForm() {
             options={options}
           />
 
-          <ServicesGrid rows={odourControlDetails.items} />
+          {/* Service grid (left intact) */}
+          <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
+            <div className="flex flex-col text-sm min-w-[500px]">
+              <div className="grid grid-cols-6 gap-2 border-b border-input">
+                <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
+                <div className="col-span-1 px-4 py-2 font-medium"></div>
+                <div className="col-span-1 px-4 py-2 font-medium"></div>
+                <div className="col-span-1 text-right px-4 py-2 font-medium">
+                  Price
+                </div>
+              </div>
 
-          <PricingFooter
-            items={odourControlDetails.items}
-            frequency={state.odourControlFrequency}
-            discountPct={discount}
-          />
+              {odourControlDetails.items.map((r, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-6 gap-2 border-b border-input"
+                >
+                  {r.building_name ? (
+                    <div className="col-span-3 px-4 py-2">
+                      <div>{r.building_name}</div>
+                      <div className="text-neutral-500">{r.site_name}</div>
+                    </div>
+                  ) : (
+                    <div className="col-span-1 px-4 py-2">{r.site_name}</div>
+                  )}
+                  <div className="col-span-1 px-4 py-2"></div>
+                  <div className="col-span-1 px-4 py-2"></div>
+                  <div className="col-span-1 text-right px-4 py-2 font-medium">
+                    {formatMoney(getNumber(r.price))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <PricingFooter
+              items={odourControlDetails.items}
+              frequency={state.odourControlFrequency}
+              discountPct={discount}
+            />
+          </div>
         </div>
       </SectionShell>
 
-      {/* Complimentary Incentives */}
+      {/* Exclusive Benefits */}
       <section id="reward" className="flex flex-col gap-6 scroll-mt-[140px]">
         <div className="flex flex-col">
-          <Label className="text-xl font-medium">Complimentary Incentives</Label>
+          <Label className="text-xl font-medium">
+            Complimentary Incentives
+          </Label>
           <span className="text-base text-neutral-500">
-            Add services to unlock and redeem complimentary incentives from us — at no extra cost.
+            Add services to unlock and redeem complimentary incentives from us —
+            at no extra cost.
           </span>
         </div>
         <div className="overflow-x-auto p-1">
@@ -420,7 +569,11 @@ function ServicesForm() {
 
       {/* Continue */}
       <div className="w-full flex justify-end mt-16">
-        <Button variant="efg" className="cursor-pointer w-[200px]" onClick={goNext}>
+        <Button
+          variant="efg"
+          className="cursor-pointer w-[200px]"
+          onClick={goNext}
+        >
           Continue <ArrowRightIcon />
         </Button>
       </div>

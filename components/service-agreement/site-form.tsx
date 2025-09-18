@@ -1,25 +1,23 @@
 "use client";
 
-import React, {
-  useEffect,
-  useMemo,
-  useImperativeHandle,
-  useRef,
-} from "react";
-import { Form, FormField } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { defaultSiteContact, Site, SiteContact } from "@/lib/interface";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect as useReactEffect } from "react";
+import { PlusIcon } from "lucide-react";
+import React, { useEffect, useImperativeHandle, useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import MultiLineAddressInput from "../ui/multi-line-address-input";
-import SiteContactForm, {
-  SiteContactFormHandle,
-} from "./site-contact-form";
-import { Button } from "@/components/ui/button";
-import { PlusIcon } from "lucide-react";
+import SiteContactForm, { SiteContactFormHandle } from "./site-contact-form";
 
 const FormSchema = z.object({
   siteName: z.string().min(1, { message: "Site name cannot be empty" }),
@@ -27,7 +25,7 @@ const FormSchema = z.object({
   City: z.string().min(1, { message: "City cannot be empty" }),
   State: z.string().min(1, { message: "State cannot be empty" }),
   PostalCode: z.string().min(1, { message: "Postal code cannot be empty" }),
-  Country: z.string().min(1, { message: "Country cannot be empty" }),
+  Country: z.string(),
 });
 export type SiteFormType = z.infer<typeof FormSchema>;
 
@@ -71,7 +69,10 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
 
     // Ensure at least 1 contact (primary)
     useEffect(() => {
-      if (!Array.isArray(site.site_contacts) || site.site_contacts.length === 0) {
+      if (
+        !Array.isArray(site.site_contacts) ||
+        site.site_contacts.length === 0
+      ) {
         handleEditSites(siteId, {
           site_contacts: [{ ...defaultSiteContact, id: crypto.randomUUID() }],
         });
@@ -95,23 +96,34 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
         handleEditSites(siteId, { site_name: value });
         return;
       }
-      // Address map
-      const map: Record<
-        Exclude<keyof SiteFormType, "siteName">,
-        keyof Site["site_address"]
-      > = {
-        Address: "Address",
-        City: "City",
-        State: "State",
-        PostalCode: "PostalCode",
-        Country: "Country",
-      };
-      handleEditSites(siteId, {
+
+      const address = {
         site_address: {
           ...site.site_address,
-          [map[field as keyof typeof map]]: value,
+          [field]: value,
         },
-      });
+      };
+
+      handleEditSites(siteId, address);
+    };
+
+    const onChangeAll = (
+      street: string,
+      city: string,
+      postcode: string,
+      state: string
+    ) => {
+      const address = {
+        site_address: {
+          Address: street,
+          City: city,
+          PostalCode: postcode,
+          State: state,
+          Country: "Australia",
+        },
+      };
+
+      handleEditSites(siteId, address);
     };
 
     /** Contacts ops */
@@ -142,7 +154,9 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
 
     /** === Validation wiring === */
     const rootRef = useRef<HTMLDivElement>(null);
-    const contactRefs = useRef<Record<string, SiteContactFormHandle | null>>({});
+    const contactRefs = useRef<Record<string, SiteContactFormHandle | null>>(
+      {}
+    );
     const setContactRef =
       (id: string) => (instance: SiteContactFormHandle | null) => {
         contactRefs.current[id] = instance;
@@ -154,13 +168,19 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
         const siteOk = await form.trigger();
         // 2) validate all contact forms
         const results = await Promise.all(
-          contacts.map((c) => contactRefs.current[c.id]?.validate() ?? Promise.resolve(true))
+          contacts.map(
+            (c) =>
+              contactRefs.current[c.id]?.validate() ?? Promise.resolve(true)
+          )
         );
         const contactsOk = results.every(Boolean);
 
         const ok = siteOk && contactsOk;
         if (!ok) {
-          rootRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+          rootRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
         }
         return ok;
       },
@@ -190,23 +210,28 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
               <Label className="w-full md:w-1/3 text-sm">
                 Site Name <span className="text-red-500">*</span>
               </Label>
-              <div className="w-full md:w-2/3 flex flex-row space-x-2">
+     
                 <FormField
                   control={form.control}
                   name="siteName"
                   render={({ field }) => (
-                    <Input
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        onChange("siteName", e.target.value);
-                      }}
-                      className="efg-input"
-                      disabled={editDisabled}
-                    />
+                    <FormItem className="w-full md:w-2/3 flex flex-col space-x-2">
+                      <FormControl>
+                        <Input
+                          {...field}
+                          onChange={(e) => {
+                            field.onChange(e);
+                            onChange("siteName", e.target.value);
+                          }}
+                          className="efg-input"
+                          disabled={editDisabled}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
                   )}
                 />
-              </div>
+              
             </div>
 
             <hr className="border-neutral-300 border-dashed" />
@@ -227,6 +252,9 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
                   handleChange={(f, v) => onChange(f as keyof SiteFormType, v)}
                   stateSelectValue={site.site_address.State}
                   disabled={editDisabled}
+                  handleChangeAll={(street, city, postcode, state) =>
+                    onChangeAll(street, city, postcode, state)
+                  }
                 />
               </div>
             </div>

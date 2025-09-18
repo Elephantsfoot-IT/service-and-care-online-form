@@ -46,6 +46,7 @@ interface MultiLineAddressInputProps<T extends FieldValues> {
     country: Path<T>;
   };
   handleChange: (field: Path<T>, value: string) => void;
+  handleChangeAll?: (street: string, city: string, postcode: string, state: string) => void;
   disabled?: boolean;
   stateSelectValue: string;
 }
@@ -53,6 +54,7 @@ interface MultiLineAddressInputProps<T extends FieldValues> {
 function MultiLineAddressInput<T extends FieldValues>({
   fieldNames,
   handleChange,
+  handleChangeAll,
   disabled,
   stateSelectValue,
 }: MultiLineAddressInputProps<T>) {
@@ -121,6 +123,8 @@ function MultiLineAddressInput<T extends FieldValues>({
           handleChange(fieldNames.city, data.city);
           handleChange(fieldNames.postcode, data.postcode);
           handleChange(fieldNames.state, data.state);
+
+          handleChangeAll?.(data.streetAddress, data.city, data.postcode, data.state);
           setOpen(false);
         }
       } catch (error) {
