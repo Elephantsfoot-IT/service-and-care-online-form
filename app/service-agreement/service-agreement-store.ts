@@ -109,7 +109,7 @@ type StateOnly = Omit<
 
 const initialState: StateOnly = {
   /* ---------- UI / Progress ---------- */
-  page: 5,
+  page: 1,
   progress: 1,
 
   /* ---------- Signature & Agreement ---------- */
