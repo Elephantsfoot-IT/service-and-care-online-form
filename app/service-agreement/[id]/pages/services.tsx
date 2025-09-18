@@ -108,7 +108,7 @@ function PricingFooter({
 
 /* ------------------------------- Page ------------------------------- */
 
-function ServicesForm({selectMore}: {selectMore: () => void}) {
+function ServicesForm({ selectMore }: { selectMore: () => void }) {
   const state = useServiceAgreementStore();
   const [showError, setShowError] = useState(false);
 
@@ -250,19 +250,18 @@ function ServicesForm({selectMore}: {selectMore: () => void}) {
           </div>
         </div>
       </SectionShell>
-
-      {/* Waste Room Pressure Clean */}
-      <SectionShell id="waste-room-pressure-clean">
+      {/* Equipment Preventative Maintenance */}
+      <SectionShell id="equipment-preventative-maintenance">
         <SectionHeader
-          title="Waste Room Pressure Clean"
-          description="High-pressure cleaning for hygienic, odour-free waste rooms."
-          helpHref="https://www.elephantsfoot.com.au/waste-room-restoration/"
+          title="Equipment Preventative Maintenance"
+          description="Keep compactors and related equipment safe, compliant, and efficient."
+          helpHref="https://www.elephantsfoot.com.au/preventative-maintenance/"
         />
 
         <div className="p-4 md:p-6 2xl:p-8">
           <ServiceFrequency2
-            value={state.wasteRoomCleaningFrequency}
-            onChange={state.setWasteRoomCleaningFrequency}
+            value={state.equipmentMaintenanceFrequency}
+            onChange={state.setEquipmentMaintenanceFrequency}
             options={options}
           />
 
@@ -272,13 +271,15 @@ function ServicesForm({selectMore}: {selectMore: () => void}) {
               <div className="grid grid-cols-6 gap-2 border-b border-input">
                 <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
                 <div className="col-span-1 px-4 py-2 font-medium"></div>
-                <div className="col-span-1 px-4 py-2 font-medium">Area</div>
+                <div className="col-span-1 px-4 py-2 font-medium">
+                  Equipment
+                </div>
                 <div className="col-span-1 text-right px-4 py-2 font-medium">
                   Price
                 </div>
               </div>
 
-              {wasteRoomCleaningDetails.items.map((r, i) => (
+              {equipmentMaintenanceDetails.items.map((r, i) => (
                 <div
                   key={i}
                   className="grid grid-cols-6 gap-2 border-b border-input"
@@ -292,7 +293,9 @@ function ServicesForm({selectMore}: {selectMore: () => void}) {
                     <div className="col-span-1 px-4 py-2">{r.site_name}</div>
                   )}
                   <div className="col-span-1 px-4 py-2"></div>
-                  <div className="col-span-1 px-4 py-2">{r.area_label}</div>
+                  <div className="col-span-1 px-4 py-2">
+                    {r.equipment_label}
+                  </div>
                   <div className="col-span-1 text-right px-4 py-2 font-medium">
                     {formatMoney(getNumber(r.price))}
                   </div>
@@ -301,8 +304,8 @@ function ServicesForm({selectMore}: {selectMore: () => void}) {
             </div>
 
             <PricingFooter
-              items={wasteRoomCleaningDetails.items}
-              frequency={state.wasteRoomCleaningFrequency}
+              items={equipmentMaintenanceDetails.items}
+              frequency={state.equipmentMaintenanceFrequency}
               discountPct={discount}
             />
           </div>
@@ -367,6 +370,64 @@ function ServicesForm({selectMore}: {selectMore: () => void}) {
         </div>
       </SectionShell>
 
+      {/* Waste Room Pressure Clean */}
+      <SectionShell id="waste-room-pressure-clean">
+        <SectionHeader
+          title="Waste Room Pressure Clean"
+          description="High-pressure cleaning for hygienic, odour-free waste rooms."
+          helpHref="https://www.elephantsfoot.com.au/waste-room-restoration/"
+        />
+
+        <div className="p-4 md:p-6 2xl:p-8">
+          <ServiceFrequency2
+            value={state.wasteRoomCleaningFrequency}
+            onChange={state.setWasteRoomCleaningFrequency}
+            options={options}
+          />
+
+          {/* Service grid (left intact) */}
+          <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
+            <div className="flex flex-col text-sm min-w-[500px]">
+              <div className="grid grid-cols-6 gap-2 border-b border-input">
+                <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
+                <div className="col-span-1 px-4 py-2 font-medium"></div>
+                <div className="col-span-1 px-4 py-2 font-medium">Area</div>
+                <div className="col-span-1 text-right px-4 py-2 font-medium">
+                  Price
+                </div>
+              </div>
+
+              {wasteRoomCleaningDetails.items.map((r, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-6 gap-2 border-b border-input"
+                >
+                  {r.building_name ? (
+                    <div className="col-span-3 px-4 py-2">
+                      <div>{r.building_name}</div>
+                      <div className="text-neutral-500">{r.site_name}</div>
+                    </div>
+                  ) : (
+                    <div className="col-span-1 px-4 py-2">{r.site_name}</div>
+                  )}
+                  <div className="col-span-1 px-4 py-2"></div>
+                  <div className="col-span-1 px-4 py-2">{r.area_label}</div>
+                  <div className="col-span-1 text-right px-4 py-2 font-medium">
+                    {formatMoney(getNumber(r.price))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <PricingFooter
+              items={wasteRoomCleaningDetails.items}
+              frequency={state.wasteRoomCleaningFrequency}
+              discountPct={discount}
+            />
+          </div>
+        </div>
+      </SectionShell>
+
       {/* Bin Cleaning */}
       <SectionShell id="bin-cleaning">
         <SectionHeader
@@ -419,68 +480,6 @@ function ServicesForm({selectMore}: {selectMore: () => void}) {
             <PricingFooter
               items={binCleaningDetails.items}
               frequency={state.binCleaningFrequency}
-              discountPct={discount}
-            />
-          </div>
-        </div>
-      </SectionShell>
-
-      {/* Equipment Preventative Maintenance */}
-      <SectionShell id="equipment-preventative-maintenance">
-        <SectionHeader
-          title="Equipment Preventative Maintenance"
-          description="Keep compactors and related equipment safe, compliant, and efficient."
-          helpHref="https://www.elephantsfoot.com.au/preventative-maintenance/"
-        />
-
-        <div className="p-4 md:p-6 2xl:p-8">
-          <ServiceFrequency2
-            value={state.equipmentMaintenanceFrequency}
-            onChange={state.setEquipmentMaintenanceFrequency}
-            options={options}
-          />
-
-          {/* Service grid (left intact) */}
-          <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
-            <div className="flex flex-col text-sm min-w-[500px]">
-              <div className="grid grid-cols-6 gap-2 border-b border-input">
-                <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
-                <div className="col-span-1 px-4 py-2 font-medium"></div>
-                <div className="col-span-1 px-4 py-2 font-medium">
-                  Equipment
-                </div>
-                <div className="col-span-1 text-right px-4 py-2 font-medium">
-                  Price
-                </div>
-              </div>
-
-              {equipmentMaintenanceDetails.items.map((r, i) => (
-                <div
-                  key={i}
-                  className="grid grid-cols-6 gap-2 border-b border-input"
-                >
-                  {r.building_name ? (
-                    <div className="col-span-3 px-4 py-2">
-                      <div>{r.building_name}</div>
-                      <div className="text-neutral-500">{r.site_name}</div>
-                    </div>
-                  ) : (
-                    <div className="col-span-1 px-4 py-2">{r.site_name}</div>
-                  )}
-                  <div className="col-span-1 px-4 py-2"></div>
-                  <div className="col-span-1 px-4 py-2">
-                    {r.equipment_label}
-                  </div>
-                  <div className="col-span-1 text-right px-4 py-2 font-medium">
-                    {formatMoney(getNumber(r.price))}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <PricingFooter
-              items={equipmentMaintenanceDetails.items}
-              frequency={state.equipmentMaintenanceFrequency}
               discountPct={discount}
             />
           </div>
@@ -557,7 +556,10 @@ function ServicesForm({selectMore}: {selectMore: () => void}) {
           </span>
         </div>
         <div className="overflow-x-auto p-1">
-          <IncentiveTable serviceCount={numberOfServices} selectMore={selectMore} />
+          <IncentiveTable
+            serviceCount={numberOfServices}
+            selectMore={selectMore}
+          />
         </div>
       </section>
 

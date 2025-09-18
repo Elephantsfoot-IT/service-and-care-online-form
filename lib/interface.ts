@@ -31,8 +31,7 @@ export interface AdditionalContact {
   PrimaryQuoteContact: boolean;
 }
 
-
-export interface SiteContact{
+export interface SiteContact {
   id: string;
   GivenName: string;
   FamilyName: string;
@@ -122,26 +121,37 @@ export type Service =
   | OdourControlService
   | BinCleaningService;
 
-
-  export const SECTION_IDS = [
-    "chute-cleaning",
-    "waste-room-pressure-clean",
-    "hopper-door-inspection",
-    "bin-cleaning",
-    "equipment-preventative-maintenance",
-    "odour-control",
-  ] as const;
-
+export const SECTION_IDS = [
+  "chute-cleaning",
+  "equipment-preventative-maintenance",
+  "hopper-door-inspection",
+  "waste-room-pressure-clean",
+  "bin-cleaning",
+  "odour-control",
+] as const;
 
 export type Option = "quarterly" | "six-monthly" | "yearly";
 export type MaybeOption = Option | null;
 
-export const options: { label: string; value: Option; subtext: string;  recommended?: boolean }[] = [
-  { label: "Yearly",       value: "yearly",       subtext: "1 service per year" },
-  { label: "Six-Monthly",  value: "six-monthly",  subtext: "2 services per year"},
-  { label: "Quarterly",    value: "quarterly",    subtext: "4 services per year", recommended: true },
+export const options: {
+  label: string;
+  value: Option;
+  subtext: string;
+  recommended?: boolean;
+}[] = [
+  { label: "Yearly", value: "yearly", subtext: "1 service per year" },
+  {
+    label: "Six-Monthly",
+    value: "six-monthly",
+    subtext: "2 services per year",
+  },
+  {
+    label: "Quarterly",
+    value: "quarterly",
+    subtext: "4 services per year",
+    recommended: true,
+  },
 ];
-
 
 export const defaultSiteContact: SiteContact = {
   id: "",
@@ -154,16 +164,19 @@ export const defaultSiteContact: SiteContact = {
   Department: "",
 };
 
-
-
-export type ServiceByType<T extends ServiceType> =
-  T extends "chute_cleaning" ? ChuteCleaningService :
-  T extends "equipment_maintenance" ? EquipmentMaintenanceService :
-  T extends "hopper_door_inspection" ? HopperDoorInspectionService :
-  T extends "waste_room_pressure_clean" ? WasteRoomPressureCleanService :
-  T extends "odour_control" ? OdourControlService :
-  T extends "bin_cleaning" ? BinCleaningService :
-  never;
+export type ServiceByType<T extends ServiceType> = T extends "chute_cleaning"
+  ? ChuteCleaningService
+  : T extends "equipment_maintenance"
+  ? EquipmentMaintenanceService
+  : T extends "hopper_door_inspection"
+  ? HopperDoorInspectionService
+  : T extends "waste_room_pressure_clean"
+  ? WasteRoomPressureCleanService
+  : T extends "odour_control"
+  ? OdourControlService
+  : T extends "bin_cleaning"
+  ? BinCleaningService
+  : never;
 
 type WithContext<S> = S & {
   site_name: string;
@@ -176,4 +189,3 @@ export type GetServicesReturnTyped<T extends ServiceType> = {
   type: T;
   items: Array<WithContext<ServiceByType<T>>>;
 };
-

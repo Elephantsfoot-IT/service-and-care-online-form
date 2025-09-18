@@ -8,18 +8,20 @@ type Props = {
 };
 const items = [
   { id: "chute-cleaning", label: "Chute Cleaning" ,  img: '/service-icon/chute-clean.svg'},
-  { id: "waste-room-pressure-clean", label: "Waste Room Pressure Clean"  , img: '/service-icon/tag.svg'},
-  {
-    id: "hopper-door-inspection",
-    label: "Self-Closing Hooper Door Inspection",
-    img: '/service-icon/door.svg',
-  },
-  { id: "bin-cleaning", label: "Bin Cleaning" , img: '/service-icon/bin.svg'},
   {
     id: "equipment-preventative-maintenance",
     label: "Equipment Preventative Maintenance",
     img: '/service-icon/clipboard.svg',
   },
+  {
+    id: "hopper-door-inspection",
+    label: "Self-Closing Hooper Door Inspection",
+    img: '/service-icon/door.svg',
+  },
+  { id: "waste-room-pressure-clean", label: "Waste Room Pressure Clean"  , img: '/service-icon/tag.svg'},
+  
+  { id: "bin-cleaning", label: "Bin Cleaning" , img: '/service-icon/bin.svg'},
+  
   { id: "odour-control", label: "Odour Control" , img: '/service-icon/odour-control.svg'},
 ];
 
