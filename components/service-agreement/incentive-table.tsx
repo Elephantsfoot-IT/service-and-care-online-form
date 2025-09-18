@@ -87,13 +87,13 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                         3
                       </span>
                       <span className="text-sm text-neutral-600">
-                        services to unlock
+                        services required
                       </span>
                     </div>
                   ) : (
                     <div className="flex items-baseline gap-2">
                       <span className="font-semibold leading-none text-3xl">
-                        Unlocked
+                        Redeemed
                       </span>
                     </div>
                   )}
@@ -108,7 +108,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                           "bg-neutral-200/60 hover:bg-neutral-200/90 text-black "
                         )}
                       >
-                        Upgrade
+                        Redeem
                       </Button>
                     )}
                 </div>
@@ -168,13 +168,13 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                         4
                       </span>
                       <span className="text-sm text-neutral-600">
-                        services to unlock
+                        services required
                       </span>
                     </div>
                   ) : (
                     <div className="flex items-baseline gap-2">
                       <span className="font-semibold leading-none text-3xl">
-                        Unlocked
+                        Redeemed
                       </span>
                     </div>
                   )}
@@ -187,7 +187,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                         "bg-[#ffdb01] hover:bg-[#ffdb01]/90 border-b-[#ffdb01] text-neutral-700"
                       )}
                     >
-                      Upgrade
+                      Redeem
                     </Button>
                   )}
                 </div>
@@ -261,7 +261,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                             : "text-neutral-700"
                         )}
                       >
-                        services to unlock
+                        services required
                       </span>
                     </div>
                   ) : (
@@ -274,7 +274,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                             : "text-neutral-800"
                         )}
                       >
-                        Unlocked
+                        Redeemed
                       </span>
                     </div>
                   )}
@@ -286,7 +286,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                         "bg-[#1e60ad] hover:bg-[#1e60ad]/90 text-white  border-b-[#1e60ad]"
                       )}
                     >
-                      Upgrade
+                      Redeem
                     </Button>
                   )}
                 </div>
