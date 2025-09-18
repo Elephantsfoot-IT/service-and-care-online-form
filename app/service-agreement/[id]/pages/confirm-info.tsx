@@ -77,8 +77,9 @@ export default function TermsAndSignature() {
       state.updateField("signTitle", values.signTitle);
       state.updateFieldBoolean("conditionAgree", values.conditionAgree);
       // e.g., state.submitAgreement()
-      state.reset();
       router.push(`/service-agreement/success`);
+      state.reset();
+      
     }),
     [form, state]
   );
