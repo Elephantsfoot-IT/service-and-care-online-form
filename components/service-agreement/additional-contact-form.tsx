@@ -15,7 +15,7 @@ import { AdditionalContact } from "@/lib/interface";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { XIcon } from "lucide-react";
 import React, { useEffect, useImperativeHandle, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
 
@@ -35,8 +35,8 @@ const FormSchema = z
   .object({
     GivenName: z.string().min(1, { message: "Given name cannot be empty" }),
     FamilyName: z.string().min(1, { message: "Family name cannot be empty" }),
-    Email: z.string(), // (you allowed empty email in your last snippet)
-    WorkPhone: z.string(), // (and empty phones)
+    Email: z.string(),
+    WorkPhone: z.string(),
     CellPhone: z.string(),
     Position: z.string().optional().or(z.literal("")),
     Department: z.string().optional().or(z.literal("")),
@@ -55,11 +55,13 @@ const FormSchema = z
     path: ["WorkPhone"],
   });
 
+type FormValues = z.infer<typeof FormSchema>;
+
 const AdditionalcontactForm = React.forwardRef<
   AdditionalContactFormHandle,
   AdditionalcontactFormProps
 >(({ contact, index, handleDelete, handleChange }, ref) => {
-  const ContactForm = useForm<z.infer<typeof FormSchema>>({
+  const ContactForm = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     mode: "onChange",
     defaultValues: {
@@ -83,12 +85,23 @@ const AdditionalcontactForm = React.forwardRef<
 
   // Keep RHF in sync if parent updates the contact object
   useEffect(() => {
-    const fields = Object.keys(ContactForm.getValues()) as (keyof z.infer<
-      typeof FormSchema
-    >)[];
-    fields.forEach((f) =>
-      ContactForm.setValue(f, (contact as AdditionalContact)[f])
-    );
+    ContactForm.reset({
+      GivenName: contact.GivenName ?? "",
+      FamilyName: contact.FamilyName ?? "",
+      Email: contact.Email ?? "",
+      WorkPhone: contact.WorkPhone ?? "",
+      CellPhone: contact.CellPhone ?? "",
+      Position: contact.Position ?? "",
+      Department: contact.Department ?? "",
+      QuoteContact: !!contact.QuoteContact,
+      JobContact: !!contact.JobContact,
+      InvoiceContact: !!contact.InvoiceContact,
+      StatementContact: !!contact.StatementContact,
+      PrimaryStatementContact: !!contact.PrimaryStatementContact,
+      PrimaryInvoiceContact: !!contact.PrimaryInvoiceContact,
+      PrimaryJobContact: !!contact.PrimaryJobContact,
+      PrimaryQuoteContact: !!contact.PrimaryQuoteContact,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contact]);
 
@@ -98,7 +111,6 @@ const AdditionalcontactForm = React.forwardRef<
     validate: async () => {
       const ok = await ContactForm.trigger();
       if (!ok) {
-        // Bring invalid form into view
         rootRef.current?.scrollIntoView({
           behavior: "smooth",
           block: "center",
@@ -118,56 +130,70 @@ const AdditionalcontactForm = React.forwardRef<
     (value: AdditionalContact[K]) =>
       handleChange({ ...contact, [key]: value });
 
-  // Local UI toggles (no useWatch) for showing "Primary" checkboxes
-  const [toggles, setToggles] = React.useState({
-    quote: !!contact.QuoteContact,
-    job: !!contact.JobContact,
-    invoice: !!contact.InvoiceContact,
-    statement: !!contact.StatementContact,
+  // --- useWatch for the four parent toggles ---
+  const quoteOn = useWatch({
+    control: ContactForm.control,
+    name: "QuoteContact",
+  });
+  const jobOn = useWatch({ control: ContactForm.control, name: "JobContact" });
+  const invoiceOn = useWatch({
+    control: ContactForm.control,
+    name: "InvoiceContact",
+  });
+  const statementOn = useWatch({
+    control: ContactForm.control,
+    name: "StatementContact",
   });
 
-  // Keep toggles aligned if parent contact changes
+  // Auto-unset Primary when the parent toggle turns off
   useEffect(() => {
-    setToggles({
-      quote: !!contact.QuoteContact,
-      job: !!contact.JobContact,
-      invoice: !!contact.InvoiceContact,
-      statement: !!contact.StatementContact,
-    });
-  }, [
-    contact.QuoteContact,
-    contact.JobContact,
-    contact.InvoiceContact,
-    contact.StatementContact,
-  ]);
-
-  const handleParentToggle = (kind: keyof typeof toggles, checked: boolean) => {
-    setToggles((t) => ({ ...t, [kind]: checked }));
-    if (!checked) {
-      const primaryFieldMap: Record<
-        keyof typeof toggles,
-        keyof AdditionalContact
-      > = {
-        quote: "PrimaryQuoteContact",
-        job: "PrimaryJobContact",
-        invoice: "PrimaryInvoiceContact",
-        statement: "PrimaryStatementContact",
-      };
-      ContactForm.setValue(
-        primaryFieldMap[kind] as keyof z.infer<typeof FormSchema>,
-        false,
-        { shouldDirty: true, shouldTouch: true }
-      );
-      update(primaryFieldMap[kind])(
-        false as unknown as AdditionalContact[keyof AdditionalContact]
-      );
+    if (!quoteOn) {
+      ContactForm.setValue("PrimaryQuoteContact", false, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      update("PrimaryQuoteContact")(false);
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quoteOn]);
+
+  useEffect(() => {
+    if (!jobOn) {
+      ContactForm.setValue("PrimaryJobContact", false, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      update("PrimaryJobContact")(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jobOn]);
+
+  useEffect(() => {
+    if (!invoiceOn) {
+      ContactForm.setValue("PrimaryInvoiceContact", false, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      update("PrimaryInvoiceContact")(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [invoiceOn]);
+
+  useEffect(() => {
+    if (!statementOn) {
+      ContactForm.setValue("PrimaryStatementContact", false, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      update("PrimaryStatementContact")(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statementOn]);
 
   return (
     <div
       ref={rootRef}
-      className="flex flex-col w-full mx-auto rounded-lg  border border-input shadow-xs overflow-hidden"
+      className="flex flex-col w-full mx-auto rounded-lg border border-input shadow-xs overflow-hidden"
     >
       <div className="flex flex-row justify-between w-full items-center p-4 md:p-6 2xl:p-8 border-b border-input bg-neutral-50">
         <Label className="text-base">Contact ({index + 1})</Label>
@@ -179,6 +205,7 @@ const AdditionalcontactForm = React.forwardRef<
           <XIcon />
         </Button>
       </div>
+
       <Form {...ContactForm}>
         <form className="flex flex-col gap-6 p-4 md:p-6 2xl:p-8">
           {/* Full name */}
@@ -386,16 +413,7 @@ const AdditionalcontactForm = React.forwardRef<
                               checked={field.value}
                               onCheckedChange={(checked: boolean) => {
                                 field.onChange(checked);
-                                handleParentToggle("quote", checked);
                                 update("QuoteContact")(checked);
-                                if (!checked) {
-                                  ContactForm.setValue(
-                                    "PrimaryQuoteContact",
-                                    false,
-                                    { shouldDirty: true, shouldTouch: true }
-                                  );
-                                  update("PrimaryQuoteContact")(false);
-                                }
                               }}
                             />
                             <label
@@ -410,7 +428,8 @@ const AdditionalcontactForm = React.forwardRef<
                       )}
                     />
                   </div>
-                  {toggles.quote && (
+
+                  {quoteOn && (
                     <div className="w-1/2">
                       <FormField
                         control={ContactForm.control}
@@ -429,7 +448,9 @@ const AdditionalcontactForm = React.forwardRef<
                               />
                               <label
                                 htmlFor="PrimaryQuoteContact"
-                                className="text-sm leading-none"
+                                className={`text-sm leading-none ${
+                                  !quoteOn ? "opacity-50" : ""
+                                }`}
                               >
                                 Primary
                               </label>
@@ -457,16 +478,7 @@ const AdditionalcontactForm = React.forwardRef<
                               checked={field.value}
                               onCheckedChange={(checked: boolean) => {
                                 field.onChange(checked);
-                                handleParentToggle("job", checked);
                                 update("JobContact")(checked);
-                                if (!checked) {
-                                  ContactForm.setValue(
-                                    "PrimaryJobContact",
-                                    false,
-                                    { shouldDirty: true, shouldTouch: true }
-                                  );
-                                  update("PrimaryJobContact")(false);
-                                }
                               }}
                             />
                             <label
@@ -481,7 +493,8 @@ const AdditionalcontactForm = React.forwardRef<
                       )}
                     />
                   </div>
-                  {toggles.job && (
+
+                  {jobOn && (
                     <div className="w-1/2">
                       <FormField
                         control={ContactForm.control}
@@ -500,7 +513,9 @@ const AdditionalcontactForm = React.forwardRef<
                               />
                               <label
                                 htmlFor="PrimaryJobContact"
-                                className="text-sm leading-none"
+                                className={`text-sm leading-none ${
+                                  !jobOn ? "opacity-50" : ""
+                                }`}
                               >
                                 Primary
                               </label>
@@ -528,16 +543,7 @@ const AdditionalcontactForm = React.forwardRef<
                               checked={field.value}
                               onCheckedChange={(checked: boolean) => {
                                 field.onChange(checked);
-                                handleParentToggle("invoice", checked);
                                 update("InvoiceContact")(checked);
-                                if (!checked) {
-                                  ContactForm.setValue(
-                                    "PrimaryInvoiceContact",
-                                    false,
-                                    { shouldDirty: true, shouldTouch: true }
-                                  );
-                                  update("PrimaryInvoiceContact")(false);
-                                }
                               }}
                             />
                             <label
@@ -552,7 +558,8 @@ const AdditionalcontactForm = React.forwardRef<
                       )}
                     />
                   </div>
-                  {toggles.invoice && (
+
+                  {invoiceOn && (
                     <div className="w-1/2">
                       <FormField
                         control={ContactForm.control}
@@ -571,7 +578,9 @@ const AdditionalcontactForm = React.forwardRef<
                               />
                               <label
                                 htmlFor="PrimaryInvoiceContact"
-                                className="text-sm leading-none"
+                                className={`text-sm leading-none ${
+                                  !invoiceOn ? "opacity-50" : ""
+                                }`}
                               >
                                 Primary
                               </label>
@@ -599,16 +608,7 @@ const AdditionalcontactForm = React.forwardRef<
                               checked={field.value}
                               onCheckedChange={(checked: boolean) => {
                                 field.onChange(checked);
-                                handleParentToggle("statement", checked);
                                 update("StatementContact")(checked);
-                                if (!checked) {
-                                  ContactForm.setValue(
-                                    "PrimaryStatementContact",
-                                    false,
-                                    { shouldDirty: true, shouldTouch: true }
-                                  );
-                                  update("PrimaryStatementContact")(false);
-                                }
                               }}
                             />
                             <label
@@ -623,7 +623,8 @@ const AdditionalcontactForm = React.forwardRef<
                       )}
                     />
                   </div>
-                  {toggles.statement && (
+
+                  {statementOn && (
                     <div className="w-1/2">
                       <FormField
                         control={ContactForm.control}
@@ -642,7 +643,9 @@ const AdditionalcontactForm = React.forwardRef<
                               />
                               <label
                                 htmlFor="PrimaryStatementContact"
-                                className="text-sm leading-none"
+                                className={`text-sm leading-none ${
+                                  !statementOn ? "opacity-50" : ""
+                                }`}
                               >
                                 Primary
                               </label>
@@ -655,6 +658,7 @@ const AdditionalcontactForm = React.forwardRef<
                   )}
                 </div>
               </div>
+
               <p className="text-sm text-muted-foreground mt-4 ml-1">
                 Set the communications this contact receives.
               </p>
