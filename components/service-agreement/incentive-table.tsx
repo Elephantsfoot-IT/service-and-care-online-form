@@ -75,8 +75,8 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                   serviceCount === 3 && "w-full bg-transparent"
                 )}
               />
-              <div className="relative z-10 flex h-full w-full items-start p-4 md:p-6">
-                <div className="flex flex-col items-start gap-2">
+              <div className="relative z-10 flex h-full w-full items-start p-4 md:p-6 ">
+                <div className="flex flex-col items-start gap-2 w-full">
                   <span className="uppercase tracking-wide font-semibold text-xs md:text-sm">
                     Basic
                   </span>
@@ -92,7 +92,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                     </div>
                   ) : (
                     <div className="flex items-baseline gap-2">
-                      <span className="font-semibold leading-none text-3xl">
+                      <span className="font-medium leading-none text-3xl">
                         Redeemed
                       </span>
                     </div>
@@ -104,8 +104,8 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                       <Button
                         size="sm"
                         className={cn(
-                          "mt-2 shadow-sm",
-                          "bg-neutral-200/60 hover:bg-neutral-200/90 text-black "
+                          "mt-2 ",
+                          "bg-neutral-200/60 hover:bg-neutral-200/90 text-black w-full"
                         )}
                       >
                         Redeem
@@ -157,7 +157,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
               )}
             >
               <div className="relative z-10 flex h-full w-full items-start p-4 md:p-6">
-                <div className="flex flex-col items-start gap-2">
+                <div className="flex flex-col items-start gap-2 w-full">
                   <span className="uppercase tracking-wide font-semibold text-xs md:text-sm">
                     Essential
                   </span>
@@ -173,7 +173,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                     </div>
                   ) : (
                     <div className="flex items-baseline gap-2">
-                      <span className="font-semibold leading-none text-3xl">
+                      <span className="font-medium leading-none text-3xl">
                         Redeemed
                       </span>
                     </div>
@@ -183,7 +183,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                     <Button
                       size="sm"
                       className={cn(
-                        "mt-2 shadow-sm",
+                        "mt-2 w-full",
                         "bg-[#ffdb01] hover:bg-[#ffdb01]/90 border-b-[#ffdb01] text-neutral-700"
                       )}
                     >
@@ -243,7 +243,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                 )}
               />
               <div className="relative z-10 flex h-full w-full items-start p-4 md:p-6">
-                <div className="flex flex-col items-start gap-2">
+                <div className="flex flex-col items-start gap-2 w-full">
                   <span className="uppercase tracking-wide font-semibold text-xs md:text-sm">
                     Pro
                   </span>
@@ -268,7 +268,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                     <div className="flex items-baseline gap-2">
                       <span
                         className={cn(
-                          "font-semibold leading-none text-3xl",
+                          "font-medium leading-none text-3xl",
                           currentTier === "pro"
                             ? "text-white/90"
                             : "text-neutral-800"
@@ -282,7 +282,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                     <Button
                       size="sm"
                       className={cn(
-                        "mt-2 shadow-sm",
+                        "mt-2 w-full",
                         "bg-[#1e60ad] hover:bg-[#1e60ad]/90 text-white  border-b-[#1e60ad]"
                       )}
                     >
