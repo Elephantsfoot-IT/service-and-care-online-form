@@ -108,7 +108,7 @@ function PricingFooter({
 
 /* ------------------------------- Page ------------------------------- */
 
-function ServicesForm() {
+function ServicesForm({selectMore}: {selectMore: () => void}) {
   const state = useServiceAgreementStore();
   const [showError, setShowError] = useState(false);
 
@@ -557,7 +557,7 @@ function ServicesForm() {
           </span>
         </div>
         <div className="overflow-x-auto p-1">
-          <IncentiveTable serviceCount={numberOfServices} />
+          <IncentiveTable serviceCount={numberOfServices} selectMore={selectMore} />
         </div>
       </section>
 

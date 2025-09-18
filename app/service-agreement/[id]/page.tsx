@@ -24,7 +24,9 @@ import { fastScrollToEl } from "@/lib/utils";
 function ServiceAgreementComponent({ id }: { id: string }) {
   /* Store / Query */
   const state = useServiceAgreementStore();
-  const setServiceAgreement = useServiceAgreementStore((s) => s.setServiceAgreement);
+  const setServiceAgreement = useServiceAgreementStore(
+    (s) => s.setServiceAgreement
+  );
   const { data, isLoading, error, refetch } = useServiceAgreement(id);
 
   /* Refs / Local State */
@@ -62,6 +64,34 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     clearTimerRef.current = window.setTimeout(() => {
       setManualActive(null);
     }, 250); // a bit longer than duration
+  };
+
+  const selectMore = () => {
+    console.log("selectMore");
+    if (state.chuteCleaningFrequency === null) {
+      onJump("chute-cleaning");
+      return;
+    }
+    if (state.wasteRoomCleaningFrequency === null) {
+      onJump("waste-room-pressure-clean");
+      return;
+    }
+    if (state.selfClosingHopperDoorInspectionFrequency === null) {
+      onJump("hopper-door-inspection");
+      return;
+    }
+    if (state.binCleaningFrequency === null) {
+      onJump("bin-cleaning");
+      return;
+    }
+    if (state.equipmentMaintenanceFrequency === null) {
+      onJump("equipment-preventative-maintenance");
+      return;
+    }
+    if (state.odourControlFrequency === null) {
+      onJump("odour-control");
+      return;
+    }
   };
 
   /* Effects */
@@ -122,40 +152,68 @@ function ServiceAgreementComponent({ id }: { id: string }) {
             {/* {state.page >= 2 && <ServiceAgreementProgress ></ServiceAgreementProgress>} */}
 
             {state.page === 1 && (
-              <div className={`${fadeInStates.fadeIn1 ? "fade-in" : "opacity-0"} w-full flex flex-col`}>
-                <ServicesForm />
+              <div
+                className={`${
+                  fadeInStates.fadeIn1 ? "fade-in" : "opacity-0"
+                } w-full flex flex-col`}
+              >
+                <ServicesForm selectMore={selectMore} />
               </div>
             )}
             {state.page === 2 && (
-              <div className={`${fadeInStates.fadeIn2 ? "fade-in" : "opacity-0"} w-full flex flex-col`}>
+              <div
+                className={`${
+                  fadeInStates.fadeIn2 ? "fade-in" : "opacity-0"
+                } w-full flex flex-col`}
+              >
                 <CustomerInformation />
               </div>
             )}
             {state.page === 3 && (
-              <div className={`${fadeInStates.fadeIn3 ? "fade-in" : "opacity-0"} w-full flex flex-col`}>
+              <div
+                className={`${
+                  fadeInStates.fadeIn3 ? "fade-in" : "opacity-0"
+                } w-full flex flex-col`}
+              >
                 <BillingDetails />
               </div>
             )}
             {state.page === 4 && (
-              <div className={`${fadeInStates.fadeIn4 ? "fade-in" : "opacity-0"} w-full flex flex-col`}>
+              <div
+                className={`${
+                  fadeInStates.fadeIn4 ? "fade-in" : "opacity-0"
+                } w-full flex flex-col`}
+              >
                 <AdditionalContactInfo />
               </div>
             )}
 
             {state.page === 5 && (
-              <div className={`${fadeInStates.fadeIn5 ? "fade-in" : "opacity-0"} w-full flex flex-col`}>
+              <div
+                className={`${
+                  fadeInStates.fadeIn5 ? "fade-in" : "opacity-0"
+                } w-full flex flex-col`}
+              >
                 <SiteInfo />
               </div>
             )}
 
             {state.page === 6 && (
-              <div className={`${fadeInStates.fadeIn6 ? "fade-in" : "opacity-0"} w-full flex flex-col`}>
+              <div
+                className={`${
+                  fadeInStates.fadeIn6 ? "fade-in" : "opacity-0"
+                } w-full flex flex-col`}
+              >
                 <ReviewInfo />
               </div>
             )}
 
             {state.page === 7 && (
-              <div className={`${fadeInStates.fadeIn7 ? "fade-in" : "opacity-0"} w-full flex flex-col`}>
+              <div
+                className={`${
+                  fadeInStates.fadeIn7 ? "fade-in" : "opacity-0"
+                } w-full flex flex-col`}
+              >
                 <ConfirmInfo />
               </div>
             )}

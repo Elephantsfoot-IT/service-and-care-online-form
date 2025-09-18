@@ -5,9 +5,10 @@ import { Button } from "../ui/button";
 
 interface IncentiveTableProps {
   serviceCount: number;
+  selectMore: () => void;
 }
 
-function IncentiveTable({ serviceCount }: IncentiveTableProps) {
+function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
   const currentTier = useMemo(() => {
     if (serviceCount < 3) return undefined;
     if (serviceCount < 4) return "basic";
@@ -106,8 +107,8 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                         variant="outline"
                         className={cn(
                           "mt-2 w-full",
-                         
                         )}
+                        onClick={selectMore}
                       >
                         Redeem
                       </Button>
@@ -187,6 +188,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                         "mt-2 w-full",
                         "bg-[#ffdb01] hover:bg-[#ffdb01]/90 border-b-[#ffdb01] text-neutral-700"
                       )}
+                      onClick={selectMore}
                     >
                       Redeem
                     </Button>
@@ -286,6 +288,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                         "mt-2 w-full",
                         "bg-[#1e60ad] hover:bg-[#1e60ad]/90 text-white  border-b-[#1e60ad]"
                       )}
+                      onClick={selectMore}
                     >
                       Redeem
                     </Button>
