@@ -1,16 +1,162 @@
 // ServicesForm.tsx
 "use client";
+
 import IncentiveTable from "@/components/service-agreement/incentive-table";
 import ServiceFrequency2 from "@/components/service-agreement/service-frequency-2";
 import { Button } from "@/components/ui/button";
-import { options } from "@/lib/interface";
-import { scrollToTop } from "@/lib/utils";
+import { GetServicesReturnTyped, options } from "@/lib/interface";
+import {
+  formatMoney,
+  getDiscount,
+  getNumber,
+  getServices,
+  getServicesValue,
+  scrollToTop,
+} from "@/lib/utils";
 import { Label } from "@radix-ui/react-label";
 import { ArrowRightIcon, InfoIcon } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useServiceAgreementStore } from "../../service-agreement-store";
-import { useMemo } from "react";
-import { useState } from "react";
+
+/* ---------- Small, reusable building blocks ---------- */
+
+function SectionShell({
+  id,
+  children,
+}: {
+  id: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section
+      id={id}
+      className="flex flex-col gap-6 scroll-mt-[140px] border border-input rounded-lg overflow-hidden"
+    >
+      {children}
+    </section>
+  );
+}
+
+function SectionHeader({
+  title,
+  description,
+  helpHref,
+}: {
+  title: string;
+  description: string;
+  helpHref?: string;
+}) {
+  return (
+    <div className="flex flex-col bg-neutral-50 p-4 md:p-6 2xl:p-8 border-b border-input">
+      <Label className="text-xl font-medium flex flex-row items-center gap-2">
+        {title}
+        {helpHref && (
+          <a
+            href={helpHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open help in a new tab"
+            className="inline-flex items-center"
+          >
+            <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
+          </a>
+        )}
+      </Label>
+      <span className="text-base text-neutral-500">{description}</span>
+    </div>
+  );
+}
+
+function ServicesGrid<Row extends { site_name: string; price: string }>({
+  rows,
+  col2Label,
+  col3Label,
+  renderCol2,
+  renderCol3,
+}: {
+  rows: Row[];
+  col2Label?: string;
+  col3Label?: string;
+  renderCol2?: (row: Row) => React.ReactNode;
+  renderCol3?: (row: Row) => React.ReactNode;
+}) {
+  return (
+    <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
+      <div className="flex flex-col text-sm min-w-[500px]">
+        {/* Header */}
+        <div className="grid grid-cols-6 gap-2 border-b border-input">
+          <div className="col-span-2 px-4 py-2 font-medium">Sites</div>
+          <div className="col-span-1 px-4 py-2 font-medium">
+            {col2Label ?? ""}
+          </div>
+          <div className="col-span-2 px-4 py-2 font-medium">
+            {col3Label ?? ""}
+          </div>
+          <div className="col-span-1 text-right px-4 py-2 font-medium">
+            Price
+          </div>
+        </div>
+
+        {/* Rows */}
+        {rows.map((r, i) => (
+          <div key={i} className="grid grid-cols-6 gap-2 border-b border-input">
+            <div className="col-span-2 px-4 py-2">{r.site_name}</div>
+            <div className="col-span-1 px-4 py-2">
+              {renderCol2 ? renderCol2(r) : null}
+            </div>
+            <div className="col-span-2 px-4 py-2">
+              {renderCol3 ? renderCol3(r) : null}
+            </div>
+            <div className="col-span-1 text-right px-4 py-2 font-medium">
+              {formatMoney(getNumber(r.price))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* Pricing footer that also handles discount UI */
+function PricingFooter({
+  items,
+  frequency,
+  discountPct,
+}: {
+  items: Array<{ price: string }>;
+  frequency: string | null;
+  discountPct: number;
+}) {
+  const base = items.reduce((acc, r) => acc + getNumber(r.price), 0);
+  const total = getServicesValue(base || 0, frequency);
+  const onSale = discountPct !== 0 && total > 0;
+  const discounted = onSale ? total * (1 - discountPct / 100) : total;
+
+  return (
+    <div className="flex flex-row justify-between items-start px-4 py-4 gap-20 w-[300px] ml-auto">
+      <div className="font-medium text-base">Annual cost:</div>
+      <div className="text-right flex flex-col items-end font-medium text-base">
+        <div
+          className={
+            onSale
+              ? "line-through decoration-red-500 decoration-2 text-neutral-500"
+              : ""
+          }
+        >
+          {formatMoney(total)}
+        </div>
+
+        {onSale && <div className="text-xs text-red-500">-{discountPct}%</div>}
+
+        {onSale && <div>{formatMoney(discounted)}</div>}
+
+        <div className="text-xs text-neutral-500">(Excl. GST)</div>
+      </div>
+    </div>
+  );
+}
+
+/* --------------------------- Page component --------------------------- */
 
 function ServicesForm() {
   const state = useServiceAgreementStore();
@@ -40,216 +186,225 @@ function ServicesForm() {
   }, []);
 
   useEffect(() => {
-    if (numberOfServices > 0) {
-      setShowError(false);
-    }
+    if (numberOfServices > 0) setShowError(false);
   }, [numberOfServices]);
 
   const goNext = () => {
-    if (numberOfServices === 0) {
-      setShowError(true);
-    } else {
+    if (numberOfServices === 0) setShowError(true);
+    else {
       setShowError(false);
       state.setPage(2);
     }
   };
 
+  // Fetch per-service details
+  const chuteCleaningDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "chute_cleaning"
+  ) as GetServicesReturnTyped<"chute_cleaning">;
+
+  const wasteRoomCleaningDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "waste_room_pressure_clean"
+  ) as GetServicesReturnTyped<"waste_room_pressure_clean">;
+
+  const selfClosingHopperDoorInspectionDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "hopper_door_inspection"
+  ) as GetServicesReturnTyped<"hopper_door_inspection">;
+
+  const binCleaningDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "bin_cleaning"
+  ) as GetServicesReturnTyped<"bin_cleaning">;
+
+  const equipmentMaintenanceDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "equipment_maintenance"
+  ) as GetServicesReturnTyped<"equipment_maintenance">;
+
+  const odourControlDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "odour_control"
+  ) as GetServicesReturnTyped<"odour_control">;
+
+  const discount = getDiscount(numberOfServices);
+
   if (!state.serviceAgreement) return null;
 
   return (
-    <div className="flex flex-col gap-16">
+    <div className="flex flex-col gap-10">
       {/* Chute Cleaning */}
-      <section
-        id="chute-cleaning"
-        className="flex flex-col gap-6 scroll-mt-[140px]"
-      >
-        <div className="flex flex-col">
-          <Label className="text-xl font-medium flex flex-row items-center gap-2">
-            Chute Cleaning{" "}
-            <a
-              href="https://www.elephantsfoot.com.au/chute-cleaning/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open help in a new tab"
-              className="inline-flex items-center"
-            >
-              <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
-            </a>
-          </Label>
-          <span className="text-base text-neutral-500">
-            Chute cleaning that removes grime, mould, and odours—keeping
-            multi-storey buildings hygienic and safe.
-          </span>
-        </div>
-        <ServiceFrequency2
-          value={state.chuteCleaningFrequency}
-          onChange={state.setChuteCleaningFrequency}
-          options={options}
+      <SectionShell id="chute-cleaning">
+        <SectionHeader
+          title="Chute Cleaning"
+          description="Chute cleaning that removes grime, mould, and odours—keeping multi-storey buildings hygienic and safe."
+          helpHref="https://www.elephantsfoot.com.au/chute-cleaning/"
         />
-        <div className="border border-input h-[500px] w-full rounded-lg shadow-xs" />
-      </section>
+
+        <div className="p-4 md:p-6 2xl:p-8">
+          <ServiceFrequency2
+            value={state.chuteCleaningFrequency}
+            onChange={state.setChuteCleaningFrequency}
+            options={options}
+          />
+
+          <ServicesGrid
+            rows={chuteCleaningDetails.items}
+            col2Label="Qty"
+            col3Label="Level"
+            renderCol2={(r) => r.chutes}
+            renderCol3={(r) => r.levels}
+          />
+
+          <PricingFooter
+            items={chuteCleaningDetails.items}
+            frequency={state.chuteCleaningFrequency}
+            discountPct={discount}
+          />
+        </div>
+      </SectionShell>
 
       {/* Waste Room Pressure Clean */}
-      <section
-        id="waste-room-pressure-clean"
-        className="flex flex-col gap-6 scroll-mt-[140px]"
-      >
-        <div className="flex flex-col">
-          <Label className="text-xl font-medium flex flex-row items-center gap-2">
-            Waste Room Pressure Clean
-            <a
-              href="https://www.elephantsfoot.com.au/waste-room-restoration/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open help in a new tab"
-              className="inline-flex items-center"
-            >
-              <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
-            </a>
-          </Label>
-          <span className="text-base text-neutral-500">
-            High-pressure cleaning for hygienic, odour-free waste rooms.
-          </span>
-        </div>
-        <ServiceFrequency2
-          value={state.wasteRoomCleaningFrequency}
-          onChange={state.setWasteRoomCleaningFrequency}
-          options={options}
+      <SectionShell id="waste-room-pressure-clean">
+        <SectionHeader
+          title="Waste Room Pressure Clean"
+          description="High-pressure cleaning for hygienic, odour-free waste rooms."
+          helpHref="https://www.elephantsfoot.com.au/waste-room-restoration/"
         />
-        <div className="border border-input h-[500px] w-full rounded-lg shadow-xs" />
-      </section>
+
+        <div className="p-4 md:p-6 2xl:p-8">
+          <ServiceFrequency2
+            value={state.wasteRoomCleaningFrequency}
+            onChange={state.setWasteRoomCleaningFrequency}
+            options={options}
+          />
+
+          <ServicesGrid
+            rows={wasteRoomCleaningDetails.items}
+            col2Label=""
+            col3Label="Area"
+            renderCol3={(r) => r.area_label}
+          />
+
+          <PricingFooter
+            items={wasteRoomCleaningDetails.items}
+            frequency={state.wasteRoomCleaningFrequency}
+            discountPct={discount}
+          />
+        </div>
+      </SectionShell>
 
       {/* Self-Closing Hopper Door Inspection */}
-      <section
-        id="hopper-door-inspection"
-        className="flex flex-col gap-6 scroll-mt-[140px]"
-      >
-        <div className="flex flex-col">
-          <Label className="text-xl font-medium flex flex-row items-center gap-2">
-            Self-Closing Hopper Door Inspection
-            <a
-              href="https://www.elephantsfoot.com.au/chute-door-inspection/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open help in a new tab"
-              className="inline-flex items-center"
-            >
-              <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
-            </a>
-          </Label>
-          <span className="text-base text-neutral-500">
-            Chute-door inspections to ensure fire safety and compliance.
-          </span>
-        </div>
-        <ServiceFrequency2
-          value={state.selfClosingHopperDoorInspectionFrequency}
-          onChange={state.setSelfClosingHopperDoorInspectionFrequency}
-          options={options}
+      <SectionShell id="hopper-door-inspection">
+        <SectionHeader
+          title="Self-Closing Hopper Door Inspection"
+          description="Chute-door inspections to ensure fire safety and compliance."
+          helpHref="https://www.elephantsfoot.com.au/chute-door-inspection/"
         />
 
-        <div className="border border-input h-[500px] w-full rounded-lg shadow-xs" />
-      </section>
+        <div className="p-4 md:p-6 2xl:p-8">
+          <ServiceFrequency2
+            value={state.selfClosingHopperDoorInspectionFrequency}
+            onChange={state.setSelfClosingHopperDoorInspectionFrequency}
+            options={options}
+          />
+
+          <ServicesGrid rows={selfClosingHopperDoorInspectionDetails.items} />
+
+          <PricingFooter
+            items={selfClosingHopperDoorInspectionDetails.items}
+            frequency={state.selfClosingHopperDoorInspectionFrequency}
+            discountPct={discount}
+          />
+        </div>
+      </SectionShell>
 
       {/* Bin Cleaning */}
-      <section
-        id="bin-cleaning"
-        className="flex flex-col gap-6 scroll-mt-[140px]"
-      >
-        <div className="flex flex-col">
-          <Label className="text-xl font-medium flex flex-row items-center gap-2">
-            Bin Cleaning
-            <a
-              href="https://www.elephantsfoot.com.au/service-care/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open help in a new tab"
-              className="inline-flex items-center"
-            >
-              <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
-            </a>
-          </Label>
-          <span className="text-base text-neutral-500">
-            Thorough bin cleaning to reduce odours, pests, and bacteria.
-          </span>
-        </div>
-        <ServiceFrequency2
-          value={state.binCleaningFrequency}
-          onChange={state.setBinCleaningFrequency}
-          options={options}
+      <SectionShell id="bin-cleaning">
+        <SectionHeader
+          title="Bin Cleaning"
+          description="Thorough bin cleaning to reduce odours, pests, and bacteria."
+          helpHref="https://www.elephantsfoot.com.au/service-care/"
         />
 
-        <div className="border border-input h-[500px] w-full rounded-lg shadow-xs" />
-      </section>
+        <div className="p-4 md:p-6 2xl:p-8">
+          <ServiceFrequency2
+            value={state.binCleaningFrequency}
+            onChange={state.setBinCleaningFrequency}
+            options={options}
+          />
+
+          <ServicesGrid rows={binCleaningDetails.items} />
+
+          <PricingFooter
+            items={binCleaningDetails.items}
+            frequency={state.binCleaningFrequency}
+            discountPct={discount}
+          />
+        </div>
+      </SectionShell>
 
       {/* Equipment Preventative Maintenance */}
-      <section
-        id="equipment-preventative-maintenance"
-        className="flex flex-col gap-6 scroll-mt-[140px]"
-      >
-        <div className="flex flex-col">
-          <Label className="text-xl font-medium flex flex-row items-center gap-2">
-            Equipment Preventative Maintenance
-            <a
-              href="https://www.elephantsfoot.com.au/preventative-maintenance/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open help in a new tab"
-              className="inline-flex items-center"
-            >
-              <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
-            </a>
-          </Label>
-          <span className="text-base text-neutral-500">
-            Keep compactors and related equipment safe, compliant, and
-            efficient.
-          </span>
-        </div>
-        <ServiceFrequency2
-          value={state.equipmentMaintenanceFrequency}
-          onChange={state.setEquipmentMaintenanceFrequency}
-          options={options}
+      <SectionShell id="equipment-preventative-maintenance">
+        <SectionHeader
+          title="Equipment Preventative Maintenance"
+          description="Keep compactors and related equipment safe, compliant, and efficient."
+          helpHref="https://www.elephantsfoot.com.au/preventative-maintenance/"
         />
 
-        <div className="border border-input h-[500px] w-full rounded-lg shadow-xs" />
-      </section>
+        <div className="p-4 md:p-6 2xl:p-8">
+          <ServiceFrequency2
+            value={state.equipmentMaintenanceFrequency}
+            onChange={state.setEquipmentMaintenanceFrequency}
+            options={options}
+          />
+
+          <ServicesGrid
+            rows={equipmentMaintenanceDetails.items}
+            col3Label="Equipment"
+            renderCol3={(r) => r.equipment_label}
+          />
+
+          <PricingFooter
+            items={equipmentMaintenanceDetails.items}
+            frequency={state.equipmentMaintenanceFrequency}
+            discountPct={discount}
+          />
+        </div>
+      </SectionShell>
 
       {/* Odour Control */}
-      <section
-        id="odour-control"
-        className="flex flex-col gap-6 scroll-mt-[140px]"
-      >
-        <div className="flex flex-col">
-          <Label className="text-xl font-medium flex flex-row items-center gap-2">
-            Odour Control
-            <a
-              href="https://www.elephantsfoot.com.au/odour-management/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open help in a new tab"
-              className="inline-flex items-center"
-            >
-              <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
-            </a>
-          </Label>
-          <span className="text-base text-neutral-500">
-            Targeted odour management to keep shared areas fresh.
-          </span>
-        </div>
-        <ServiceFrequency2
-          value={state.odourControlFrequency}
-          onChange={state.setOdourControlFrequency}
-          options={options.filter((option) => option.value === "quarterly")}
+      <SectionShell id="odour-control">
+        <SectionHeader
+          title="Odour Control"
+          description="Targeted odour management to keep shared areas fresh."
+          helpHref="https://www.elephantsfoot.com.au/odour-management/"
         />
 
-        <div className="border border-input h-[500px] w-full rounded-lg shadow-xs" />
-      </section>
+        <div className="p-4 md:p-6 2xl:p-8">
+          <ServiceFrequency2
+            value={state.odourControlFrequency}
+            onChange={state.setOdourControlFrequency}
+            options={options}
+          />
 
-      {/* Exclusive Benefits */}
+          <ServicesGrid rows={odourControlDetails.items} />
+
+          <PricingFooter
+            items={odourControlDetails.items}
+            frequency={state.odourControlFrequency}
+            discountPct={discount}
+          />
+        </div>
+      </SectionShell>
+
+      {/* Complimentary Incentives */}
       <section id="reward" className="flex flex-col gap-6 scroll-mt-[140px]">
         <div className="flex flex-col">
           <Label className="text-xl font-medium">Complimentary Incentives</Label>
           <span className="text-base text-neutral-500">
-          Add services to unlock and redeem complimentary incentives from us — at no extra cost.
+            Add services to unlock and redeem complimentary incentives from us — at no extra cost.
           </span>
         </div>
         <div className="overflow-x-auto p-1">
@@ -265,11 +420,7 @@ function ServicesForm() {
 
       {/* Continue */}
       <div className="w-full flex justify-end mt-16">
-        <Button
-          variant="efg"
-          className="cursor-pointer w-[200px]"
-          onClick={goNext}
-        >
+        <Button variant="efg" className="cursor-pointer w-[200px]" onClick={goNext}>
           Continue <ArrowRightIcon />
         </Button>
       </div>

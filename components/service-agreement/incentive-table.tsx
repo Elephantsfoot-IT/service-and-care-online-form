@@ -50,7 +50,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
           {/* Basic tier */}
           <div className="col-span-2 transition-all duration-300 relative">
             {currentTier === "basic" && (
-              <div className="pointer-events-none absolute inset-0 z-0 border-2 border-neutral-300 bg-neutral-300/10" />
+              <div className="pointer-events-none absolute inset-0 z-0 border border-neutral-300 bg-neutral-300/10" />
             )}
             {(currentTier === "essential" || currentTier === "pro") && (
               <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-300/10" />
@@ -92,7 +92,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                     </div>
                   ) : (
                     <div className="flex items-baseline gap-2">
-                      <span className="font-medium leading-none text-3xl">
+                      <span className="font-medium leading-none text-xl">
                         Redeemed
                       </span>
                     </div>
@@ -143,7 +143,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
           {/* Essential tier */}
           <div className="col-span-2 transition-all duration-300 relative">
             {currentTier === "essential" && (
-              <div className="pointer-events-none absolute inset-0 z-30 border-2 border-[#ffdb01] bg-[#ffdb01]/5" />
+              <div className="pointer-events-none absolute inset-0 z-30 border border-[#ffdb01] bg-[#ffdb01]/5" />
             )}
             {currentTier === "pro" && (
               <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-300/10" />
@@ -174,7 +174,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                     </div>
                   ) : (
                     <div className="flex items-baseline gap-2">
-                      <span className="font-medium leading-none text-3xl">
+                      <span className="font-medium leading-none text-xl">
                         Redeemed
                       </span>
                     </div>
@@ -222,7 +222,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
           {/* Pro tier */}
           <div className="col-span-2 transition-all duration-300 relative">
             {currentTier === "pro" && (
-              <div className="pointer-events-none absolute inset-0 z-30 border-2 border-[#1e60ad] bg-blue-400/5 rounded-br-lg" />
+              <div className="pointer-events-none absolute inset-0 z-30 border border-[#1e60ad] bg-blue-400/5 rounded-br-lg" />
             )}
 
             {/* PRO */}
@@ -269,7 +269,7 @@ function IncentiveTable({ serviceCount }: IncentiveTableProps) {
                     <div className="flex items-baseline gap-2">
                       <span
                         className={cn(
-                          "font-medium leading-none text-3xl",
+                          "font-medium leading-none text-xl",
                           currentTier === "pro"
                             ? "text-white"
                             : "text-neutral-800"

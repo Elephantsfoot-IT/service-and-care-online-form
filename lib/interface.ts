@@ -153,3 +153,27 @@ export const defaultSiteContact: SiteContact = {
   Position: "",
   Department: "",
 };
+
+
+
+export type ServiceByType<T extends ServiceType> =
+  T extends "chute_cleaning" ? ChuteCleaningService :
+  T extends "equipment_maintenance" ? EquipmentMaintenanceService :
+  T extends "hopper_door_inspection" ? HopperDoorInspectionService :
+  T extends "waste_room_pressure_clean" ? WasteRoomPressureCleanService :
+  T extends "odour_control" ? OdourControlService :
+  T extends "bin_cleaning" ? BinCleaningService :
+  never;
+
+type WithContext<S> = S & {
+  site_name: string;
+  site_id: string;
+  building_id: string;
+  building_name: string | null;
+};
+
+export type GetServicesReturnTyped<T extends ServiceType> = {
+  type: T;
+  items: Array<WithContext<ServiceByType<T>>>;
+};
+
