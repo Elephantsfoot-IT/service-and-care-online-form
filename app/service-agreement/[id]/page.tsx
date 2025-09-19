@@ -9,7 +9,7 @@ import { useServiceAgreement } from "@/lib/api";
 import { SECTION_IDS, ServiceAgreement } from "@/lib/interface";
 import { fastScrollToEl } from "@/lib/utils";
 import { Loader2Icon } from "lucide-react";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 import AdditionalContactInfo from "./pages/additional-contact-info";
 import BillingDetails from "./pages/billing-info";
@@ -139,7 +139,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     );
   }
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return notFound(); // triggers the matching not-found.tsx
   }
 
   /* Render */
