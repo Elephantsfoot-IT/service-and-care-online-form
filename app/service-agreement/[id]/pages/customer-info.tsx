@@ -137,9 +137,11 @@ export default function CustomerDetails() {
     <div className="flex flex-col w-full mx-auto gap-10">
       <div className="flex flex-col">
         <Label className="text-2xl mb-1">Company Details</Label>
-        <span className="text-lg text-neutral-500 font-normal">
+        {hasCustomer ? <span className="text-lg text-neutral-500 font-normal">
+          Review the information below for your company.
+        </span> : <span className="text-lg text-neutral-500 font-normal">
           Please provide information about your company.
-        </span>
+        </span>}
       </div>
 
       <Form {...form}>
