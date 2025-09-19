@@ -40,7 +40,7 @@ export default function Sider({
         {/* Pin to bottom-right like your sider */}
         <BrandCornerShape
           className="absolute bottom-0 -right-2 text-efg-yellow"
-          height={300}
+          height={350}
           durationMs={1400}
           loop={false}
           fillAngleDeg={45}
