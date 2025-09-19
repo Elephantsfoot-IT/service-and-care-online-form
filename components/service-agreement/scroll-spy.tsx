@@ -1,7 +1,6 @@
 // hooks/useScrollSpy.ts
 import { useEffect, useState } from "react";
 
-type Options = { offset?: number; disabled?: boolean };
 
 export function useScrollSpy(
   ids: string[],
