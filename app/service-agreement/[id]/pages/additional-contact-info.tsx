@@ -118,7 +118,7 @@ export default function AdditionalContactInfo() {
       
 
       {state.additionalContacts.length === 0 ? (
-        <div className="text-sm w-full h-40 bg-neutral-75 rounded-lg flex justify-center items-center gap-2">
+        <div className="text-sm w-full h-40 bg-white border border-input shadow-xs rounded-lg flex justify-center items-center gap-2">
           No Contact
         </div>
       ) : (
@@ -139,7 +139,7 @@ export default function AdditionalContactInfo() {
         <Button
           disabled={state.additionalContacts.length >= 3}
           onClick={handleAddContact}
-          variant="secondary"
+          variant="outline"
         >
           <PlusIcon className="mr-1" /> Add Contact
         </Button>

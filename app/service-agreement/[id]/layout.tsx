@@ -7,7 +7,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <title>Service Agreement</title>
-      <QueryProvider>{children}</QueryProvider>
+      <QueryProvider>
+        <div className="bg-[#fefefe] min-h-screen">
+        {children}
+        </div>
+        </QueryProvider>
       <Toaster />
     </>
   );

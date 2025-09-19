@@ -189,10 +189,10 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
     return (
       <div
         ref={rootRef}
-        className="flex flex-col w-full mx-auto border border-input shadow-xs rounded-lg gap-6 overflow-hidden"
+        className="flex flex-col w-full mx-auto border border-input shadow-xs rounded-lg gap-6 overflow-hidden bg-white"
       >
         {/* Header */}
-        <div className="p-4 md:p-6 2xl:p-8 border-b border-input bg-neutral-75">
+        <div className="p-4 md:p-6 2xl:p-8 border-b border-input ">
           <Label className="text-base mb-1">
             {site.site_name || (
               <span className="text-neutral-400">

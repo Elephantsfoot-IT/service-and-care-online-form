@@ -30,7 +30,7 @@ function SectionShell({
   return (
     <section
       id={id}
-      className="flex flex-col gap-6 scroll-mt-[140px] border border-input rounded-lg overflow-hidden shadow-xs"
+      className="flex flex-col gap-6 scroll-mt-[140px] border border-input rounded-lg overflow-hidden shadow-xs bg-white"
     >
       {children}
     </section>
@@ -47,7 +47,7 @@ function SectionHeader({
   helpHref?: string;
 }) {
   return (
-    <div className="flex flex-col bg-neutral-75 p-4 md:p-6 2xl:p-8 border-b border-input">
+    <div className="flex flex-col p-4 md:p-6 2xl:p-8 border-b border-input">
       <Label className="text-lg font-medium flex flex-row items-center gap-2">
         {title}
         {helpHref && (

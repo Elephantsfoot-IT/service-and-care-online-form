@@ -45,9 +45,9 @@ function CompanyDetailsCard() {
   );
 
   return (
-    <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden">
-      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
-        <Label className="text-lg">Company Details</Label>
+    <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white">
+      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input ">
+        <Label className="text-lg">Company Details</Label>  
         <Button
           variant="ghost"
           className="text-sm ml-auto"
@@ -99,8 +99,8 @@ function BillingDetailsCard() {
   );
 
   return (
-    <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden">
-      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
+    <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white">
+      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input ">
         <Label className="text-lg">Billing Details</Label>
         <Button
           variant="ghost"
@@ -171,9 +171,9 @@ function AdditionalContactsList() {
       {state.additionalContacts.map((contact, index) => (
         <section
           key={contact.id}
-          className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden"
+          className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white"
         >
-          <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
+          <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input ">
             <Label className="text-lg">Contact ({index + 1})</Label>
             <Button
               variant="ghost"
@@ -251,9 +251,9 @@ function SitesSummaryList() {
         return (
           <section
             key={site.simpro_site_id}
-            className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden"
+            className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white"
           >
-            <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
+            <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input ">
               <Label className="text-lg">Site ({idx + 1})</Label>
               <Button
                 variant="ghost"
@@ -288,7 +288,7 @@ function SitesSummaryList() {
                       key={c.id}
                       className="border border-input rounded-lg overflow-hidden"
                     >
-                      <div className="p-3 md:p-4 border-b border-input bg-neutral-75">
+                      <div className="p-3 md:p-4 border-b border-input bg-neutral-50">
                         <Label className="text-base">Contact ({i + 1})</Label>
                       </div>
 

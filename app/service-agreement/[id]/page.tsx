@@ -148,9 +148,9 @@ function ServiceAgreementComponent({ id }: { id: string }) {
       <Header />
       {activeId && <Sider activeId={activeId} onJump={onJump} />}
       <div className="pt-[40px] xl:pl-[400px] ">
-        <div className="px-4 xl:px-20 text-neutral-700 ">
+        <div className="px-4 xl:px-20 text-neutral-700 bg-transparent">
     
-          <div className="w-full flex flex-col items-center font-sans py-10 xl:py-20 bg-white flex-grow gap-8 max-w-screen-lg mx-auto">
+          <div className="w-full flex flex-col items-center font-sans py-10 xl:py-20 flex-grow gap-8 max-w-screen-lg mx-auto">
             {<ServiceAgreementProgress ></ServiceAgreementProgress>}
 
             {state.page === 1 && (
