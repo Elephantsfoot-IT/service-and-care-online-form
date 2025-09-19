@@ -12,6 +12,15 @@ export interface Address {
   Country: string;
 }
 
+export type SimproCustomer = {
+  ID: number;
+  CompanyName: string;
+  EIN: string;
+  Address: Address;
+  Phone: string;
+  Email: string;
+};
+
 export interface AdditionalContact {
   id: string;
   GivenName: string;
@@ -49,6 +58,7 @@ export interface ServiceAgreement {
   created_at: string;
   status: string;
   sites: Site[];
+  simpro_customer?: SimproCustomer | null;
 }
 
 export interface Building {

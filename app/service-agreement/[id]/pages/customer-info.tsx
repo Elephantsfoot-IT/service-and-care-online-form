@@ -20,16 +20,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { scrollToTop } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ArrowLeftIcon,
-  ArrowRightIcon,
-  BriefcaseBusinessIcon,
+  ArrowRightIcon
 } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { scrollToTop } from "@/lib/utils";
 
 const customerSchema = z.object({
   companyType: z.string().min(1, "Company type cannot be empty"),
@@ -55,31 +54,32 @@ export type CustomerDetailsFormType = z.infer<typeof customerSchema>;
 
 export default function CustomerDetails() {
   const state = useServiceAgreementStore();
+  const simproCustomer = state.serviceAgreement?.simpro_customer;
 
   const form = useForm<CustomerDetailsFormType>({
     resolver: zodResolver(customerSchema),
     mode: "onChange",
     defaultValues: {
-      companyType: "",
-      abn: "",
-      companyName: "",
-      businessStreetAddress: "",
-      businessCity: "",
-      businessState: "",
-      businessPostcode: "",
-      businessCountry: "",
+      companyType: simproCustomer?.CompanyName || "",
+      abn: simproCustomer?.EIN || "",
+      companyName: simproCustomer?.CompanyName || "",
+      businessStreetAddress: simproCustomer?.Address.Address || "",
+      businessCity: simproCustomer?.Address.City || "",
+      businessState: simproCustomer?.Address.State || "",
+      businessPostcode: simproCustomer?.Address.PostalCode || "",
+      businessCountry: simproCustomer?.Address.Country || "",
     },
   });
 
   useEffect(() => {
     // hydrate from store
-    form.setValue("companyType", state.companyType);
-    form.setValue("abn", state.abn);
-    form.setValue("companyName", state.companyName);
-    form.setValue("businessStreetAddress", state.businessStreetAddress);
-    form.setValue("businessCity", state.businessCity);
-    form.setValue("businessState", state.businessState);
-    form.setValue("businessPostcode", state.businessPostcode);
+    form.setValue("companyType", state.companyType ? state.companyType : simproCustomer?.CompanyName || ""  );
+    form.setValue("abn", state.abn ? state.abn : simproCustomer?.EIN || "");
+    form.setValue("companyName", state.companyName ? state.companyName : simproCustomer?.CompanyName || "");
+    form.setValue("businessStreetAddress", state.businessStreetAddress ? state.businessStreetAddress : simproCustomer?.Address.Address || "");
+    form.setValue("businessCity", state.businessCity ? state.businessCity : simproCustomer?.Address.City || "");
+    form.setValue("businessState", state.businessState ? state.businessState : simproCustomer?.Address.State || "");
+    form.setValue("businessPostcode", state.businessPostcode ? state.businessPostcode : simproCustomer?.Address.PostalCode || "");
   }, []); // eslint-disable-line
 
   useEffect(() => {
@@ -122,6 +122,7 @@ export default function CustomerDetails() {
                       field.onChange(val);
                       onChange("companyType", val);
                     }}
+                    disabled={simproCustomer !== null}
                   >
                     <FormControl>
                       <SelectTrigger className="w-full eft-select-trigger">
@@ -161,6 +162,7 @@ export default function CustomerDetails() {
                         onChange("abn", e.target.value);
                       }}
                       className="efg-input"
+                      disabled={simproCustomer !== null}
                     />
                   </FormControl>
                   <FormMessage />
@@ -199,6 +201,7 @@ export default function CustomerDetails() {
                           onChange("companyName", e.target.value);
                         }}
                         className="efg-input"
+                        disabled={simproCustomer !== null}
                       />
                     </FormControl>
                     <FormMessage />
@@ -234,6 +237,7 @@ export default function CustomerDetails() {
                   onChange(f as keyof CustomerDetailsFormType, v)
                 }
                 stateSelectValue={state.businessState}
+                disabled={simproCustomer !== null}
               />
             </div>
           </div>
