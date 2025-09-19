@@ -50,7 +50,7 @@ function FormVerticalProgress() {
               disabled={isLocked}
               aria-current={isActive ? "step" : undefined}
               className={cn(
-                "flex w-full items-center gap-4 transition-all duration-200",
+                "flex w-full items-center gap-4 transition-all duration-200 hover:opacity-100",
                 isActive ? "opacity-100" : "opacity-40",
                 isLocked ? "cursor-not-allowed" : "cursor-pointer"
               )}

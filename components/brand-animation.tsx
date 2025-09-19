@@ -21,6 +21,7 @@ type Props = {
    * 0 = bottom→top, 90 = left→right, 180 = top→bottom, 270 = right→left
    */
   fillAngleDeg?: number;
+  
 };
 
 const VB_W = 130;
@@ -29,6 +30,10 @@ const VB_H = 180;
 /** Your exact shape path */
 const SHAPE_D =
   "M129.5 0.5C50.5 20 0.112198 89.7734 0.999757 180L43.5 180C42 110 79 66.5 129 48.5L129.5 0.5Z";
+
+const SHAPE_D_2 =
+  "M0.5 0.5C79.5 20 129.888 89.7734 129.000243 180L86.5 180C88 110 51 66.5 1 48.5L0.5 0.5Z";
+
 
 export default function BrandCornerShape({
   height = 180,
