@@ -248,7 +248,7 @@ function MultiLineAddressInput<T extends FieldValues>({
                 <FormControl>
                   <SelectTrigger
                     size="default"
-                    className="w-full focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none"
+                    className="w-full eft-select-trigger"
                     disabled={disabled}
                   >
                     <SelectValue

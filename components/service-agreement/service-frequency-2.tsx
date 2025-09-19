@@ -57,7 +57,7 @@ function ServiceFrequency2({ value, onChange, options }: Props) {
             <Checkbox className={checkboxClasses} checked={isSelected} />
 
             <div className="flex flex-col pr-8">
-              <span className="text-base font-medium">{option.label}</span>
+              <span className="text-base font-semibold">{option.label}</span>
               <span className="text-sm text-neutral-500">{option.subtext}</span>
             </div>
           </div>
