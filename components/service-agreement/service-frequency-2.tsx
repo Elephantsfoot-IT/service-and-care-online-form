@@ -32,7 +32,7 @@ function ServiceFrequency2({ value, onChange, options }: Props) {
         const selectedClasses = isSelected
           ? isHighTier
             ? "bg-efg-yellow/5 border-efg-yellow ring-1 ring-efg-yellow"
-            : "bg-secondary border-neutral-400 ring-1 ring-neutral-300"
+            : "bg-neutral-75 border-neutral-400 ring-1 ring-neutral-300"
           : "";
 
         const checkboxClasses = cn(

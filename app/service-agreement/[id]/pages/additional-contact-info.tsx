@@ -118,7 +118,7 @@ export default function AdditionalContactInfo() {
       
 
       {state.additionalContacts.length === 0 ? (
-        <div className="text-sm w-full h-40 bg-secondary rounded-lg flex justify-center items-center gap-2">
+        <div className="text-sm w-full h-40 bg-neutral-75 rounded-lg flex justify-center items-center gap-2">
           No Contact
         </div>
       ) : (

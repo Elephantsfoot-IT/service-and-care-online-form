@@ -99,7 +99,7 @@ export default function CustomerDetails() {
   return (
     <div className="flex flex-col w-full mx-auto gap-10">
       <div className="flex flex-col">
-        <Label className="text-2xl mb-1 ">Company Details</Label>
+        <Label className="text-2xl mb-1">Company Details</Label>
         <span className="text-lg text-neutral-500 font-normal">
           Please provide information about your company.
         </span>

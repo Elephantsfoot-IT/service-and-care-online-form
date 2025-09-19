@@ -99,7 +99,7 @@ function TierCard({
       )}
     >
       {shouldDim && (
-        <div className="pointer-events-none absolute inset-0 z-50 bg-secondary/40" />
+        <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-75/40" />
       )}
 
       <div className={cn("text-xl font-medium text-left", isActive && tier.headerClassesWhenActive)}>

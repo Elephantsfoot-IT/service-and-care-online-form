@@ -46,7 +46,7 @@ function CompanyDetailsCard() {
 
   return (
     <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden">
-      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-secondary">
+      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
         <Label className="text-lg">Company Details</Label>
         <Button
           variant="ghost"
@@ -100,7 +100,7 @@ function BillingDetailsCard() {
 
   return (
     <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden">
-      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-secondary">
+      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
         <Label className="text-lg">Billing Details</Label>
         <Button
           variant="ghost"
@@ -173,7 +173,7 @@ function AdditionalContactsList() {
           key={contact.id}
           className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden"
         >
-          <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-secondary">
+          <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
             <Label className="text-lg">Contact ({index + 1})</Label>
             <Button
               variant="ghost"
@@ -265,7 +265,7 @@ function SitesSummaryList() {
             key={site.simpro_site_id}
             className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden"
           >
-            <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-secondary">
+            <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
               <Label className="text-lg">Site ({idx + 1})</Label>
               <Button
                 variant="ghost"
@@ -300,7 +300,7 @@ function SitesSummaryList() {
                       key={c.id}
                       className="border border-input rounded-lg overflow-hidden"
                     >
-                      <div className="p-3 md:p-4 border-b border-input bg-secondary">
+                      <div className="p-3 md:p-4 border-b border-input bg-neutral-75">
                         <Label className="text-base">Contact ({i + 1})</Label>
                       </div>
 

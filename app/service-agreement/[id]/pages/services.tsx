@@ -47,8 +47,8 @@ function SectionHeader({
   helpHref?: string;
 }) {
   return (
-    <div className="flex flex-col bg-secondary p-4 md:p-6 2xl:p-8 border-b border-input">
-      <Label className="text-xl font-medium flex flex-row items-center gap-2">
+    <div className="flex flex-col bg-neutral-75 p-4 md:p-6 2xl:p-8 border-b border-input">
+      <Label className="text-lg font-medium flex flex-row items-center gap-2">
         {title}
         {helpHref && (
           <a

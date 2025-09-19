@@ -115,6 +115,7 @@
 @theme {
   --color-efg-yellow: #fcbd2a;
   --color-efg-blue: #1e60ad;
+  --color-neutral-75: #f7f7f7;
 }
 
 @layer base {

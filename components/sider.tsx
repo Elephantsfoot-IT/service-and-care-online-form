@@ -17,7 +17,7 @@ export default function Sider({
   const state = useServiceAgreementStore();
   return (
     <aside className="hidden xl:flex fixed left-0 top-0 z-[99] w-[400px] h-screen p-4">
-      <div className="flex flex-col h-full w-full bg-secondary  p-10 relative rounded-lg overflow-hidden shadow-xs">
+      <div className="flex flex-col h-full w-full bg-neutral-75  p-10 relative rounded-lg overflow-hidden shadow-xs">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/logo/Elephants FootService Care Dark.svg"
