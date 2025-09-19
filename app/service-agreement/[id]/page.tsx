@@ -67,27 +67,28 @@ function ServiceAgreementComponent({ id }: { id: string }) {
   };
 
   const selectMore = () => {
-    console.log("selectMore");
     if (state.chuteCleaningFrequency === null) {
       onJump("chute_cleaning");
-      return;
-    }
-    if (state.wasteRoomCleaningFrequency === null) {
-      onJump("waste_room_pressure_clean");
-      return;
-    }
-    if (state.selfClosingHopperDoorInspectionFrequency === null) {
-      onJump("hopper_door_inspection");
-      return;
-    }
-    if (state.binCleaningFrequency === null) {
-      onJump("bin_cleaning");
       return;
     }
     if (state.equipmentMaintenanceFrequency === null) {
       onJump("equipment_maintenance");
       return;
     }
+    if (state.selfClosingHopperDoorInspectionFrequency === null) {
+      onJump("hopper_door_inspection");
+      return;
+    }
+    if (state.wasteRoomCleaningFrequency === null) {
+      onJump("waste_room_pressure_clean");
+      return;
+    }
+   
+    if (state.binCleaningFrequency === null) {
+      onJump("bin_cleaning");
+      return;
+    }
+  
     if (state.odourControlFrequency === null) {
       onJump("odour_control");
       return;

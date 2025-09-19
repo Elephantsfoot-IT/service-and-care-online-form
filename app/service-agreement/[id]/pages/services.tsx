@@ -546,12 +546,12 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       </SectionShell>}
 
       {/* Exclusive Benefits */}
-      <section id="reward" className="flex flex-col gap-6 scroll-mt-[140px]">
+      <section id="reward" className="flex flex-col gap-6 scroll-mt-[140px] mt-10">
         <div className="flex flex-col">
-          <Label className="text-xl font-medium">
+          <Label className="text-2xl font-medium">
             Complimentary Incentives
           </Label>
-          <span className="text-base text-neutral-500">
+          <span className="text-lg text-neutral-500">
             Add services to unlock and redeem complimentary incentives from us —
             at no extra cost.
           </span>
