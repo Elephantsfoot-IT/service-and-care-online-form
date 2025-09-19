@@ -2,7 +2,7 @@
 "use client";
 
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
-import { MailIcon, PhoneIcon } from "lucide-react";
+import { GlobeIcon, MailIcon, PhoneIcon } from "lucide-react";
 import BrandCornerShape from "./brand-animation";
 import FormVerticalProgress from "./service-agreement/form-vertical-progress";
 import ServiceVerticalProgress from "./service-agreement/service-vertical-progress";
@@ -46,17 +46,23 @@ export default function Sider({
         />
 
         <div className="flex flex-col gap-2 mt-auto z-10">
-          <div className="text-xs text-neutral-700 font-medium mb-1">
+          <div className="text-xs text-neutral-600 font-medium mb-1">
             Support
           </div>
-          <div className="text-xs text-neutral-700 flex items-center gap-2">
+          <div className="text-xs text-neutral-500 hover:text-neutral-600 hover:underline flex items-center gap-2">
             <PhoneIcon className="w-3.5 h-3.5"></PhoneIcon>
             <a href="tel:1300261938">1300 261 938</a>
           </div>
-          <div className="text-xs text-neutral-700 flex items-center gap-2">
+          <div className="text-xs text-neutral-500 hover:text-neutral-600 hover:underline flex items-center gap-2">
             <MailIcon className="w-3.5 h-3.5"></MailIcon>{" "}
             <a href="mailto:services@elephantsfootservice.com.au">
               services@elephantsfootservice.com.au
+            </a>
+          </div>
+          <div className="text-xs text-neutral-500 hover:text-neutral-600 hover:underline flex items-center gap-2">
+            <GlobeIcon className="w-3.5 h-3.5"></GlobeIcon>{" "}
+            <a href="https://www.elephantsfoot.com.au" target="_blank">
+              elephantsfoot.com.au
             </a>
           </div>
         </div>
