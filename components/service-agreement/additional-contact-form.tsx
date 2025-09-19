@@ -36,7 +36,10 @@ const FormSchema = z
     GivenName: z.string().min(1, { message: "Given name cannot be empty" }),
     FamilyName: z.string().min(1, { message: "Family name cannot be empty" }),
     Email: z.string(),
-    CellPhone: z.string(),
+    CellPhone: z.string().regex(/^(\+614|04)\d{8}$/, {
+      message:
+        "Phone number must start with '04' or '+614' and contain 8 digits after that.",
+    }),
     Position: z.string().optional().or(z.literal("")),
     QuoteContact: z.boolean(),
     JobContact: z.boolean(),
@@ -47,7 +50,7 @@ const FormSchema = z
     PrimaryJobContact: z.boolean(),
     PrimaryQuoteContact: z.boolean(),
   })
-  .refine((data) =>  data.CellPhone || data.Email, {
+  .refine((data) => data.CellPhone || data.Email, {
     message:
       "At least one contact number (Office, Mobile) or Email must be provided.",
     path: ["WorkPhone"],
@@ -253,8 +256,6 @@ const AdditionalcontactForm = React.forwardRef<
             </div>
           </div>
 
-        
-
           {/* Mobile */}
           <FormField
             control={ContactForm.control}
@@ -262,7 +263,7 @@ const AdditionalcontactForm = React.forwardRef<
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
                 <FormLabel className="text-sm w-full md:w-1/3">
-                  Mobile phone
+                  Mobile phone <span className="text-red-500">*</span>
                 </FormLabel>
                 <div className="w-full md:w-2/3">
                   <FormControl>
@@ -282,9 +283,8 @@ const AdditionalcontactForm = React.forwardRef<
             )}
           />
 
-
-           {/* Email */}
-           <FormField
+          {/* Email */}
+          <FormField
             control={ContactForm.control}
             name="Email"
             render={({ field }) => (
@@ -334,7 +334,6 @@ const AdditionalcontactForm = React.forwardRef<
               </FormItem>
             )}
           />
-
 
           {/* Use this contact for */}
           <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">

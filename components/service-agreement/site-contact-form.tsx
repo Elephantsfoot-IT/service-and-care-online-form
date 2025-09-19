@@ -31,19 +31,16 @@ interface SiteContactFormProps {
   handleChange: (data: SiteContact) => void; // updates parent/store for this contact
 }
 
-const FormSchema = z
-  .object({
-    GivenName: z.string().min(1, { message: "First name required" }),
-    FamilyName: z.string().min(1, { message: "Last name required" }),
-    Email: z.string(), // allow empty
-    CellPhone: z.string(),
-    Position: z.string().optional().or(z.literal("")),
-  })
-  .refine((data) => data.CellPhone || data.Email, {
+const FormSchema = z.object({
+  GivenName: z.string().min(1, { message: "First name required" }),
+  FamilyName: z.string().min(1, { message: "Last name required" }),
+  Email: z.string(), // allow empty
+  CellPhone: z.string().regex(/^(\+614|04)\d{8}$/, {
     message:
-      "At least one contact number (Office, Mobile) or Email must be provided.",
-    path: ["WorkPhone"],
-  });
+      "Phone number must start with '04' or '+614' and contain 8 digits after that.",
+  }),
+  Position: z.string().optional().or(z.literal("")),
+});
 
 const SiteContactForm = React.forwardRef<
   SiteContactFormHandle,
@@ -185,7 +182,7 @@ const SiteContactForm = React.forwardRef<
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
                 <FormLabel className="text-sm w-full md:w-1/3">
-                  Mobile phone
+                  Mobile phone <span className="text-red-500">*</span>
                 </FormLabel>
                 <div className="w-full md:w-2/3">
                   <FormControl>

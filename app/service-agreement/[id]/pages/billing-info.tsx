@@ -1,11 +1,11 @@
 "use client";
 
 /* ------------------------------ Imports ------------------------------ */
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeftIcon, ArrowRightIcon, LandmarkIcon } from "lucide-react";
 
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Button } from "@/components/ui/button";
@@ -234,42 +234,6 @@ export default function BillingDetails() {
 
           <hr className="border-neutral-300 border-dashed" />
 
-          {/* Email */}
-          <FormField
-            control={form.control}
-            name="accountEmail"
-            render={({ field }) => (
-              <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel
-                  className="text-sm w-full md:w-1/3"
-                  htmlFor="accountEmail"
-                >
-                  Email address<span className="text-red-500">*</span>
-                </FormLabel>
-                <div className="w-full md:w-2/3">
-                  <FormControl>
-                    <Input
-                      placeholder="you@example.com"
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        onChange("accountEmail", e.target.value);
-                      }}
-                      className="efg-input"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                  <FormDescription className="ml-1 mt-2">
-                    We will send the signed service agreement document to this
-                    email address.
-                  </FormDescription>
-                </div>
-              </FormItem>
-            )}
-          />
-
-          <hr className="border-neutral-300 border-dashed" />
-
           {/* Phones */}
           <FormField
             control={form.control}
@@ -326,6 +290,42 @@ export default function BillingDetails() {
                     />
                   </FormControl>
                   <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
+
+          <hr className="border-neutral-300 border-dashed" />
+
+          {/* Email */}
+          <FormField
+            control={form.control}
+            name="accountEmail"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
+                <FormLabel
+                  className="text-sm w-full md:w-1/3"
+                  htmlFor="accountEmail"
+                >
+                  Email address<span className="text-red-500">*</span>
+                </FormLabel>
+                <div className="w-full md:w-2/3">
+                  <FormControl>
+                    <Input
+                      placeholder="you@example.com"
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        onChange("accountEmail", e.target.value);
+                      }}
+                      className="efg-input"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                  <FormDescription className="ml-1 mt-2">
+                    We will send the signed service agreement document to this
+                    email address.
+                  </FormDescription>
                 </div>
               </FormItem>
             )}

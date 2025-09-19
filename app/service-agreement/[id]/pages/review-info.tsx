@@ -127,13 +127,6 @@ function BillingDetailsCard() {
           </div>
         </div>
 
-        <div className="space-y-1">
-          <Label className="text-neutral-500 text-sm">Email address</Label>
-          <span className="text-base break-words">
-            <Value>{state.accountEmail}</Value>
-          </span>
-        </div>
-
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1 space-y-1">
             <Label className="text-neutral-500 text-sm">Mobile phone</Label>
@@ -147,6 +140,13 @@ function BillingDetailsCard() {
               <Value>{state.accountPhone}</Value>
             </span>
           </div>
+        </div>
+
+        <div className="space-y-1">
+          <Label className="text-neutral-500 text-sm">Email address</Label>
+          <span className="text-base break-words">
+            <Value>{state.accountEmail}</Value>
+          </span>
         </div>
 
         <div className="space-y-1">
@@ -202,37 +202,25 @@ function AdditionalContactsList() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1 space-y-1">
-                <Label className="text-neutral-500 text-sm">Department</Label>
-                <span className="text-base break-words">
-                  <Value>{contact.Department}</Value>
-                </span>
-              </div>
-              <div className="flex-1 space-y-1">
-                <Label className="text-neutral-500 text-sm">Position</Label>
-                <span className="text-base break-words">
-                  <Value>{contact.Position}</Value>
-                </span>
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <Label className="text-neutral-500 text-sm">Email address</Label>
-              <span className="text-base break-words">
-                <Value>{contact.Email}</Value>
-              </span>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1 space-y-1">
                 <Label className="text-neutral-500 text-sm">Mobile phone</Label>
                 <span className="text-base break-words">
                   <Value>{contact.CellPhone}</Value>
                 </span>
               </div>
               <div className="flex-1 space-y-1">
-                <Label className="text-neutral-500 text-sm">Office phone</Label>
+                <Label className="text-neutral-500 text-sm">
+                  Email address
+                </Label>
                 <span className="text-base break-words">
-                  <Value>{contact.WorkPhone}</Value>
+                  <Value>{contact.Email}</Value>
+                </span>
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1 space-y-1">
+                <Label className="text-neutral-500 text-sm">Position</Label>
+                <span className="text-base break-words">
+                  <Value>{contact.Position}</Value>
                 </span>
               </div>
             </div>
@@ -327,34 +315,6 @@ function SitesSummaryList() {
                         <div className="flex flex-col sm:flex-row gap-4">
                           <div className="flex-1 space-y-1">
                             <Label className="text-neutral-500 text-sm">
-                              Department
-                            </Label>
-                            <span className="text-base break-words">
-                              <Value>{c.Department}</Value>
-                            </span>
-                          </div>
-                          <div className="flex-1 space-y-1">
-                            <Label className="text-neutral-500 text-sm">
-                              Position
-                            </Label>
-                            <span className="text-base break-words">
-                              <Value>{c.Position}</Value>
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="space-y-1">
-                          <Label className="text-neutral-500 text-sm">
-                            Email address
-                          </Label>
-                          <span className="text-base break-words">
-                            <Value>{c.Email}</Value>
-                          </span>
-                        </div>
-
-                        <div className="flex flex-col sm:flex-row gap-4">
-                          <div className="flex-1 space-y-1">
-                            <Label className="text-neutral-500 text-sm">
                               Mobile phone
                             </Label>
                             <span className="text-base break-words">
@@ -363,10 +323,21 @@ function SitesSummaryList() {
                           </div>
                           <div className="flex-1 space-y-1">
                             <Label className="text-neutral-500 text-sm">
-                              Office phone
+                              Email address
                             </Label>
                             <span className="text-base break-words">
-                              <Value>{c.WorkPhone}</Value>
+                              <Value>{c.Email}</Value>
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row gap-4">
+                          <div className="flex-1 space-y-1">
+                            <Label className="text-neutral-500 text-sm">
+                              Position
+                            </Label>
+                            <span className="text-base break-words">
+                              <Value>{c.Position}</Value>
                             </span>
                           </div>
                         </div>
@@ -418,7 +389,11 @@ export default function ReviewInfo() {
         >
           <ArrowLeftIcon /> Back
         </Button>
-        <Button onClick={goNext} className="w-[200px] cursor-pointer" variant="efg">
+        <Button
+          onClick={goNext}
+          className="w-[200px] cursor-pointer"
+          variant="efg"
+        >
           Continue
         </Button>
       </div>
