@@ -13,7 +13,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
     if (serviceCount < 3) return undefined;
     if (serviceCount < 4) return "basic";
     if (serviceCount < 6) return "essential";
-    return "pro";
+    return "premium";
   }, [serviceCount]);
 
   return (
@@ -53,7 +53,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
             {currentTier === "basic" && (
               <div className="pointer-events-none absolute inset-0 z-0 border border-neutral-300 bg-neutral-300/10" />
             )}
-            {(currentTier === "essential" || currentTier === "pro") && (
+            {(currentTier === "essential" || currentTier === "premium") && (
               <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-300/10" />
             )}
 
@@ -101,7 +101,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
 
                   {currentTier != "basic" &&
                     currentTier != "essential" &&
-                    currentTier != "pro" && (
+                    currentTier != "premium" && (
                       <Button
                         size="sm"
                         variant="outline"
@@ -146,7 +146,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
             {currentTier === "essential" && (
               <div className="pointer-events-none absolute inset-0 z-30 border border-[#ffdb01] bg-[#ffdb01]/5" />
             )}
-            {currentTier === "pro" && (
+            {currentTier === "premium" && (
               <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-300/10" />
             )}
 
@@ -181,7 +181,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
                     </div>
                   )}
 
-                  {currentTier != "essential" && currentTier != "pro" && (
+                  {currentTier != "essential" && currentTier != "premium" && (
                     <Button
                       size="sm"
                       className={cn(
@@ -223,7 +223,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
 
           {/* Pro tier */}
           <div className="col-span-2 transition-all duration-300 relative">
-            {currentTier === "pro" && (
+            {currentTier === "premium" && (
               <div className="pointer-events-none absolute inset-0 z-30 border border-[#1e60ad] bg-blue-400/5 rounded-br-lg" />
             )}
 
@@ -231,7 +231,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
             <div
               className={cn(
                 "h-40 border-solid relative transition-all duration-300",
-                currentTier === "pro"
+                currentTier === "premium"
                   ? "bg-[#1e60ad] text-white border-b-[#1e60ad]"
                   : "border-b border-input"
               )}
@@ -248,7 +248,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
               <div className="relative z-10 flex h-full w-full items-start p-4 md:p-6">
                 <div className="flex flex-col items-start gap-2 w-full">
                   <span className="uppercase tracking-wide font-semibold text-xs md:text-sm">
-                    Pro
+                    Premium
                   </span>
 
                   {serviceCount < 6 ? (
@@ -259,7 +259,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
                       <span
                         className={cn(
                           "text-sm",
-                          currentTier === "pro"
+                          currentTier === "premium"
                             ? "text-white/80"
                             : "text-neutral-700"
                         )}
@@ -272,7 +272,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
                       <span
                         className={cn(
                           "font-medium leading-none text-xl",
-                          currentTier === "pro"
+                          currentTier === "premium"
                             ? "text-white"
                             : "text-neutral-800"
                         )}
@@ -281,7 +281,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
                       </span>
                     </div>
                   )}
-                  {currentTier != "pro" && (
+                  {currentTier != "premium" && (
                     <Button
                       size="sm"
                       className={cn(
