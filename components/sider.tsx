@@ -49,17 +49,17 @@ export default function Sider({
           {/* <div className="text-xs text-neutral-500 font-semibold mb-1">
             Support
           </div> */}
-          <div className="text-xs text-neutral-700 hover:text-neutral-800 transition-all duration-200 flex items-center gap-2 font-medium">
+          <div className="text-xs text-neutral-500 hover:text-neutral-800 transition-all duration-200 flex items-center gap-2 font-medium">
             <PhoneIcon className="w-3.5 h-3.5"></PhoneIcon>
             <a href="tel:1300435374">1300 435 374</a>
           </div>
-          <div className="text-xs text-neutral-700 hover:text-neutral-800 transition-all duration-200 flex items-center gap-2 font-medium">
+          <div className="text-xs text-neutral-500 hover:text-neutral-800 transition-all duration-200 flex items-center gap-2 font-medium">
             <MailIcon className="w-3.5 h-3.5"></MailIcon>{" "}
             <a href="mailto:service@elephantsfoot.com.au">
               service@elephantsfoot.com.au
             </a>
           </div>
-          <div className="text-xs text-neutral-700 hover:text-neutral-800 transition-all duration-200 flex items-center gap-2 font-medium">
+          <div className="text-xs text-neutral-500 hover:text-neutral-800 transition-all duration-200 flex items-center gap-2 font-medium">
             <GlobeIcon className="w-3.5 h-3.5"></GlobeIcon>{" "}
             <a href="https://www.elephantsfoot.com.au" target="_blank">
               elephantsfoot.com.au
