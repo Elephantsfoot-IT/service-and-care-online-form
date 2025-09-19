@@ -16,8 +16,8 @@ export default function Sider({
 }) {
   const state = useServiceAgreementStore();
   return (
-    <aside className="hidden xl:flex fixed left-0 top-0 z-[99] w-[400px] h-screen p-4">
-      <div className="flex flex-col h-full w-full bg-neutral-75  p-10 relative rounded-lg overflow-hidden shadow-xs">
+    <aside className="hidden xl:flex fixed left-0 top-0 z-[99] w-[400px] h-screen ">
+      <div className="flex flex-col h-full w-full   p-10 relative rounded-lg overflow-hidden ">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/logo/Elephants FootService Care Dark.svg"
@@ -37,29 +37,29 @@ export default function Sider({
         )}
 
         {/* Pin to bottom-right like your sider */}
-        <BrandCornerShape
+        {/* <BrandCornerShape
           className="absolute bottom-0 -right-2 text-efg-yellow"
           height={375}
           durationMs={1400}
           loop={false}
           fillAngleDeg={60}
-        />
+        /> */}
 
         <div className="flex flex-col gap-2 mt-auto z-10">
           {/* <div className="text-xs text-neutral-500 font-semibold mb-1">
             Support
           </div> */}
-          <div className="text-xs text-neutral-700 hover:underline opacity-70 hover:opacity-100 transition-all duration-200 flex items-center gap-2 font-medium">
+          <div className="text-xs text-neutral-700 hover:text-neutral-800 transition-all duration-200 flex items-center gap-2 font-medium">
             <PhoneIcon className="w-3.5 h-3.5"></PhoneIcon>
             <a href="tel:1300435374">1300 435 374</a>
           </div>
-          <div className="text-xs text-neutral-700 hover:underline opacity-70 hover:opacity-100 transition-all duration-200 flex items-center gap-2 font-medium">
+          <div className="text-xs text-neutral-700 hover:text-neutral-800 transition-all duration-200 flex items-center gap-2 font-medium">
             <MailIcon className="w-3.5 h-3.5"></MailIcon>{" "}
             <a href="mailto:service@elephantsfoot.com.au">
               service@elephantsfoot.com.au
             </a>
           </div>
-          <div className="text-xs text-neutral-700 hover:underline opacity-70 hover:opacity-100 flex items-center gap-2 font-medium">
+          <div className="text-xs text-neutral-700 hover:text-neutral-800 transition-all duration-200 flex items-center gap-2 font-medium">
             <GlobeIcon className="w-3.5 h-3.5"></GlobeIcon>{" "}
             <a href="https://www.elephantsfoot.com.au" target="_blank">
               elephantsfoot.com.au
