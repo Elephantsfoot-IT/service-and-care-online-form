@@ -1,13 +1,11 @@
 // components/Sider.tsx
 "use client";
 
+import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { MailIcon, PhoneIcon } from "lucide-react";
+import BrandCornerShape from "./brand-animation";
 import FormVerticalProgress from "./service-agreement/form-vertical-progress";
 import ServiceVerticalProgress from "./service-agreement/service-vertical-progress";
-import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
-import DecorativeQuarterRing from "./brand-animation";
-import BrandCornerCurve from "./brand-animation";
-import BrandCornerShape from "./brand-animation";
 
 export default function Sider({
   activeId,
@@ -20,6 +18,7 @@ export default function Sider({
   return (
     <aside className="hidden xl:flex fixed left-0 top-0 z-[99] w-[400px] h-screen p-4">
       <div className="flex flex-col h-full w-full bg-secondary  p-10 relative rounded-lg overflow-hidden shadow-xs">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/logo/Elephants FootService Care Dark.svg"
           alt="EFG Service and Care"

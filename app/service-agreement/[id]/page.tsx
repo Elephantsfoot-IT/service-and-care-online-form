@@ -1,24 +1,24 @@
 "use client";
 
 /* ------------------------------ Imports ------------------------------ */
-import { useEffect, useState, useRef } from "react";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
+import Header from "@/components/header";
+import { useScrollSpy } from "@/components/service-agreement/scroll-spy";
+import Sider from "@/components/sider";
+import { useServiceAgreement } from "@/lib/api";
+import { SECTION_IDS, ServiceAgreement } from "@/lib/interface";
+import { fastScrollToEl } from "@/lib/utils";
+import { Loader2Icon } from "lucide-react";
+import { useParams } from "next/navigation";
+import { Suspense, useEffect, useRef, useState } from "react";
+import AdditionalContactInfo from "./pages/additional-contact-info";
+import BillingDetails from "./pages/billing-info";
 import ConfirmInfo from "./pages/confirm-info";
 import CustomerInformation from "./pages/customer-info";
-import SiteInfo from "./pages/site-info";
-import BillingDetails from "./pages/billing-info";
 import ReviewInfo from "./pages/review-info";
-import AdditionalContactInfo from "./pages/additional-contact-info";
 import ServicesForm from "./pages/services";
-import { useServiceAgreement } from "@/lib/api";
-import { useParams } from "next/navigation";
-import { Suspense } from "react";
-import Header from "@/components/header";
-import Sider from "@/components/sider";
-import { Loader2Icon } from "lucide-react";
-import { SECTION_IDS, ServiceAgreement } from "@/lib/interface";
-import { useScrollSpy } from "@/components/service-agreement/scroll-spy";
-import { fastScrollToEl } from "@/lib/utils";
+import SiteInfo from "./pages/site-info";
+import ServiceAgreementProgress from "@/components/service-agreement/service-agreement-progress";
 
 /* ------------------------------ Component ------------------------------ */
 function ServiceAgreementComponent({ id }: { id: string }) {
@@ -144,12 +144,13 @@ function ServiceAgreementComponent({ id }: { id: string }) {
   /* Render */
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       {activeId && <Sider activeId={activeId} onJump={onJump} />}
-      <div className="pt-[88px] xl:pl-[400px]">
+      <div className="pt-[40px] xl:pl-[400px] ">
         <div className="px-4 xl:px-20 text-neutral-700 ">
-          <div className="w-full flex flex-col items-center font-sans pt-20 pb-20 bg-white flex-grow gap-8 max-w-screen-lg mx-auto">
-            {/* {state.page >= 2 && <ServiceAgreementProgress ></ServiceAgreementProgress>} */}
+    
+          <div className="w-full flex flex-col items-center font-sans py-10 xl:py-20 bg-white flex-grow gap-8 max-w-screen-lg mx-auto">
+            {<ServiceAgreementProgress ></ServiceAgreementProgress>}
 
             {state.page === 1 && (
               <div

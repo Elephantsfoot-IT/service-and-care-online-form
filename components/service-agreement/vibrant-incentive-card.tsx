@@ -18,7 +18,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
         )}
       >
         {(currentTier === "essential" || currentTier === "pro") && (
-          <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-50/40" />
+          <div className="pointer-events-none absolute inset-0 z-50 bg-secondary/40" />
         )}
 
         <div className="text-xl font-medium text-left">Basic</div>
@@ -69,7 +69,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
         )}
       >
         {currentTier === "pro" && (
-          <div className="pointer-events-none absolute inset-0 z-50 bg-neutral-50/40" />
+          <div className="pointer-events-none absolute inset-0 z-50 bg-secondary/40" />
         )}
 
         <div className="text-xl font-medium text-left">Essential</div>

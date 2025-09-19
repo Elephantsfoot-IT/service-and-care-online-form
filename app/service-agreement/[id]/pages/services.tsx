@@ -47,7 +47,7 @@ function SectionHeader({
   helpHref?: string;
 }) {
   return (
-    <div className="flex flex-col bg-neutral-50 p-4 md:p-6 2xl:p-8 border-b border-input">
+    <div className="flex flex-col bg-secondary p-4 md:p-6 2xl:p-8 border-b border-input">
       <Label className="text-xl font-medium flex flex-row items-center gap-2">
         {title}
         {helpHref && (
@@ -230,7 +230,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       <div className="text-neutral-500">{r.site_name}</div>
                     </div>
                   ) : (
-                    <div className="col-span-1 px-4 py-2">{r.site_name}</div>
+                    <div className="col-span-3 px-4 py-2">{r.site_name}</div>
                   )}
 
                   <div className="col-span-1 px-4 py-2">{r.chutes}</div>
@@ -291,7 +291,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       <div className="text-neutral-500">{r.site_name}</div>
                     </div>
                   ) : (
-                    <div className="col-span-1 px-4 py-2">{r.site_name}</div>
+                    <div className="col-span-3 px-4 py-2">{r.site_name}</div>
                   )}
                   <div className="col-span-1 px-4 py-2"></div>
                   <div className="col-span-1 px-4 py-2">
@@ -351,7 +351,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       <div className="text-neutral-500">{r.site_name}</div>
                     </div>
                   ) : (
-                    <div className="col-span-1 px-4 py-2">{r.site_name}</div>
+                    <div className="col-span-3 px-4 py-2">{r.site_name}</div>
                   )}
                   <div className="col-span-1 px-4 py-2"></div>
                   <div className="col-span-1 px-4 py-2"></div>
@@ -409,7 +409,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       <div className="text-neutral-500">{r.site_name}</div>
                     </div>
                   ) : (
-                    <div className="col-span-1 px-4 py-2">{r.site_name}</div>
+                    <div className="col-span-3 px-4 py-2">{r.site_name}</div>
                   )}
                   <div className="col-span-1 px-4 py-2"></div>
                   <div className="col-span-1 px-4 py-2">{r.area_label}</div>
@@ -467,7 +467,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       <div className="text-neutral-500">{r.site_name}</div>
                     </div>
                   ) : (
-                    <div className="col-span-1 px-4 py-2">{r.site_name}</div>
+                    <div className="col-span-3 px-4 py-2">{r.site_name}</div>
                   )}
                   <div className="col-span-1 px-4 py-2"></div>
                   <div className="col-span-1 px-4 py-2"></div>
@@ -525,7 +525,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       <div className="text-neutral-500">{r.site_name}</div>
                     </div>
                   ) : (
-                    <div className="col-span-1 px-4 py-2">{r.site_name}</div>
+                    <div className="col-span-3 px-4 py-2">{r.site_name}</div>
                   )}
                   <div className="col-span-1 px-4 py-2"></div>
                   <div className="col-span-1 px-4 py-2"></div>
