@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useEffect, useImperativeHandle, useRef } from "react";
 import {
   Form,
   FormControl,
@@ -11,11 +10,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SiteContact } from "@/lib/interface";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { XIcon } from "lucide-react";
+import React, { useEffect, useImperativeHandle, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { SiteContact } from "@/lib/interface";
-import { Trash2Icon, XIcon } from "lucide-react";
 import { Button } from "../ui/button";
 
 export type SiteContactFormHandle = {
@@ -36,12 +36,10 @@ const FormSchema = z
     GivenName: z.string().min(1, { message: "First name required" }),
     FamilyName: z.string().min(1, { message: "Last name required" }),
     Email: z.string(), // allow empty
-    WorkPhone: z.string(),
     CellPhone: z.string(),
     Position: z.string().optional().or(z.literal("")),
-    Department: z.string().optional().or(z.literal("")),
   })
-  .refine((data) => data.WorkPhone || data.CellPhone || data.Email, {
+  .refine((data) => data.CellPhone || data.Email, {
     message:
       "At least one contact number (Office, Mobile) or Email must be provided.",
     path: ["WorkPhone"],
@@ -58,10 +56,8 @@ const SiteContactForm = React.forwardRef<
       GivenName: contact.GivenName ?? "",
       FamilyName: contact.FamilyName ?? "",
       Email: contact.Email ?? "",
-      WorkPhone: contact.WorkPhone ?? "",
       CellPhone: contact.CellPhone ?? "",
       Position: contact.Position ?? "",
-      Department: contact.Department ?? "",
     },
   });
 
@@ -114,17 +110,19 @@ const SiteContactForm = React.forwardRef<
         <Label className="text-base">
           {isPrimary ? "Primary Contact" : `Contact (${index + 1})`}
         </Label>
-        {!isPrimary &&<Button
-          variant="ghost"
-          size="icon"
-          onClick={() => !isPrimary && handleDelete(contact.id!)}
-          disabled={isPrimary}
-          title={
-            isPrimary ? "Primary contact cannot be deleted" : "Delete contact"
-          }
-        >
-          <XIcon />
-        </Button>}
+        {!isPrimary && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => !isPrimary && handleDelete(contact.id!)}
+            disabled={isPrimary}
+            title={
+              isPrimary ? "Primary contact cannot be deleted" : "Delete contact"
+            }
+          >
+            <XIcon />
+          </Button>
+        )}
       </div>
 
       <Form {...ContactForm}>
@@ -180,49 +178,24 @@ const SiteContactForm = React.forwardRef<
             </div>
           </div>
 
-          {/* Position */}
+          {/* Mobile */}
           <FormField
             control={ContactForm.control}
-            name="Position"
+            name="CellPhone"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
                 <FormLabel className="text-sm w-full md:w-1/3">
-                  Position
+                  Mobile phone
                 </FormLabel>
                 <div className="w-full md:w-2/3">
                   <FormControl>
                     <Input
+                      maxLength={13}
                       className="efg-input"
                       {...field}
                       onChange={(e) => {
                         field.onChange(e);
-                        update("Position")(e.target.value);
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </div>
-              </FormItem>
-            )}
-          />
-
-          {/* Department */}
-          <FormField
-            control={ContactForm.control}
-            name="Department"
-            render={({ field }) => (
-              <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel className="text-sm w-full md:w-1/3">
-                  Department
-                </FormLabel>
-                <div className="w-full md:w-2/3">
-                  <FormControl>
-                    <Input
-                      className="efg-input"
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        update("Department")(e.target.value);
+                        update("CellPhone")(e.target.value);
                       }}
                     />
                   </FormControl>
@@ -258,51 +231,23 @@ const SiteContactForm = React.forwardRef<
             )}
           />
 
-          {/* Mobile */}
+          {/* Position */}
           <FormField
             control={ContactForm.control}
-            name="CellPhone"
+            name="Position"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
                 <FormLabel className="text-sm w-full md:w-1/3">
-                  Mobile phone
+                  Position
                 </FormLabel>
                 <div className="w-full md:w-2/3">
                   <FormControl>
                     <Input
-                      maxLength={13}
                       className="efg-input"
                       {...field}
                       onChange={(e) => {
                         field.onChange(e);
-                        update("CellPhone")(e.target.value);
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </div>
-              </FormItem>
-            )}
-          />
-
-          {/* Office */}
-          <FormField
-            control={ContactForm.control}
-            name="WorkPhone"
-            render={({ field }) => (
-              <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel className="text-sm w-full md:w-1/3">
-                  Office phone
-                </FormLabel>
-                <div className="w-full md:w-2/3">
-                  <FormControl>
-                    <Input
-                      maxLength={13}
-                      className="efg-input"
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        update("WorkPhone")(e.target.value);
+                        update("Position")(e.target.value);
                       }}
                     />
                   </FormControl>

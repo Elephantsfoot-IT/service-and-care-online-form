@@ -36,10 +36,8 @@ const FormSchema = z
     GivenName: z.string().min(1, { message: "Given name cannot be empty" }),
     FamilyName: z.string().min(1, { message: "Family name cannot be empty" }),
     Email: z.string(),
-    WorkPhone: z.string(),
     CellPhone: z.string(),
     Position: z.string().optional().or(z.literal("")),
-    Department: z.string().optional().or(z.literal("")),
     QuoteContact: z.boolean(),
     JobContact: z.boolean(),
     InvoiceContact: z.boolean(),
@@ -49,7 +47,7 @@ const FormSchema = z
     PrimaryJobContact: z.boolean(),
     PrimaryQuoteContact: z.boolean(),
   })
-  .refine((data) => data.WorkPhone || data.CellPhone || data.Email, {
+  .refine((data) =>  data.CellPhone || data.Email, {
     message:
       "At least one contact number (Office, Mobile) or Email must be provided.",
     path: ["WorkPhone"],
@@ -68,10 +66,8 @@ const AdditionalcontactForm = React.forwardRef<
       GivenName: contact.GivenName ?? "",
       FamilyName: contact.FamilyName ?? "",
       Email: contact.Email ?? "",
-      WorkPhone: contact.WorkPhone ?? "",
       CellPhone: contact.CellPhone ?? "",
       Position: contact.Position ?? "",
-      Department: contact.Department ?? "",
       QuoteContact: !!contact.QuoteContact,
       JobContact: !!contact.JobContact,
       InvoiceContact: !!contact.InvoiceContact,
@@ -89,10 +85,8 @@ const AdditionalcontactForm = React.forwardRef<
       GivenName: contact.GivenName ?? "",
       FamilyName: contact.FamilyName ?? "",
       Email: contact.Email ?? "",
-      WorkPhone: contact.WorkPhone ?? "",
       CellPhone: contact.CellPhone ?? "",
       Position: contact.Position ?? "",
-      Department: contact.Department ?? "",
       QuoteContact: !!contact.QuoteContact,
       JobContact: !!contact.JobContact,
       InvoiceContact: !!contact.InvoiceContact,
@@ -259,83 +253,7 @@ const AdditionalcontactForm = React.forwardRef<
             </div>
           </div>
 
-          {/* Position */}
-          <FormField
-            control={ContactForm.control}
-            name="Position"
-            render={({ field }) => (
-              <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel className="text-sm w-full md:w-1/3">
-                  Position
-                </FormLabel>
-                <div className="w-full md:w-2/3">
-                  <FormControl>
-                    <Input
-                      className="efg-input"
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        update("Position")(e.target.value);
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </div>
-              </FormItem>
-            )}
-          />
-
-          {/* Department */}
-          <FormField
-            control={ContactForm.control}
-            name="Department"
-            render={({ field }) => (
-              <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel className="text-sm w-full md:w-1/3">
-                  Department
-                </FormLabel>
-                <div className="w-full md:w-2/3">
-                  <FormControl>
-                    <Input
-                      className="efg-input"
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        update("Department")(e.target.value);
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </div>
-              </FormItem>
-            )}
-          />
-
-          {/* Email */}
-          <FormField
-            control={ContactForm.control}
-            name="Email"
-            render={({ field }) => (
-              <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel className="text-sm w-full md:w-1/3">
-                  Email address
-                </FormLabel>
-                <div className="w-full md:w-2/3">
-                  <FormControl>
-                    <Input
-                      className="efg-input"
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        update("Email")(e.target.value);
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </div>
-              </FormItem>
-            )}
-          />
+        
 
           {/* Mobile */}
           <FormField
@@ -364,24 +282,24 @@ const AdditionalcontactForm = React.forwardRef<
             )}
           />
 
-          {/* Office */}
-          <FormField
+
+           {/* Email */}
+           <FormField
             control={ContactForm.control}
-            name="WorkPhone"
+            name="Email"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
                 <FormLabel className="text-sm w-full md:w-1/3">
-                  Office phone
+                  Email address
                 </FormLabel>
                 <div className="w-full md:w-2/3">
                   <FormControl>
                     <Input
-                      maxLength={13}
                       className="efg-input"
                       {...field}
                       onChange={(e) => {
                         field.onChange(e);
-                        update("WorkPhone")(e.target.value);
+                        update("Email")(e.target.value);
                       }}
                     />
                   </FormControl>
@@ -390,6 +308,33 @@ const AdditionalcontactForm = React.forwardRef<
               </FormItem>
             )}
           />
+
+          {/* Position */}
+          <FormField
+            control={ContactForm.control}
+            name="Position"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
+                <FormLabel className="text-sm w-full md:w-1/3">
+                  Position
+                </FormLabel>
+                <div className="w-full md:w-2/3">
+                  <FormControl>
+                    <Input
+                      className="efg-input"
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        update("Position")(e.target.value);
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </div>
+              </FormItem>
+            )}
+          />
+
 
           {/* Use this contact for */}
           <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
