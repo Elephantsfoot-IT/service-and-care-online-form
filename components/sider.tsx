@@ -51,12 +51,12 @@ export default function Sider({
           </div>
           <div className="text-xs text-neutral-500 hover:text-neutral-600 hover:underline flex items-center gap-2">
             <PhoneIcon className="w-3.5 h-3.5"></PhoneIcon>
-            <a href="tel:1300261938">1300 261 938</a>
+            <a href="tel:1300435374">1300 435 374</a>
           </div>
           <div className="text-xs text-neutral-500 hover:text-neutral-600 hover:underline flex items-center gap-2">
             <MailIcon className="w-3.5 h-3.5"></MailIcon>{" "}
-            <a href="mailto:services@elephantsfootservice.com.au">
-              services@elephantsfootservice.com.au
+            <a href="mailto:service@elephantsfoot.com.au">
+              service@elephantsfoot.com.au
             </a>
           </div>
           <div className="text-xs text-neutral-500 hover:text-neutral-600 hover:underline flex items-center gap-2">
