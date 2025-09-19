@@ -144,7 +144,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
   /* Render */
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       {activeId && <Sider activeId={activeId} onJump={onJump} />}
       <div className="pt-[88px] xl:pl-[400px]">
         <div className="px-4 xl:px-20 text-neutral-700 ">

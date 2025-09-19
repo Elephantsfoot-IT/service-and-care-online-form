@@ -113,7 +113,7 @@
 }
 
 @theme {
-  --color-efg-yellow: #ffdb01;
+  --color-efg-yellow: #fcbd2a;
   --color-efg-blue: #1e60ad;
 }
 
@@ -320,4 +320,58 @@
   animation-timing-function: linear;
   animation-iteration-count: 1;
   animation-fill-mode: forwards; 
+}
+
+
+
+
+
+@keyframes fadeLeft {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    transform: translateX(0);
+  }
+}
+
+.fade-left {
+  @apply opacity-0;
+  animation: fadeLeft 1s forwards;
+  animation-delay: var(--fade-delay, 0s); /* Default to 0s if not set */
+}
+
+.fade-left-100 {
+  --fade-delay: 0.1s;
+}
+.fade-left-200 {
+  --fade-delay: 0.2s;
+}
+.fade-left-300 {
+  --fade-delay: 0.3s;
+}
+.fade-left-400 {
+  --fade-delay: 0.4s;
+}
+.fade-left-500 {
+  --fade-delay: 0.5s;
+}
+.fade-left-600 {
+  --fade-delay: 0.6s;
+}
+.fade-left-700 {
+  --fade-delay: 0.7s;
+}
+.fade-left-800 {
+  --fade-delay: 0.8s;
+}
+.fade-left-900 {
+  --fade-delay: 0.9s;
+}
+.fade-left-1000 {
+  --fade-delay: 1s;
 }

@@ -55,7 +55,7 @@ function FormVerticalProgress() {
                 isLocked ? "cursor-not-allowed" : "cursor-pointer"
               )}
             >
-              <div className="size-10 border border-input rounded-lg flex items-center justify-center shadow-xs">
+              <div className="size-10 border border-input rounded-lg flex items-center justify-center shadow-xs bg-white">
                 <Icon className="size-4.5 text-neutral-600" />
               </div>
               <div className={cn("text-base", isActive && "underline font-medium")}>
