@@ -30,7 +30,7 @@ function SectionShell({
   return (
     <section
       id={id}
-      className="flex flex-col  scroll-mt-[140px] border border-input rounded-lg overflow-hidden shadow-xs bg-white"
+      className="flex flex-col scroll-mt-[140px] bg-transparent gap-6 border border-input shadow-sm rounded-xl p-6"
     >
       {children}
     </section>
@@ -41,14 +41,21 @@ function SectionHeader({
   title,
   description,
   helpHref,
+  image,
+  imageAlt,
 }: {
   title: string;
   description: string;
   helpHref?: string;
+  image?: string;
+  imageAlt?: string;
 }) {
   return (
-    <div className="flex flex-col p-4 2xl:p-8 border-b border-input bg-neutral-75">
-      <div className="text-base xl:text-lg font-medium flex flex-row items-center gap-2">
+    <div className="flex flex-col  ">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={image} alt={imageAlt} className="h-auto w-6 mb-4" />
+
+      <div className="text-lg font-medium flex flex-row items-center gap-2">
         {title}
         {helpHref && (
           <a
@@ -62,9 +69,7 @@ function SectionHeader({
           </a>
         )}
       </div>
-      <span className="text-sm xl:text-base text-neutral-500">
-        {description}
-      </span>
+      <span className="text-base text-neutral-500">{description}</span>
     </div>
   );
 }
@@ -91,7 +96,7 @@ function PricingFooter({
   }
 
   return (
-    <div className="mt-4 space-y-2 w-full sm:max-w-[360px] ml-auto px-4">
+    <div className="space-y-2 w-full sm:max-w-[360px] ml-auto px-2">
       {showDiscount ? (
         <>
           <div className="flex justify-between text-sm text-green-500">
@@ -221,25 +226,25 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             title="Chute Cleaning"
             description="Chute cleaning that removes grime, mould, and odours—keeping multi-storey buildings hygienic and safe."
             helpHref="https://www.elephantsfoot.com.au/chute-cleaning/"
+            image="/Service & Care Icons/Service & Care Cleaning.png"
+            imageAlt="Chute Cleaning"
           />
 
-          <div className="px-4 2xl:px-8 py-8">
+          <div className="flex flex-col gap-4">
             <ServiceFrequency2
               value={state.chuteCleaningFrequency}
               onChange={state.setChuteCleaningFrequency}
               options={options}
             />
 
-            <hr className="my-4 border-input border-dashed" />
-
             {/* Desktop table */}
             <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
-                  <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
-                  <div className="col-span-1 px-4 py-2 font-medium">Qty</div>
-                  <div className="col-span-1 px-4 py-2 font-medium">Level</div>
-                  <div className="col-span-1 text-right px-4 py-2 font-medium">
+                  <div className="col-span-3 px-2 py-2 font-medium">Sites</div>
+                  <div className="col-span-1 px-2 py-2 font-medium">Qty</div>
+                  <div className="col-span-1 px-2 py-2 font-medium">Level</div>
+                  <div className="col-span-1 text-right px-2 py-2 font-medium">
                     Price
                   </div>
                 </div>
@@ -247,22 +252,22 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 {chuteCleaningDetails.items.map((r, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-6 gap-2 border-b border-input"
+                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0"
                   >
                     {r.building_name ? (
-                      <div className="col-span-3 px-4 py-2">
+                      <div className="col-span-3 px-2 py-2">
                         <div className="font-medium">{r.site_name}</div>
                         <div>{r.building_name}</div>
                       </div>
                     ) : (
-                      <div className="col-span-3 px-4 py-2 font-medium">
+                      <div className="col-span-3 px-2 py-2 font-medium">
                         {r.site_name}
                       </div>
                     )}
 
-                    <div className="col-span-1 px-4 py-2">{r.chutes}</div>
-                    <div className="col-span-1 px-4 py-2">{r.levels}</div>
-                    <div className="col-span-1 text-right px-4 py-2 font-medium">
+                    <div className="col-span-1 px-2 py-2">{r.chutes}</div>
+                    <div className="col-span-1 px-2 py-2">{r.levels}</div>
+                    <div className="col-span-1 text-right px-2 py-2 font-medium">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -273,17 +278,17 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-4 py-2 font-medium">Services</div>
-                <div className="col-span-1 text-right px-4 py-2 font-medium">
+                <div className="col-span-1 px-2 py-2 font-medium">Services</div>
+                <div className="col-span-1 text-right px-2 py-2 font-medium">
                   Price
                 </div>
               </div>
               {chuteCleaningDetails.items.map((r, i) => (
                 <div
                   key={i}
-                  className="flex flex-row gap-2 border-b border-input text-sm"
+                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm"
                 >
-                  <div className="w-full px-4 py-2">
+                  <div className="w-full px-2 py-2">
                     <div className="flex flex-col gap-1">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && (
@@ -295,7 +300,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
                     </div>
                   </div>
-                  <div className="text-right px-4 py-2 font-medium w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 font-medium w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -318,27 +323,27 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             title="Equipment Preventative Maintenance"
             description="Keep compactors and related equipment safe, compliant, and efficient."
             helpHref="https://www.elephantsfoot.com.au/preventative-maintenance/"
+            image="/Service & Care Icons/Service & Care Preventative Maintenance.png"
+            imageAlt="Equipment Preventative Maintenance"
           />
 
-          <div className="px-4 2xl:px-8 py-8">
+          <div className="flex flex-col gap-4">
             <ServiceFrequency2
               value={state.equipmentMaintenanceFrequency}
               onChange={state.setEquipmentMaintenanceFrequency}
               options={options}
             />
 
-            <hr className="my-4 border-input border-dashed" />
-
             {/* Desktop table */}
             <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
-                  <div className="col-span-2 px-4 py-2 font-medium">Sites</div>
-                  <div className="col-span-1 px-4 py-2 font-medium"></div>
-                  <div className="col-span-2 px-4 py-2 font-medium">
+                  <div className="col-span-2 px-2 py-2 font-medium">Sites</div>
+                  <div className="col-span-1 px-2 py-2 font-medium"></div>
+                  <div className="col-span-2 px-2 py-2 font-medium">
                     Equipment
                   </div>
-                  <div className="col-span-1 text-right px-4 py-2 font-medium">
+                  <div className="col-span-1 text-right px-2 py-2 font-medium">
                     Price
                   </div>
                 </div>
@@ -346,17 +351,17 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 {equipmentMaintenanceDetails.items.map((r, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-6 gap-2 border-b border-input"
+                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0"
                   >
-                    <div className="col-span-2 px-4 py-2">
+                    <div className="col-span-2 px-2 py-2">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && <div>{r.building_name}</div>}
                     </div>
-                    <div className="col-span-1 px-4 py-2"></div>
-                    <div className="col-span-2 px-4 py-2">
+                    <div className="col-span-1 px-2 py-2"></div>
+                    <div className="col-span-2 px-2 py-2">
                       {r.equipment_label}
                     </div>
-                    <div className="col-span-1 text-right px-4 py-2 font-medium">
+                    <div className="col-span-1 text-right px-2 py-2 font-medium">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -367,17 +372,17 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-4 py-2 font-medium">Services</div>
-                <div className="col-span-1 text-right px-4 py-2 font-medium">
+                <div className="col-span-1 px-2 py-2 font-medium">Services</div>
+                <div className="col-span-1 text-right px-2 py-2 font-medium">
                   Price
                 </div>
               </div>
               {equipmentMaintenanceDetails.items.map((r, i) => (
                 <div
                   key={`${r.site_id}-${r.building_id}-${i}`}
-                  className="flex flex-row gap-2 border-b border-input text-sm"
+                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm"
                 >
-                  <div className="w-full px-4 py-2">
+                  <div className="w-full px-2 py-2">
                     <div className="flex flex-col gap-1">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && (
@@ -388,7 +393,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
                     </div>
                   </div>
-                  <div className="text-right px-4 py-2 font-medium w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 font-medium w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -411,25 +416,25 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             title="Self-Closing Hopper Door Inspection"
             description="Chute-door inspections to ensure fire safety and compliance."
             helpHref="https://www.elephantsfoot.com.au/chute-door-inspection/"
+            image="/Service & Care Icons/Service & Care Door Inspection.png"
+            imageAlt="Self-Closing Hopper Door Inspection"
           />
 
-          <div className="px-4 2xl:px-8 py-8">
+          <div className="flex flex-col gap-4">
             <ServiceFrequency2
               value={state.selfClosingHopperDoorInspectionFrequency}
               onChange={state.setSelfClosingHopperDoorInspectionFrequency}
               options={options}
             />
 
-            <hr className="my-4 border-input border-dashed" />
-
             {/* Desktop table */}
             <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
-                  <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
-                  <div className="col-span-1 px-4 py-2 font-medium"></div>
-                  <div className="col-span-1 px-4 py-2 font-medium"></div>
-                  <div className="col-span-1 text-right px-4 py-2 font-medium">
+                  <div className="col-span-3 px-2 py-2 font-medium">Sites</div>
+                  <div className="col-span-1 px-2 py-2 font-medium"></div>
+                  <div className="col-span-1 px-2 py-2 font-medium"></div>
+                  <div className="col-span-1 text-right px-2 py-2 font-medium">
                     Price
                   </div>
                 </div>
@@ -437,15 +442,15 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 {selfClosingHopperDoorInspectionDetails.items.map((r, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-6 gap-2 border-b border-input"
+                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0"
                   >
-                    <div className="col-span-3 px-4 py-2">
+                    <div className="col-span-3 px-2 py-2">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && <div>{r.building_name}</div>}
                     </div>
-                    <div className="col-span-1 px-4 py-2"></div>
-                    <div className="col-span-1 px-4 py-2"></div>
-                    <div className="col-span-1 text-right px-4 py-2 font-medium">
+                    <div className="col-span-1 px-2 py-2"></div>
+                    <div className="col-span-1 px-2 py-2"></div>
+                    <div className="col-span-1 text-right px-2 py-2 font-medium">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -456,17 +461,17 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-4 py-2 font-medium">Services</div>
-                <div className="col-span-1 text-right px-4 py-2 font-medium">
+                <div className="col-span-1 px-2 py-2 font-medium">Services</div>
+                <div className="col-span-1 text-right px-2 py-2 font-medium">
                   Price
                 </div>
               </div>
               {selfClosingHopperDoorInspectionDetails.items.map((r, i) => (
                 <div
                   key={`${r.site_id}-${r.building_id}-${i}`}
-                  className="flex flex-row gap-2 border-b border-input text-sm"
+                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm"
                 >
-                  <div className="w-full px-4 py-2">
+                  <div className="w-full px-2 py-2">
                     <div className="flex flex-col gap-1">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && (
@@ -474,7 +479,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       )}
                     </div>
                   </div>
-                  <div className="text-right px-4 py-2 font-medium w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 font-medium w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -497,25 +502,25 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             title="Waste Room Pressure Clean"
             description="High-pressure cleaning for hygienic, odour-free waste rooms."
             helpHref="https://www.elephantsfoot.com.au/waste-room-restoration/"
+            image="/Service & Care Icons/Service & Care Test Tag.png"
+            imageAlt="Waste Room Pressure Clean"
           />
 
-          <div className="px-4 2xl:px-8 py-8">
+          <div className="flex flex-col gap-4">
             <ServiceFrequency2
               value={state.wasteRoomCleaningFrequency}
               onChange={state.setWasteRoomCleaningFrequency}
               options={options}
             />
 
-            <hr className="my-4 border-input border-dashed" />
-
             {/* Desktop table */}
             <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
-                  <div className="col-span-2 px-4 py-2 font-medium">Sites</div>
-                  <div className="col-span-1 px-4 py-2 font-medium"></div>
-                  <div className="col-span-2 px-4 py-2 font-medium">Area</div>
-                  <div className="col-span-1 text-right px-4 py-2 font-medium">
+                  <div className="col-span-2 px-2 py-2 font-medium">Sites</div>
+                  <div className="col-span-1 px-2 py-2 font-medium"></div>
+                  <div className="col-span-2 px-2 py-2 font-medium">Area</div>
+                  <div className="col-span-1 text-right px-2 py-2 font-medium">
                     Price
                   </div>
                 </div>
@@ -523,15 +528,15 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 {wasteRoomCleaningDetails.items.map((r, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-6 gap-2 border-b border-input"
+                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0"
                   >
-                    <div className="col-span-2 px-4 py-2">
+                    <div className="col-span-2 px-2 py-2">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && <div>{r.building_name}</div>}
                     </div>
-                    <div className="col-span-1 px-4 py-2"></div>
-                    <div className="col-span-2 px-4 py-2">{r.area_label}</div>
-                    <div className="col-span-1 text-right px-4 py-2 font-medium">
+                    <div className="col-span-1 px-2 py-2"></div>
+                    <div className="col-span-2 px-2 py-2">{r.area_label}</div>
+                    <div className="col-span-1 text-right px-2 py-2 font-medium">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -542,17 +547,17 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-4 py-2 font-medium">Services</div>
-                <div className="col-span-1 text-right px-4 py-2 font-medium">
+                <div className="col-span-1 px-2 py-2 font-medium">Services</div>
+                <div className="col-span-1 text-right px-2 py-2 font-medium">
                   Price
                 </div>
               </div>
               {wasteRoomCleaningDetails.items.map((r, i) => (
                 <div
                   key={`${r.site_id}-${r.building_id}-${i}`}
-                  className="flex flex-row gap-2 border-b border-input text-sm"
+                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm"
                 >
-                  <div className="w-full px-4 py-2">
+                  <div className="w-full px-2 py-2">
                     <div className="flex flex-col gap-1">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && (
@@ -563,7 +568,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
                     </div>
                   </div>
-                  <div className="text-right px-4 py-2 font-medium w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 font-medium w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -586,25 +591,25 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             title="Bin Cleaning"
             description="Thorough bin cleaning to reduce odours, pests, and bacteria."
             helpHref="https://www.elephantsfoot.com.au/service-care/"
+            image="/Service & Care Icons/Service & Care Equipment Replacement.png"
+            imageAlt="Bin Cleaning"
           />
 
-          <div className="px-4 2xl:px-8 py-8">
+          <div className="flex flex-col gap-4">
             <ServiceFrequency2
               value={state.binCleaningFrequency}
               onChange={state.setBinCleaningFrequency}
               options={options}
             />
 
-            <hr className="my-4 border-input border-dashed" />
-
             {/* Desktop table */}
             <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
-                  <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
-                  <div className="col-span-1 px-4 py-2 font-medium"></div>
-                  <div className="col-span-1 px-4 py-2 font-medium"></div>
-                  <div className="col-span-1 text-right px-4 py-2 font-medium">
+                  <div className="col-span-3 px-2 py-2 font-medium">Sites</div>
+                  <div className="col-span-1 px-2 py-2 font-medium"></div>
+                  <div className="col-span-1 px-2 py-2 font-medium"></div>
+                  <div className="col-span-1 text-right px-2 py-2 font-medium">
                     Price
                   </div>
                 </div>
@@ -612,15 +617,15 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 {binCleaningDetails.items.map((r, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-6 gap-2 border-b border-input"
+                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0"
                   >
-                    <div className="col-span-3 px-4 py-2">
+                    <div className="col-span-3 px-2 py-2">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && <div>{r.building_name}</div>}
                     </div>
-                    <div className="col-span-1 px-4 py-2"></div>
-                    <div className="col-span-1 px-4 py-2"></div>
-                    <div className="col-span-1 text-right px-4 py-2 font-medium">
+                    <div className="col-span-1 px-2 py-2"></div>
+                    <div className="col-span-1 px-2 py-2"></div>
+                    <div className="col-span-1 text-right px-2 py-2 font-medium">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -631,17 +636,17 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-4 py-2 font-medium">Services</div>
-                <div className="col-span-1 text-right px-4 py-2 font-medium">
+                <div className="col-span-1 px-2 py-2 font-medium">Services</div>
+                <div className="col-span-1 text-right px-2 py-2 font-medium">
                   Price
                 </div>
               </div>
               {binCleaningDetails.items.map((r, i) => (
                 <div
                   key={`${r.site_id}-${r.building_id}-${i}`}
-                  className="flex flex-row gap-2 border-b border-input text-sm"
+                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm"
                 >
-                  <div className="w-full px-4 py-2">
+                  <div className="w-full px-2 py-2">
                     <div className="flex flex-col gap-1">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && (
@@ -649,7 +654,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       )}
                     </div>
                   </div>
-                  <div className="text-right px-4 py-2 font-medium w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 font-medium w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -672,25 +677,25 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             title="Odour Control"
             description="Targeted odour management to keep shared areas fresh."
             helpHref="https://www.elephantsfoot.com.au/odour-management/"
+            image="/Service & Care Icons/Service & Care Odour Management Box.png"
+            imageAlt="Odour Control"
           />
 
-        <div className="px-4 2xl:px-8 py-8">
+          <div className="flex flex-col gap-4">
             <ServiceFrequency2
               value={state.odourControlFrequency}
               onChange={state.setOdourControlFrequency}
               options={options}
             />
 
-            <hr className="my-4 border-input border-dashed" />
-
             {/* Desktop table */}
             <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
-                  <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
-                  <div className="col-span-1 px-4 py-2 font-medium"></div>
-                  <div className="col-span-1 px-4 py-2 font-medium"></div>
-                  <div className="col-span-1 text-right px-4 py-2 font-medium">
+                  <div className="col-span-3 px-2 py-2 font-medium">Sites</div>
+                  <div className="col-span-1 px-2 py-2 font-medium"></div>
+                  <div className="col-span-1 px-2 py-2 font-medium"></div>
+                  <div className="col-span-1 text-right px-2 py-2 font-medium">
                     Price
                   </div>
                 </div>
@@ -698,15 +703,15 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 {odourControlDetails.items.map((r, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-6 gap-2 border-b border-input"
+                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0"
                   >
-                    <div className="col-span-3 px-4 py-2">
+                    <div className="col-span-3 px-2 py-2">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && <div>{r.building_name}</div>}
                     </div>
-                    <div className="col-span-1 px-4 py-2"></div>
-                    <div className="col-span-1 px-4 py-2"></div>
-                    <div className="col-span-1 text-right px-4 py-2 font-medium">
+                    <div className="col-span-1 px-2 py-2"></div>
+                    <div className="col-span-1 px-2 py-2"></div>
+                    <div className="col-span-1 text-right px-2 py-2 font-medium">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -717,17 +722,17 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-4 py-2 font-medium">Services</div>
-                <div className="col-span-1 text-right px-4 py-2 font-medium">
+                <div className="col-span-1 px-2 py-2 font-medium">Services</div>
+                <div className="col-span-1 text-right px-2 py-2 font-medium">
                   Price
                 </div>
               </div>
               {odourControlDetails.items.map((r, i) => (
                 <div
                   key={`${r.site_id}-${r.building_id}-${i}`}
-                  className="flex flex-row gap-2 border-b border-input text-sm"
+                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm"
                 >
-                  <div className="w-full px-4 py-2">
+                  <div className="w-full px-2 py-2">
                     <div className="flex flex-col gap-1">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && (
@@ -735,7 +740,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       )}
                     </div>
                   </div>
-                  <div className="text-right px-4 py-2 font-medium w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 font-medium w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
