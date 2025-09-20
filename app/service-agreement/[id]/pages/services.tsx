@@ -287,11 +287,11 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     <div className="flex flex-col gap-1">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && (
-                        <div className="text-sm">{r.building_name}</div>
+                        <div className="text-xs">{r.building_name}</div>
                       )}
                       <div className="flex flex-row gap-2 items-center">
-                        <div className="text-sm">{r.levels} × Levels</div>
-                        <div className="text-sm">{r.chutes} × Chutes</div>
+                        <div className="text-xs">{r.levels} × Levels</div>
+                        <div className="text-xs">{r.chutes} × Chutes</div>
                       </div>
                     </div>
                   </div>
@@ -381,10 +381,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     <div className="flex flex-col gap-1">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && (
-                        <div className="text-sm">{r.building_name}</div>
+                        <div className="text-xs">{r.building_name}</div>
                       )}
-                      <div className="text-sm text-neutral-700">
-                        {r.equipment_label}
+                      <div className="text-xs text-neutral-700">
+                        Equipment: {r.equipment_label}
                       </div>
                     </div>
                   </div>
@@ -470,7 +470,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     <div className="flex flex-col gap-1">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && (
-                        <div className="text-sm">{r.building_name}</div>
+                        <div className="text-xs">{r.building_name}</div>
                       )}
                     </div>
                   </div>
@@ -556,10 +556,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     <div className="flex flex-col gap-1">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && (
-                        <div className="text-sm">{r.building_name}</div>
+                        <div className="text-xs">{r.building_name}</div>
                       )}
-                      <div className="text-sm text-neutral-700">
-                        {r.area_label}
+                      <div className="text-xs text-neutral-700">
+                        Area: {r.area_label}
                       </div>
                     </div>
                   </div>
@@ -645,7 +645,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     <div className="flex flex-col gap-1">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && (
-                        <div className="text-sm">{r.building_name}</div>
+                        <div className="text-xs">{r.building_name}</div>
                       )}
                     </div>
                   </div>
@@ -731,7 +731,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     <div className="flex flex-col gap-1">
                       <div className="font-medium">{r.site_name}</div>
                       {r.building_name && (
-                        <div className="text-sm">{r.building_name}</div>
+                        <div className="text-xs">{r.building_name}</div>
                       )}
                     </div>
                   </div>
