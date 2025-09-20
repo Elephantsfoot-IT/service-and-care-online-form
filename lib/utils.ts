@@ -106,3 +106,10 @@ export function fastScrollToEl(
 
   requestAnimationFrame(step);
 }
+
+export const getServiceAnualCost = (services: ServiceByType<ServiceType>[], frequency: string | null) => {
+  if (!frequency) return 0;
+  const frequencyValue =
+    frequency === "yearly" ? 1 : frequency === "six-monthly" ? 2 : 4;
+  return services.reduce((acc, service) => acc + getNumber(service.price) * frequencyValue, 0);
+};

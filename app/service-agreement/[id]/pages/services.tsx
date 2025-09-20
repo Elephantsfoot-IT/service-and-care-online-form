@@ -78,33 +78,54 @@ function PricingFooter({
   discountPct: number;
 }) {
   const base = items.reduce((acc, r) => acc + getNumber(r.price), 0);
-  const total = getServicesValue(base || 0, frequency);
-  const onSale = discountPct !== 0 && total > 0;
-  const discounted = onSale ? total * (1 - discountPct / 100) : total;
+  const subtotal = getServicesValue(base || 0, frequency); // annualised for this section
+  const hasTotal = subtotal > 0;
+  const showDiscount = discountPct > 0 && hasTotal;
+  const discountAmt = showDiscount ? (subtotal * discountPct) / 100 : 0;
+  const grandTotal = subtotal - discountAmt;
 
   return (
-    <div className="flex flex-row justify-between items-start px-4 py-4 gap-20 w-[300px] ml-auto">
-      <div className="font-medium text-sm">Annual cost:</div>
-      <div className="text-right flex flex-col items-end font-medium text-lg">
-        <div
-          className={
-            onSale
-              ? "line-through decoration-red-500 decoration-2 text-neutral-500"
-              : ""
-          }
-        >
-          {formatMoney(total)}
-        </div>
-
-        {onSale && <div className="text-xs text-red-500">-{discountPct}%</div>}
-
-        {onSale && <div>{formatMoney(discounted)}</div>}
-
-        <div className="text-xs text-neutral-500">(Excl. GST)</div>
+    <div className="mt-4 space-y-2 w-full sm:max-w-[360px] ml-auto px-4">
+      <div className="flex justify-between text-sm">
+        <span className="text-neutral-600">Subtotal</span>
+        <span className="font-medium">{formatMoney(subtotal)}</span>
       </div>
+
+      {showDiscount ? (
+        <>
+          <div className="flex justify-between text-sm text-emerald-700">
+            <span>Bundle discount ({discountPct}%)</span>
+            <span>-{formatMoney(discountAmt)}</span>
+          </div>
+
+          <div className="flex justify-between items-baseline">
+            <span className="text-neutral-600 text-sm font-medium">
+              Annual cost (excl. GST)
+            </span>
+            <div className="text-right">
+              <div className="text-sm line-through text-neutral-500">
+                {formatMoney(subtotal)}
+              </div>
+              <div className="text-base font-semibold">
+                {formatMoney(grandTotal)}
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="flex justify-between items-baseline">
+          <span className="text-neutral-600 text-sm font-medium">
+            Annual cost (excl. GST)
+          </span>
+          <span className="text-base font-semibold">
+            {formatMoney(grandTotal)}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
+
 
 /* ------------------------------- Page ------------------------------- */
 

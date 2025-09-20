@@ -4,9 +4,18 @@
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { scrollToTop } from "@/lib/utils";
+import { GetServicesReturnTyped, MaybeOption } from "@/lib/interface";
+import {
+  cn,
+  formatMoney,
+  getDiscount,
+  getServiceAnualCost,
+  getServices,
+  getServicesValue,
+  scrollToTop,
+} from "@/lib/utils";
 import { ArrowLeftIcon } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 /* ------------------------------ Small helpers ------------------------------ */
 function Value({ children }: { children?: string | null }) {
@@ -47,7 +56,7 @@ function CompanyDetailsCard() {
   return (
     <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white">
       <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input ">
-        <Label className="text-lg">Company Details</Label>  
+        <Label className="text-lg">Company Details</Label>
         <Button
           variant="ghost"
           className="text-sm ml-auto"
@@ -354,6 +363,220 @@ function SitesSummaryList() {
   );
 }
 
+/* ------------------------------ Services ------------------------------ */
+function ServicesList() {
+  const state = useServiceAgreementStore();
+
+  const numberOfServices = useMemo(() => {
+    const vals = [
+      state.chuteCleaningFrequency,
+      state.equipmentMaintenanceFrequency,
+      state.wasteRoomCleaningFrequency,
+      state.odourControlFrequency,
+      state.selfClosingHopperDoorInspectionFrequency,
+      state.binCleaningFrequency,
+    ];
+    return vals.filter((v): v is NonNullable<typeof v> => v != null).length;
+  }, [
+    state.chuteCleaningFrequency,
+    state.equipmentMaintenanceFrequency,
+    state.wasteRoomCleaningFrequency,
+    state.odourControlFrequency,
+    state.selfClosingHopperDoorInspectionFrequency,
+    state.binCleaningFrequency,
+  ]);
+
+  // Map value -> display label
+  const freqLabel = (v: MaybeOption) =>
+    v === "quarterly" ? "Quarterly"
+    : v === "six-monthly" ? "Six-Monthly"
+    : v === "yearly" ? "Yearly"
+    : "Not selected";
+
+  // Gather items for each service type
+  const chuteCleaningDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "chute_cleaning"
+  ) as GetServicesReturnTyped<"chute_cleaning">;
+  const equipmentMaintenanceDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "equipment_maintenance"
+  ) as GetServicesReturnTyped<"equipment_maintenance">;
+  const selfClosingHopperDoorInspectionDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "hopper_door_inspection"
+  ) as GetServicesReturnTyped<"hopper_door_inspection">;
+  const wasteRoomCleaningDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "waste_room_pressure_clean"
+  ) as GetServicesReturnTyped<"waste_room_pressure_clean">;
+  const binCleaningDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "bin_cleaning"
+  ) as GetServicesReturnTyped<"bin_cleaning">;
+  const odourControlDetails = getServices(
+    state.serviceAgreement?.sites ?? [],
+    "odour_control"
+  ) as GetServicesReturnTyped<"odour_control">;
+
+  // Annual costs per service (0 if no frequency)
+  const chuteAnnual = getServiceAnualCost(
+    chuteCleaningDetails.items,
+    state.chuteCleaningFrequency
+  );
+  const equipAnnual = getServiceAnualCost(
+    equipmentMaintenanceDetails.items,
+    state.equipmentMaintenanceFrequency
+  );
+  const hopperAnnual = getServiceAnualCost(
+    selfClosingHopperDoorInspectionDetails.items,
+    state.selfClosingHopperDoorInspectionFrequency
+  );
+  const wasteAnnual = getServiceAnualCost(
+    wasteRoomCleaningDetails.items,
+    state.wasteRoomCleaningFrequency
+  );
+  const binAnnual = getServiceAnualCost(
+    binCleaningDetails.items,
+    state.binCleaningFrequency
+  );
+  const odourAnnual = getServiceAnualCost(
+    odourControlDetails.items,
+    state.odourControlFrequency
+  );
+
+  // Totals + discount
+  const discountPct = getDiscount(numberOfServices);
+  const subtotal =
+    chuteAnnual +
+    equipAnnual +
+    hopperAnnual +
+    wasteAnnual +
+    binAnnual +
+    odourAnnual;
+  const discountAmt = discountPct ? (subtotal * discountPct) / 100 : 0;
+  const grandTotal = subtotal - discountAmt;
+
+  // Row renderer (hides services with no items)
+  const Row = ({
+    label,
+    freq,
+    amount,
+    hasItems,
+  }: {
+    label: string;
+    freq: MaybeOption;
+    amount: number;
+    hasItems: boolean;
+  }) => {
+    if (!hasItems) return null;
+    const selected = freq !== null;
+    return (
+      <div className="grid grid-cols-12 items-center py-2">
+        <Label className="col-span-6 text-base">{label}</Label>
+        <div className={cn("col-span-3 text-sm", selected ? "text-neutral-900" : "text-neutral-500")}>
+          {freqLabel(freq)}
+        </div>
+        <div className="col-span-3 text-right text-base font-medium">
+          {formatMoney(amount)}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white">
+      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input">
+        <Label className="text-lg">Services</Label>
+        <Button
+          variant="ghost"
+          className="text-sm ml-auto"
+          onClick={() => state.setPage(1)}
+        >
+          Edit
+        </Button>
+      </header>
+
+      <div className="p-4 md:p-6 space-y-2 divide-y divide-input">
+        {state.chuteCleaningFrequency && <Row
+          label="Chute Cleaning"
+          freq={state.chuteCleaningFrequency}
+          amount={chuteAnnual}
+          hasItems={chuteCleaningDetails.items.length > 0}
+        />}
+        {state.equipmentMaintenanceFrequency && <Row
+          label="Equipment Preventative Maintenance"
+          freq={state.equipmentMaintenanceFrequency}
+          amount={equipAnnual}
+          hasItems={equipmentMaintenanceDetails.items.length > 0}
+        />}
+        {state.selfClosingHopperDoorInspectionFrequency && <Row
+          label="Self-Closing Hopper Door Inspection"
+          freq={state.selfClosingHopperDoorInspectionFrequency}
+          amount={hopperAnnual}
+          hasItems={selfClosingHopperDoorInspectionDetails.items.length > 0}
+        />}
+        {state.wasteRoomCleaningFrequency && <Row
+          label="Waste Room Pressure Clean"
+          freq={state.wasteRoomCleaningFrequency}
+          amount={wasteAnnual}
+          hasItems={wasteRoomCleaningDetails.items.length > 0}
+        />}
+        {state.binCleaningFrequency && <Row
+          label="Bin Cleaning"
+          freq={state.binCleaningFrequency}
+          amount={binAnnual}
+          hasItems={binCleaningDetails.items.length > 0}
+        />}
+        {state.odourControlFrequency && <Row
+          label="Odour Control"
+          freq={state.odourControlFrequency}
+          amount={odourAnnual}
+          hasItems={odourControlDetails.items.length > 0}
+        />}
+
+        {/* Totals */}
+        <div className="mt-4 space-y-2">
+          <div className="flex justify-between text-sm">
+            <span className="text-neutral-600">Subtotal</span>
+            <span className="font-medium">{formatMoney(subtotal)}</span>
+          </div>
+
+          {discountPct > 0 && (
+            <>
+              <div className="flex justify-between text-sm text-emerald-700">
+                <span>Bundle discount ({discountPct}%)</span>
+                <span>-{formatMoney(discountAmt)}</span>
+              </div>
+              <div className="flex justify-between items-baseline">
+                <span className="text-neutral-600 text-sm font-medium">Annual cost (excl. GST)</span>
+                <div className="text-right">
+                  <div className="text-sm line-through text-neutral-500">
+                    {formatMoney(subtotal)}
+                  </div>
+                  <div className="text-base font-semibold">
+                    {formatMoney(grandTotal)}
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {discountPct === 0 && (
+            <div className="flex justify-between items-baseline">
+              <span className="text-neutral-600 text-sm font-medium">Annual cost (excl. GST)</span>
+              <span className="text-base font-semibold">
+                {formatMoney(grandTotal)}
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
 /* ------------------------------ Page ------------------------------ */
 export default function ReviewInfo() {
   const state = useServiceAgreementStore();
@@ -375,6 +598,7 @@ export default function ReviewInfo() {
         </span>
       </div>
 
+      <ServicesList />
       <CompanyDetailsCard />
       <BillingDetailsCard />
       <AdditionalContactsList />
