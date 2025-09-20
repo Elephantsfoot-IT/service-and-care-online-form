@@ -388,10 +388,13 @@ function ServicesList() {
 
   // Map value -> display label
   const freqLabel = (v: MaybeOption) =>
-    v === "quarterly" ? "Quarterly"
-    : v === "six-monthly" ? "Six-Monthly"
-    : v === "yearly" ? "Yearly"
-    : "Not selected";
+    v === "quarterly"
+      ? "Quarterly"
+      : v === "six-monthly"
+      ? "Six-Monthly"
+      : v === "yearly"
+      ? "Yearly"
+      : "Not selected";
 
   // Gather items for each service type
   const chuteCleaningDetails = getServices(
@@ -473,11 +476,21 @@ function ServicesList() {
     const selected = freq !== null;
     return (
       <div className="grid grid-cols-12 items-center py-2">
-        <Label className="col-span-6 text-base">{label}</Label>
-        <div className={cn("col-span-3 text-sm", selected ? "text-neutral-900" : "text-neutral-500")}>
+        {/* Primary label: sm + medium */}
+        <Label className="col-span-6 text-sm font-medium">{label}</Label>
+
+        {/* Frequency: xs, dim when not selected */}
+        <div
+          className={cn(
+            "col-span-3 text-sm",
+            selected ? "text-neutral-700" : "text-neutral-500"
+          )}
+        >
           {freqLabel(freq)}
         </div>
-        <div className="col-span-3 text-right text-base font-medium">
+
+        {/* Amount: base + semibold, right-aligned (highlight) */}
+        <div className="col-span-3 text-right text-sm font-medium text-neutral-900">
           {formatMoney(amount)}
         </div>
       </div>
@@ -487,10 +500,11 @@ function ServicesList() {
   return (
     <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white">
       <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input">
+        {/* Keep title sizing as-is */}
         <Label className="text-lg">Services Summary</Label>
         <Button
           variant="ghost"
-          className="text-sm ml-auto"
+          className=" ml-auto font-medium"
           onClick={() => state.setPage(1)}
         >
           Edit
@@ -498,74 +512,114 @@ function ServicesList() {
       </header>
 
       <div className="p-4 md:p-6 space-y-2 divide-y divide-input">
-        {state.chuteCleaningFrequency && <Row
-          label="Chute Cleaning"
-          freq={state.chuteCleaningFrequency}
-          amount={chuteAnnual}
-          hasItems={chuteCleaningDetails.items.length > 0}
-        />}
-        {state.equipmentMaintenanceFrequency && <Row
-          label="Equipment Preventative Maintenance"
-          freq={state.equipmentMaintenanceFrequency}
-          amount={equipAnnual}
-          hasItems={equipmentMaintenanceDetails.items.length > 0}
-        />}
-        {state.selfClosingHopperDoorInspectionFrequency && <Row
-          label="Self-Closing Hopper Door Inspection"
-          freq={state.selfClosingHopperDoorInspectionFrequency}
-          amount={hopperAnnual}
-          hasItems={selfClosingHopperDoorInspectionDetails.items.length > 0}
-        />}
-        {state.wasteRoomCleaningFrequency && <Row
-          label="Waste Room Pressure Clean"
-          freq={state.wasteRoomCleaningFrequency}
-          amount={wasteAnnual}
-          hasItems={wasteRoomCleaningDetails.items.length > 0}
-        />}
-        {state.binCleaningFrequency && <Row
-          label="Bin Cleaning"
-          freq={state.binCleaningFrequency}
-          amount={binAnnual}
-          hasItems={binCleaningDetails.items.length > 0}
-        />}
-        {state.odourControlFrequency && <Row
-          label="Odour Control"
-          freq={state.odourControlFrequency}
-          amount={odourAnnual}
-          hasItems={odourControlDetails.items.length > 0}
-        />}
+        {state.chuteCleaningFrequency && (
+          <Row
+            label="Chute Cleaning"
+            freq={state.chuteCleaningFrequency}
+            amount={chuteAnnual}
+            hasItems={chuteCleaningDetails.items.length > 0}
+          />
+        )}
+        {state.equipmentMaintenanceFrequency && (
+          <Row
+            label="Equipment Preventative Maintenance"
+            freq={state.equipmentMaintenanceFrequency}
+            amount={equipAnnual}
+            hasItems={equipmentMaintenanceDetails.items.length > 0}
+          />
+        )}
+        {state.selfClosingHopperDoorInspectionFrequency && (
+          <Row
+            label="Self-Closing Hopper Door Inspection"
+            freq={state.selfClosingHopperDoorInspectionFrequency}
+            amount={hopperAnnual}
+            hasItems={selfClosingHopperDoorInspectionDetails.items.length > 0}
+          />
+        )}
+        {state.wasteRoomCleaningFrequency && (
+          <Row
+            label="Waste Room Pressure Clean"
+            freq={state.wasteRoomCleaningFrequency}
+            amount={wasteAnnual}
+            hasItems={wasteRoomCleaningDetails.items.length > 0}
+          />
+        )}
+        {state.binCleaningFrequency && (
+          <Row
+            label="Bin Cleaning"
+            freq={state.binCleaningFrequency}
+            amount={binAnnual}
+            hasItems={binCleaningDetails.items.length > 0}
+          />
+        )}
+        {state.odourControlFrequency && (
+          <Row
+            label="Odour Control"
+            freq={state.odourControlFrequency}
+            amount={odourAnnual}
+            hasItems={odourControlDetails.items.length > 0}
+          />
+        )}
 
         {/* Totals */}
         <div className="mt-4 space-y-2">
-          
-
-          {discountPct > 0 && (
+          {discountPct > 0 ? (
             <>
+              {/* Discount line: xs + emerald tone */}
               <div className="flex justify-between text-sm text-emerald-700">
                 <span>Service discount ({discountPct}%)</span>
-                <span>-{formatMoney(discountAmt)}</span>
+                <span className="font-medium">-{formatMoney(discountAmt)}</span>
               </div>
+
+              {/* Annual cost: label sm, values base with strike for original */}
               <div className="flex justify-between items-baseline">
-                <span className="text-neutral-600 text-sm font-medium">Annual cost (excl. GST)</span>
+                <span className="text-neutral-600 text-sm font-medium">
+                  Annual cost (excl. GST)
+                </span>
                 <div className="text-right">
                   <div className="text-sm line-through text-neutral-500">
                     {formatMoney(subtotal)}
                   </div>
-                  <div className="text-base font-semibold">
+                  <div className="text-base font-medium">
                     {formatMoney(grandTotal)}
                   </div>
                 </div>
               </div>
-            </>
-          )}
 
-          {discountPct === 0 && (
-            <div className="flex justify-between items-baseline">
-              <span className="text-neutral-600 text-sm font-medium">Annual cost (excl. GST)</span>
-              <span className="text-base font-semibold">
-                {formatMoney(grandTotal)}
-              </span>
-            </div>
+              {/* Contract value (2 years): label sm, value base + semibold */}
+              <div className="flex justify-between items-baseline pt-1 border-t border-input/60 mt-2">
+                <span className="text-neutral-600 text-sm font-medium">
+                  Contract value (2 years, excl. GST)
+                </span>
+                <div className="text-right">
+                  <div className="text-base font-medium">
+                    {formatMoney(grandTotal * 2)}
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Annual cost when no discount */}
+              <div className="flex justify-between items-baseline">
+                <span className="text-neutral-600 text-sm font-medium">
+                  Annual cost (excl. GST)
+                </span>
+                <span className="text-base font-medium">
+                  {formatMoney(grandTotal)}
+                </span>
+              </div>
+
+              {/* Contract value (2 years) */}
+              <div className="flex justify-between items-baseline pt-1 border-t border-input/60 mt-2">
+                <span className="text-neutral-600 text-sm font-medium">
+                  Contract value (2 years, excl. GST)
+                </span>
+                <span className="text-base font-medium">
+                  {formatMoney(grandTotal * 2)}
+                </span>
+              </div>
+            </>
           )}
         </div>
       </div>
