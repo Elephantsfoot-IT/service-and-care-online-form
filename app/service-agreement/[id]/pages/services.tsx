@@ -86,10 +86,6 @@ function PricingFooter({
 
   return (
     <div className="mt-4 space-y-2 w-full sm:max-w-[360px] ml-auto px-4">
-      <div className="flex justify-between text-sm">
-        <span className="text-neutral-600">Subtotal</span>
-        <span className="font-medium">{formatMoney(subtotal)}</span>
-      </div>
 
       {showDiscount ? (
         <>

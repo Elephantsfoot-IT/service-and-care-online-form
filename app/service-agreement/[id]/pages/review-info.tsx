@@ -487,7 +487,7 @@ function ServicesList() {
   return (
     <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white">
       <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input">
-        <Label className="text-lg">Services</Label>
+        <Label className="text-lg">Services Summary</Label>
         <Button
           variant="ghost"
           className="text-sm ml-auto"
@@ -537,10 +537,7 @@ function ServicesList() {
 
         {/* Totals */}
         <div className="mt-4 space-y-2">
-          <div className="flex justify-between text-sm">
-            <span className="text-neutral-600">Subtotal</span>
-            <span className="font-medium">{formatMoney(subtotal)}</span>
-          </div>
+          
 
           {discountPct > 0 && (
             <>
