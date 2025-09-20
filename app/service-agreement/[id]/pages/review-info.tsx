@@ -545,7 +545,7 @@ function ServicesList() {
           {discountPct > 0 && (
             <>
               <div className="flex justify-between text-sm text-emerald-700">
-                <span>Bundle discount ({discountPct}%)</span>
+                <span>Service discount ({discountPct}%)</span>
                 <span>-{formatMoney(discountAmt)}</span>
               </div>
               <div className="flex justify-between items-baseline">
