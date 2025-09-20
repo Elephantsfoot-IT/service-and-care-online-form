@@ -753,7 +753,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
       {/* Exclusive Benefits */}
       <section
-        id="reward"
+        id="rewards"
         className="flex flex-col gap-6 scroll-mt-[140px] mt-10"
       >
         <div className="flex flex-col">

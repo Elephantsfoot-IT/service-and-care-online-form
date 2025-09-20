@@ -138,6 +138,7 @@ export const SECTION_IDS = [
   "waste_room_pressure_clean",
   "bin_cleaning",
   "odour_control",
+  "rewards",
 ] as const;
 
 export type Option = "quarterly" | "six-monthly" | "yearly";

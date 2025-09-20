@@ -10,12 +10,32 @@ type Props = {
 };
 
 const items = [
-  { id: "chute_cleaning", label: "Chute Cleaning", img: "/service-icon/chute-clean.svg" },
-  { id: "equipment_maintenance", label: "Equipment Preventative Maintenance", img: "/service-icon/clipboard.svg" },
-  { id: "hopper_door_inspection", label: "Self-Closing Hopper Door Inspection", img: "/service-icon/door.svg" }, // fixed typo
-  { id: "waste_room_pressure_clean", label: "Waste Room Pressure Clean", img: "/service-icon/tag.svg" },
+  {
+    id: "chute_cleaning",
+    label: "Chute Cleaning",
+    img: "/service-icon/chute-clean.svg",
+  },
+  {
+    id: "equipment_maintenance",
+    label: "Equipment Preventative Maintenance",
+    img: "/service-icon/clipboard.svg",
+  },
+  {
+    id: "hopper_door_inspection",
+    label: "Self-Closing Hopper Door Inspection",
+    img: "/service-icon/door.svg",
+  }, // fixed typo
+  {
+    id: "waste_room_pressure_clean",
+    label: "Waste Room Pressure Clean",
+    img: "/service-icon/tag.svg",
+  },
   { id: "bin_cleaning", label: "Bin Cleaning", img: "/service-icon/bin.svg" },
-  { id: "odour_control", label: "Odour Control", img: "/service-icon/odour-control.svg" },
+  {
+    id: "odour_control",
+    label: "Odour Control",
+    img: "/service-icon/odour-control.svg",
+  },
 ] as const;
 
 function FormVerticalProgress({ activeId, onJump }: Props) {
@@ -70,7 +90,10 @@ function FormVerticalProgress({ activeId, onJump }: Props) {
   return (
     <div className="flex flex-col gap-6">
       {visibleItems.map((it, i) => (
-        <div key={it.id} className={cn(`fade-right fade-right-${(i + 1) * 100}`)}>
+        <div
+          key={it.id}
+          className={cn(`fade-right fade-right-${(i + 1) * 100}`)}
+        >
           <div
             className={cn(
               "flex flex-row items-center gap-4 transition-all duration-200 cursor-pointer hover:opacity-100",
@@ -82,12 +105,40 @@ function FormVerticalProgress({ activeId, onJump }: Props) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={it.img} alt={it.label} className="size-4.5" />
             </div>
-            <div className={cn("text-base", activeId === it.id ? "underline font-medium" : "")}>
+            <div
+              className={cn(
+                "text-base",
+                activeId === it.id ? "underline font-medium" : ""
+              )}
+            >
               <div className="text-base">{it.label}</div>
             </div>
           </div>
         </div>
       ))}
+
+      <div className={cn(`fade-right fade-right-${(visibleItems.length + 1) * 100}`)}>
+        <div
+          className={cn(
+            "flex flex-row items-center gap-4 transition-all duration-200 cursor-pointer hover:opacity-100",
+            activeId === 'rewards' ? "opacity-100" : "opacity-40"
+          )}
+          onClick={() => onJump?.('rewards')}
+        >
+          <div className="size-10 border border-input rounded-lg flex items-center justify-center shadow-xs bg-white flex-shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={"/service-icon/star.svg"} alt="Rewards" className="size-4.5" />
+          </div>
+          <div
+            className={cn(
+              "text-base",
+              activeId === 'rewards' ? "underline font-medium" : ""
+            )}
+          >
+            <div className="text-base">Rewards</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
