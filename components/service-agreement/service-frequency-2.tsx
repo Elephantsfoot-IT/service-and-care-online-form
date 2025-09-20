@@ -24,7 +24,7 @@ function ServiceFrequency2({ value, onChange, options }: Props) {
     }
   };
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-3 lg:grid-cols-3 gap-4">
       {options.map((option) => {
         const isSelected = value === option.value;
         const isHighTier = option.value !== "yearly"; // only these get yellow
@@ -36,7 +36,7 @@ function ServiceFrequency2({ value, onChange, options }: Props) {
           : "";
 
         const checkboxClasses = cn(
-          "absolute top-4 right-4 cursor-pointer focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none",
+          "hidden xl:flex absolute top-4 right-4 cursor-pointer focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none",
           // when selected, tint checkbox by tier
           isSelected &&
             (isHighTier
@@ -48,7 +48,7 @@ function ServiceFrequency2({ value, onChange, options }: Props) {
           <div
             key={option.value}
             className={cn(
-              "flex-1 border border-input rounded-lg relative p-2 xl:p-4 text-left transition-colors cursor-pointer shadow-xs",
+              "flex-1 border flex flex-row items-center justify-center xl:justify-start border-input rounded-lg relative p-2 xl:p-4 text-left transition-colors cursor-pointer shadow-xs",
 
               selectedClasses
             )}
@@ -56,9 +56,9 @@ function ServiceFrequency2({ value, onChange, options }: Props) {
           >
             <Checkbox className={checkboxClasses} checked={isSelected} />
 
-            <div className="flex flex-col pr-8">
-              <span className="text-base font-semibold">{option.label}</span>
-              <span className="text-sm text-neutral-500">{option.subtext}</span>
+            <div className="flex flex-col ">
+              <span className="text-sm xl:text-base font-medium">{option.label}</span>
+              <span className="hidden xl:flex text-sm text-neutral-500">{option.subtext}</span>
             </div>
           </div>
         );

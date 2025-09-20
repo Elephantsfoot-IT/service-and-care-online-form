@@ -47,8 +47,8 @@ function SectionHeader({
   helpHref?: string;
 }) {
   return (
-    <div className="flex flex-col p-4 md:p-6 2xl:p-8 border-b border-input">
-      <Label className="text-lg font-medium flex flex-row items-center gap-2">
+    <div className="flex flex-col p-4 md:p-6 2xl:p-8 border-b border-input bg-neutral-75">
+      <Label className="text-base xl:text-lg font-medium flex flex-row items-center gap-2">
         {title}
         {helpHref && (
           <a
@@ -62,7 +62,7 @@ function SectionHeader({
           </a>
         )}
       </Label>
-      <span className="text-base text-neutral-500">{description}</span>
+      <span className="text-sm xl:text-base text-neutral-500">{description}</span>
     </div>
   );
 }
@@ -101,7 +101,7 @@ function PricingFooter({
               <div className="text-sm line-through text-neutral-500">
                 {formatMoney(subtotal)}
               </div>
-              <div className="text-base font-semibold">
+              <div className="text-base font-medium">
                 {formatMoney(grandTotal)}
               </div>
             </div>
@@ -112,7 +112,7 @@ function PricingFooter({
           <span className="text-neutral-600 text-sm font-medium">
             Annual cost (excl. GST)
           </span>
-          <span className="text-base font-semibold">
+          <span className="text-base font-medium">
             {formatMoney(grandTotal)}
           </span>
         </div>
