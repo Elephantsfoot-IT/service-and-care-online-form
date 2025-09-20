@@ -477,7 +477,7 @@ function ServicesList() {
       <div className="flex flex-row items-center gap-4 pb-2">
         {/* Primary label: sm + medium */}
         <div className="col-span-2 w-full">
-          <div className=" text-sm font-medium">{label}</div>
+          <div className=" text-sm ">{label}</div>
         </div>
 
         {/* Frequency: xs, dim when not selected */}
