@@ -113,7 +113,7 @@
 }
 
 @theme {
-  --color-efg-yellow: #fcbd2a;
+  --color-efg-yellow: #ffdb01;
   --color-efg-blue: #1e60ad;
   --color-neutral-75: #f7f7f7;
 }
@@ -246,7 +246,7 @@
 }
 
 .eft-select-trigger{
-  @apply focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none border-input bg-white;
+  @apply border-input focus-visible:ring-1 focus-visible:ring-efg-yellow focus-visible:border-efg-yellow shadow-none border-input bg-white;
 }
 
 

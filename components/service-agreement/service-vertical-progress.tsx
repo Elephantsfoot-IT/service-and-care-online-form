@@ -135,7 +135,7 @@ function FormVerticalProgress({ activeId, onJump }: Props) {
               activeId === 'rewards' ? "underline font-medium" : ""
             )}
           >
-            <div className="text-base">Rewards</div>
+            <div className="text-base">Complimentary Incentives</div>
           </div>
         </div>
       </div>

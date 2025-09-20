@@ -48,7 +48,7 @@ function SectionHeader({
 }) {
   return (
     <div className="flex flex-col p-4 2xl:p-8 border-b border-input bg-neutral-75">
-      <Label className="text-base xl:text-lg font-medium flex flex-row items-center gap-2">
+      <div className="text-base xl:text-lg font-medium flex flex-row items-center gap-2">
         {title}
         {helpHref && (
           <a
@@ -61,7 +61,7 @@ function SectionHeader({
             <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
           </a>
         )}
-      </Label>
+      </div>
       <span className="text-sm xl:text-base text-neutral-500">
         {description}
       </span>
@@ -94,7 +94,7 @@ function PricingFooter({
     <div className="mt-4 space-y-2 w-full sm:max-w-[360px] ml-auto px-4">
       {showDiscount ? (
         <>
-          <div className="flex justify-between text-sm text-emerald-700">
+          <div className="flex justify-between text-sm text-green-500">
             <span>Service discount ({discountPct}%)</span>
             <span>-{formatMoney(discountAmt)}</span>
           </div>
@@ -233,7 +233,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <hr className="my-4 border-input border-dashed" />
 
             {/* Desktop table */}
-            <div className="hidden xl:block w-full rounded-lg overflow-auto">
+            <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
@@ -330,7 +330,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <hr className="my-4 border-input border-dashed" />
 
             {/* Desktop table */}
-            <div className="hidden xl:block w-full rounded-lg overflow-auto">
+            <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-2 px-4 py-2 font-medium">Sites</div>
@@ -423,7 +423,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <hr className="my-4 border-input border-dashed" />
 
             {/* Desktop table */}
-            <div className="hidden xl:block w-full rounded-lg overflow-auto">
+            <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
@@ -509,7 +509,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <hr className="my-4 border-input border-dashed" />
 
             {/* Desktop table */}
-            <div className="hidden xl:block w-full rounded-lg overflow-auto">
+            <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-2 px-4 py-2 font-medium">Sites</div>
@@ -598,7 +598,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <hr className="my-4 border-input border-dashed" />
 
             {/* Desktop table */}
-            <div className="hidden xl:block w-full rounded-lg overflow-auto">
+            <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
@@ -684,7 +684,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <hr className="my-4 border-input border-dashed" />
 
             {/* Desktop table */}
-            <div className="hidden xl:block w-full rounded-lg overflow-auto">
+            <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
