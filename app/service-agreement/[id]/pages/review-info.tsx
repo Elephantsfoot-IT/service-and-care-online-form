@@ -55,7 +55,7 @@ function CompanyDetailsCard() {
 
   return (
     <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white">
-      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input ">
+      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
         <Label className="text-lg">Company Details</Label>
         <Button
           variant="ghost"
@@ -109,7 +109,7 @@ function BillingDetailsCard() {
 
   return (
     <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white">
-      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input ">
+      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
         <Label className="text-lg">Billing Details</Label>
         <Button
           variant="ghost"
@@ -182,7 +182,7 @@ function AdditionalContactsList() {
           key={contact.id}
           className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white"
         >
-          <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input ">
+          <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
             <Label className="text-lg">Contact ({index + 1})</Label>
             <Button
               variant="ghost"
@@ -262,7 +262,7 @@ function SitesSummaryList() {
             key={site.simpro_site_id}
             className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white"
           >
-            <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input ">
+            <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
               <Label className="text-lg">Site ({idx + 1})</Label>
               <Button
                 variant="ghost"
@@ -473,24 +473,17 @@ function ServicesList() {
     hasItems: boolean;
   }) => {
     if (!hasItems) return null;
-    const selected = freq !== null;
     return (
-      <div className="grid grid-cols-12 items-center py-2">
+      <div className="flex flex-row items-center gap-4 pb-2">
         {/* Primary label: sm + medium */}
-        <Label className="col-span-6 text-sm font-medium">{label}</Label>
-
-        {/* Frequency: xs, dim when not selected */}
-        <div
-          className={cn(
-            "col-span-3 text-sm",
-            selected ? "text-neutral-700" : "text-neutral-500"
-          )}
-        >
-          {freqLabel(freq)}
+        <div className="col-span-2 w-full">
+          <div className=" text-sm font-medium">{label}</div>
         </div>
 
+        {/* Frequency: xs, dim when not selected */}
+
         {/* Amount: base + semibold, right-aligned (highlight) */}
-        <div className="col-span-3 text-right text-sm font-medium text-neutral-900">
+        <div className="w-fit flex-shrink-0 text-right text-sm font-medium text-neutral-900">
           {formatMoney(amount)}
         </div>
       </div>
@@ -498,10 +491,10 @@ function ServicesList() {
   };
 
   return (
-    <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white">
-      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input">
+    <section className="flex flex-col border border-input rounded-lg shadow-xs overflow-hidden bg-white">
+      <header className="flex items-center gap-4 p-4 2xl:p-8 border-b border-input bg-neutral-75">
         {/* Keep title sizing as-is */}
-        <Label className="text-lg">Services Summary</Label>
+        <Label className="text-base 2xl:text-lg">Services Summary</Label>
         <Button
           variant="ghost"
           className=" ml-auto font-medium"
@@ -511,7 +504,7 @@ function ServicesList() {
         </Button>
       </header>
 
-      <div className="p-4 md:p-6 space-y-2 divide-y divide-input">
+      <div className="px-4 md:px-6 py-6 space-y-2 divide-y divide-input flex flex-col gap-2">
         {state.chuteCleaningFrequency && (
           <Row
             label="Chute Cleaning"
@@ -587,7 +580,7 @@ function ServicesList() {
               </div>
 
               {/* Contract value (2 years): label sm, value base + semibold */}
-              <div className="flex justify-between items-baseline pt-1 border-t border-input/60 mt-2">
+              <div className="flex justify-between items-baseline pt-4 border-t border-input/60 mt-2">
                 <span className="text-neutral-600 text-sm font-medium">
                   Contract value (2 years, excl. GST)
                 </span>
@@ -611,7 +604,7 @@ function ServicesList() {
               </div>
 
               {/* Contract value (2 years) */}
-              <div className="flex justify-between items-baseline pt-1 border-t border-input/60 mt-2">
+              <div className="flex justify-between items-baseline pt-4 border-t border-input/60 mt-2">
                 <span className="text-neutral-600 text-sm font-medium">
                   Contract value (2 years, excl. GST)
                 </span>
@@ -626,7 +619,6 @@ function ServicesList() {
     </section>
   );
 }
-
 
 /* ------------------------------ Page ------------------------------ */
 export default function ReviewInfo() {
