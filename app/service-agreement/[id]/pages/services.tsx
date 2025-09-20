@@ -86,7 +86,6 @@ function PricingFooter({
 
   return (
     <div className="mt-4 space-y-2 w-full sm:max-w-[360px] ml-auto px-4">
-
       {showDiscount ? (
         <>
           <div className="flex justify-between text-sm text-emerald-700">
@@ -121,7 +120,6 @@ function PricingFooter({
     </div>
   );
 }
-
 
 /* ------------------------------- Page ------------------------------- */
 
@@ -210,360 +208,369 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </span>
       </div>
       {/* Chute Cleaning */}
-      {chuteCleaningDetails.items.length > 0 && <SectionShell id="chute_cleaning">
-        <SectionHeader
-          title="Chute Cleaning"
-          description="Chute cleaning that removes grime, mould, and odours—keeping multi-storey buildings hygienic and safe."
-          helpHref="https://www.elephantsfoot.com.au/chute-cleaning/"
-        />
-
-        <div className="p-4 md:p-6 2xl:p-8">
-          <ServiceFrequency2
-            value={state.chuteCleaningFrequency}
-            onChange={state.setChuteCleaningFrequency}
-            options={options}
+      {chuteCleaningDetails.items.length > 0 && (
+        <SectionShell id="chute_cleaning">
+          <SectionHeader
+            title="Chute Cleaning"
+            description="Chute cleaning that removes grime, mould, and odours—keeping multi-storey buildings hygienic and safe."
+            helpHref="https://www.elephantsfoot.com.au/chute-cleaning/"
           />
 
-          {/* Service grid (left intact) */}
-          <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
-            <div className="flex flex-col text-sm min-w-[500px]">
-              <div className="grid grid-cols-6 gap-2 border-b border-input">
-                <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
-                <div className="col-span-1 px-4 py-2 font-medium">Qty</div>
-                <div className="col-span-1 px-4 py-2 font-medium">Level</div>
-                <div className="col-span-1 text-right px-4 py-2 font-medium">
-                  Price
-                </div>
-              </div>
+          <div className="p-4 md:p-6 2xl:p-8">
+            <ServiceFrequency2
+              value={state.chuteCleaningFrequency}
+              onChange={state.setChuteCleaningFrequency}
+              options={options}
+            />
 
-              {chuteCleaningDetails.items.map((r, i) => (
-                <div
-                  key={i}
-                  className="grid grid-cols-6 gap-2 border-b border-input"
-                >
-                  {r.building_name ? (
-                    <div className="col-span-3 px-4 py-2">
-                      <div>{r.building_name}</div>
-                      <div className="text-neutral-500">{r.site_name}</div>
-                    </div>
-                  ) : (
-                    <div className="col-span-3 px-4 py-2">{r.site_name}</div>
-                  )}
-
-                  <div className="col-span-1 px-4 py-2">{r.chutes}</div>
-                  <div className="col-span-1 px-4 py-2">{r.levels}</div>
+            {/* Service grid (left intact) */}
+            <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
+              <div className="flex flex-col text-sm min-w-[500px]">
+                <div className="grid grid-cols-6 gap-2 border-b border-input">
+                  <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
+                  <div className="col-span-1 px-4 py-2 font-medium">Qty</div>
+                  <div className="col-span-1 px-4 py-2 font-medium">Level</div>
                   <div className="col-span-1 text-right px-4 py-2 font-medium">
-                    {formatMoney(getNumber(r.price))}
+                    Price
                   </div>
                 </div>
-              ))}
-            </div>
 
+                {chuteCleaningDetails.items.map((r, i) => (
+                  <div
+                    key={i}
+                    className="grid grid-cols-6 gap-2 border-b border-input"
+                  >
+                    {r.building_name ? (
+                      <div className="col-span-3 px-4 py-2">
+                        <div>{r.building_name}</div>
+                        <div className="text-neutral-500">{r.site_name}</div>
+                      </div>
+                    ) : (
+                      <div className="col-span-3 px-4 py-2">{r.site_name}</div>
+                    )}
+
+                    <div className="col-span-1 px-4 py-2">{r.chutes}</div>
+                    <div className="col-span-1 px-4 py-2">{r.levels}</div>
+                    <div className="col-span-1 text-right px-4 py-2 font-medium">
+                      {formatMoney(getNumber(r.price))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
             <PricingFooter
               items={chuteCleaningDetails.items}
               frequency={state.chuteCleaningFrequency}
               discountPct={discount}
             />
           </div>
-        </div>
-      </SectionShell>}
+        </SectionShell>
+      )}
 
       {/* Equipment Preventative Maintenance */}
-      {equipmentMaintenanceDetails.items.length > 0 && <SectionShell id="equipment_maintenance">
-        <SectionHeader
-          title="Equipment Preventative Maintenance"
-          description="Keep compactors and related equipment safe, compliant, and efficient."
-          helpHref="https://www.elephantsfoot.com.au/preventative-maintenance/"
-        />
-
-        <div className="p-4 md:p-6 2xl:p-8">
-          <ServiceFrequency2
-            value={state.equipmentMaintenanceFrequency}
-            onChange={state.setEquipmentMaintenanceFrequency}
-            options={options}
+      {equipmentMaintenanceDetails.items.length > 0 && (
+        <SectionShell id="equipment_maintenance">
+          <SectionHeader
+            title="Equipment Preventative Maintenance"
+            description="Keep compactors and related equipment safe, compliant, and efficient."
+            helpHref="https://www.elephantsfoot.com.au/preventative-maintenance/"
           />
 
-          {/* Service grid (left intact) */}
-          <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
-            <div className="flex flex-col text-sm min-w-[500px]">
-              <div className="grid grid-cols-6 gap-2 border-b border-input">
-                <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
-                <div className="col-span-1 px-4 py-2 font-medium"></div>
-                <div className="col-span-1 px-4 py-2 font-medium">
-                  Equipment
-                </div>
-                <div className="col-span-1 text-right px-4 py-2 font-medium">
-                  Price
-                </div>
-              </div>
+          <div className="p-4 md:p-6 2xl:p-8">
+            <ServiceFrequency2
+              value={state.equipmentMaintenanceFrequency}
+              onChange={state.setEquipmentMaintenanceFrequency}
+              options={options}
+            />
 
-              {equipmentMaintenanceDetails.items.map((r, i) => (
-                <div
-                  key={i}
-                  className="grid grid-cols-6 gap-2 border-b border-input"
-                >
-                  {r.building_name ? (
-                    <div className="col-span-3 px-4 py-2">
-                      <div>{r.building_name}</div>
-                      <div className="text-neutral-500">{r.site_name}</div>
-                    </div>
-                  ) : (
-                    <div className="col-span-3 px-4 py-2">{r.site_name}</div>
-                  )}
-                  <div className="col-span-1 px-4 py-2"></div>
-                  <div className="col-span-1 px-4 py-2">
-                    {r.equipment_label}
+            {/* Service grid (left intact) */}
+            <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
+              <div className="flex flex-col text-sm min-w-[500px]">
+                <div className="grid grid-cols-6 gap-2 border-b border-input">
+                  <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
+                  <div className="col-span-1 px-4 py-2 font-medium"></div>
+                  <div className="col-span-1 px-4 py-2 font-medium">
+                    Equipment
                   </div>
                   <div className="col-span-1 text-right px-4 py-2 font-medium">
-                    {formatMoney(getNumber(r.price))}
+                    Price
                   </div>
                 </div>
-              ))}
-            </div>
 
+                {equipmentMaintenanceDetails.items.map((r, i) => (
+                  <div
+                    key={i}
+                    className="grid grid-cols-6 gap-2 border-b border-input"
+                  >
+                    {r.building_name ? (
+                      <div className="col-span-3 px-4 py-2">
+                        <div>{r.building_name}</div>
+                        <div className="text-neutral-500">{r.site_name}</div>
+                      </div>
+                    ) : (
+                      <div className="col-span-3 px-4 py-2">{r.site_name}</div>
+                    )}
+                    <div className="col-span-1 px-4 py-2"></div>
+                    <div className="col-span-1 px-4 py-2">
+                      {r.equipment_label}
+                    </div>
+                    <div className="col-span-1 text-right px-4 py-2 font-medium">
+                      {formatMoney(getNumber(r.price))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
             <PricingFooter
               items={equipmentMaintenanceDetails.items}
               frequency={state.equipmentMaintenanceFrequency}
               discountPct={discount}
             />
           </div>
-        </div>
-      </SectionShell>}
+        </SectionShell>
+      )}
 
       {/* Self-Closing Hopper Door Inspection */}
-      {selfClosingHopperDoorInspectionDetails.items.length > 0 && <SectionShell id="hopper_door_inspection">
-        <SectionHeader
-          title="Self-Closing Hopper Door Inspection"
-          description="Chute-door inspections to ensure fire safety and compliance."
-          helpHref="https://www.elephantsfoot.com.au/chute-door-inspection/"
-        />
-
-        <div className="p-4 md:p-6 2xl:p-8">
-          <ServiceFrequency2
-            value={state.selfClosingHopperDoorInspectionFrequency}
-            onChange={state.setSelfClosingHopperDoorInspectionFrequency}
-            options={options}
+      {selfClosingHopperDoorInspectionDetails.items.length > 0 && (
+        <SectionShell id="hopper_door_inspection">
+          <SectionHeader
+            title="Self-Closing Hopper Door Inspection"
+            description="Chute-door inspections to ensure fire safety and compliance."
+            helpHref="https://www.elephantsfoot.com.au/chute-door-inspection/"
           />
 
-          {/* Service grid (left intact) */}
-          <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
-            <div className="flex flex-col text-sm min-w-[500px]">
-              <div className="grid grid-cols-6 gap-2 border-b border-input">
-                <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
-                <div className="col-span-1 px-4 py-2 font-medium"></div>
-                <div className="col-span-1 px-4 py-2 font-medium"></div>
-                <div className="col-span-1 text-right px-4 py-2 font-medium">
-                  Price
-                </div>
-              </div>
+          <div className="p-4 md:p-6 2xl:p-8">
+            <ServiceFrequency2
+              value={state.selfClosingHopperDoorInspectionFrequency}
+              onChange={state.setSelfClosingHopperDoorInspectionFrequency}
+              options={options}
+            />
 
-              {selfClosingHopperDoorInspectionDetails.items.map((r, i) => (
-                <div
-                  key={i}
-                  className="grid grid-cols-6 gap-2 border-b border-input"
-                >
-                  {r.building_name ? (
-                    <div className="col-span-3 px-4 py-2">
-                      <div>{r.building_name}</div>
-                      <div className="text-neutral-500">{r.site_name}</div>
-                    </div>
-                  ) : (
-                    <div className="col-span-3 px-4 py-2">{r.site_name}</div>
-                  )}
-                  <div className="col-span-1 px-4 py-2"></div>
-                  <div className="col-span-1 px-4 py-2"></div>
+            {/* Service grid (left intact) */}
+            <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
+              <div className="flex flex-col text-sm min-w-[500px]">
+                <div className="grid grid-cols-6 gap-2 border-b border-input">
+                  <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
+                  <div className="col-span-1 px-4 py-2 font-medium"></div>
+                  <div className="col-span-1 px-4 py-2 font-medium"></div>
                   <div className="col-span-1 text-right px-4 py-2 font-medium">
-                    {formatMoney(getNumber(r.price))}
+                    Price
                   </div>
                 </div>
-              ))}
-            </div>
 
+                {selfClosingHopperDoorInspectionDetails.items.map((r, i) => (
+                  <div
+                    key={i}
+                    className="grid grid-cols-6 gap-2 border-b border-input"
+                  >
+                    {r.building_name ? (
+                      <div className="col-span-3 px-4 py-2">
+                        <div>{r.building_name}</div>
+                        <div className="text-neutral-500">{r.site_name}</div>
+                      </div>
+                    ) : (
+                      <div className="col-span-3 px-4 py-2">{r.site_name}</div>
+                    )}
+                    <div className="col-span-1 px-4 py-2"></div>
+                    <div className="col-span-1 px-4 py-2"></div>
+                    <div className="col-span-1 text-right px-4 py-2 font-medium">
+                      {formatMoney(getNumber(r.price))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
             <PricingFooter
               items={selfClosingHopperDoorInspectionDetails.items}
               frequency={state.selfClosingHopperDoorInspectionFrequency}
               discountPct={discount}
             />
           </div>
-        </div>
-      </SectionShell>}
+        </SectionShell>
+      )}
 
       {/* Waste Room Pressure Clean */}
-      {wasteRoomCleaningDetails.items.length > 0 && <SectionShell id="waste_room_pressure_clean">
-        <SectionHeader
-          title="Waste Room Pressure Clean"
-          description="High-pressure cleaning for hygienic, odour-free waste rooms."
-          helpHref="https://www.elephantsfoot.com.au/waste-room-restoration/"
-        />
-
-        <div className="p-4 md:p-6 2xl:p-8">
-          <ServiceFrequency2
-            value={state.wasteRoomCleaningFrequency}
-            onChange={state.setWasteRoomCleaningFrequency}
-            options={options}
+      {wasteRoomCleaningDetails.items.length > 0 && (
+        <SectionShell id="waste_room_pressure_clean">
+          <SectionHeader
+            title="Waste Room Pressure Clean"
+            description="High-pressure cleaning for hygienic, odour-free waste rooms."
+            helpHref="https://www.elephantsfoot.com.au/waste-room-restoration/"
           />
 
-          {/* Service grid (left intact) */}
-          <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
-            <div className="flex flex-col text-sm min-w-[500px]">
-              <div className="grid grid-cols-6 gap-2 border-b border-input">
-                <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
-                <div className="col-span-1 px-4 py-2 font-medium"></div>
-                <div className="col-span-1 px-4 py-2 font-medium">Area</div>
-                <div className="col-span-1 text-right px-4 py-2 font-medium">
-                  Price
-                </div>
-              </div>
+          <div className="p-4 md:p-6 2xl:p-8">
+            <ServiceFrequency2
+              value={state.wasteRoomCleaningFrequency}
+              onChange={state.setWasteRoomCleaningFrequency}
+              options={options}
+            />
 
-              {wasteRoomCleaningDetails.items.map((r, i) => (
-                <div
-                  key={i}
-                  className="grid grid-cols-6 gap-2 border-b border-input"
-                >
-                  {r.building_name ? (
-                    <div className="col-span-3 px-4 py-2">
-                      <div>{r.building_name}</div>
-                      <div className="text-neutral-500">{r.site_name}</div>
-                    </div>
-                  ) : (
-                    <div className="col-span-3 px-4 py-2">{r.site_name}</div>
-                  )}
-                  <div className="col-span-1 px-4 py-2"></div>
-                  <div className="col-span-1 px-4 py-2">{r.area_label}</div>
+            {/* Service grid (left intact) */}
+            <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
+              <div className="flex flex-col text-sm min-w-[500px]">
+                <div className="grid grid-cols-6 gap-2 border-b border-input">
+                  <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
+                  <div className="col-span-1 px-4 py-2 font-medium"></div>
+                  <div className="col-span-1 px-4 py-2 font-medium">Area</div>
                   <div className="col-span-1 text-right px-4 py-2 font-medium">
-                    {formatMoney(getNumber(r.price))}
+                    Price
                   </div>
                 </div>
-              ))}
-            </div>
 
+                {wasteRoomCleaningDetails.items.map((r, i) => (
+                  <div
+                    key={i}
+                    className="grid grid-cols-6 gap-2 border-b border-input"
+                  >
+                    {r.building_name ? (
+                      <div className="col-span-3 px-4 py-2">
+                        <div>{r.building_name}</div>
+                        <div className="text-neutral-500">{r.site_name}</div>
+                      </div>
+                    ) : (
+                      <div className="col-span-3 px-4 py-2">{r.site_name}</div>
+                    )}
+                    <div className="col-span-1 px-4 py-2"></div>
+                    <div className="col-span-1 px-4 py-2">{r.area_label}</div>
+                    <div className="col-span-1 text-right px-4 py-2 font-medium">
+                      {formatMoney(getNumber(r.price))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
             <PricingFooter
               items={wasteRoomCleaningDetails.items}
               frequency={state.wasteRoomCleaningFrequency}
               discountPct={discount}
             />
           </div>
-        </div>
-      </SectionShell>}
+        </SectionShell>
+      )}
 
       {/* Bin Cleaning */}
-      {binCleaningDetails.items.length > 0 && <SectionShell id="bin_cleaning">
-        <SectionHeader
-          title="Bin Cleaning"
-          description="Thorough bin cleaning to reduce odours, pests, and bacteria."
-          helpHref="https://www.elephantsfoot.com.au/service-care/"
-        />
-
-        <div className="p-4 md:p-6 2xl:p-8">
-          <ServiceFrequency2
-            value={state.binCleaningFrequency}
-            onChange={state.setBinCleaningFrequency}
-            options={options}
+      {binCleaningDetails.items.length > 0 && (
+        <SectionShell id="bin_cleaning">
+          <SectionHeader
+            title="Bin Cleaning"
+            description="Thorough bin cleaning to reduce odours, pests, and bacteria."
+            helpHref="https://www.elephantsfoot.com.au/service-care/"
           />
 
-          {/* Service grid (left intact) */}
-          <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
-            <div className="flex flex-col text-sm min-w-[500px]">
-              <div className="grid grid-cols-6 gap-2 border-b border-input">
-                <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
-                <div className="col-span-1 px-4 py-2 font-medium"></div>
-                <div className="col-span-1 px-4 py-2 font-medium"></div>
-                <div className="col-span-1 text-right px-4 py-2 font-medium">
-                  Price
-                </div>
-              </div>
+          <div className="p-4 md:p-6 2xl:p-8">
+            <ServiceFrequency2
+              value={state.binCleaningFrequency}
+              onChange={state.setBinCleaningFrequency}
+              options={options}
+            />
 
-              {binCleaningDetails.items.map((r, i) => (
-                <div
-                  key={i}
-                  className="grid grid-cols-6 gap-2 border-b border-input"
-                >
-                  {r.building_name ? (
-                    <div className="col-span-3 px-4 py-2">
-                      <div>{r.building_name}</div>
-                      <div className="text-neutral-500">{r.site_name}</div>
-                    </div>
-                  ) : (
-                    <div className="col-span-3 px-4 py-2">{r.site_name}</div>
-                  )}
-                  <div className="col-span-1 px-4 py-2"></div>
-                  <div className="col-span-1 px-4 py-2"></div>
+            {/* Service grid (left intact) */}
+            <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
+              <div className="flex flex-col text-sm min-w-[500px]">
+                <div className="grid grid-cols-6 gap-2 border-b border-input">
+                  <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
+                  <div className="col-span-1 px-4 py-2 font-medium"></div>
+                  <div className="col-span-1 px-4 py-2 font-medium"></div>
                   <div className="col-span-1 text-right px-4 py-2 font-medium">
-                    {formatMoney(getNumber(r.price))}
+                    Price
                   </div>
                 </div>
-              ))}
-            </div>
 
+                {binCleaningDetails.items.map((r, i) => (
+                  <div
+                    key={i}
+                    className="grid grid-cols-6 gap-2 border-b border-input"
+                  >
+                    {r.building_name ? (
+                      <div className="col-span-3 px-4 py-2">
+                        <div>{r.building_name}</div>
+                        <div className="text-neutral-500">{r.site_name}</div>
+                      </div>
+                    ) : (
+                      <div className="col-span-3 px-4 py-2">{r.site_name}</div>
+                    )}
+                    <div className="col-span-1 px-4 py-2"></div>
+                    <div className="col-span-1 px-4 py-2"></div>
+                    <div className="col-span-1 text-right px-4 py-2 font-medium">
+                      {formatMoney(getNumber(r.price))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
             <PricingFooter
               items={binCleaningDetails.items}
               frequency={state.binCleaningFrequency}
               discountPct={discount}
             />
           </div>
-        </div>
-      </SectionShell>}
+        </SectionShell>
+      )}
 
       {/* Odour Control */}
-      {odourControlDetails.items.length > 0 && <SectionShell id="odour_control">
-        <SectionHeader
-          title="Odour Control"
-          description="Targeted odour management to keep shared areas fresh."
-          helpHref="https://www.elephantsfoot.com.au/odour-management/"
-        />
-
-        <div className="p-4 md:p-6 2xl:p-8">
-          <ServiceFrequency2
-            value={state.odourControlFrequency}
-            onChange={state.setOdourControlFrequency}
-            options={options}
+      {odourControlDetails.items.length > 0 && (
+        <SectionShell id="odour_control">
+          <SectionHeader
+            title="Odour Control"
+            description="Targeted odour management to keep shared areas fresh."
+            helpHref="https://www.elephantsfoot.com.au/odour-management/"
           />
 
-          {/* Service grid (left intact) */}
-          <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
-            <div className="flex flex-col text-sm min-w-[500px]">
-              <div className="grid grid-cols-6 gap-2 border-b border-input">
-                <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
-                <div className="col-span-1 px-4 py-2 font-medium"></div>
-                <div className="col-span-1 px-4 py-2 font-medium"></div>
-                <div className="col-span-1 text-right px-4 py-2 font-medium">
-                  Price
-                </div>
-              </div>
+          <div className="p-4 md:p-6 2xl:p-8">
+            <ServiceFrequency2
+              value={state.odourControlFrequency}
+              onChange={state.setOdourControlFrequency}
+              options={options}
+            />
 
-              {odourControlDetails.items.map((r, i) => (
-                <div
-                  key={i}
-                  className="grid grid-cols-6 gap-2 border-b border-input"
-                >
-                  {r.building_name ? (
-                    <div className="col-span-3 px-4 py-2">
-                      <div>{r.building_name}</div>
-                      <div className="text-neutral-500">{r.site_name}</div>
-                    </div>
-                  ) : (
-                    <div className="col-span-3 px-4 py-2">{r.site_name}</div>
-                  )}
-                  <div className="col-span-1 px-4 py-2"></div>
-                  <div className="col-span-1 px-4 py-2"></div>
+            {/* Service grid (left intact) */}
+            <div className="max-h-[500px] w-full rounded-lg overflow-auto py-4">
+              <div className="flex flex-col text-sm min-w-[500px]">
+                <div className="grid grid-cols-6 gap-2 border-b border-input">
+                  <div className="col-span-3 px-4 py-2 font-medium">Sites</div>
+                  <div className="col-span-1 px-4 py-2 font-medium"></div>
+                  <div className="col-span-1 px-4 py-2 font-medium"></div>
                   <div className="col-span-1 text-right px-4 py-2 font-medium">
-                    {formatMoney(getNumber(r.price))}
+                    Price
                   </div>
                 </div>
-              ))}
-            </div>
 
+                {odourControlDetails.items.map((r, i) => (
+                  <div
+                    key={i}
+                    className="grid grid-cols-6 gap-2 border-b border-input"
+                  >
+                    {r.building_name ? (
+                      <div className="col-span-3 px-4 py-2">
+                        <div>{r.building_name}</div>
+                        <div className="text-neutral-500">{r.site_name}</div>
+                      </div>
+                    ) : (
+                      <div className="col-span-3 px-4 py-2">{r.site_name}</div>
+                    )}
+                    <div className="col-span-1 px-4 py-2"></div>
+                    <div className="col-span-1 px-4 py-2"></div>
+                    <div className="col-span-1 text-right px-4 py-2 font-medium">
+                      {formatMoney(getNumber(r.price))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
             <PricingFooter
               items={odourControlDetails.items}
               frequency={state.odourControlFrequency}
               discountPct={discount}
             />
           </div>
-        </div>
-      </SectionShell>}
+        </SectionShell>
+      )}
 
       {/* Exclusive Benefits */}
-      <section id="reward" className="flex flex-col gap-6 scroll-mt-[140px] mt-10">
+      <section
+        id="reward"
+        className="flex flex-col gap-6 scroll-mt-[140px] mt-10"
+      >
         <div className="flex flex-col">
           <Label className="text-2xl font-medium">
             Complimentary Incentives
