@@ -88,7 +88,7 @@ function FormVerticalProgress({ activeId, onJump }: Props) {
   if (visibleItems.length === 0) return null;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 text-neutral-800">
       {visibleItems.map((it, i) => (
         <div
           key={it.id}
