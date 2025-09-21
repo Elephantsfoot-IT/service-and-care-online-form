@@ -23,7 +23,7 @@ const steps: Step[] = [
   },
   {
     page: 2,
-    label: "Company Details",
+    label: "Customer Information",
     Icon: BriefcaseBusinessIcon,
     fadeClass: "fade-right fade-right-200",
   },

@@ -4,19 +4,26 @@
 import IncentiveTable from "@/components/service-agreement/incentive-table";
 import ServiceFrequency2 from "@/components/service-agreement/service-frequency-2";
 import { Button } from "@/components/ui/button";
-import { GetServicesReturnTyped, options } from "@/lib/interface";
+import {
+  GetServicesReturnTyped,
+  MaybeOption,
+  OdourControlService,
+  options,
+} from "@/lib/interface";
 import {
   formatMoney,
   getDiscount,
   getNumber,
   getServices,
   getServicesValue,
+  normalizeQty,
   scrollToTop,
 } from "@/lib/utils";
 import { Label } from "@radix-ui/react-label";
 import { ArrowRightIcon, InfoIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
+import { Input } from "@/components/ui/input";
 
 /* ---------- Small helpers (do NOT touch your service grids) ---------- */
 
@@ -38,7 +45,11 @@ function SectionShell({
 }
 
 function SectionContent({ children }: { children: React.ReactNode }) {
-  return <div className="flex flex-col gap-2 md:gap-4 py-8 px-4 md:px-6">{children}</div>;
+  return (
+    <div className="flex flex-col gap-4 py-8 px-4 md:px-6">
+      {children}
+    </div>
+  );
 }
 
 function SectionHeader({
@@ -117,7 +128,7 @@ function PricingFooter({
                 <div className="text-sm line-through text-neutral-500">
                   {formatMoney(subtotal)}
                 </div>
-                <div className="text-base font-medium">
+                <div className="text-lg font-medium">
                   {formatMoney(grandTotal)}
                 </div>
               </div>
@@ -128,11 +139,61 @@ function PricingFooter({
             <span className="text-neutral-600 text-sm font-medium">
               Annual cost (excl. GST)
             </span>
-            <span className="text-base font-medium">
+            <span className="text-lg font-medium">
               {formatMoney(grandTotal)}
             </span>
           </div>
         )}
+      </div>
+    </>
+  );
+}
+
+function OdourControlFooter({
+  items, // [{ price: string }] where price is already units * unitPrice
+  discountPct,
+  frequency,
+}: {
+  items: Array<{ price: string }>;
+  discountPct: number;
+  frequency: MaybeOption;
+}) {
+  if (!frequency) {
+    return null;
+  }
+  const subtotal = items.reduce((acc, r) => acc + getNumber(r.price), 0);
+  if (subtotal === 0) return null;
+
+  const showDiscount = discountPct > 0;
+  const discountAmt = showDiscount ? (subtotal * discountPct) / 100 : 0;
+  const grandTotal = subtotal - discountAmt;
+
+  return (
+    <>
+      <hr className="my-2 border-input border-dashed" />
+      <div className="space-y-2 w-full sm:max-w-[360px] ml-auto px-2">
+        {showDiscount && (
+          <div className="flex justify-between text-sm text-emerald-600">
+            <span>Service discount ({discountPct}%)</span>
+            <span>-{formatMoney(discountAmt)}</span>
+          </div>
+        )}
+
+        <div className="flex justify-between items-baseline">
+          <span className="text-neutral-600 text-sm font-medium">
+            Annual cost (excl. GST)
+          </span>
+          <div className="text-right">
+            {showDiscount && (
+              <div className="text-sm line-through text-neutral-500">
+                {formatMoney(subtotal)}
+              </div>
+            )}
+            <div className="text-lg font-medium">
+              {formatMoney(grandTotal)}
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
@@ -143,6 +204,7 @@ function PricingFooter({
 function ServicesForm({ selectMore }: { selectMore: () => void }) {
   const state = useServiceAgreementStore();
   const [showError, setShowError] = useState(false);
+  const [odourQtyError, setOdourQtyError] = useState(false);
 
   const numberOfServices = useMemo(() => {
     const vals = [
@@ -170,15 +232,6 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
   useEffect(() => {
     if (numberOfServices > 0) setShowError(false);
   }, [numberOfServices]);
-
-  const goNext = () => {
-    if (numberOfServices === 0) {
-      setShowError(true);
-    } else {
-      setShowError(false);
-      state.setPage(2);
-    }
-  };
 
   const chuteCleaningDetails = getServices(
     state.serviceAgreement?.sites ?? [],
@@ -211,6 +264,40 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
   ) as GetServicesReturnTyped<"odour_control">;
 
   const discount = getDiscount(numberOfServices);
+
+  // --- Odour Control validation: if frequency selected, all unit inputs must be > 0
+  const odourNeedsUnits = !!state.odourControlFrequency;
+  const hasMissingOdourQty = useMemo(() => {
+    if (!odourNeedsUnits) return false;
+    return odourControlDetails.items.some(
+      (r) => (state.odourControlUnits[r.id] ?? 0) <= 0
+    );
+  }, [odourNeedsUnits, state.odourControlUnits, odourControlDetails.items]);
+
+  // Clear message as soon as user fixes the inputs or unselects frequency
+  useEffect(() => {
+    if (!hasMissingOdourQty) setOdourQtyError(false);
+  }, [hasMissingOdourQty]);
+
+  const goNext = () => {
+    if (numberOfServices === 0) {
+      setShowError(true);
+      return;
+    }
+
+    // Block if odour control selected but some unit(s) are empty or 0
+    if (odourNeedsUnits && hasMissingOdourQty) {
+      setOdourQtyError(true);
+      // Scroll to the odour control section to show the error
+      document
+        .getElementById("odour_control")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
+    setShowError(false);
+    state.setPage(2);
+  };
 
   if (!state.serviceAgreement) return null;
 
@@ -282,8 +369,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-2 py-2">Services</div>
-                <div className="col-span-1 text-right px-2 py-2">Price</div>
+                <div className="col-span-1 px-2 py-2 text-xs">Services</div>
+                <div className="col-span-1 text-right px-2 py-2 text-xs">Price</div>
               </div>
               {chuteCleaningDetails.items.map((r, i) => (
                 <div
@@ -302,7 +389,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
                     </div>
                   </div>
-                 <div className="text-right px-2 py-2 w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -359,7 +446,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     <div className="col-span-2 px-2 py-2">
                       {r.equipment_label}
                     </div>
-                                     <div className="col-span-1 text-right px-2 py-2">
+                    <div className="col-span-1 text-right px-2 py-2">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -370,8 +457,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-2 py-2">Services</div>
-                <div className="col-span-1 text-right px-2 py-2">Price</div>
+                <div className="col-span-1 px-2 py-2 text-xs">Services</div>
+                <div className="col-span-1 text-right px-2 py-2 text-xs">Price</div>
               </div>
               {equipmentMaintenanceDetails.items.map((r, i) => (
                 <div
@@ -444,7 +531,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     </div>
                     <div className="col-span-1 px-2 py-2"></div>
                     <div className="col-span-1 px-2 py-2"></div>
-                                     <div className="col-span-1 text-right px-2 py-2">
+                    <div className="col-span-1 text-right px-2 py-2">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -455,8 +542,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-2 py-2">Services</div>
-                <div className="col-span-1 text-right px-2 py-2">Price</div>
+                <div className="col-span-1 px-2 py-2 text-xs">Services</div>
+                <div className="col-span-1 text-right px-2 py-2 text-xs">Price</div>
               </div>
               {selfClosingHopperDoorInspectionDetails.items.map((r, i) => (
                 <div
@@ -471,7 +558,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       )}
                     </div>
                   </div>
-                 <div className="text-right px-2 py-2 w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -526,7 +613,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     </div>
                     <div className="col-span-1 px-2 py-2"></div>
                     <div className="col-span-2 px-2 py-2">{r.area_label}</div>
-                                     <div className="col-span-1 text-right px-2 py-2">
+                    <div className="col-span-1 text-right px-2 py-2">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -537,8 +624,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-2 py-2">Services</div>
-                <div className="col-span-1 text-right px-2 py-2">Price</div>
+                <div className="col-span-1 px-2 py-2 text-xs">Services</div>
+                <div className="col-span-1 text-right px-2 py-2 text-xs">Price</div>
               </div>
               {wasteRoomCleaningDetails.items.map((r, i) => (
                 <div
@@ -556,7 +643,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
                     </div>
                   </div>
-                 <div className="text-right px-2 py-2 w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -611,7 +698,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     </div>
                     <div className="col-span-1 px-2 py-2"></div>
                     <div className="col-span-1 px-2 py-2"></div>
-                                     <div className="col-span-1 text-right px-2 py-2">
+                    <div className="col-span-1 text-right px-2 py-2">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -622,8 +709,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-2 py-2">Services</div>
-                <div className="col-span-1 text-right px-2 py-2">Price</div>
+                <div className="col-span-1 px-2 py-2 text-xs">Services</div>
+                <div className="col-span-1 text-right px-2 py-2 text-xs">Price</div>
               </div>
               {binCleaningDetails.items.map((r, i) => (
                 <div
@@ -638,7 +725,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       )}
                     </div>
                   </div>
-                 <div className="text-right px-2 py-2 w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -654,7 +741,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </SectionShell>
       )}
 
-      {/* Odour Control (matched styling) */}
+      {/* Odour Control (matched styling + units) */}
       {odourControlDetails.items.length > 0 && (
         <SectionShell id="odour_control">
           <SectionHeader
@@ -669,69 +756,172 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <ServiceFrequency2
               value={state.odourControlFrequency}
               onChange={state.setOdourControlFrequency}
-              options={options}
+              options={options.filter((o) => o.value === "quarterly")}
             />
 
-            {/* Desktop table */}
-            <div className="hidden xl:block w-full ">
-              <div className="flex flex-col text-sm min-w-[500px]">
-                <div className="grid grid-cols-6 gap-2 border-b border-input">
-                  <div className="col-span-3 px-2 py-2">Sites</div>
-                  <div className="col-span-1 px-2 py-2"></div>
-                  <div className="col-span-1 px-2 py-2"></div>
-                  <div className="col-span-1 text-right px-2 py-2">Price</div>
-                </div>
-
-                {odourControlDetails.items.map((r, i) => (
-                  <div
-                    key={i}
-                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0"
-                  >
-                    <div className="col-span-3 px-2 py-2">
-                      <div className="font-medium">{r.site_name}</div>
-                      {r.building_name && <div>{r.building_name}</div>}
-                    </div>
-                    <div className="col-span-1 px-2 py-2"></div>
-                    <div className="col-span-1 px-2 py-2"></div>
-                                     <div className="col-span-1 text-right px-2 py-2">
-                      {formatMoney(getNumber(r.price))}
-                    </div>
-                  </div>
-                ))}
+            {odourQtyError && (
+              <div className="text-sm text-destructive mt-2">
+                Enter the quantity for each location
               </div>
-            </div>
+            )}
 
-            {/* Mobile list */}
-            <div className="xl:hidden w-full flex flex-col">
-              <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-2 py-2">Services</div>
-                <div className="col-span-1 text-right px-2 py-2">Price</div>
-              </div>
-              {odourControlDetails.items.map((r, i) => (
-                <div
-                  key={`${r.site_id}-${r.building_id}-${i}`}
-                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm"
-                >
-                  <div className="w-full px-2 py-2">
-                    <div className="flex flex-col gap-1">
-                      <div className="font-medium">{r.site_name}</div>
-                      {r.building_name && (
-                        <div className="text-xs">{r.building_name}</div>
-                      )}
+            {(() => {
+              const getKey = (r: OdourControlService) => r.id;
+
+              // Desktop table
+              return (
+                <>
+                  <div className="hidden xl:block w-full">
+                    <div className="flex flex-col text-sm min-w-[640px]">
+                      <div className="grid grid-cols-7 gap-2 border-b border-input">
+                        <div className="col-span-3 px-2 py-2">Sites</div>
+                        <div className="col-span-2 px-2 py-2">Units</div>
+                        <div className="col-span-1 px-2 py-2 text-right">
+                          Unit price
+                        </div>
+                        <div className="col-span-1 px-2 py-2 text-right">
+                          Line total
+                        </div>
+                      </div>
+
+                      {odourControlDetails.items.map((r) => {
+                        const key = getKey(r);
+                        const qty = state.odourControlUnits[key] ?? 0;
+                        const unitPrice = getNumber(r.price);
+                        const lineTotal = unitPrice * qty;
+                        const invalid =
+                          odourQtyError && odourNeedsUnits && qty <= 0;
+
+                        return (
+                          <div
+                            key={key}
+                            className="grid grid-cols-7 gap-2 border-b border-input last:border-b-0"
+                          >
+                            <div className="col-span-3 px-2 py-2">
+                              <div className="font-medium">{r.site_name}</div>
+                              {r.building_name && <div>{r.building_name}</div>}
+                            </div>
+
+                            <div className="col-span-2 px-2 py-2">
+                              <div className="flex items-center gap-2">
+                                <Input
+                                  type="text"
+                                  value={qty}
+                                  onChange={(e) => {
+                                    const v = normalizeQty(
+                                      e.currentTarget.value
+                                    );
+                                    state.setOdourControlUnit(key, Number(v));
+                                  }}
+                                  aria-invalid={invalid}
+                                  className={`h-8 w-16 efg-input ${
+                                    invalid
+                                      ? "border-destructive focus-visible:ring-destructive"
+                                      : ""
+                                  }`}
+                                />
+                              </div>
+                            </div>
+
+                            <div className="col-span-1 px-2 py-2 text-right">
+                              {formatMoney(unitPrice)}
+                            </div>
+                            <div className="col-span-1 px-2 py-2 text-right font-medium">
+                              {formatMoney(lineTotal)}
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
-                 <div className="text-right px-2 py-2 w-fit flex-shrink-0">
-                    {formatMoney(getNumber(r.price))}
-                  </div>
-                </div>
-              ))}
-            </div>
 
-            <PricingFooter
-              items={odourControlDetails.items}
-              frequency={state.odourControlFrequency}
-              discountPct={discount}
-            />
+                  {/* Mobile list */}
+                  <div className="xl:hidden w-full flex flex-col  divide-y divide-input">
+                    <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
+                      <div className="col-span-1 px-2 py-2 text-xs">Services</div>
+                      <div className="col-span-1 text-right px-2 py-2 text-xs">
+                        Line total
+                      </div>
+                    </div>
+                    {odourControlDetails.items.map((r) => {
+                      const key = getKey(r);
+                      const qty = state.odourControlUnits[key] ?? 0;
+                      const unitPrice = getNumber(r.price);
+                      const lineTotal = unitPrice * qty;
+                      const invalid =
+                        odourQtyError && odourNeedsUnits && qty <= 0;
+
+                      return (
+                        <div key={key} className="px-2 py-3">
+                          {/* Top: site + building */}
+                          <div className="mb-2">
+                            <div className="font-medium">{r.site_name}</div>
+                            {r.building_name && (
+                              <div className="text-xs text-neutral-600">
+                                {r.building_name}
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Middle: units (left) & unit price (right) */}
+                          <div className="flex items-center justify-between gap-3">
+                            <div className="flex items-center gap-2">
+                              <Input
+                                id={`odour-units-${key}`}
+                                inputMode="numeric"
+                                type="text"
+                                value={qty}
+                                onChange={(e) => {
+                                  const v = normalizeQty(e.currentTarget.value);
+                                  state.setOdourControlUnit(key, Number(v));
+                                }}
+                                aria-invalid={invalid}
+                                className={`h-8 w-20 efg-input ${
+                                  invalid
+                                    ? "border-destructive focus-visible:ring-destructive"
+                                    : ""
+                                }`}
+                              />
+                            </div>
+
+                            <div className="text-right">
+                              <div className="text-xs text-neutral-600">
+                                Unit price
+                              </div>
+                              <div className="text-sm">
+                                {formatMoney(unitPrice)}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Bottom: line total */}
+                          <div className="mt-2 text-right">
+                            <span className="text-xs text-neutral-600 mr-2">
+                              Total
+                            </span>
+                            <span className="font-medium">
+                              {formatMoney(lineTotal)}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Pricing footer (units-aware) */}
+                  <OdourControlFooter
+                    items={odourControlDetails.items.map((r) => {
+                      const key = r.id;
+                      const qty = state.odourControlUnits[key] ?? 0;
+                      const unitPrice = getNumber(r.price);
+                      return { price: String(unitPrice * qty) };
+                    })}
+                    discountPct={discount}
+                    frequency={state.odourControlFrequency}
+                  />
+                </>
+              );
+            })()}
           </SectionContent>
         </SectionShell>
       )}

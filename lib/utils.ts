@@ -125,3 +125,9 @@ export function formatFullAddress(
   return `${street}, ${city} ${state} ${postcode}, ${country}`;
 }
 
+export const normalizeQty = (raw: string) => {
+  const digitsOnly = raw.replace(/\D+/g, "");
+  if (digitsOnly === "") return "";           // allow empty
+  const stripped = digitsOnly.replace(/^0+/, "");
+  return stripped;                            // "05" -> "5", "000" -> "" (empty)
+};

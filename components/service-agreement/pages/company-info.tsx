@@ -46,11 +46,8 @@ function CompanyInfo() {
   return (
     <div className="w-full mx-auto flex flex-col gap-6">
       <div className="flex flex-col">
-        <Label className="text-2xl mb-1 mt-10">
+        <Label className="text-2xl mb-1">
           Customer Information{/* or “Your information” */}
-          {state?.serviceAgreement?.simpro_customer?.CompanyName
-            ? ` — ${state.serviceAgreement.simpro_customer.CompanyName}`
-            : ""}
         </Label>
         <span className="text-lg text-neutral-500">
           Review and update your information before continuing.
