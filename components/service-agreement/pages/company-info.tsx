@@ -24,10 +24,10 @@ function CompanyInfo() {
 
   // Next: validate additional contacts first
   const goNext = async () => {
-    let ok = await addlRef.current?.handleSubmit?.();
-    if (!ok) return; // stop if invalid
-    ok = await siteRef.current?.handleSubmit?.();
-    if (!ok) return; // stop if invalid
+    const additionalContactsOk = await addlRef.current?.handleSubmit?.();
+    const siteOk = await siteRef.current?.handleSubmit?.();
+    if (!additionalContactsOk || !siteOk) return;
+
     state.setPage(3);
   };
 
@@ -35,7 +35,7 @@ function CompanyInfo() {
     scrollToTop();
   }, []);
   return (
-    <div className="w-full mx-auto flex flex-col gap-10">
+    <div className="w-full mx-auto flex flex-col gap-4">
       <div className="flex flex-col">
         <Label className="text-2xl mb-1">
           Company Details{/* or “Your information” */}
@@ -49,10 +49,26 @@ function CompanyInfo() {
       </div>
 
       <CompanyDetailsCard />
+
+      <div className="flex flex-col mt-10">
+        <Label className="text-2xl mb-1 ">Billing Details</Label>
+        <span className="text-lg text-neutral-500 font-normal">
+          Please supply the billing information associated with this service
+          agreement.
+        </span>
+      </div>
       <BillingDetailsCard />
+
+      <div className="flex flex-col mt-10">
+        <Label className="text-2xl mb-1">Additional Contacts</Label>
+        <span className="text-lg text-neutral-500">
+          Provide optional additional contacts for your business as needed.
+          (Optional)
+        </span>
+      </div>
       <AdditionalContactsList ref={addlRef} />
 
-      <div className="flex flex-col">
+      <div className="flex flex-col mt-10">
         <Label className="text-2xl mb-1">Site Details</Label>
         <span className="text-lg text-neutral-500">
           Provide the site information associated with this service agreement.
