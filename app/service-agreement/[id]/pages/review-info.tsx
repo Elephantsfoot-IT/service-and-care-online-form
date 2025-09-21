@@ -386,15 +386,6 @@ function ServicesList() {
     state.binCleaningFrequency,
   ]);
 
-  // Map value -> display label
-  const freqLabel = (v: MaybeOption) =>
-    v === "quarterly"
-      ? "Quarterly"
-      : v === "six-monthly"
-      ? "Six-Monthly"
-      : v === "yearly"
-      ? "Yearly"
-      : "Not selected";
 
   // Gather items for each service type
   const chuteCleaningDetails = getServices(
@@ -555,7 +546,7 @@ function ServicesList() {
         )}
 
         {/* Totals */}
-        <div className="mt-4 space-y-2">
+        <div className=" space-y-2">
           {discountPct > 0 ? (
             <>
               {/* Discount line: xs + emerald tone */}

@@ -30,11 +30,15 @@ function SectionShell({
   return (
     <section
       id={id}
-      className="flex flex-col scroll-mt-[140px] bg-transparent gap-6 border border-input shadow-sm rounded-xl p-6 bg-white"
+      className="flex flex-col scroll-mt-[140px] bg-transparent  border border-input shadow-sm rounded-xl  bg-white overflow-hidden"
     >
       {children}
     </section>
   );
+}
+
+function SectionContent({ children }: { children: React.ReactNode }) {
+  return <div className="flex flex-col gap-2 md:gap-4 py-6 px-4 md:px-6">{children}</div>;
 }
 
 function SectionHeader({
@@ -51,11 +55,8 @@ function SectionHeader({
   imageAlt?: string;
 }) {
   return (
-    <div className="flex flex-col  ">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      {/* <img src={image} alt={imageAlt} className="h-auto w-6 mb-4" /> */}
-
-      <div className="text-lg font-medium flex flex-row items-center gap-2 ">
+    <div className="flex flex-col border-b border-input p-6 bg-neutral-75">
+      <div className="text-base xl:text-lg font-medium flex flex-row items-center gap-2 ">
         {title}
         {helpHref && (
           <a
@@ -69,7 +70,9 @@ function SectionHeader({
           </a>
         )}
       </div>
-      <span className="text-base text-neutral-500">{description}</span>
+      <span className="text-sm xl:text-base text-neutral-500">
+        {description}
+      </span>
     </div>
   );
 }
@@ -97,41 +100,40 @@ function PricingFooter({
 
   return (
     <>
-    <hr className="my-2 border-input border-dashed" />
-    <div className="space-y-2 w-full sm:max-w-[360px] ml-auto px-2">
-      {showDiscount ? (
-        <>
-              
-          <div className="flex justify-between text-sm text-red-500">
-            <span>Service discount ({discountPct}%)</span>
-            <span>-{formatMoney(discountAmt)}</span>
-          </div>
+      <hr className="my-2 border-input border-dashed" />
+      <div className="space-y-2 w-full sm:max-w-[360px] ml-auto px-2">
+        {showDiscount ? (
+          <>
+            <div className="flex justify-between text-sm text-red-500">
+              <span>Service discount ({discountPct}%)</span>
+              <span>-{formatMoney(discountAmt)}</span>
+            </div>
 
+            <div className="flex justify-between items-baseline">
+              <span className="text-neutral-600 text-sm font-medium">
+                Annual cost (excl. GST)
+              </span>
+              <div className="text-right">
+                <div className="text-sm line-through text-neutral-500">
+                  {formatMoney(subtotal)}
+                </div>
+                <div className="text-base font-medium">
+                  {formatMoney(grandTotal)}
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
           <div className="flex justify-between items-baseline">
             <span className="text-neutral-600 text-sm font-medium">
               Annual cost (excl. GST)
             </span>
-            <div className="text-right">
-              <div className="text-sm line-through text-neutral-500">
-                {formatMoney(subtotal)}
-              </div>
-              <div className="text-base font-medium">
-                {formatMoney(grandTotal)}
-              </div>
-            </div>
+            <span className="text-base font-medium">
+              {formatMoney(grandTotal)}
+            </span>
           </div>
-        </>
-      ) : (
-        <div className="flex justify-between items-baseline">
-          <span className="text-neutral-600 text-sm font-medium">
-            Annual cost (excl. GST)
-          </span>
-          <span className="text-base font-medium">
-            {formatMoney(grandTotal)}
-          </span>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
     </>
   );
 }
@@ -234,7 +236,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             imageAlt="Chute Cleaning"
           />
 
-          <div className="flex flex-col gap-4">
+          <SectionContent>
             <ServiceFrequency2
               value={state.chuteCleaningFrequency}
               onChange={state.setChuteCleaningFrequency}
@@ -248,9 +250,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                   <div className="col-span-3 px-2 py-2 ">Sites</div>
                   <div className="col-span-1 px-2 py-2">Qty</div>
                   <div className="col-span-1 px-2 py-2">Level</div>
-                  <div className="col-span-1 text-right px-2 py-2">
-                    Price
-                  </div>
+                  <div className="col-span-1 text-right px-2 py-2">Price</div>
                 </div>
 
                 {chuteCleaningDetails.items.map((r, i) => (
@@ -280,12 +280,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             </div>
 
             {/* Mobile list */}
-            <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
+            <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2">Services</div>
-                <div className="col-span-1 text-right px-2 py-2">
-                  Price
-                </div>
+                <div className="col-span-1 text-right px-2 py-2">Price</div>
               </div>
               {chuteCleaningDetails.items.map((r, i) => (
                 <div
@@ -316,7 +314,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               frequency={state.chuteCleaningFrequency}
               discountPct={discount}
             />
-          </div>
+          </SectionContent>
         </SectionShell>
       )}
 
@@ -331,7 +329,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             imageAlt="Equipment Preventative Maintenance"
           />
 
-          <div className="flex flex-col gap-4">
+          <SectionContent>
             <ServiceFrequency2
               value={state.equipmentMaintenanceFrequency}
               onChange={state.setEquipmentMaintenanceFrequency}
@@ -344,12 +342,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-2 px-2 py-2">Sites</div>
                   <div className="col-span-1 px-2 py-2"></div>
-                  <div className="col-span-2 px-2 py-2">
-                    Equipment
-                  </div>
-                  <div className="col-span-1 text-right px-2 py-2">
-                    Price
-                  </div>
+                  <div className="col-span-2 px-2 py-2">Equipment</div>
+                  <div className="col-span-1 text-right px-2 py-2">Price</div>
                 </div>
 
                 {equipmentMaintenanceDetails.items.map((r, i) => (
@@ -374,12 +368,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             </div>
 
             {/* Mobile list */}
-            <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
+            <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2">Services</div>
-                <div className="col-span-1 text-right px-2 py-2">
-                  Price
-                </div>
+                <div className="col-span-1 text-right px-2 py-2">Price</div>
               </div>
               {equipmentMaintenanceDetails.items.map((r, i) => (
                 <div
@@ -409,7 +401,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               frequency={state.equipmentMaintenanceFrequency}
               discountPct={discount}
             />
-          </div>
+          </SectionContent>
         </SectionShell>
       )}
 
@@ -424,7 +416,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             imageAlt="Self-Closing Hopper Door Inspection"
           />
 
-          <div className="flex flex-col gap-4">
+          <SectionContent>
             <ServiceFrequency2
               value={state.selfClosingHopperDoorInspectionFrequency}
               onChange={state.setSelfClosingHopperDoorInspectionFrequency}
@@ -438,9 +430,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                   <div className="col-span-3 px-2 py-2">Sites</div>
                   <div className="col-span-1 px-2 py-2"></div>
                   <div className="col-span-1 px-2 py-2"></div>
-                  <div className="col-span-1 text-right px-2 py-2">
-                    Price
-                  </div>
+                  <div className="col-span-1 text-right px-2 py-2">Price</div>
                 </div>
 
                 {selfClosingHopperDoorInspectionDetails.items.map((r, i) => (
@@ -463,12 +453,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             </div>
 
             {/* Mobile list */}
-            <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
+            <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2">Services</div>
-                <div className="col-span-1 text-right px-2 py-2">
-                  Price
-                </div>
+                <div className="col-span-1 text-right px-2 py-2">Price</div>
               </div>
               {selfClosingHopperDoorInspectionDetails.items.map((r, i) => (
                 <div
@@ -495,7 +483,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               frequency={state.selfClosingHopperDoorInspectionFrequency}
               discountPct={discount}
             />
-          </div>
+          </SectionContent>
         </SectionShell>
       )}
 
@@ -510,7 +498,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             imageAlt="Waste Room Pressure Clean"
           />
 
-          <div className="flex flex-col gap-4">
+          <SectionContent>
             <ServiceFrequency2
               value={state.wasteRoomCleaningFrequency}
               onChange={state.setWasteRoomCleaningFrequency}
@@ -524,9 +512,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                   <div className="col-span-2 px-2 py-2">Sites</div>
                   <div className="col-span-1 px-2 py-2"></div>
                   <div className="col-span-2 px-2 py-2">Area</div>
-                  <div className="col-span-1 text-right px-2 py-2">
-                    Price
-                  </div>
+                  <div className="col-span-1 text-right px-2 py-2">Price</div>
                 </div>
 
                 {wasteRoomCleaningDetails.items.map((r, i) => (
@@ -549,12 +535,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             </div>
 
             {/* Mobile list */}
-            <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
+            <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2">Services</div>
-                <div className="col-span-1 text-right px-2 py-2">
-                  Price
-                </div>
+                <div className="col-span-1 text-right px-2 py-2">Price</div>
               </div>
               {wasteRoomCleaningDetails.items.map((r, i) => (
                 <div
@@ -584,7 +568,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               frequency={state.wasteRoomCleaningFrequency}
               discountPct={discount}
             />
-          </div>
+          </SectionContent>
         </SectionShell>
       )}
 
@@ -599,7 +583,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             imageAlt="Bin Cleaning"
           />
 
-          <div className="flex flex-col gap-4">
+          <SectionContent>
             <ServiceFrequency2
               value={state.binCleaningFrequency}
               onChange={state.setBinCleaningFrequency}
@@ -613,9 +597,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                   <div className="col-span-3 px-2 py-2">Sites</div>
                   <div className="col-span-1 px-2 py-2"></div>
                   <div className="col-span-1 px-2 py-2"></div>
-                  <div className="col-span-1 text-right px-2 py-2">
-                    Price
-                  </div>
+                  <div className="col-span-1 text-right px-2 py-2">Price</div>
                 </div>
 
                 {binCleaningDetails.items.map((r, i) => (
@@ -638,12 +620,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             </div>
 
             {/* Mobile list */}
-            <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
+            <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2">Services</div>
-                <div className="col-span-1 text-right px-2 py-2">
-                  Price
-                </div>
+                <div className="col-span-1 text-right px-2 py-2">Price</div>
               </div>
               {binCleaningDetails.items.map((r, i) => (
                 <div
@@ -670,7 +650,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               frequency={state.binCleaningFrequency}
               discountPct={discount}
             />
-          </div>
+          </SectionContent>
         </SectionShell>
       )}
 
@@ -685,7 +665,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             imageAlt="Odour Control"
           />
 
-          <div className="flex flex-col gap-4">
+          <SectionContent>
             <ServiceFrequency2
               value={state.odourControlFrequency}
               onChange={state.setOdourControlFrequency}
@@ -699,9 +679,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                   <div className="col-span-3 px-2 py-2">Sites</div>
                   <div className="col-span-1 px-2 py-2"></div>
                   <div className="col-span-1 px-2 py-2"></div>
-                  <div className="col-span-1 text-right px-2 py-2">
-                    Price
-                  </div>
+                  <div className="col-span-1 text-right px-2 py-2">Price</div>
                 </div>
 
                 {odourControlDetails.items.map((r, i) => (
@@ -724,12 +702,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             </div>
 
             {/* Mobile list */}
-            <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
+            <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2">Services</div>
-                <div className="col-span-1 text-right px-2 py-2">
-                  Price
-                </div>
+                <div className="col-span-1 text-right px-2 py-2">Price</div>
               </div>
               {odourControlDetails.items.map((r, i) => (
                 <div
@@ -756,7 +732,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               frequency={state.odourControlFrequency}
               discountPct={discount}
             />
-          </div>
+          </SectionContent>
         </SectionShell>
       )}
 
