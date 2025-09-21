@@ -291,6 +291,7 @@ function MultiLineAddressInput<T extends FieldValues>({
                   value={field.value as string}
                   disabled={disabled}
                   className="efg-input"
+                   inputMode="numeric"
                 />
               </FormControl>
               <FormMessage />

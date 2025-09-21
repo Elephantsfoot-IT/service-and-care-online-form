@@ -275,6 +275,7 @@ const AdditionalcontactForm = React.forwardRef<
                         field.onChange(e);
                         update("CellPhone")(e.target.value);
                       }}
+                      inputMode="tel"
                     />
                   </FormControl>
                   <FormMessage />
