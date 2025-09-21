@@ -105,7 +105,7 @@ const SiteContactForm = React.forwardRef<
       {/* Heading */}
       <div className="flex flex-row justify-between w-full items-center p-4 md:p-6 border-b border-input bg-neutral-50">
         <Label className="text-base">
-          {isPrimary ? "Primary Contact" : `Contact (${index + 1})`}
+          {isPrimary ? "Primary Contact" : `Site contact (${index + 1})`}
         </Label>
         {!isPrimary && (
           <Button

@@ -63,6 +63,13 @@ function CompanyInfo() {
 
       <AdditionalContactsList ref={addlRef} />
 
+      <div className="flex flex-col">
+        <Label className="text-2xl mb-1">Site Details</Label>
+        <span className="text-lg text-neutral-500">
+          Provide the site information associated with this service agreement.
+        </span>
+      </div>
+
       <SiteDetailsCard ref={siteRef} />
 
       {/* Nav */}

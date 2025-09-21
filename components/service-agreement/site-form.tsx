@@ -195,7 +195,6 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
         {/* Header */}
         <div className="py-8 px-4 md:px-6 border-b border-input bg-neutral-50">
           <Label className="text-base xl:text-lg">
-            Sites:
             <div className="underline">
               {site.site_name || (
                 <span className="text-neutral-400 ">
