@@ -102,7 +102,11 @@ export function ServiceSummary() {
       const unitPrice = getNumber(r.price);
       return acc + qty * unitPrice;
     }, 0);
-  }, [state.odourControlFrequency, state.odourControlUnits, odourControlDetails.items]);
+  }, [
+    state.odourControlFrequency,
+    state.odourControlUnits,
+    odourControlDetails.items,
+  ]);
 
   // Totals + discount
   const discountPct = getDiscount(numberOfServices);
@@ -136,7 +140,6 @@ export function ServiceSummary() {
       <div className="flex items-center justify-between gap-4 px-4 md:px-6 py-4 transition-colors">
         <div className="min-w-0">
           <div className="text-sm  text-neutral-900 truncate">{label}</div>
-          
         </div>
         <div className="text-sm text-neutral-900">{formatMoney(amount)}</div>
       </div>
@@ -150,13 +153,19 @@ export function ServiceSummary() {
           label="Chute Cleaning"
           freq={state.chuteCleaningFrequency}
           amount={chuteAnnual}
-          show={!!state.chuteCleaningFrequency && chuteCleaningDetails.items.length > 0}
+          show={
+            !!state.chuteCleaningFrequency &&
+            chuteCleaningDetails.items.length > 0
+          }
         />
         <Row
           label="Equipment Preventative Maintenance"
           freq={state.equipmentMaintenanceFrequency}
           amount={equipAnnual}
-          show={!!state.equipmentMaintenanceFrequency && equipmentMaintenanceDetails.items.length > 0}
+          show={
+            !!state.equipmentMaintenanceFrequency &&
+            equipmentMaintenanceDetails.items.length > 0
+          }
         />
         <Row
           label="Self-Closing Hopper Door Inspection"
@@ -171,24 +180,32 @@ export function ServiceSummary() {
           label="Waste Room Pressure Clean"
           freq={state.wasteRoomCleaningFrequency}
           amount={wasteAnnual}
-          show={!!state.wasteRoomCleaningFrequency && wasteRoomCleaningDetails.items.length > 0}
+          show={
+            !!state.wasteRoomCleaningFrequency &&
+            wasteRoomCleaningDetails.items.length > 0
+          }
         />
         <Row
           label="Bin Cleaning"
           freq={state.binCleaningFrequency}
           amount={binAnnual}
-          show={!!state.binCleaningFrequency && binCleaningDetails.items.length > 0}
+          show={
+            !!state.binCleaningFrequency && binCleaningDetails.items.length > 0
+          }
         />
         <Row
           label="Odour Control"
           freq={state.odourControlFrequency}
           amount={odourAnnual}
           hint={state.odourControlFrequency ? "Units × price" : undefined}
-          show={!!state.odourControlFrequency && odourControlDetails.items.length > 0}
+          show={
+            !!state.odourControlFrequency &&
+            odourControlDetails.items.length > 0
+          }
         />
 
         {/* Totals */}
-        <div >
+        <div>
           {discountPct > 0 ? (
             <>
               <div className="flex justify-between text-sm text-emerald-600 px-4 md:px-6 pt-4 ">
@@ -197,20 +214,25 @@ export function ServiceSummary() {
               </div>
 
               <div className="flex justify-between items-baseline px-4 md:px-6 pb-4 border-b border-input">
-                <span className="text-neutral-700 text-sm font-medium">Annual cost (excl. GST)</span>
+                <span className="text-neutral-700 text-sm font-medium flex flex-col">
+                  Annual cost <span className="font-normal text-xs">(excl. GST)</span>
+                </span>
                 <div className="text-right">
-                  <div className="text-sm line-through text-neutral-500">{formatMoney(subtotal)}</div>
-                  <div className="text-base font-semibold text-neutral-900">
+                  <div className="text-sm line-through text-neutral-500">
+                    {formatMoney(subtotal)}
+                  </div>
+                  <div className="text-base font-medium text-neutral-900">
                     {formatMoney(grandTotal)}
                   </div>
                 </div>
               </div>
 
               <div className="flex justify-between items-baseline px-4 md:px-6 py-6">
-                <span className="text-neutral-700 text-sm font-medium">
-                  Contract value (2 years, excl. GST)
+                <span className="text-neutral-700 text-sm font-medium flex flex-col">
+                  Contract value{" "}
+                  <span className="font-normal text-xs">(2 years, excl. GST)</span>
                 </span>
-                <div className="text-base font-semibold text-neutral-900">
+                <div className="text-base font-medium text-neutral-900">
                   {formatMoney(grandTotal * 2)}
                 </div>
               </div>
@@ -218,17 +240,21 @@ export function ServiceSummary() {
           ) : (
             <>
               <div className="flex justify-between items-baseline px-4 md:px-6 py-6">
-                <span className="text-neutral-700 text-sm font-medium">Annual cost (excl. GST)</span>
-                <span className="text-lg font-semibold text-neutral-900">
+                <span className="text-neutral-700 text-sm font-medium flex flex-col">
+                  Annual cost{" "}
+                  <span className="font-normal text-xs">(2 years, excl. GST)</span>
+                </span>
+                <span className="text-lg font-medium text-neutral-900">
                   {formatMoney(grandTotal)}
                 </span>
               </div>
 
               <div className="flex justify-between items-baseline border-t border-input px-4 md:px-6 py-6">
-                <span className="text-neutral-700 text-sm font-medium">
-                  Contract value (2 years, excl. GST)
+                <span className="text-neutral-700 text-sm font-medium flex flex-col">
+                  Contract value{" "}
+                  <span className="font-normal text-xs">(2 years, excl. GST)</span>
                 </span>
-                <span className="text-lg font-semibold text-neutral-900">
+                <span className="text-lg font-medium text-neutral-900">
                   {formatMoney(grandTotal * 2)}
                 </span>
               </div>
