@@ -4,8 +4,7 @@ import { Label } from "@/components/ui/label";
 import { scrollToTop } from "@/lib/utils";
 import { ArrowLeftIcon } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { BillingDetailsCard } from "../company-info/billing-detail-card";
-import { CompanyDetailsCard } from "../company-info/company-detail-card";
+
 import {
   AdditionalContactsList,
   AdditionalContactsListHandle,
@@ -13,20 +12,30 @@ import {
 import SiteDetailsCard, {
   SiteDetailsCardHandle,
 } from "../company-info/site-detail-card";
+import BillingDetailsCard, {
+  BillingDetailsCardHandle,
+} from "../company-info/billing-detail-card";
+import CompanyDetailsCard, {
+  CompanyDetailsCardHandle,
+} from "../company-info/company-detail-card";
 
 function CompanyInfo() {
   const state = useServiceAgreementStore();
 
   const goBack = () => state.setPage(1);
   // Ref to child list
-  const addlRef = useRef<AdditionalContactsListHandle>(null);
   const siteRef = useRef<SiteDetailsCardHandle>(null);
+  const addlRef = useRef<AdditionalContactsListHandle>(null);
+  const billingRef = useRef<BillingDetailsCardHandle>(null);
+  const companyRef = useRef<CompanyDetailsCardHandle>(null);
 
   // Next: validate additional contacts first
   const goNext = async () => {
     const additionalContactsOk = await addlRef.current?.handleSubmit?.();
     const siteOk = await siteRef.current?.handleSubmit?.();
-    if (!additionalContactsOk || !siteOk) return;
+    const billingOk = await billingRef.current?.handleSubmit?.();
+    const companyOk = await companyRef.current?.handleSubmit?.();
+    if (!additionalContactsOk || !siteOk || !billingOk || !companyOk) return;
 
     state.setPage(3);
   };
@@ -35,10 +44,10 @@ function CompanyInfo() {
     scrollToTop();
   }, []);
   return (
-    <div className="w-full mx-auto flex flex-col gap-4">
+    <div className="w-full mx-auto flex flex-col gap-10">
       <div className="flex flex-col">
         <Label className="text-2xl mb-1">
-          Company Details{/* or “Your information” */}
+          Customer Information{/* or “Your information” */}
           {state?.serviceAgreement?.simpro_customer?.CompanyName
             ? ` — ${state.serviceAgreement.simpro_customer.CompanyName}`
             : ""}
@@ -48,32 +57,12 @@ function CompanyInfo() {
         </span>
       </div>
 
-      <CompanyDetailsCard />
+      <CompanyDetailsCard ref={companyRef} />
 
-      <div className="flex flex-col mt-10">
-        <Label className="text-2xl mb-1 ">Billing Details</Label>
-        <span className="text-lg text-neutral-500 font-normal">
-          Please supply the billing information associated with this service
-          agreement.
-        </span>
-      </div>
-      <BillingDetailsCard />
+      <BillingDetailsCard ref={billingRef} />
 
-      <div className="flex flex-col mt-10">
-        <Label className="text-2xl mb-1">Additional Contacts</Label>
-        <span className="text-lg text-neutral-500">
-          Provide optional additional contacts for your business as needed.
-          (Optional)
-        </span>
-      </div>
       <AdditionalContactsList ref={addlRef} />
 
-      <div className="flex flex-col mt-10">
-        <Label className="text-2xl mb-1">Site Details</Label>
-        <span className="text-lg text-neutral-500">
-          Provide the site information associated with this service agreement.
-        </span>
-      </div>
       <SiteDetailsCard ref={siteRef} />
 
       {/* Nav */}

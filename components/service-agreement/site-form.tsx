@@ -190,12 +190,20 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
     return (
       <div
         ref={rootRef}
-        className="flex flex-col w-full mx-auto border border-input shadow-xs rounded-lg overflow-hidden bg-white"
+        className="flex flex-col w-full mx-auto border border-input shadow-xs rounded-xl overflow-hidden bg-white"
       >
         {/* Header */}
         <div className="py-8 px-4 md:px-6 border-b border-input bg-neutral-50">
           <Label className="text-base xl:text-lg">
-            Site {(index || 0) + 1}
+            Sites:
+            <div className="underline">
+              {site.site_name || (
+                <span className="text-neutral-400 ">
+                  <span aria-hidden>—</span>
+                  <span className="sr-only">Not provided</span>
+                </span>
+              )}
+            </div>
           </Label>
         </div>
 
@@ -212,7 +220,7 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
                   control={form.control}
                   name="siteName"
                   render={({ field }) => (
-                    <FormItem className="w-full md:w-2/3 flex flex-col space-x-2">
+                    <FormItem className="w-full md:w-2/3 flex flex-col space-x-2 flex-shrink-0">
                       <FormControl>
                         <Input
                           {...field}
@@ -236,7 +244,7 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
                 <Label className="mb-2 text-sm w-full md:w-1/3">
                   Company address <span className="text-red-500">*</span>
                 </Label>
-                <div className="w-full md:w-2/3">
+                <div className="w-full md:w-2/3 flex-shrink-0">
                   <MultiLineAddressInput<SiteFormType>
                     fieldNames={{
                       street: "Address",
@@ -269,7 +277,7 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
               </Label>
             </div>
 
-            <div className="w-full md:w-2/3 flex flex-col gap-6">
+            <div className="w-full md:w-2/3 flex flex-col gap-6 flex-shrink-0">
               {contacts.map((contact, index) => (
                 <SiteContactForm
                   key={contact.id}

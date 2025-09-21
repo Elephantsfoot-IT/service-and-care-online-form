@@ -129,7 +129,7 @@ const SiteContactForm = React.forwardRef<
             <Label className="w-full md:w-1/3 text-sm">
               Full name <span className="text-red-500">*</span>
             </Label>
-            <div className="w-full md:w-2/3 flex flex-row space-x-2">
+            <div className="w-full md:w-2/3 flex flex-row space-x-2 flex-shrink-0">
               <FormField
                 control={ContactForm.control}
                 name="GivenName"
@@ -184,7 +184,7 @@ const SiteContactForm = React.forwardRef<
                 <FormLabel className="text-sm w-full md:w-1/3">
                   Mobile phone <span className="text-red-500">*</span>
                 </FormLabel>
-                <div className="w-full md:w-2/3">
+                <div className="w-full md:w-2/3 flex-shrink-0">
                   <FormControl>
                     <Input
                       maxLength={13}
@@ -212,7 +212,7 @@ const SiteContactForm = React.forwardRef<
                 <FormLabel className="text-sm w-full md:w-1/3">
                   Email address
                 </FormLabel>
-                <div className="w-full md:w-2/3">
+                <div className="w-full md:w-2/3 flex-shrink-0">
                   <FormControl>
                     <Input
                       className="efg-input"
@@ -238,7 +238,7 @@ const SiteContactForm = React.forwardRef<
                 <FormLabel className="text-sm w-full md:w-1/3">
                   Position
                 </FormLabel>
-                <div className="w-full md:w-2/3">
+                <div className="w-full md:w-2/3 flex-shrink-0">
                   <FormControl>
                     <Input
                       className="efg-input"

@@ -103,8 +103,8 @@ export const AdditionalContactsList = React.forwardRef<
   return (
     <>
       {state.additionalContacts.length === 0 ? (
-        <div className="text-sm w-full h-40 bg-white border border-input shadow-xs rounded-lg flex flex-col items-center justify-center gap-2 text-center px-4">
-          <div className="font-medium">Additional contacts (optional)</div>
+        <div className="text-sm w-full h-40 bg-white border border-input shadow-sm rounded-xl flex flex-col items-center justify-center gap-2 text-center px-4">
+          <div className="text-base xl:text-lg font-medium">Additional contacts (optional)</div>
           <p className="text-neutral-500">
             Add extra people for quotes, jobs, invoices or statements so we can
             reach the right person.
