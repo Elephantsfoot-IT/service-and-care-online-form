@@ -97,7 +97,7 @@ function FormVerticalProgress({ activeId, onJump }: Props) {
           <div
             className={cn(
               "flex flex-row items-center gap-4 transition-all duration-200 cursor-pointer hover:opacity-100",
-              activeId === it.id ? "opacity-100" : "opacity-40"
+              activeId === it.id ? "opacity-100" : "opacity-50"
             )}
             onClick={() => onJump?.(it.id)}
           >
