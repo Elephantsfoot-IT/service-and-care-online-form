@@ -25,7 +25,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Input } from "@/components/ui/input";
 import { ServiceSummary } from "../service-summary";
-import { format } from "date-fns-tz";
+import { format, formatInTimeZone } from "date-fns-tz";
 
 /* ---------- Small helpers (do NOT touch your service grids) ---------- */
 
@@ -301,6 +301,24 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
     state.setPage(2);
   };
 
+  const TZ = "Australia/Sydney";
+  const expiry = new Date(state.serviceAgreement?.expire_at ?? new Date());
+
+  // e.g. "21 Sep 2025" in AU time
+  const expiryLabel = formatInTimeZone(expiry, TZ, "dd MMM yyyy");
+
+  // AU start-of-day for today and expiry, then diff in whole days
+  const daysLeft = (() => {
+    const auStartToday = new Date(
+      formatInTimeZone(new Date(), TZ, "yyyy-MM-dd'T'00:00:00XXX")
+    );
+    const auStartExpiry = new Date(
+      formatInTimeZone(expiry, TZ, "yyyy-MM-dd'T'00:00:00XXX")
+    );
+    const diffMs = auStartExpiry.getTime() - auStartToday.getTime();
+    return Math.floor(diffMs / 86_400_000); // 1000*60*60*24
+  })();
+
   if (!state.serviceAgreement) return null;
 
   return (
@@ -319,9 +337,27 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           safe, compliant, and fresh. Once submitted, our team will confirm the
           details and next steps.
         </span>
-        <span className="font-medium mt-2">
-          *This proposal is valid for 30 days.
-        </span>
+        <div className="font-medium mt-2 flex flex-row items-center gap-2">
+          {daysLeft < 0 ? (
+            <>
+              This proposal <span className="text-red-600">expired</span> on{" "}
+              <span className="underline">{expiryLabel}</span>.
+            </>
+          ) : daysLeft === 0 ? (
+            <>
+              This proposal expires{" "}
+              <span className="text-amber-600">today</span> (
+              <span className="underline">{expiryLabel}</span>).
+            </>
+          ) : (
+            <>
+              This proposal expires in{" "}
+              <span className="font-semibold underline">{daysLeft}</span>{" "}
+              {daysLeft === 1 ? "day" : "days"} on{" "}
+              <span className="underline">{expiryLabel}</span>.
+            </>
+          )}
+        </div>
       </div>
       <SectionShell id="service_agreement_duration">
         <SectionHeader
