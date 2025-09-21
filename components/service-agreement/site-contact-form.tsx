@@ -100,10 +100,10 @@ const SiteContactForm = React.forwardRef<
   return (
     <div
       ref={rootRef}
-      className="flex flex-col w-full rounded-lg border border-input overflow-hidden"
+      className="flex flex-col w-full rounded-xl shadow-sm border border-input overflow-hidden"
     >
       {/* Heading */}
-      <div className="flex flex-row justify-between w-full items-center p-4 md:p-6 border-b border-input bg-neutral-50">
+      <div className="flex flex-row justify-between w-full items-center py-8 px-4 md:px-6 border-b border-input bg-neutral-50">
         <Label className="text-base">
           {isPrimary ? "Primary Contact" : `Site contact (${index + 1})`}
         </Label>
@@ -123,7 +123,7 @@ const SiteContactForm = React.forwardRef<
       </div>
 
       <Form {...ContactForm}>
-        <form className="flex flex-col gap-6 p-4 md:p-6">
+        <form className="flex flex-col gap-6 py-8 px-4 md:px-6">
           {/* Full name */}
           <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
             <Label className="w-full md:w-1/3 text-sm">

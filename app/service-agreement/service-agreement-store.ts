@@ -1,9 +1,5 @@
 import { create } from "zustand";
-import {
-  AdditionalContact,
-  MaybeOption,
-  ServiceAgreement,
-} from "@/lib/interface";
+import { AdditionalContact, MaybeOption, ServiceAgreement } from "@/lib/interface";
 
 /* -------------------------------- Types ------------------------------- */
 
@@ -53,9 +49,14 @@ export interface ServiceAgreementStore {
   businessState: string;
   companyName: string;
   abn: string;
-  companyType: string;
-  sameAddres: boolean; // keeping original key to avoid breaking existing usage
+
+  /** Kept as-is for backward compatibility (typo preserved intentionally). */
+  sameAddres: boolean;
   setSameAddress: (sameAddres: boolean) => void;
+
+  /** Mark when user has edited company details so Simpro hydration won't overwrite. */
+  companyDetailsEdited: boolean;
+  setCompanyDetailsEdited: (edited: boolean) => void;
 
   /* ---------- Additional Contacts ---------- */
   additionalContacts: AdditionalContact[];
@@ -94,6 +95,7 @@ type StateOnly = Omit<
   | "setProgress"
   | "setTrimmedDataURL"
   | "setSameAddress"
+  | "setCompanyDetailsEdited"
   | "setAdditionalContacts"
   | "setServiceAgreement"
   | "setChuteCleaningFrequency"
@@ -150,8 +152,8 @@ const initialState: StateOnly = {
   businessState: "",
   companyName: "",
   abn: "",
-  companyType: "",
   sameAddres: false,
+  companyDetailsEdited: false,
 
   /* ---------- Additional Contacts ---------- */
   additionalContacts: [],
@@ -182,6 +184,7 @@ export const useServiceAgreementStore = create<ServiceAgreementStore>((set) => (
 
   /* ---------- Business / Billing ---------- */
   setSameAddress: (sameAddres) => set({ sameAddres }),
+  setCompanyDetailsEdited: (edited) => set({ companyDetailsEdited: edited }),
 
   /* ---------- Additional Contacts ---------- */
   setAdditionalContacts: (additionalContacts) => set({ additionalContacts }),

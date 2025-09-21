@@ -190,7 +190,7 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
     return (
       <div
         ref={rootRef}
-        className="flex flex-col w-full mx-auto border border-input shadow-xs rounded-xl overflow-hidden bg-white"
+        className="flex flex-col w-full mx-auto border border-input shadow-sm rounded-xl overflow-hidden bg-white"
       >
         {/* Header */}
         <div className="py-8 px-4 md:px-6 border-b border-input bg-neutral-50">
