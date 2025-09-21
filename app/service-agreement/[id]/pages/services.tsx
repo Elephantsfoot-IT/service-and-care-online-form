@@ -30,7 +30,7 @@ function SectionShell({
   return (
     <section
       id={id}
-      className="flex flex-col scroll-mt-[140px] bg-transparent gap-6 border border-input shadow-sm rounded-xl p-6"
+      className="flex flex-col scroll-mt-[140px] bg-transparent gap-6 border border-input shadow-sm rounded-xl p-6 bg-white"
     >
       {children}
     </section>
@@ -53,9 +53,9 @@ function SectionHeader({
   return (
     <div className="flex flex-col  ">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={image} alt={imageAlt} className="h-auto w-6 mb-4" />
+      {/* <img src={image} alt={imageAlt} className="h-auto w-6 mb-4" /> */}
 
-      <div className="text-lg font-medium flex flex-row items-center gap-2">
+      <div className="text-lg font-medium flex flex-row items-center gap-2 ">
         {title}
         {helpHref && (
           <a
@@ -96,10 +96,13 @@ function PricingFooter({
   }
 
   return (
+    <>
+    <hr className="my-2 border-input border-dashed" />
     <div className="space-y-2 w-full sm:max-w-[360px] ml-auto px-2">
       {showDiscount ? (
         <>
-          <div className="flex justify-between text-sm text-green-500">
+              
+          <div className="flex justify-between text-sm text-red-500">
             <span>Service discount ({discountPct}%)</span>
             <span>-{formatMoney(discountAmt)}</span>
           </div>
@@ -129,6 +132,7 @@ function PricingFooter({
         </div>
       )}
     </div>
+    </>
   );
 }
 
@@ -241,10 +245,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
-                  <div className="col-span-3 px-2 py-2 font-medium">Sites</div>
-                  <div className="col-span-1 px-2 py-2 font-medium">Qty</div>
-                  <div className="col-span-1 px-2 py-2 font-medium">Level</div>
-                  <div className="col-span-1 text-right px-2 py-2 font-medium">
+                  <div className="col-span-3 px-2 py-2 ">Sites</div>
+                  <div className="col-span-1 px-2 py-2">Qty</div>
+                  <div className="col-span-1 px-2 py-2">Level</div>
+                  <div className="col-span-1 text-right px-2 py-2">
                     Price
                   </div>
                 </div>
@@ -278,8 +282,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-2 py-2 font-medium">Services</div>
-                <div className="col-span-1 text-right px-2 py-2 font-medium">
+                <div className="col-span-1 px-2 py-2">Services</div>
+                <div className="col-span-1 text-right px-2 py-2">
                   Price
                 </div>
               </div>
@@ -338,12 +342,12 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
-                  <div className="col-span-2 px-2 py-2 font-medium">Sites</div>
-                  <div className="col-span-1 px-2 py-2 font-medium"></div>
-                  <div className="col-span-2 px-2 py-2 font-medium">
+                  <div className="col-span-2 px-2 py-2">Sites</div>
+                  <div className="col-span-1 px-2 py-2"></div>
+                  <div className="col-span-2 px-2 py-2">
                     Equipment
                   </div>
-                  <div className="col-span-1 text-right px-2 py-2 font-medium">
+                  <div className="col-span-1 text-right px-2 py-2">
                     Price
                   </div>
                 </div>
@@ -372,8 +376,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-2 py-2 font-medium">Services</div>
-                <div className="col-span-1 text-right px-2 py-2 font-medium">
+                <div className="col-span-1 px-2 py-2">Services</div>
+                <div className="col-span-1 text-right px-2 py-2">
                   Price
                 </div>
               </div>
@@ -431,10 +435,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
-                  <div className="col-span-3 px-2 py-2 font-medium">Sites</div>
-                  <div className="col-span-1 px-2 py-2 font-medium"></div>
-                  <div className="col-span-1 px-2 py-2 font-medium"></div>
-                  <div className="col-span-1 text-right px-2 py-2 font-medium">
+                  <div className="col-span-3 px-2 py-2">Sites</div>
+                  <div className="col-span-1 px-2 py-2"></div>
+                  <div className="col-span-1 px-2 py-2"></div>
+                  <div className="col-span-1 text-right px-2 py-2">
                     Price
                   </div>
                 </div>
@@ -461,8 +465,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-2 py-2 font-medium">Services</div>
-                <div className="col-span-1 text-right px-2 py-2 font-medium">
+                <div className="col-span-1 px-2 py-2">Services</div>
+                <div className="col-span-1 text-right px-2 py-2">
                   Price
                 </div>
               </div>
@@ -517,10 +521,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
-                  <div className="col-span-2 px-2 py-2 font-medium">Sites</div>
-                  <div className="col-span-1 px-2 py-2 font-medium"></div>
-                  <div className="col-span-2 px-2 py-2 font-medium">Area</div>
-                  <div className="col-span-1 text-right px-2 py-2 font-medium">
+                  <div className="col-span-2 px-2 py-2">Sites</div>
+                  <div className="col-span-1 px-2 py-2"></div>
+                  <div className="col-span-2 px-2 py-2">Area</div>
+                  <div className="col-span-1 text-right px-2 py-2">
                     Price
                   </div>
                 </div>
@@ -547,8 +551,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-2 py-2 font-medium">Services</div>
-                <div className="col-span-1 text-right px-2 py-2 font-medium">
+                <div className="col-span-1 px-2 py-2">Services</div>
+                <div className="col-span-1 text-right px-2 py-2">
                   Price
                 </div>
               </div>
@@ -606,10 +610,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
-                  <div className="col-span-3 px-2 py-2 font-medium">Sites</div>
-                  <div className="col-span-1 px-2 py-2 font-medium"></div>
-                  <div className="col-span-1 px-2 py-2 font-medium"></div>
-                  <div className="col-span-1 text-right px-2 py-2 font-medium">
+                  <div className="col-span-3 px-2 py-2">Sites</div>
+                  <div className="col-span-1 px-2 py-2"></div>
+                  <div className="col-span-1 px-2 py-2"></div>
+                  <div className="col-span-1 text-right px-2 py-2">
                     Price
                   </div>
                 </div>
@@ -636,8 +640,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-2 py-2 font-medium">Services</div>
-                <div className="col-span-1 text-right px-2 py-2 font-medium">
+                <div className="col-span-1 px-2 py-2">Services</div>
+                <div className="col-span-1 text-right px-2 py-2">
                   Price
                 </div>
               </div>
@@ -692,10 +696,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <div className="hidden xl:block w-full ">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
-                  <div className="col-span-3 px-2 py-2 font-medium">Sites</div>
-                  <div className="col-span-1 px-2 py-2 font-medium"></div>
-                  <div className="col-span-1 px-2 py-2 font-medium"></div>
-                  <div className="col-span-1 text-right px-2 py-2 font-medium">
+                  <div className="col-span-3 px-2 py-2">Sites</div>
+                  <div className="col-span-1 px-2 py-2"></div>
+                  <div className="col-span-1 px-2 py-2"></div>
+                  <div className="col-span-1 text-right px-2 py-2">
                     Price
                   </div>
                 </div>
@@ -722,8 +726,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             {/* Mobile list */}
             <div className="xl:hidden w-full rounded-lg py-4 flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                <div className="col-span-1 px-2 py-2 font-medium">Services</div>
-                <div className="col-span-1 text-right px-2 py-2 font-medium">
+                <div className="col-span-1 px-2 py-2">Services</div>
+                <div className="col-span-1 text-right px-2 py-2">
                   Price
                 </div>
               </div>

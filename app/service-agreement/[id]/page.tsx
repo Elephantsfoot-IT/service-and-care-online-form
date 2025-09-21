@@ -83,12 +83,12 @@ function ServiceAgreementComponent({ id }: { id: string }) {
       onJump("waste_room_pressure_clean");
       return;
     }
-   
+
     if (state.binCleaningFrequency === null) {
       onJump("bin_cleaning");
       return;
     }
-  
+
     if (state.odourControlFrequency === null) {
       onJump("odour_control");
       return;
@@ -147,11 +147,10 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     <>
       <Header />
       {activeId && <Sider activeId={activeId} onJump={onJump} />}
-      <div className="pt-[40px] xl:pl-[400px] ">
-        <div className="px-4 xl:px-20 text-neutral-700 bg-transparent">
-    
-          <div className="w-full flex flex-col items-center font-sans py-10 xl:py-20 flex-grow gap-8 max-w-screen-lg mx-auto">
-            {<ServiceAgreementProgress ></ServiceAgreementProgress>}
+      <div className="pt-10 xl:pt-40 xl:pl-[400px] pb-20">
+        <div className="px-4 xl:px-20 text-neutral-800 bg-transparent">
+          <div className="w-full flex flex-col items-center font-sans flex-grow gap-8 max-w-screen-lg mx-auto">
+            {<ServiceAgreementProgress></ServiceAgreementProgress>}
 
             {state.page === 1 && (
               <div

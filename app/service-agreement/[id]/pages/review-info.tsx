@@ -559,7 +559,7 @@ function ServicesList() {
           {discountPct > 0 ? (
             <>
               {/* Discount line: xs + emerald tone */}
-              <div className="flex justify-between text-sm text-green-600">
+              <div className="flex justify-between text-sm text-red-500">
                 <span>Service discount ({discountPct}%)</span>
                 <span className="font-medium">-{formatMoney(discountAmt)}</span>
               </div>
