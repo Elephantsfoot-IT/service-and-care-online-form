@@ -54,8 +54,7 @@ const CompanyDetailsCard = React.forwardRef<CompanyDetailsCardHandle, Props>(fun
   const state = useServiceAgreementStore();
   const simproCustomer = state.serviceAgreement?.simpro_customer ?? null;
   const hasCustomer = !!simproCustomer;
-  console.log(simproCustomer);
-  console.log(hasCustomer);
+
   const edited = state.companyDetailsEdited;
 
   // Build store snapshot
