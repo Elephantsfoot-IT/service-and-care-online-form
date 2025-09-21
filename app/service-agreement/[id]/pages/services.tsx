@@ -104,7 +104,7 @@ function PricingFooter({
       <div className="space-y-2 w-full sm:max-w-[360px] ml-auto px-2">
         {showDiscount ? (
           <>
-            <div className="flex justify-between text-sm text-red-500">
+            <div className="flex justify-between text-sm text-emerald-600">
               <span>Service discount ({discountPct}%)</span>
               <span>-{formatMoney(discountAmt)}</span>
             </div>

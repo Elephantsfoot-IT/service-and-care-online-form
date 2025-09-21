@@ -8,7 +8,7 @@ import Sider from "@/components/sider";
 import { useServiceAgreement } from "@/lib/api";
 import { SECTION_IDS, ServiceAgreement } from "@/lib/interface";
 import { fastScrollToEl } from "@/lib/utils";
-import { Loader2Icon } from "lucide-react";
+import { ChevronUpIcon, Loader2Icon } from "lucide-react";
 import { notFound, useParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 import AdditionalContactInfo from "./pages/additional-contact-info";
@@ -19,6 +19,7 @@ import ReviewInfo from "./pages/review-info";
 import ServicesForm from "./pages/services";
 import SiteInfo from "./pages/site-info";
 import ServiceAgreementProgress from "@/components/service-agreement/service-agreement-progress";
+import ScrollButton from "@/components/service-agreement/scroll-button";
 
 /* ------------------------------ Component ------------------------------ */
 function ServiceAgreementComponent({ id }: { id: string }) {
@@ -128,6 +129,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     if (next > cur) {
       state.setProgress(next);
     }
+    onJump("chute_cleaning");
   }, [state.page, state.progress]);
 
   /* Early Returns */
@@ -145,9 +147,12 @@ function ServiceAgreementComponent({ id }: { id: string }) {
   /* Render */
   return (
     <>
+   
       <Header />
       {activeId && <Sider activeId={activeId} onJump={onJump} />}
-      <div className="pt-10 xl:pt-40 xl:pl-[400px] pb-20">
+      <div className="pt-10 xl:pt-40 xl:pl-[400px] pb-20 relative">
+        <ScrollButton />
+
         <div className="px-4 xl:px-20 text-neutral-800 bg-transparent">
           <div className="w-full flex flex-col items-center font-sans flex-grow gap-8 max-w-screen-lg mx-auto">
             {<ServiceAgreementProgress></ServiceAgreementProgress>}
