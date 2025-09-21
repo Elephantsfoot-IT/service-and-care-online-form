@@ -15,7 +15,7 @@ function ScrollButton() {
     });
   };
   return (
-    <div className="fixed right-5 bottom-1/2 translate-y-1/2 flex flex-col gap-2 z-[9999]">
+    <div className="fixed right-5 bottom-5 flex flex-col gap-2 z-[9999]">
       <button
         type="button"
         onClick={scrollToTop}
