@@ -256,6 +256,7 @@ export default function BillingDetails() {
                         onChange("accountMobile", e.target.value);
                       }}
                       className="efg-input"
+                      inputMode="tel"
                     />
                   </FormControl>
                   <FormMessage />
@@ -287,6 +288,7 @@ export default function BillingDetails() {
                         onChange("accountPhone", e.target.value);
                       }}
                       className="efg-input"
+                      inputMode="tel"
                     />
                   </FormControl>
                   <FormMessage />
