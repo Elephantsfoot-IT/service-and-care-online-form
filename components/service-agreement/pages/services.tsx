@@ -309,7 +309,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         <Label className="text-2xl mb-1 font-medium">
           Service Agreement Form
         </Label>
-        <span className="text-lg text-neutral-500 font-normal">
+        <span className="text-base xl:text-lg text-neutral-500 font-normal">
           Thanks for choosing{" "}
           <span className="font-medium text-neutral-700">
             Elephants Foot Service & Care
@@ -351,7 +351,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         <Label className="text-2xl mb-1 font-medium">
           Build Your Service Plan
         </Label>
-        <span className="text-lg text-neutral-500 font-normal">
+        <span className="text-base xl:text-lg text-neutral-500 font-normal">
           Pick the services you need by setting a frequency.
         </span>
       </div>
@@ -1008,7 +1008,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       <div className="flex flex-col gap-6 mt-10">
         <div className="flex flex-col">
           <Label className="text-2xl font-medium">Service Summary</Label>
-          <span className="text-lg text-neutral-500">
+          <span className="text-base xl:text-lg text-neutral-500">
             Review your service plan and the total cost.
           </span>
         </div>
