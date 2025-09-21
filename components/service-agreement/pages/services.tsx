@@ -24,6 +24,7 @@ import { ArrowRightIcon, InfoIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Input } from "@/components/ui/input";
+import { ServiceSummary } from "../service-summary";
 
 /* ---------- Small helpers (do NOT touch your service grids) ---------- */
 
@@ -46,9 +47,7 @@ function SectionShell({
 
 function SectionContent({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-4 py-8 px-4 md:px-6">
-      {children}
-    </div>
+    <div className="flex flex-col gap-4 py-8 px-4 md:px-6">{children}</div>
   );
 }
 
@@ -189,9 +188,7 @@ function OdourControlFooter({
                 {formatMoney(subtotal)}
               </div>
             )}
-            <div className="text-lg font-medium">
-              {formatMoney(grandTotal)}
-            </div>
+            <div className="text-lg font-medium">{formatMoney(grandTotal)}</div>
           </div>
         </div>
       </div>
@@ -370,7 +367,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
-                <div className="col-span-1 text-right px-2 py-2 text-xs">Price</div>
+                <div className="col-span-1 text-right px-2 py-2 text-xs">
+                  Price
+                </div>
               </div>
               {chuteCleaningDetails.items.map((r, i) => (
                 <div
@@ -458,7 +457,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
-                <div className="col-span-1 text-right px-2 py-2 text-xs">Price</div>
+                <div className="col-span-1 text-right px-2 py-2 text-xs">
+                  Price
+                </div>
               </div>
               {equipmentMaintenanceDetails.items.map((r, i) => (
                 <div
@@ -543,7 +544,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
-                <div className="col-span-1 text-right px-2 py-2 text-xs">Price</div>
+                <div className="col-span-1 text-right px-2 py-2 text-xs">
+                  Price
+                </div>
               </div>
               {selfClosingHopperDoorInspectionDetails.items.map((r, i) => (
                 <div
@@ -625,7 +628,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
-                <div className="col-span-1 text-right px-2 py-2 text-xs">Price</div>
+                <div className="col-span-1 text-right px-2 py-2 text-xs">
+                  Price
+                </div>
               </div>
               {wasteRoomCleaningDetails.items.map((r, i) => (
                 <div
@@ -710,7 +715,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             <div className="xl:hidden w-full flex flex-col">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
-                <div className="col-span-1 text-right px-2 py-2 text-xs">Price</div>
+                <div className="col-span-1 text-right px-2 py-2 text-xs">
+                  Price
+                </div>
               </div>
               {binCleaningDetails.items.map((r, i) => (
                 <div
@@ -838,7 +845,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                   {/* Mobile list */}
                   <div className="xl:hidden w-full flex flex-col  divide-y divide-input">
                     <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                      <div className="col-span-1 px-2 py-2 text-xs">Services</div>
+                      <div className="col-span-1 px-2 py-2 text-xs">
+                        Services
+                      </div>
                       <div className="col-span-1 text-right px-2 py-2 text-xs">
                         Line total
                       </div>
@@ -947,6 +956,18 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           />
         </div>
       </section>
+
+      <div className="flex flex-col gap-6 mt-10">
+        <div className="flex flex-col">
+          <Label className="text-2xl font-medium">
+            Service Summary
+          </Label>
+          <span className="text-lg text-neutral-500">
+            Review your service plan and the total cost.
+          </span>
+        </div>
+        <ServiceSummary />
+      </div>
 
       {showError && (
         <div className="text-destructive text-sm">

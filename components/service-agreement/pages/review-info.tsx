@@ -6,13 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { GetServicesReturnTyped, MaybeOption } from "@/lib/interface";
 import {
-  cn,
   formatMoney,
   getDiscount,
   getServiceAnualCost,
   getServices,
-  getServicesValue,
-  scrollToTop,
+  scrollToTop
 } from "@/lib/utils";
 import { ArrowLeftIcon } from "lucide-react";
 import { useEffect, useMemo } from "react";
@@ -68,11 +66,7 @@ function CompanyDetailsCard() {
 
       <div className="p-4 md:p-6 space-y-4">
         <div className="space-y-1">
-          <Label className="text-neutral-500 text-sm">
-            {state.companyType === "Other"
-              ? "Company name"
-              : "Strata plan number (CTS/SP/OC)"}
-          </Label>
+          
           <span className="text-base break-words">
             <Value>{state.companyName}</Value>
           </span>
