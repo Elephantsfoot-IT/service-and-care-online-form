@@ -190,10 +190,10 @@ const AdditionalcontactForm = React.forwardRef<
   return (
     <div
       ref={rootRef}
-      className="flex flex-col w-full mx-auto rounded-lg border border-input shadow-xs overflow-hidden bg-white"
+      className="flex flex-col w-full mx-auto rounded-lg border border-input shadow-xs overflow-hidden "
     >
-      <div className="flex flex-row justify-between w-full items-center p-4 md:p-6 2xl:p-8 border-b border-input">
-        <Label className="text-base">Contact ({index + 1})</Label>
+      <div className="flex flex-row justify-between w-full items-center p-4 md:p-6 2xl:p-8 border-b border-input bg-neutral-50">
+        <Label className="text-base xl:text-lg">Contact ({index + 1})</Label>
         <Button
           variant="ghost"
           size="icon"

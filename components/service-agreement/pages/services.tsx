@@ -16,7 +16,7 @@ import {
 import { Label } from "@radix-ui/react-label";
 import { ArrowRightIcon, InfoIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { useServiceAgreementStore } from "../../service-agreement-store";
+import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 
 /* ---------- Small helpers (do NOT touch your service grids) ---------- */
 
@@ -55,7 +55,7 @@ function SectionHeader({
   imageAlt?: string;
 }) {
   return (
-    <div className="flex flex-col border-b border-input p-6 bg-neutral-75">
+    <div className="flex flex-col border-b border-input p-6 bg-neutral-50">
       <div className="text-base xl:text-lg font-medium flex flex-row items-center gap-2 ">
         {title}
         {helpHref && (

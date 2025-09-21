@@ -113,3 +113,15 @@ export const getServiceAnualCost = (services: ServiceByType<ServiceType>[], freq
     frequency === "yearly" ? 1 : frequency === "six-monthly" ? 2 : 4;
   return services.reduce((acc, service) => acc + getNumber(service.price) * frequencyValue, 0);
 };
+
+export function formatFullAddress(
+  street?: string,
+  city?: string,
+  state?: string,
+  postcode?: string,
+  country?: string
+) {
+  if (!street || !city || !state || !postcode || !country) return null;
+  return `${street}, ${city} ${state} ${postcode}, ${country}`;
+}
+

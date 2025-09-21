@@ -55,7 +55,7 @@ function CompanyDetailsCard() {
 
   return (
     <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white">
-      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
+      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-50">
         <Label className="text-lg">Company Details</Label>
         <Button
           variant="ghost"
@@ -109,7 +109,7 @@ function BillingDetailsCard() {
 
   return (
     <section className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white">
-      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
+      <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-50">
         <Label className="text-lg">Billing Details</Label>
         <Button
           variant="ghost"
@@ -182,7 +182,7 @@ function AdditionalContactsList() {
           key={contact.id}
           className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white"
         >
-          <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
+          <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-50">
             <Label className="text-lg">Contact ({index + 1})</Label>
             <Button
               variant="ghost"
@@ -262,7 +262,7 @@ function SitesSummaryList() {
             key={site.simpro_site_id}
             className="flex flex-col gap-2 border border-input rounded-lg shadow-xs overflow-hidden bg-white"
           >
-            <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-75">
+            <header className="flex items-center gap-4 p-4 md:p-6 border-b border-input bg-neutral-50">
               <Label className="text-lg">Site ({idx + 1})</Label>
               <Button
                 variant="ghost"
@@ -483,7 +483,7 @@ function ServicesList() {
 
   return (
     <section className="flex flex-col border border-input rounded-lg shadow-xs overflow-hidden bg-white">
-      <header className="flex items-center gap-4 p-4 2xl:p-8 border-b border-input bg-neutral-75">
+      <header className="flex items-center gap-4 p-4 2xl:p-8 border-b border-input bg-neutral-50">
         {/* Keep title sizing as-is */}
         <Label className="text-base 2xl:text-lg">Services Summary</Label>
         <Button

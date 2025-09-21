@@ -68,7 +68,7 @@ export default function TermsAndSignature() {
 
   /** Handlers */
   const goBack = useCallback(() => {
-    state.setPage(6); // back to Review page
+    state.setPage(2); // back to Review page
   }, [state]);
 
   const onSubmit = useCallback(
