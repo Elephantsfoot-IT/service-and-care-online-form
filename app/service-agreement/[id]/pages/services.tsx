@@ -271,7 +271,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
                     <div className="col-span-1 px-2 py-2">{r.chutes}</div>
                     <div className="col-span-1 px-2 py-2">{r.levels}</div>
-                    <div className="col-span-1 text-right px-2 py-2 font-medium">
+                    <div className="col-span-1 text-right px-2 py-2">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -302,7 +302,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
                     </div>
                   </div>
-                  <div className="text-right px-2 py-2 font-medium w-fit flex-shrink-0">
+                 <div className="text-right px-2 py-2 w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -359,7 +359,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     <div className="col-span-2 px-2 py-2">
                       {r.equipment_label}
                     </div>
-                    <div className="col-span-1 text-right px-2 py-2 font-medium">
+                                     <div className="col-span-1 text-right px-2 py-2">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -389,7 +389,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
                     </div>
                   </div>
-                  <div className="text-right px-2 py-2 font-medium w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -444,7 +444,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     </div>
                     <div className="col-span-1 px-2 py-2"></div>
                     <div className="col-span-1 px-2 py-2"></div>
-                    <div className="col-span-1 text-right px-2 py-2 font-medium">
+                                     <div className="col-span-1 text-right px-2 py-2">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -471,7 +471,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       )}
                     </div>
                   </div>
-                  <div className="text-right px-2 py-2 font-medium w-fit flex-shrink-0">
+                 <div className="text-right px-2 py-2 w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -526,7 +526,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     </div>
                     <div className="col-span-1 px-2 py-2"></div>
                     <div className="col-span-2 px-2 py-2">{r.area_label}</div>
-                    <div className="col-span-1 text-right px-2 py-2 font-medium">
+                                     <div className="col-span-1 text-right px-2 py-2">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -556,7 +556,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
                     </div>
                   </div>
-                  <div className="text-right px-2 py-2 font-medium w-fit flex-shrink-0">
+                 <div className="text-right px-2 py-2 w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -611,7 +611,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     </div>
                     <div className="col-span-1 px-2 py-2"></div>
                     <div className="col-span-1 px-2 py-2"></div>
-                    <div className="col-span-1 text-right px-2 py-2 font-medium">
+                                     <div className="col-span-1 text-right px-2 py-2">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -638,7 +638,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       )}
                     </div>
                   </div>
-                  <div className="text-right px-2 py-2 font-medium w-fit flex-shrink-0">
+                 <div className="text-right px-2 py-2 w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -693,7 +693,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     </div>
                     <div className="col-span-1 px-2 py-2"></div>
                     <div className="col-span-1 px-2 py-2"></div>
-                    <div className="col-span-1 text-right px-2 py-2 font-medium">
+                                     <div className="col-span-1 text-right px-2 py-2">
                       {formatMoney(getNumber(r.price))}
                     </div>
                   </div>
@@ -720,7 +720,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       )}
                     </div>
                   </div>
-                  <div className="text-right px-2 py-2 font-medium w-fit flex-shrink-0">
+                 <div className="text-right px-2 py-2 w-fit flex-shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
