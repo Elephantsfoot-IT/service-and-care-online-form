@@ -3,23 +3,18 @@
 /* ------------------------------ Imports ------------------------------ */
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import Header from "@/components/header";
+import CompanyInfo from "@/components/service-agreement/pages/company-info";
+import ConfirmInfo from "@/components/service-agreement/pages/confirm-info";
+import ServicesForm from "@/components/service-agreement/pages/services";
+import ScrollButton from "@/components/service-agreement/scroll-button";
 import { useScrollSpy } from "@/components/service-agreement/scroll-spy";
 import Sider from "@/components/sider";
 import { useServiceAgreement } from "@/lib/api";
 import { SECTION_IDS, ServiceAgreement } from "@/lib/interface";
-import { fastScrollToEl } from "@/lib/utils";
-import { ChevronUpIcon, Loader2Icon } from "lucide-react";
+import { fastScrollToEl, scrollToTop } from "@/lib/utils";
+import { Loader2Icon } from "lucide-react";
 import { notFound, useParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
-import AdditionalContactInfo from "./pages/additional-contact-info";
-import BillingDetails from "./pages/billing-info";
-import ConfirmInfo from "./pages/confirm-info";
-import CustomerInformation from "./pages/customer-info";
-import ReviewInfo from "./pages/review-info";
-import ServicesForm from "./pages/services";
-import SiteInfo from "./pages/site-info";
-import ServiceAgreementProgress from "@/components/service-agreement/service-agreement-progress";
-import ScrollButton from "@/components/service-agreement/scroll-button";
 
 /* ------------------------------ Component ------------------------------ */
 function ServiceAgreementComponent({ id }: { id: string }) {
@@ -38,10 +33,6 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     fadeIn1: false,
     fadeIn2: false,
     fadeIn3: false,
-    fadeIn4: false,
-    fadeIn5: false,
-    fadeIn6: false,
-    fadeIn7: false,
   });
 
   /* Derived */
@@ -50,6 +41,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     offset: 120,
     disabled: !!manualActive,
   });
+
   const activeId = manualActive ?? spiedId;
 
   /* Callbacks */
@@ -115,10 +107,6 @@ function ServiceAgreementComponent({ id }: { id: string }) {
       fadeIn1: state.page === 1,
       fadeIn2: state.page === 2,
       fadeIn3: state.page === 3,
-      fadeIn4: state.page === 4,
-      fadeIn5: state.page === 5,
-      fadeIn6: state.page === 6,
-      fadeIn7: state.page === 7,
     });
   }, [state.page]);
 
@@ -129,7 +117,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     if (next > cur) {
       state.setProgress(next);
     }
-    onJump("chute_cleaning");
+    scrollToTop();
   }, [state.page, state.progress]);
 
   /* Early Returns */
@@ -147,15 +135,14 @@ function ServiceAgreementComponent({ id }: { id: string }) {
   /* Render */
   return (
     <>
-   
       <Header />
-      {activeId && <Sider activeId={activeId} onJump={onJump} />}
+      <Sider activeId={activeId} onJump={onJump} />
       <div className="pt-10 xl:pt-40 xl:pl-[400px] pb-40 relative">
         <ScrollButton />
 
         <div className="px-4 xl:px-20 text-neutral-800 bg-transparent">
           <div className="w-full flex flex-col items-center font-sans flex-grow gap-8 max-w-screen-lg mx-auto">
-            {<ServiceAgreementProgress></ServiceAgreementProgress>}
+            {/* {<ServiceAgreementProgress></ServiceAgreementProgress>} */}
 
             {state.page === 1 && (
               <div
@@ -166,58 +153,21 @@ function ServiceAgreementComponent({ id }: { id: string }) {
                 <ServicesForm selectMore={selectMore} />
               </div>
             )}
+
             {state.page === 2 && (
               <div
                 className={`${
                   fadeInStates.fadeIn2 ? "fade-in" : "opacity-0"
                 } w-full flex flex-col`}
               >
-                <CustomerInformation />
+                <CompanyInfo />
               </div>
             )}
+
             {state.page === 3 && (
               <div
                 className={`${
                   fadeInStates.fadeIn3 ? "fade-in" : "opacity-0"
-                } w-full flex flex-col`}
-              >
-                <BillingDetails />
-              </div>
-            )}
-            {state.page === 4 && (
-              <div
-                className={`${
-                  fadeInStates.fadeIn4 ? "fade-in" : "opacity-0"
-                } w-full flex flex-col`}
-              >
-                <AdditionalContactInfo />
-              </div>
-            )}
-
-            {state.page === 5 && (
-              <div
-                className={`${
-                  fadeInStates.fadeIn5 ? "fade-in" : "opacity-0"
-                } w-full flex flex-col`}
-              >
-                <SiteInfo />
-              </div>
-            )}
-
-            {state.page === 6 && (
-              <div
-                className={`${
-                  fadeInStates.fadeIn6 ? "fade-in" : "opacity-0"
-                } w-full flex flex-col`}
-              >
-                <ReviewInfo />
-              </div>
-            )}
-
-            {state.page === 7 && (
-              <div
-                className={`${
-                  fadeInStates.fadeIn7 ? "fade-in" : "opacity-0"
                 } w-full flex flex-col`}
               >
                 <ConfirmInfo />
@@ -236,7 +186,13 @@ export default function ServiceAgreementPage() {
   const id = params.id as string;
 
   return (
-    <Suspense fallback={<div>Loading details...</div>}>
+    <Suspense
+      fallback={
+        <div className="w-full min-h-screen flex items-center justify-center">
+          <Loader2Icon className="size-20 animate-spin text-efg-yellow" />
+        </div>
+      }
+    >
       <ServiceAgreementComponent id={id} />
     </Suspense>
   );

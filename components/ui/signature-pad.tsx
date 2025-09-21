@@ -133,7 +133,7 @@ const SignaturePadComponent = ({
       <canvas
         ref={canvasRef}
         style={{ width: parentWidth, height }}
-        className="border border-input rounded-md shadow-xs bg-white touch-none select-none"
+        className="border border-input rounded-xl shadow-sm bg-white touch-none select-none"
         onClick={trimSignature}
       />
     </div>

@@ -1,9 +1,5 @@
 import { create } from "zustand";
-import {
-  AdditionalContact,
-  MaybeOption,
-  ServiceAgreement,
-} from "@/lib/interface";
+import { AdditionalContact, MaybeOption, ServiceAgreement } from "@/lib/interface";
 
 /* -------------------------------- Types ------------------------------- */
 
@@ -53,9 +49,14 @@ export interface ServiceAgreementStore {
   businessState: string;
   companyName: string;
   abn: string;
-  companyType: string;
-  sameAddres: boolean; // keeping original key to avoid breaking existing usage
+
+  /** Kept as-is for backward compatibility (typo preserved intentionally). */
+  sameAddres: boolean;
   setSameAddress: (sameAddres: boolean) => void;
+
+  /** Mark when user has edited company details so Simpro hydration won't overwrite. */
+  companyDetailsEdited: boolean;
+  setCompanyDetailsEdited: (edited: boolean) => void;
 
   /* ---------- Additional Contacts ---------- */
   additionalContacts: AdditionalContact[];
@@ -72,6 +73,7 @@ export interface ServiceAgreementStore {
   odourControlFrequency: MaybeOption;
   selfClosingHopperDoorInspectionFrequency: MaybeOption;
   binCleaningFrequency: MaybeOption;
+  odourControlUnits: Record<string, number>;
 
   setChuteCleaningFrequency: (frequency: MaybeOption) => void;
   setEquipmentMaintenanceFrequency: (frequency: MaybeOption) => void;
@@ -79,6 +81,7 @@ export interface ServiceAgreementStore {
   setOdourControlFrequency: (frequency: MaybeOption) => void;
   setSelfClosingHopperDoorInspectionFrequency: (frequency: MaybeOption) => void;
   setBinCleaningFrequency: (frequency: MaybeOption) => void;
+  setOdourControlUnit: (key: string, qty: number) => void;
 
   /* ---------- Generic field updates & reset ---------- */
   updateField: (field: string, value: string) => void;
@@ -94,6 +97,7 @@ type StateOnly = Omit<
   | "setProgress"
   | "setTrimmedDataURL"
   | "setSameAddress"
+  | "setCompanyDetailsEdited"
   | "setAdditionalContacts"
   | "setServiceAgreement"
   | "setChuteCleaningFrequency"
@@ -103,6 +107,7 @@ type StateOnly = Omit<
   | "setSelfClosingHopperDoorInspectionFrequency"
   | "setBinCleaningFrequency"
   | "updateField"
+  | "setOdourControlUnit"
   | "updateFieldBoolean"
   | "reset"
 >;
@@ -150,8 +155,9 @@ const initialState: StateOnly = {
   businessState: "",
   companyName: "",
   abn: "",
-  companyType: "",
   sameAddres: false,
+  companyDetailsEdited: false,
+  odourControlUnits: {},
 
   /* ---------- Additional Contacts ---------- */
   additionalContacts: [],
@@ -166,6 +172,7 @@ const initialState: StateOnly = {
   odourControlFrequency: null,
   selfClosingHopperDoorInspectionFrequency: null,
   binCleaningFrequency: null,
+  
 };
 
 /* -------------------------------- Store -------------------------------- */
@@ -182,6 +189,7 @@ export const useServiceAgreementStore = create<ServiceAgreementStore>((set) => (
 
   /* ---------- Business / Billing ---------- */
   setSameAddress: (sameAddres) => set({ sameAddres }),
+  setCompanyDetailsEdited: (edited) => set({ companyDetailsEdited: edited }),
 
   /* ---------- Additional Contacts ---------- */
   setAdditionalContacts: (additionalContacts) => set({ additionalContacts }),
@@ -202,6 +210,13 @@ export const useServiceAgreementStore = create<ServiceAgreementStore>((set) => (
     set({ selfClosingHopperDoorInspectionFrequency: frequency }),
   setBinCleaningFrequency: (frequency) =>
     set({ binCleaningFrequency: frequency }),
+  setOdourControlUnit: (key, qty) =>
+    set((s) => ({
+      odourControlUnits: {
+        ...s.odourControlUnits,
+        [key]: Math.max(0, Number.isFinite(qty) ? qty : 0),
+      },
+    })),
 
   /* ---------- Generic field updates & reset ---------- */
   updateField: (field, value) =>

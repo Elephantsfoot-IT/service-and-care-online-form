@@ -25,6 +25,14 @@ import SignaturePadComponent from "@/components/ui/signature-pad";
 import { scrollToTop } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
+const submitServiceAgreement = async (id: string) => {
+  const response = await fetch("/api/service-agreements/submission", {
+    method: "POST",
+    body: JSON.stringify({ id }),
+  });
+  return response.json();
+};
+
 /* ------------------------------ Schema ------------------------------ */
 const TermsSchema = z.object({
   signFullName: z.string().min(1, { message: "Name cannot be empty" }),
@@ -68,18 +76,18 @@ export default function TermsAndSignature() {
 
   /** Handlers */
   const goBack = useCallback(() => {
-    state.setPage(6); // back to Review page
+    state.setPage(2); // back to Review page
   }, [state]);
 
   const onSubmit = useCallback(
-    form.handleSubmit((values) => {
-      state.updateField("signFullName", values.signFullName);
-      state.updateField("signTitle", values.signTitle);
-      state.updateFieldBoolean("conditionAgree", values.conditionAgree);
+    form.handleSubmit(() => {
+      if (!state.serviceAgreement?.id) {
+        return;
+      }
       // e.g., state.submitAgreement()
+      submitServiceAgreement(state.serviceAgreement?.id);
       router.push(`/service-agreement/success`);
       state.reset();
-      
     }),
     [form, state]
   );
@@ -121,7 +129,7 @@ export default function TermsAndSignature() {
       <div className="flex flex-col">
         <Label className="text-sm">Terms and Conditions</Label>
         {/* Terms box */}
-        <div className="p-4 md:p-6 2xl:p-8 border border-input rounded-lg shadow-xs w-full max-h-[500px] overflow-y-auto mt-2 bg-white">
+        <div className="p-4 md:p-6 2xl:p-8 border border-input rounded-xl shadow-sm w-full max-h-[500px] overflow-y-auto mt-2 bg-white">
           <ServiceAndCareTerms />
         </div>
       </div>

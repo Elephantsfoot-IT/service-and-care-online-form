@@ -100,12 +100,12 @@ const SiteContactForm = React.forwardRef<
   return (
     <div
       ref={rootRef}
-      className="flex flex-col w-full rounded-lg border border-input overflow-hidden"
+      className="flex flex-col w-full rounded-xl shadow-sm border border-input overflow-hidden"
     >
       {/* Heading */}
-      <div className="flex flex-row justify-between w-full items-center p-4 md:p-6 border-b border-input bg-neutral-50">
+      <div className="flex flex-row justify-between w-full items-center py-8 px-4 md:px-6 border-b border-input bg-neutral-50">
         <Label className="text-base">
-          {isPrimary ? "Primary Contact" : `Contact (${index + 1})`}
+          {isPrimary ? "Primary Contact" : `Site contact (${index + 1})`}
         </Label>
         {!isPrimary && (
           <Button
@@ -123,13 +123,13 @@ const SiteContactForm = React.forwardRef<
       </div>
 
       <Form {...ContactForm}>
-        <form className="flex flex-col gap-6 p-4 md:p-6">
+        <form className="flex flex-col gap-6 py-8 px-4 md:px-6">
           {/* Full name */}
           <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
             <Label className="w-full md:w-1/3 text-sm">
               Full name <span className="text-red-500">*</span>
             </Label>
-            <div className="w-full md:w-2/3 flex flex-row space-x-2">
+            <div className="w-full md:w-2/3 flex flex-row space-x-2 flex-shrink-0">
               <FormField
                 control={ContactForm.control}
                 name="GivenName"
@@ -184,7 +184,7 @@ const SiteContactForm = React.forwardRef<
                 <FormLabel className="text-sm w-full md:w-1/3">
                   Mobile phone <span className="text-red-500">*</span>
                 </FormLabel>
-                <div className="w-full md:w-2/3">
+                <div className="w-full md:w-2/3 flex-shrink-0">
                   <FormControl>
                     <Input
                       maxLength={13}
@@ -212,7 +212,7 @@ const SiteContactForm = React.forwardRef<
                 <FormLabel className="text-sm w-full md:w-1/3">
                   Email address
                 </FormLabel>
-                <div className="w-full md:w-2/3">
+                <div className="w-full md:w-2/3 flex-shrink-0">
                   <FormControl>
                     <Input
                       className="efg-input"
@@ -238,7 +238,7 @@ const SiteContactForm = React.forwardRef<
                 <FormLabel className="text-sm w-full md:w-1/3">
                   Position
                 </FormLabel>
-                <div className="w-full md:w-2/3">
+                <div className="w-full md:w-2/3 flex-shrink-0">
                   <FormControl>
                     <Input
                       className="efg-input"

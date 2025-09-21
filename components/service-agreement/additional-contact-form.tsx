@@ -190,10 +190,10 @@ const AdditionalcontactForm = React.forwardRef<
   return (
     <div
       ref={rootRef}
-      className="flex flex-col w-full mx-auto rounded-lg border border-input shadow-xs overflow-hidden bg-white"
+      className="flex flex-col w-full mx-auto rounded-xl border border-input shadow-sm overflow-hidden "
     >
-      <div className="flex flex-row justify-between w-full items-center p-4 md:p-6 2xl:p-8 border-b border-input">
-        <Label className="text-base">Contact ({index + 1})</Label>
+      <div className="flex flex-row justify-between w-full items-center p-4 md:p-6 2xl:p-8 border-b border-input bg-neutral-50">
+        <Label className="text-base xl:text-lg">Additional Contact ({index + 1})</Label>
         <Button
           variant="ghost"
           size="icon"
@@ -210,7 +210,7 @@ const AdditionalcontactForm = React.forwardRef<
             <Label className="w-full md:w-1/3 text-sm">
               Full name <span className="text-red-500">*</span>
             </Label>
-            <div className="w-full md:w-2/3 flex flex-row space-x-2">
+            <div className="w-full md:w-2/3 flex flex-row space-x-2 flex-shrink-0">
               <FormField
                 control={ContactForm.control}
                 name="GivenName"
@@ -265,7 +265,7 @@ const AdditionalcontactForm = React.forwardRef<
                 <FormLabel className="text-sm w-full md:w-1/3">
                   Mobile phone <span className="text-red-500">*</span>
                 </FormLabel>
-                <div className="w-full md:w-2/3">
+                <div className="w-full md:w-2/3 flex-shrink-0">
                   <FormControl>
                     <Input
                       maxLength={13}
@@ -293,7 +293,7 @@ const AdditionalcontactForm = React.forwardRef<
                 <FormLabel className="text-sm w-full md:w-1/3">
                   Email address
                 </FormLabel>
-                <div className="w-full md:w-2/3">
+                <div className="w-full md:w-2/3 flex-shrink-0">
                   <FormControl>
                     <Input
                       className="efg-input"
@@ -319,7 +319,7 @@ const AdditionalcontactForm = React.forwardRef<
                 <FormLabel className="text-sm w-full md:w-1/3">
                   Position
                 </FormLabel>
-                <div className="w-full md:w-2/3">
+                <div className="w-full md:w-2/3 flex-shrink-0">
                   <FormControl>
                     <Input
                       className="efg-input"
@@ -341,7 +341,7 @@ const AdditionalcontactForm = React.forwardRef<
             <Label className="text-sm w-full md:w-1/3">
               Use this contact for
             </Label>
-            <div className="w-full md:w-2/3 flex flex-col">
+            <div className="w-full md:w-2/3 flex flex-col flex-shrink-0">
               <div className="flex flex-col gap-4">
                 {/* Quote */}
                 <div className="flex flex-row gap-2">

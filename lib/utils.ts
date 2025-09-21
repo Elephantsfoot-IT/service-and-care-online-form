@@ -113,3 +113,21 @@ export const getServiceAnualCost = (services: ServiceByType<ServiceType>[], freq
     frequency === "yearly" ? 1 : frequency === "six-monthly" ? 2 : 4;
   return services.reduce((acc, service) => acc + getNumber(service.price) * frequencyValue, 0);
 };
+
+export function formatFullAddress(
+  street?: string,
+  city?: string,
+  state?: string,
+  postcode?: string,
+  country?: string
+) {
+  if (!street || !city || !state || !postcode || !country) return null;
+  return `${street}, ${city} ${state} ${postcode}, ${country}`;
+}
+
+export const normalizeQty = (raw: string) => {
+  const digitsOnly = raw.replace(/\D+/g, "");
+  if (digitsOnly === "") return "";           // allow empty
+  const stripped = digitsOnly.replace(/^0+/, "");
+  return stripped;                            // "05" -> "5", "000" -> "" (empty)
+};
