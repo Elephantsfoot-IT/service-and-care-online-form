@@ -44,9 +44,9 @@ function CompanyInfo() {
     scrollToTop();
   }, []);
   return (
-    <div className="w-full mx-auto flex flex-col gap-10">
+    <div className="w-full mx-auto flex flex-col gap-6">
       <div className="flex flex-col">
-        <Label className="text-2xl mb-1">
+        <Label className="text-2xl mb-1 mt-10">
           Customer Information{/* or “Your information” */}
           {state?.serviceAgreement?.simpro_customer?.CompanyName
             ? ` — ${state.serviceAgreement.simpro_customer.CompanyName}`
@@ -60,6 +60,14 @@ function CompanyInfo() {
       <CompanyDetailsCard ref={companyRef} />
 
       <BillingDetailsCard ref={billingRef} />
+
+      <div className="flex flex-col mt-10">
+        <Label className="text-2xl mb-1">Additional Contacts (Optional)</Label>
+        <span className="text-lg text-neutral-500">
+          Provide optional additional contacts for your business as needed.
+          
+        </span>
+      </div>
 
       <AdditionalContactsList ref={addlRef} />
 

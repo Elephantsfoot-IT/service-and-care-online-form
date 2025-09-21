@@ -77,7 +77,7 @@ function SiteDetailsCardImpl(
   };
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-6">
       {state.serviceAgreement.sites.map((site, index) => (
         <SiteForm
         index={index}

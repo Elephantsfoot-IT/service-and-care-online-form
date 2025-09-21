@@ -104,7 +104,7 @@ export const AdditionalContactsList = React.forwardRef<
     <>
       {state.additionalContacts.length === 0 ? (
         <div className="text-sm w-full h-40 bg-white border border-input shadow-sm rounded-xl flex flex-col items-center justify-center gap-2 text-center px-4">
-          <div className="text-base xl:text-lg font-medium">Additional contacts (optional)</div>
+          <div className="text-base xl:text-lg font-medium">Additional contacts</div>
           <p className="text-neutral-500">
             Add extra people for quotes, jobs, invoices or statements so we can
             reach the right person.
@@ -120,7 +120,7 @@ export const AdditionalContactsList = React.forwardRef<
           </Button>
         </div>
       ) : (
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6">
           {state.additionalContacts.map((contact, index) => (
             <AdditionalcontactForm
               key={contact.id}
