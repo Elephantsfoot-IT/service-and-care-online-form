@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { EraserIcon } from "lucide-react";
-import { useEffect, useMemo, useRef } from "react";
+import React from "react";
 import SignaturePad from "signature_pad";
 
 interface SignaturePropTypes {
@@ -16,75 +16,100 @@ const SignaturePadComponent = ({
   setTrimmedDataURL,
   trimmedDataURL,
 }: SignaturePropTypes) => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const signaturePadRef = useRef<SignaturePad | null>(null);
+  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
+  const signaturePadRef = React.useRef<SignaturePad | null>(null);
 
-  const height = useMemo(() => {
-    return (parentWidth/16)*9;
-  }, [parentWidth]);
+  const height = React.useMemo(() => (parentWidth / 16) * 9, [parentWidth]);
 
-  useEffect(() => {
-    if (canvasRef.current) {
-      const signaturePad = new SignaturePad(canvasRef.current, {
-        backgroundColor: "rgba(255,255,255,0)", // transparent background
-        penColor: "black",
-      });
+  const resizeCanvas = React.useCallback(() => {
+    const canvas = canvasRef.current;
+    const pad = signaturePadRef.current;
+    if (!canvas || !pad) return;
 
-      signaturePadRef.current = signaturePad;
+    const ratio = Math.max(window.devicePixelRatio || 1, 1);
+    // keep vector data to restore crisp strokes after resize
+    const data = pad.toData();
 
-      // Add event listeners for mouseup and touchend
-      const handleEnd = () => {
-        if (!signaturePad.isEmpty()) {
-          const dataUrl = signaturePad.toDataURL("image/png");
-          setTrimmedDataURL(dataUrl);
-        }
-      };
+    canvas.width = Math.floor(parentWidth * ratio);
+    canvas.height = Math.floor(height * ratio);
+    canvas.style.width = `${parentWidth}px`;
+    canvas.style.height = `${height}px`;
 
-      canvasRef.current.addEventListener("mouseup", handleEnd);
-      canvasRef.current.addEventListener("touchend", handleEnd);
-      canvasRef.current.addEventListener("pointerup", handleEnd);
+    const ctx = canvas.getContext("2d");
+    if (ctx) ctx.scale(ratio, ratio);
 
-      return () => {
-        // Clean up event listeners
-        canvasRef.current?.removeEventListener("mouseup", handleEnd);
-        canvasRef.current?.removeEventListener("touchend", handleEnd);
-        canvasRef.current?.removeEventListener("pointerup", handleEnd);
-        signaturePad.off();
-      };
+    pad.clear();
+    if (data.length) {
+      pad.fromData(data);
     }
-  }, [setTrimmedDataURL]);
+  }, [parentWidth, height]);
 
-  useEffect(() => {
-    if (canvasRef.current) {
-      const signaturePad = new SignaturePad(canvasRef.current, {
-        backgroundColor: "rgba(255,255,255,0)", // Transparent background
-        penColor: "black", // Pen color
-        throttle: 0,
-        maxWidth: 2,
-        minWidth: 2,
-      });
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-      signaturePadRef.current = signaturePad;
+    const pad = new SignaturePad(canvas, {
+      backgroundColor: "rgba(255,255,255,0)",
+      penColor: "#111",
+      minWidth: 0.9,
+      maxWidth: 2.4,
+      throttle: 16, // ~1 frame
+    });
+    signaturePadRef.current = pad;
 
-      // Re-draw the saved signature when trimmedDataURL changes
-      if (trimmedDataURL) {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
-        if (ctx) {
-          const image = new Image();
-          image.onload = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-            ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // Draw saved signature
-          };
-          image.src = trimmedDataURL;
-        }
+    const savePNG = () => {
+      if (!pad.isEmpty()) {
+        setTrimmedDataURL(pad.toDataURL("image/png"));
       }
+    };
 
-      return () => {
-        signaturePad.off(); // Clean up SignaturePad instance
-      };
+    // Prefer modern event API if present
+    const anyPad = pad as unknown as {
+      addEventListener?: (name: string, fn: () => void) => void;
+      removeEventListener?: (name: string, fn: () => void) => void;
+      onEnd?: () => void;
+    };
+
+    if (anyPad.addEventListener) {
+      anyPad.addEventListener("endStroke", savePNG);
+    } else if ("onEnd" in anyPad) {
+      anyPad.onEnd = savePNG; // legacy fallback
+    } else {
+      // last resort fallback to pointerup on the canvas
+      canvas.addEventListener("pointerup", savePNG, { passive: true });
     }
-  }, [trimmedDataURL]);
+
+    resizeCanvas();
+    const onResize = () => resizeCanvas();
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+      if (anyPad.removeEventListener) {
+        anyPad.removeEventListener("endStroke", savePNG);
+      } else {
+        // clear legacy handler if we set it
+        if ("onEnd" in anyPad) anyPad.onEnd = undefined;
+        canvas.removeEventListener("pointerup", savePNG);
+      }
+      pad.off();
+      signaturePadRef.current = null;
+    };
+  }, [resizeCanvas, setTrimmedDataURL]);
+
+  React.useEffect(() => {
+    if (!trimmedDataURL || !signaturePadRef.current) return;
+    try {
+      // Use SignaturePad API to keep its internal state in sync
+      signaturePadRef.current.fromDataURL(trimmedDataURL, {
+        ratio: 1,
+        width: parentWidth,
+        height,
+      });
+    } catch {
+      // ignore decode errors
+    }
+  }, [trimmedDataURL, parentWidth, height]);
 
   const clearSignature = () => {
     signaturePadRef.current?.clear();
@@ -92,25 +117,25 @@ const SignaturePadComponent = ({
   };
 
   const trimSignature = () => {
-    if (!signaturePadRef.current || signaturePadRef.current.isEmpty()) return;
-    const dataUrl = signaturePadRef.current.toDataURL("image/png");
-    setTrimmedDataURL(dataUrl);
+    const pad = signaturePadRef.current;
+    if (!pad || pad.isEmpty()) return;
+    setTrimmedDataURL(pad.toDataURL("image/png"));
   };
 
   return (
     <div className="relative flex flex-col items-center gap-2">
       <div className="z-20 right-0 m-1 absolute flex flex-row gap-2">
-        <Button variant="ghost" size="icon" onClick={clearSignature}>
-          <EraserIcon></EraserIcon>
+        <Button variant="ghost" size="icon" onClick={clearSignature} title="Clear">
+          <EraserIcon />
         </Button>
       </div>
+
       <canvas
         ref={canvasRef}
-        width={parentWidth}
-        height={height}
-        className="border border-input rounded-md shadow-xs bg-white"
+        style={{ width: parentWidth, height }}
+        className="border border-input rounded-md shadow-xs bg-white touch-none select-none"
         onClick={trimSignature}
-      ></canvas>
+      />
     </div>
   );
 };
