@@ -88,8 +88,6 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
       [site.site_contacts]
     );
 
-    const editDisabled = useMemo(() => site.mode === "existing", [site.mode]);
-
     /** Field change helpers -> always call handleEditSites */
     const onChange = (field: keyof SiteFormType, value: string) => {
       form.setValue(field, value, { shouldDirty: true, shouldTouch: true });
@@ -228,7 +226,6 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
                             onChange("siteName", e.target.value);
                           }}
                           className="efg-input"
-                          disabled={editDisabled}
                         />
                       </FormControl>
                       <FormMessage />
@@ -256,7 +253,6 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
                       onChange(f as keyof SiteFormType, v)
                     }
                     stateSelectValue={site.site_address.State}
-                    disabled={editDisabled}
                     handleChangeAll={(street, city, postcode, state) =>
                       onChangeAll(street, city, postcode, state)
                     }
