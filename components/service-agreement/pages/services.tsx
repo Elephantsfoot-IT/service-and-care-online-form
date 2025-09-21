@@ -346,7 +346,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           ) : daysLeft === 0 ? (
             <>
               This proposal expires{" "}
-              <span className="text-amber-600">today</span> (
+              <span className="">Today</span> (
               <span className="underline">{expiryLabel}</span>).
             </>
           ) : (
