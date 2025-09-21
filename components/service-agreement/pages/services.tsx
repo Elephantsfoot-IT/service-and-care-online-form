@@ -81,9 +81,11 @@ function SectionHeader({
           </a>
         )}
       </div>
-      {description && <span className="text-sm xl:text-base text-neutral-500">
-        {description}
-      </span>}
+      {description && (
+        <span className="text-sm xl:text-base text-neutral-500">
+          {description}
+        </span>
+      )}
     </div>
   );
 }
@@ -128,7 +130,7 @@ function PricingFooter({
                 <div className="text-sm line-through text-neutral-500">
                   {formatMoney(subtotal)}
                 </div>
-                <div className="text-lg font-medium">
+                <div className="text-base font-medium">
                   {formatMoney(grandTotal)}
                 </div>
               </div>
@@ -139,7 +141,7 @@ function PricingFooter({
             <span className="text-neutral-600 text-sm font-medium">
               Annual cost (excl. GST)
             </span>
-            <span className="text-lg font-medium">
+            <span className="text-base font-medium">
               {formatMoney(grandTotal)}
             </span>
           </div>
@@ -189,7 +191,9 @@ function OdourControlFooter({
                 {formatMoney(subtotal)}
               </div>
             )}
-            <div className="text-lg font-medium">{formatMoney(grandTotal)}</div>
+            <div className="text-base font-medium">
+              {formatMoney(grandTotal)}
+            </div>
           </div>
         </div>
       </div>
@@ -301,29 +305,21 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
   return (
     <div className="flex flex-col gap-10">
-      <SectionShell id="service_agreement">
-        <SectionHeader
-          title="Service Agreement Duration"
-         
-        />
-        <SectionContent>
-          <div className="flex flex-row items-center gap-4 justify-between bg-white ">
-            <div className="flex flex-col w-fit flex-shrink-0">
-              <Label className="text-sm">Start date</Label>
-              <span className="text-base font-medium">
-                {format(state.serviceAgreement.start_date, "dd MMM yyyy")}
-              </span>
-            </div>
-            <hr className="w-full border-input" />
-            <div className="flex flex-col w-fit flex-shrink-0">
-              <Label className="text-sm">End date</Label>
-              <span className="text-base font-medium">
-                {format(state.serviceAgreement.end_date, "dd MMM yyyy")}
-              </span>
-            </div>
-          </div>
-        </SectionContent>
-      </SectionShell>
+      <div className="flex flex-row items-center gap-4 justify-between bg-white ">
+        <div className="flex flex-col w-fit flex-shrink-0">
+          <Label className="text-sm">Start date</Label>
+          <span className="text-base font-medium">
+            {format(state.serviceAgreement.start_date, "dd MMM yyyy")}
+          </span>
+        </div>
+        <hr className="w-full border-input" />
+        <div className="flex flex-col w-fit flex-shrink-0">
+          <Label className="text-sm">End date</Label>
+          <span className="text-base font-medium">
+            {format(state.serviceAgreement.end_date, "dd MMM yyyy")}
+          </span>
+        </div>
+      </div>
 
       <div className="flex flex-col mt-10">
         <Label className="text-2xl mb-1 font-medium">

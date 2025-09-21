@@ -244,7 +244,7 @@ export function ServiceSummary() {
                   Annual cost{" "}
                   <span className="font-normal text-xs">(2 years, excl. GST)</span>
                 </span>
-                <span className="text-lg font-medium text-neutral-900">
+                <span className="text-base font-medium text-neutral-900">
                   {formatMoney(grandTotal)}
                 </span>
               </div>
@@ -254,7 +254,7 @@ export function ServiceSummary() {
                   Contract value{" "}
                   <span className="font-normal text-xs">(2 years, excl. GST)</span>
                 </span>
-                <span className="text-lg font-medium text-neutral-900">
+                <span className="text-base font-medium text-neutral-900">
                   {formatMoney(grandTotal * 2)}
                 </span>
               </div>

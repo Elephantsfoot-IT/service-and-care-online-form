@@ -117,7 +117,7 @@ function FormVerticalProgress({ activeId, onJump }: Props) {
         </div>
       ))}
 
-      <div className={cn(`fade-right fade-right-${(visibleItems.length + 1) * 100}`)}>
+      {state.serviceAgreement?.incentives && <div className={cn(`fade-right fade-right-${(visibleItems.length + 1) * 100}`)}>
         <div
           className={cn(
             "flex flex-row items-center gap-4 transition-all duration-200 cursor-pointer hover:opacity-100",
@@ -138,7 +138,7 @@ function FormVerticalProgress({ activeId, onJump }: Props) {
             <div className="text-base">Complimentary Incentives</div>
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }
