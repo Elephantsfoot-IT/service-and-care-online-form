@@ -25,6 +25,14 @@ import SignaturePadComponent from "@/components/ui/signature-pad";
 import { scrollToTop } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
+const submitServiceAgreement = async (id: string) => {
+  const response = await fetch("/api/service-agreements/submission", {
+    method: "POST",
+    body: JSON.stringify({ id }),
+  });
+  return response.json();
+};
+
 /* ------------------------------ Schema ------------------------------ */
 const TermsSchema = z.object({
   signFullName: z.string().min(1, { message: "Name cannot be empty" }),
@@ -72,14 +80,14 @@ export default function TermsAndSignature() {
   }, [state]);
 
   const onSubmit = useCallback(
-    form.handleSubmit((values) => {
-      state.updateField("signFullName", values.signFullName);
-      state.updateField("signTitle", values.signTitle);
-      state.updateFieldBoolean("conditionAgree", values.conditionAgree);
+    form.handleSubmit(() => {
+      if (!state.serviceAgreement?.id) {
+        return;
+      }
       // e.g., state.submitAgreement()
+      submitServiceAgreement(state.serviceAgreement?.id);
       router.push(`/service-agreement/success`);
       state.reset();
-      
     }),
     [form, state]
   );
