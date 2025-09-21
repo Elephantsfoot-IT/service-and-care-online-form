@@ -30,6 +30,7 @@ const FormSchema = z.object({
 export type SiteFormType = z.infer<typeof FormSchema>;
 
 type Props = {
+  index?: number;
   site: Site;
   handleEditSites: (siteId: string, patch: Partial<Site>) => void;
 };
@@ -40,7 +41,7 @@ export type SiteFormHandle = {
 };
 
 const SiteForm = React.forwardRef<SiteFormHandle, Props>(
-  ({ site, handleEditSites }, ref) => {
+  ({ site, handleEditSites, index }, ref) => {
     const siteId = site.simpro_site_id;
 
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -189,28 +190,24 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
     return (
       <div
         ref={rootRef}
-        className="flex flex-col w-full mx-auto border border-input shadow-xs rounded-lg gap-6 overflow-hidden bg-white"
+        className="flex flex-col w-full mx-auto border border-input shadow-xs rounded-lg overflow-hidden bg-white"
       >
         {/* Header */}
-        <div className="p-4 md:p-6 2xl:p-8 border-b border-input ">
-          <Label className="text-base mb-1">
-            {site.site_name || (
-              <span className="text-neutral-400">
-                <span aria-hidden>—</span>
-                <span className="sr-only">Not provided</span>
-              </span>
-            )}
+        <div className="py-8 px-4 md:px-6 border-b border-input bg-neutral-50">
+          <Label className="text-base xl:text-lg">
+            Site {(index || 0) + 1}
           </Label>
         </div>
 
-        {/* Site meta form */}
-        <Form {...form}>
-          <form className="flex flex-col gap-6 p-4 md:p-6 2xl:p-8">
-            <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-              <Label className="w-full md:w-1/3 text-sm">
-                Site Name <span className="text-red-500">*</span>
-              </Label>
-     
+        <div className="py-8 px-4 md:px-6 flex flex-col gap-6">
+          {/* Site meta form */}
+          <Form {...form}>
+            <form className="flex flex-col gap-6">
+              <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
+                <Label className="w-full md:w-1/3 text-sm">
+                  Site Name <span className="text-red-500">*</span>
+                </Label>
+
                 <FormField
                   control={form.control}
                   name="siteName"
@@ -231,69 +228,73 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
                     </FormItem>
                   )}
                 />
-              
+              </div>
+
+              <hr className="border-neutral-300 border-dashed" />
+
+              <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
+                <Label className="mb-2 text-sm w-full md:w-1/3">
+                  Company address <span className="text-red-500">*</span>
+                </Label>
+                <div className="w-full md:w-2/3">
+                  <MultiLineAddressInput<SiteFormType>
+                    fieldNames={{
+                      street: "Address",
+                      city: "City",
+                      state: "State",
+                      postcode: "PostalCode",
+                      country: "Country",
+                    }}
+                    handleChange={(f, v) =>
+                      onChange(f as keyof SiteFormType, v)
+                    }
+                    stateSelectValue={site.site_address.State}
+                    disabled={editDisabled}
+                    handleChangeAll={(street, city, postcode, state) =>
+                      onChangeAll(street, city, postcode, state)
+                    }
+                  />
+                </div>
+              </div>
+              <hr className="border-neutral-300 border-dashed" />
+            </form>
+          </Form>
+
+          {/* Contacts */}
+          <div className="flex flex-col gap-4 md:flex-row md:items-start">
+            <div className="w-full md:w-1/3">
+              <Label className="text-sm">
+                Site Contacts ({contacts.length}/3){" "}
+                <span className="text-red-500">*</span>
+              </Label>
             </div>
 
-            <hr className="border-neutral-300 border-dashed" />
-
-            <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-              <Label className="mb-2 text-sm w-full md:w-1/3">
-                Company address <span className="text-red-500">*</span>
-              </Label>
-              <div className="w-full md:w-2/3">
-                <MultiLineAddressInput<SiteFormType>
-                  fieldNames={{
-                    street: "Address",
-                    city: "City",
-                    state: "State",
-                    postcode: "PostalCode",
-                    country: "Country",
-                  }}
-                  handleChange={(f, v) => onChange(f as keyof SiteFormType, v)}
-                  stateSelectValue={site.site_address.State}
-                  disabled={editDisabled}
-                  handleChangeAll={(street, city, postcode, state) =>
-                    onChangeAll(street, city, postcode, state)
+            <div className="w-full md:w-2/3 flex flex-col gap-6">
+              {contacts.map((contact, index) => (
+                <SiteContactForm
+                  key={contact.id}
+                  ref={setContactRef(contact.id)}
+                  contact={contact}
+                  index={index}
+                  isPrimary={index === 0}
+                  handleDelete={() => handleDeleteContact(index)}
+                  handleChange={(updated) =>
+                    handleChangeContact(index, updated)
                   }
                 />
-              </div>
+              ))}
             </div>
-          </form>
-        </Form>
-
-        {/* Contacts */}
-        <div className="flex flex-col gap-4 md:flex-row md:items-start md:gap-6 p-4 md:p-6 2xl:p-8">
-          <div className="w-full md:w-1/3">
-            <Label className="text-sm">
-              Site Contacts ({contacts.length}/3){" "}
-              <span className="text-red-500">*</span>
-            </Label>
           </div>
-
-          <div className="w-full md:w-2/3 flex flex-col gap-6">
-            {contacts.map((contact, index) => (
-              <SiteContactForm
-                key={contact.id}
-                ref={setContactRef(contact.id)}
-                contact={contact}
-                index={index}
-                isPrimary={index === 0}
-                handleDelete={() => handleDeleteContact(index)}
-                handleChange={(updated) => handleChangeContact(index, updated)}
-              />
-            ))}
-
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={addContact}
-              disabled={contacts.length >= 3}
-              className="cursor-pointer w-fit ml-auto"
-            >
-              <PlusIcon className="mr-1" />
-              New contact
-            </Button>
-          </div>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={addContact}
+            disabled={contacts.length >= 3}
+            className="cursor-pointer w-fit ml-auto"
+          >
+            <PlusIcon className="mr-1" />
+            New contact
+          </Button>
         </div>
       </div>
     );

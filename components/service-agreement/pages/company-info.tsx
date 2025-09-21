@@ -6,10 +6,13 @@ import { ArrowLeftIcon } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { BillingDetailsCard } from "../company-info/billing-detail-card";
 import { CompanyDetailsCard } from "../company-info/company-detail-card";
-import { AdditionalContactsList, AdditionalContactsListHandle } from "../company-info/additional-contact-card";
-
-
-
+import {
+  AdditionalContactsList,
+  AdditionalContactsListHandle,
+} from "../company-info/additional-contact-card";
+import SiteDetailsCard, {
+  SiteDetailsCardHandle,
+} from "../company-info/site-detail-card";
 
 function CompanyInfo() {
   const state = useServiceAgreementStore();
@@ -17,10 +20,13 @@ function CompanyInfo() {
   const goBack = () => state.setPage(1);
   // Ref to child list
   const addlRef = useRef<AdditionalContactsListHandle>(null);
+  const siteRef = useRef<SiteDetailsCardHandle>(null);
 
   // Next: validate additional contacts first
   const goNext = async () => {
-    const ok = await addlRef.current?.handleSubmit?.();
+    let ok = await addlRef.current?.handleSubmit?.();
+    if (!ok) return; // stop if invalid
+    ok = await siteRef.current?.handleSubmit?.();
     if (!ok) return; // stop if invalid
     state.setPage(3);
   };
@@ -45,6 +51,14 @@ function CompanyInfo() {
       <CompanyDetailsCard />
       <BillingDetailsCard />
       <AdditionalContactsList ref={addlRef} />
+
+      <div className="flex flex-col">
+        <Label className="text-2xl mb-1">Site Details</Label>
+        <span className="text-lg text-neutral-500">
+          Provide the site information associated with this service agreement.
+        </span>
+      </div>
+      <SiteDetailsCard ref={siteRef} />
 
       {/* Nav */}
       <div className="flex flex-row gap-2 justify-between mt-10">
