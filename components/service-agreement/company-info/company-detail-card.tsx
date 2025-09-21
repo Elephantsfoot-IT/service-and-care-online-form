@@ -157,7 +157,7 @@ const CompanyDetailsCard = React.forwardRef<CompanyDetailsCardHandle, Props>(
 
     return (
       <div className="flex flex-col w-full mx-auto rounded-xl border border-input shadow-sm overflow-hidden">
-        <div className="flex flex-row justify-between w-full items-center p-4 md:p-6 2xl:p-8 border-b border-input bg-neutral-50">
+        <div className="flex flex-row justify-between w-full items-center py-8 px-4 md:px-6 border-b border-input bg-neutral-50">
           <Label className="text-base xl:text-lg">Company Information</Label>
         </div>
 
