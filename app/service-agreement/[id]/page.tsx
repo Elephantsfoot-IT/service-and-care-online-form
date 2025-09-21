@@ -150,7 +150,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
    
       <Header />
       {activeId && <Sider activeId={activeId} onJump={onJump} />}
-      <div className="pt-10 xl:pt-40 xl:pl-[400px] pb-20 relative">
+      <div className="pt-10 xl:pt-40 xl:pl-[400px] pb-40 relative">
         <ScrollButton />
 
         <div className="px-4 xl:px-20 text-neutral-800 bg-transparent">
