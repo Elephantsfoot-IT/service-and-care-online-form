@@ -3,7 +3,6 @@
 
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { GlobeIcon, MailIcon, PhoneIcon } from "lucide-react";
-import BrandCornerShape from "./brand-animation";
 import FormVerticalProgress from "./service-agreement/form-vertical-progress";
 import ServiceVerticalProgress from "./service-agreement/service-vertical-progress";
 
@@ -11,7 +10,7 @@ export default function Sider({
   activeId,
   onJump,
 }: {
-  activeId: string;
+  activeId: string | null;
   onJump: (id: string) => void;
 }) {
   const state = useServiceAgreementStore();

@@ -6,7 +6,7 @@ export function useScrollSpy(
   ids: string[],
   { offset = 140, disabled = false }: { offset?: number; disabled?: boolean } = {}
 ) {
-  const [activeId, setActiveId] = useState<string | null>(ids[0] ?? null);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;

@@ -41,6 +41,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     offset: 120,
     disabled: !!manualActive,
   });
+
   const activeId = manualActive ?? spiedId;
 
   /* Callbacks */
@@ -135,7 +136,7 @@ function ServiceAgreementComponent({ id }: { id: string }) {
   return (
     <>
       <Header />
-      {activeId && <Sider activeId={activeId} onJump={onJump} />}
+      <Sider activeId={activeId} onJump={onJump} />
       <div className="pt-10 xl:pt-40 xl:pl-[400px] pb-40 relative">
         <ScrollButton />
 

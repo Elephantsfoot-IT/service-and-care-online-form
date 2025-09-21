@@ -305,21 +305,47 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex flex-row items-center gap-4 justify-between bg-white ">
-        <div className="flex flex-col w-fit flex-shrink-0">
-          <Label className="text-sm">Start date</Label>
-          <span className="text-base font-medium">
-            {format(state.serviceAgreement.start_date, "dd MMM yyyy")}
+      <div className="flex flex-col ">
+        <Label className="text-2xl mb-1 font-medium">
+          Service Agreement Form
+        </Label>
+        <span className="text-lg text-neutral-500 font-normal">
+          Thanks for choosing{" "}
+          <span className="font-medium text-neutral-700">
+            Elephants Foot Service & Care
           </span>
-        </div>
-        <hr className="w-full border-input" />
-        <div className="flex flex-col w-fit flex-shrink-0">
-          <Label className="text-sm">End date</Label>
-          <span className="text-base font-medium">
-            {format(state.serviceAgreement.end_date, "dd MMM yyyy")}
-          </span>
-        </div>
+          . This form captures your sites and the services/frequencies you’d
+          like so we can tailor a maintenance plan that keeps your building
+          safe, compliant, and fresh. Once submitted, our team will confirm the
+          details and next steps.
+        </span>
+        <span className="font-medium mt-2">
+          *This proposal is valid for 30 days.
+        </span>
       </div>
+      <SectionShell id="service_agreement_duration">
+        <SectionHeader
+          title="Service Agreement Duration"
+          description="The duration of your service agreement."
+        />
+        <SectionContent>
+          <div className="flex flex-row items-center gap-4 justify-between bg-white ">
+            <div className="flex flex-col w-fit flex-shrink-0">
+              <Label className="text-sm">Start date</Label>
+              <span className="text-base font-medium">
+                {format(state.serviceAgreement.start_date, "dd MMM yyyy")}
+              </span>
+            </div>
+            <hr className="w-full border-input" />
+            <div className="flex flex-col w-fit flex-shrink-0">
+              <Label className="text-sm">End date</Label>
+              <span className="text-base font-medium">
+                {format(state.serviceAgreement.end_date, "dd MMM yyyy")}
+              </span>
+            </div>
+          </div>
+        </SectionContent>
+      </SectionShell>
 
       <div className="flex flex-col mt-10">
         <Label className="text-2xl mb-1 font-medium">
