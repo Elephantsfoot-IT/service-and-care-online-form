@@ -25,6 +25,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Input } from "@/components/ui/input";
 import { ServiceSummary } from "../service-summary";
+import { format } from "date-fns-tz";
 
 /* ---------- Small helpers (do NOT touch your service grids) ---------- */
 
@@ -59,7 +60,7 @@ function SectionHeader({
   imageAlt,
 }: {
   title: string;
-  description: string;
+  description?: string;
   helpHref?: string;
   image?: string;
   imageAlt?: string;
@@ -80,9 +81,9 @@ function SectionHeader({
           </a>
         )}
       </div>
-      <span className="text-sm xl:text-base text-neutral-500">
+      {description && <span className="text-sm xl:text-base text-neutral-500">
         {description}
-      </span>
+      </span>}
     </div>
   );
 }
@@ -300,7 +301,31 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex flex-col">
+      <SectionShell id="service_agreement">
+        <SectionHeader
+          title="Service Agreement Duration"
+         
+        />
+        <SectionContent>
+          <div className="flex flex-row items-center gap-4 justify-between bg-white ">
+            <div className="flex flex-col w-fit flex-shrink-0">
+              <Label className="text-sm">Start date</Label>
+              <span className="text-base font-medium">
+                {format(state.serviceAgreement.start_date, "dd MMM yyyy")}
+              </span>
+            </div>
+            <hr className="w-full border-input" />
+            <div className="flex flex-col w-fit flex-shrink-0">
+              <Label className="text-sm">End date</Label>
+              <span className="text-base font-medium">
+                {format(state.serviceAgreement.end_date, "dd MMM yyyy")}
+              </span>
+            </div>
+          </div>
+        </SectionContent>
+      </SectionShell>
+
+      <div className="flex flex-col mt-10">
         <Label className="text-2xl mb-1 font-medium">
           Build Your Service Plan
         </Label>
@@ -936,36 +961,36 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       )}
 
       {/* Exclusive Benefits */}
-      <section
-        id="rewards"
-        className="flex flex-col gap-6 scroll-mt-[140px] mt-10"
-      >
-        <div className="flex flex-col">
-          <Label className="text-2xl font-medium">
-            Complimentary Incentives
-          </Label>
-          <span className="text-lg text-neutral-500">
-            Add services to unlock and redeem complimentary incentives from us —
-            at no extra cost.
-          </span>
-        </div>
-        <div className="overflow-x-auto p-1">
-          <IncentiveTable
-            serviceCount={numberOfServices}
-            selectMore={selectMore}
-          />
-        </div>
-      </section>
-
+      {state.serviceAgreement.incentives && (
+        <section
+          id="rewards"
+          className="flex flex-col gap-6 scroll-mt-[140px] mt-10"
+        >
+          <div className="flex flex-col">
+            <Label className="text-2xl font-medium">
+              Complimentary Incentives
+            </Label>
+            <span className="text-lg text-neutral-500">
+              Add services to unlock and redeem complimentary incentives from us
+              — at no extra cost.
+            </span>
+          </div>
+          <div className="overflow-x-auto p-1">
+            <IncentiveTable
+              serviceCount={numberOfServices}
+              selectMore={selectMore}
+            />
+          </div>
+        </section>
+      )}
       <div className="flex flex-col gap-6 mt-10">
         <div className="flex flex-col">
-          <Label className="text-2xl font-medium">
-            Service Summary
-          </Label>
+          <Label className="text-2xl font-medium">Service Summary</Label>
           <span className="text-lg text-neutral-500">
             Review your service plan and the total cost.
           </span>
         </div>
+
         <ServiceSummary />
       </div>
 

@@ -59,6 +59,9 @@ export interface ServiceAgreement {
   status: string;
   sites: Site[];
   simpro_customer?: SimproCustomer | null;
+  incentives: boolean;
+  end_date: Date;
+  start_date: Date;
 }
 
 export interface Building {

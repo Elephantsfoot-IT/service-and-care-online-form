@@ -3,9 +3,11 @@
 /* ------------------------------ Imports ------------------------------ */
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import Header from "@/components/header";
+import CompanyInfo from "@/components/service-agreement/pages/company-info";
+import ConfirmInfo from "@/components/service-agreement/pages/confirm-info";
+import ServicesForm from "@/components/service-agreement/pages/services";
 import ScrollButton from "@/components/service-agreement/scroll-button";
 import { useScrollSpy } from "@/components/service-agreement/scroll-spy";
-import ServiceAgreementProgress from "@/components/service-agreement/service-agreement-progress";
 import Sider from "@/components/sider";
 import { useServiceAgreement } from "@/lib/api";
 import { SECTION_IDS, ServiceAgreement } from "@/lib/interface";
@@ -13,9 +15,6 @@ import { fastScrollToEl, scrollToTop } from "@/lib/utils";
 import { Loader2Icon } from "lucide-react";
 import { notFound, useParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
-import ConfirmInfo from "@/components/service-agreement/pages/confirm-info";
-import ServicesForm from "@/components/service-agreement/pages/services";
-import CompanyInfo from "@/components/service-agreement/pages/company-info";
 
 /* ------------------------------ Component ------------------------------ */
 function ServiceAgreementComponent({ id }: { id: string }) {
