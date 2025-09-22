@@ -12,15 +12,6 @@ export interface Address {
   Country: string;
 }
 
-export type SimproCustomer = {
-  ID: number;
-  CompanyName: string;
-  EIN: string;
-  Address: Address;
-  Phone: string;
-  Email: string;
-};
-
 export interface AdditionalContact {
   id: string;
   GivenName: string;
@@ -51,6 +42,29 @@ export interface SiteContact {
   Department: string;
 }
 
+export interface BillingDetails {
+  accountFirstName?: string;
+  accountLastName?: string;
+  accountEmail?: string;
+  accountPhone?: string;
+  accountMobile?: string;
+  postalStreetAddress?: string;
+  postalCity?: string;
+  postalState?: string;
+  postalPostcode?: string;
+  postalCountry?: string;
+}
+
+export interface CompanyInfo {
+  abn?: string;
+  companyName?: string;
+  businessStreetAddress?: string;
+  businessCity?: string;
+  businessState?: string;
+  businessPostcode?: string;
+  businessCountry?: string;
+}
+
 export interface ServiceAgreement {
   id: string;
   simpro_customer_id: string;
@@ -58,11 +72,12 @@ export interface ServiceAgreement {
   created_at: string;
   status: string;
   sites: Site[];
-  simpro_customer?: SimproCustomer | null;
   incentives: boolean;
   end_date: Date;
   start_date: Date;
   expire_at: Date;
+  company_details?: CompanyInfo;
+  billing_details?: BillingDetails;
 }
 
 export interface Building {
@@ -182,16 +197,16 @@ export const defaultSiteContact: SiteContact = {
 export type ServiceByType<T extends ServiceType> = T extends "chute_cleaning"
   ? ChuteCleaningService
   : T extends "equipment_maintenance"
-  ? EquipmentMaintenanceService
-  : T extends "hopper_door_inspection"
-  ? HopperDoorInspectionService
-  : T extends "waste_room_pressure_clean"
-  ? WasteRoomPressureCleanService
-  : T extends "odour_control"
-  ? OdourControlService
-  : T extends "bin_cleaning"
-  ? BinCleaningService
-  : never;
+    ? EquipmentMaintenanceService
+    : T extends "hopper_door_inspection"
+      ? HopperDoorInspectionService
+      : T extends "waste_room_pressure_clean"
+        ? WasteRoomPressureCleanService
+        : T extends "odour_control"
+          ? OdourControlService
+          : T extends "bin_cleaning"
+            ? BinCleaningService
+            : never;
 
 type WithContext<S> = S & {
   site_name: string;

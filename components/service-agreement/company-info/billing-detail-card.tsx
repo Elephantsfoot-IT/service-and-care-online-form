@@ -1,18 +1,30 @@
 "use client";
 
 /* ------------------------------ Imports ------------------------------ */
-import React, { useEffect, useImperativeHandle } from "react";
+import React, { useEffect, useImperativeHandle, useMemo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import MultiLineAddressInput from "@/components/ui/multi-line-address-input";
 import { scrollToTop } from "@/lib/utils";
+import { BillingDetails } from "@/lib/interface";
+
+// If your BillingDetails type lives elsewhere, adjust this import:
+
 
 /* ------------------------------ Schema/Types ------------------------------ */
 const billingSchema = z
@@ -70,13 +82,19 @@ type Props = {
 };
 
 /* ------------------------------ Component ------------------------------ */
-const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(function BillingDetailsCard(_props, ref) {
+const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(function BillingDetailsCard(
+  _props,
+  ref
+) {
   const state = useServiceAgreementStore();
 
-  const form = useForm<BillingDetailsFormType>({
-    resolver: zodResolver(billingSchema),
-    mode: "onChange",
-    defaultValues: {
+  // ✅ Use billing details from the service agreement (mirrors company_details flow)
+  const billingDetails = state.serviceAgreement?.billing_details ?? null;
+  const hasBillingDetails = !!billingDetails;
+
+  // Build empty defaults
+  const emptyValues: BillingDetailsFormType = useMemo(
+    () => ({
       accountFirstName: "",
       accountLastName: "",
       accountEmail: "",
@@ -95,31 +113,66 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
       postalState: "",
       postalPostcode: "",
       postalCountry: "",
-    },
+    }),
+    []
+  );
+
+  // Map API BillingDetails → FormType (booleans default to false if not present in API)
+  const valuesFromBilling = (b: BillingDetails): BillingDetailsFormType => ({
+    accountFirstName: b?.accountFirstName ?? "",
+    accountLastName: b?.accountLastName ?? "",
+    accountEmail: b?.accountEmail ?? "",
+    accountPhone: b?.accountPhone ?? "",
+    accountMobile: b?.accountMobile ?? "",
+    // These may not exist in your API interface; default to false
+    QuoteContact: false,    
+    JobContact: false,
+    InvoiceContact: false,
+    StatementContact: false,
+    PrimaryStatementContact: false,
+    PrimaryInvoiceContact: false,
+    PrimaryJobContact: false,
+    PrimaryQuoteContact: false,
+    postalStreetAddress: b?.postalStreetAddress ?? "",
+    postalCity: b?.postalCity ?? "",
+    postalState: b?.postalState ?? "",
+    postalPostcode: b?.postalPostcode ?? "",
+    postalCountry: b?.postalCountry ?? "",
   });
 
-  /* hydrate from store once */
-  useEffect(() => {
-    form.setValue("accountFirstName", state.accountFirstName);
-    form.setValue("accountLastName", state.accountLastName);
-    form.setValue("accountEmail", state.accountEmail);
-    form.setValue("accountPhone", state.accountPhone);
-    form.setValue("accountMobile", state.accountMobile);
-    form.setValue("QuoteContact", state.QuoteContact);
-    form.setValue("JobContact", state.JobContact);
-    form.setValue("InvoiceContact", state.InvoiceContact);
-    form.setValue("StatementContact", state.StatementContact);
-    form.setValue("PrimaryStatementContact", state.PrimaryStatementContact);
-    form.setValue("PrimaryInvoiceContact", state.PrimaryInvoiceContact);
-    form.setValue("PrimaryJobContact", state.PrimaryJobContact);
-    form.setValue("PrimaryQuoteContact", state.PrimaryQuoteContact);
-    form.setValue("postalStreetAddress", state.postalStreetAddress);
-    form.setValue("postalCity", state.postalCity);
-    form.setValue("postalState", state.postalState);
-    form.setValue("postalPostcode", state.postalPostcode);
-    form.setValue("postalCountry", state.postalCountry);
+  // Initial defaults: hydrate from serviceAgreement.billing_details if present (once)
+  const initialDefaults = useMemo(
+    () => (hasBillingDetails ? valuesFromBilling(billingDetails as BillingDetails) : emptyValues),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    []
+  );
+
+  const form = useForm<BillingDetailsFormType>({
+    resolver: zodResolver(billingSchema),
+    mode: "onChange",
+    defaultValues: initialDefaults,
+  });
+
+  // Rehydrate when billing details linkage toggles
+  useEffect(() => {
+    if (hasBillingDetails) {
+      const vals = valuesFromBilling(billingDetails as BillingDetails);
+      form.reset(vals);
+      // Mirror into store
+      for (const [k, v] of Object.entries(vals)) {
+        if (typeof v === "boolean") state.updateFieldBoolean(k, v);
+        else state.updateField(k, v as string);
+      }
+    } else {
+      // Clear to empty when no linked billing details
+      form.reset(emptyValues);
+      for (const [k, v] of Object.entries(emptyValues)) {
+        if (typeof v === "boolean") state.updateFieldBoolean(k, v);
+        else state.updateField(k, v as string);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasBillingDetails]);
 
   useEffect(() => {
     scrollToTop();
@@ -143,6 +196,8 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
       onChange("postalState", state.businessState);
     }
   };
+
+
 
   /* -------- Expose validate() to parent -------- */
   useImperativeHandle(
@@ -194,6 +249,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                             onChange("accountFirstName", e.target.value);
                           }}
                           className="efg-input"
+                          
                         />
                       </FormControl>
                       <FormMessage />
@@ -214,6 +270,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                             onChange("accountLastName", e.target.value);
                           }}
                           className="efg-input"
+                          
                         />
                       </FormControl>
                       <FormMessage />
@@ -243,6 +300,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                         }}
                         className="efg-input"
                         inputMode="tel"
+                        
                       />
                     </FormControl>
                     <FormMessage />
@@ -270,6 +328,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                         }}
                         className="efg-input"
                         inputMode="tel"
+                        
                       />
                     </FormControl>
                     <FormMessage />
@@ -297,6 +356,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                           onChange("accountEmail", e.target.value);
                         }}
                         className="efg-input"
+                        
                       />
                     </FormControl>
                     <FormMessage />
@@ -319,6 +379,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                     checked={state.sameAddres}
                     onCheckedChange={(c: boolean) => handleCopyCompanyToPostal(c)}
                     className="efg-checkbox"
+                    
                   />
                   <label className="text-sm font-medium text-neutral-600">Use Company Address</label>
                 </div>
@@ -331,8 +392,8 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                     country: "postalCountry",
                   }}
                   handleChange={(f, v) => onChange(f as keyof BillingDetailsFormType, v)}
-                  stateSelectValue={state.postalState}
-                  disabled={state.sameAddres}
+                  stateSelectValue={form.watch("postalState")}
+                  disabled={ state.sameAddres}
                 />
               </div>
             </div>
@@ -363,6 +424,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                     onChange("PrimaryQuoteContact", false);
                                   }
                                 }}
+                                
                               />
                               <label htmlFor="QuoteContact" className="text-sm leading-none">
                                 Quote
@@ -389,6 +451,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                     field.onChange(checked);
                                     onChange("PrimaryQuoteContact", checked);
                                   }}
+                                  
                                 />
                                 <label htmlFor="PrimaryQuoteContact" className="text-sm leading-none">
                                   Primary
@@ -423,6 +486,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                     onChange("PrimaryJobContact", false);
                                   }
                                 }}
+                                
                               />
                               <label htmlFor="JobContact" className="text-sm leading-none">
                                 Job
@@ -449,6 +513,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                     field.onChange(checked);
                                     onChange("PrimaryJobContact", checked);
                                   }}
+                                  
                                 />
                                 <label htmlFor="PrimaryJobContact" className="text-sm leading-none">
                                   Primary
@@ -483,6 +548,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                     onChange("PrimaryInvoiceContact", false);
                                   }
                                 }}
+                                
                               />
                               <label htmlFor="InvoiceContact" className="text-sm leading-none">
                                 Invoice
@@ -509,6 +575,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                     field.onChange(checked);
                                     onChange("PrimaryInvoiceContact", checked);
                                   }}
+                                  
                                 />
                                 <label htmlFor="PrimaryInvoiceContact" className="text-sm leading-none">
                                   Primary
@@ -543,6 +610,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                     onChange("PrimaryStatementContact", false);
                                   }
                                 }}
+                                
                               />
                               <label htmlFor="StatementContact" className="text-sm leading-none">
                                 Statement
@@ -569,6 +637,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                     field.onChange(checked);
                                     onChange("PrimaryStatementContact", checked);
                                   }}
+                                  
                                 />
                                 <label htmlFor="PrimaryStatementContact" className="text-sm leading-none">
                                   Primary
