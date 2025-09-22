@@ -27,14 +27,17 @@ const updateStatus = async (id: string, status: string) => {
   return response.json();
 };
 
-
 /* ------------------------------ Component ------------------------------ */
-function ServiceAgreementComponent({ id, isPreview }: { id: string, isPreview: boolean }) {
+function ServiceAgreementComponent({
+  id,
+  isPreview,
+}: {
+  id: string;
+  isPreview: boolean;
+}) {
   /* Store / Query */
   const state = useServiceAgreementStore();
-  const setServiceAgreement = useServiceAgreementStore(
-    (s) => s.setServiceAgreement
-  );
+
   const { data, isLoading, error, refetch } = useServiceAgreement(id);
 
   /* Refs / Local State */
@@ -109,11 +112,39 @@ function ServiceAgreementComponent({ id, isPreview }: { id: string, isPreview: b
   );
 
   useEffect(() => {
-    if (data) setServiceAgreement(data as ServiceAgreement);
-    // optional: clear when unmounting/leaving the page
-    return () => setServiceAgreement(null);
-  }, [data, setServiceAgreement]);
-
+    if (!data) return;
+  
+    state.setServiceAgreement(data as ServiceAgreement);
+  
+    const c = data.company_details ?? {};
+    const b = data.billing_details ?? {};
+  
+    const fields: Record<string, string | undefined> = {
+      // company
+      abn: c.abn,
+      companyName: c.companyName,
+      businessStreetAddress: c.businessStreetAddress,
+      businessCity: c.businessCity,
+      businessState: c.businessState,
+      businessPostcode: c.businessPostcode,
+      businessCountry: c.businessCountry,
+  
+      // billing
+      accountFirstName: b.accountFirstName,
+      accountLastName: b.accountLastName,
+      accountEmail: b.accountEmail,
+      accountPhone: b.accountPhone,
+      accountMobile: b.accountMobile,
+      postalStreetAddress: b.postalStreetAddress,
+      postalCity: b.postalCity,
+      postalState: b.postalState,
+      postalPostcode: b.postalPostcode,
+      // postalCountry: b.postalCountry, // include if you use it
+    };
+  
+    Object.entries(fields).forEach(([k, v]) => state.updateField(k, v ?? ""));
+  }, [data]);
+  
   useEffect(() => {
     setFadeInStates({
       fadeIn1: state.page === 1,

@@ -1,13 +1,23 @@
 "use client";
 
 /* ------------------------------ Imports ------------------------------ */
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeftIcon, Loader2Icon } from "lucide-react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeftIcon, SignatureIcon } from "lucide-react";
 
-import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
+import {
+  ServiceAgreementStore,
+  useServiceAgreementStore,
+} from "@/app/service-agreement/service-agreement-store";
 import ServiceAndCareTerms from "@/components/terms-and-conditions/service-and-care-terms";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -24,11 +34,15 @@ import { Label } from "@/components/ui/label";
 import SignaturePadComponent from "@/components/ui/signature-pad";
 import { scrollToTop } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
-const submitServiceAgreement = async (id: string) => {
+const submitServiceAgreement = async (
+  id: string,
+  state: ServiceAgreementStore
+) => {
   const response = await fetch("/api/service-agreements/submission", {
     method: "POST",
-    body: JSON.stringify({ id }),
+    body: JSON.stringify({ id, state }),
   });
   return response.json();
 };
@@ -79,15 +93,24 @@ export default function TermsAndSignature() {
     state.setPage(2); // back to Review page
   }, [state]);
 
+  const [isSubmitting, startSubmitting] = useTransition();
+
   const onSubmit = useCallback(
     form.handleSubmit(() => {
-      if (!state.serviceAgreement?.id) {
-        return;
-      }
-      // e.g., state.submitAgreement()
-      submitServiceAgreement(state.serviceAgreement?.id);
-      router.push(`/service-agreement/success`);
-      state.reset();
+      startSubmitting(async () => {
+        if (!state.serviceAgreement?.id) {
+          return;
+        }
+        // e.g., state.submitAgreement()
+        try {
+          console.log("state", state);
+          // await submitServiceAgreement(state.serviceAgreement?.id, state);
+          // router.push(`/service-agreement/success`);
+          // state.reset();
+        } catch (error) {
+          toast.error("Failed to submit service agreement");
+        }
+      });
     }),
     [form, state]
   );
@@ -120,9 +143,7 @@ export default function TermsAndSignature() {
   return (
     <div ref={containerRef} className="w-full mx-auto flex flex-col gap-10">
       <div className="flex flex-col">
-      <Label className="text-2xl font-medium mb-2">
-          Sign Agreement
-        </Label>
+        <Label className="text-2xl font-medium mb-2">Sign Agreement</Label>
         <span className="text-lg text-neutral-500">
           Read the Terms and Conditions and sign the agreement.
         </span>
@@ -262,8 +283,9 @@ export default function TermsAndSignature() {
           onClick={onSubmit}
           className="w-[200px] cursor-pointer"
           variant="efg"
+          disabled={isSubmitting}
         >
-          Submit
+          {isSubmitting ? <Loader2Icon className="size-4 animate-spin" /> : "Submit"}
         </Button>
       </div>
     </div>
