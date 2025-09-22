@@ -31,7 +31,7 @@ function ServiceFrequency2({ value, onChange, options }: Props) {
 
         const selectedClasses = isSelected
           ? isHighTier
-            ? "bg-efg-yellow/5 border-efg-yellow ring-1 ring-efg-yellow"
+            ? "bg-yellow-50 border-efg-yellow ring-1 ring-efg-yellow"
             : "bg-neutral-50 border-neutral-400 ring-1 ring-neutral-300"
           : "";
 
@@ -48,7 +48,7 @@ function ServiceFrequency2({ value, onChange, options }: Props) {
           <div
             key={option.value}
             className={cn(
-              "flex-1 border flex flex-row items-center justify-center xl:justify-start border-input rounded-lg relative p-2 xl:p-4 text-left transition-colors cursor-pointer shadow-xs",
+              "bg-white flex-1 border flex flex-row items-center justify-center xl:justify-start border-input rounded-lg relative p-2 xl:p-4 text-left transition-colors cursor-pointer shadow-xs",
 
               selectedClasses
             )}
