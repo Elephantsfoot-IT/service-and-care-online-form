@@ -13,11 +13,23 @@ import { useServiceAgreement } from "@/lib/api";
 import { SECTION_IDS, ServiceAgreement } from "@/lib/interface";
 import { fastScrollToEl, scrollToTop } from "@/lib/utils";
 import { Loader2Icon } from "lucide-react";
-import { notFound, useParams } from "next/navigation";
+import { notFound, useParams, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 
+const updateStatus = async (id: string, status: string) => {
+  const response = await fetch("/api/service-agreements/update-status", {
+    method: "PUT",
+    body: JSON.stringify({ id, status }),
+  });
+  if (!response.ok) {
+    throw new Error("Failed to update service agreement status");
+  }
+  return response.json();
+};
+
+
 /* ------------------------------ Component ------------------------------ */
-function ServiceAgreementComponent({ id }: { id: string }) {
+function ServiceAgreementComponent({ id, isPreview }: { id: string, isPreview: boolean }) {
   /* Store / Query */
   const state = useServiceAgreementStore();
   const setServiceAgreement = useServiceAgreementStore(
@@ -120,6 +132,12 @@ function ServiceAgreementComponent({ id }: { id: string }) {
     scrollToTop();
   }, [state.page, state.progress]);
 
+  useEffect(() => {
+    if (!isPreview) {
+      updateStatus(id, "Opened");
+    }
+  }, [state.page, id, isPreview]);
+
   /* Early Returns */
   if (isLoading) {
     return (
@@ -184,6 +202,8 @@ function ServiceAgreementComponent({ id }: { id: string }) {
 export default function ServiceAgreementPage() {
   const params = useParams();
   const id = params.id as string;
+  const searchParams = useSearchParams();
+  const isPreview = searchParams.get("preview") === "true";
 
   return (
     <Suspense
@@ -193,7 +213,7 @@ export default function ServiceAgreementPage() {
         </div>
       }
     >
-      <ServiceAgreementComponent id={id} />
+      <ServiceAgreementComponent id={id} isPreview={isPreview} />
     </Suspense>
   );
 }

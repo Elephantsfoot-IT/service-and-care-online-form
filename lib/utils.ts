@@ -6,6 +6,7 @@ import {
   ServiceType,
   Site,
 } from "./interface";
+import { formatInTimeZone } from "date-fns-tz";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -131,3 +132,28 @@ export const normalizeQty = (raw: string) => {
   const stripped = digitsOnly.replace(/^0+/, "");
   return stripped;                            // "05" -> "5", "000" -> "" (empty)
 };
+
+/** Parse input into a valid Date. Accepts ISO-like strings or dd/MM/yyyy. */
+function toDate(input: string | Date | undefined | null): Date | null {
+  if (!input) return null;
+  if (input instanceof Date) return isNaN(input.getTime()) ? null : input;
+
+  // dd/MM/yyyy support
+  const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(input);
+  if (m) {
+    const [, dd, mm, yyyy] = m;
+    const d = new Date(Number(yyyy), Number(mm) - 1, Number(dd));
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  // Fallback: ISO / other parseable strings
+  const d = new Date(input);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+/** AU-local calendar date as YYYY-MM-DD (Australia/Sydney). */
+export function ausYMD(input: string | Date | undefined | null): string | null {
+  const d = toDate(input);
+  if (!d) return null;
+  return formatInTimeZone(d, "Australia/Sydney", "yyyy-MM-dd HH:mm:ss");
+}
