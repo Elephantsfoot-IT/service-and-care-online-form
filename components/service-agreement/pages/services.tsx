@@ -306,7 +306,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col ">
-        <Label className="text-2xl xl:text-3xl mb-2">
+        <Label className="text-2xl font-medium mb-2">
           Service Agreement Form
         </Label>
         <span className="text-base xl:text-lg text-neutral-500 font-normal">
@@ -351,7 +351,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       </SectionShell>
 
       <div className="flex flex-col mt-10">
-        <Label className="text-2xl xl:text-3xl mb-2">
+      <Label className="text-2xl font-medium mb-2">
           Build Your Service Plan
         </Label>
         <span className="text-base xl:text-lg text-neutral-500 font-normal">
@@ -992,7 +992,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           className="flex flex-col gap-6 scroll-mt-[140px] mt-10"
         >
           <div className="flex flex-col">
-            <Label className="text-2xl xl:text-3xl mb-2">
+          <Label className="text-2xl font-medium mb-2">
               Complimentary Incentives
             </Label>
             <span className="text-lg text-neutral-500">
@@ -1010,7 +1010,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       )}
       <div className="flex flex-col gap-6 mt-10">
         <div className="flex flex-col">
-          <Label className="text-2xl xl:text-3xl mb-2">Service Summary</Label>
+        <Label className="text-2xl font-medium mb-2">Service Summary</Label>
           <span className="text-base xl:text-lg text-neutral-500">
             Review your service plan and the total cost.
           </span>

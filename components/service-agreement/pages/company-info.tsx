@@ -46,7 +46,7 @@ function CompanyInfo() {
   return (
     <div className="w-full mx-auto flex flex-col gap-6 ">
       <div className="flex flex-col">
-        <Label className="text-2xl xl:text-3xl mb-2 font-normal">
+      <Label className="text-2xl font-medium mb-2">
           Customer Information{/* or “Your information” */}
         </Label>
         <span className="text-lg text-neutral-500">
@@ -59,7 +59,7 @@ function CompanyInfo() {
       <BillingDetailsCard ref={billingRef} />
 
       <div className="flex flex-col mt-10">
-        <Label className="text-2xl xl:text-3xl mb-2 font-normal">
+      <Label className="text-2xl font-medium mb-2">
           Additional Contacts (Optional)
         </Label>
         <span className="text-lg text-neutral-500">
@@ -70,7 +70,7 @@ function CompanyInfo() {
       <AdditionalContactsList ref={addlRef} />
 
       <div className="flex flex-col">
-        <Label className="text-2xl xl:text-3xl mb-2 font-normal">
+      <Label className="text-2xl font-medium mb-2">
           Site Details
         </Label>
         <span className="text-lg text-neutral-500">
