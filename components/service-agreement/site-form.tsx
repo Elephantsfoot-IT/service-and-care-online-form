@@ -41,7 +41,7 @@ export type SiteFormHandle = {
 };
 
 const SiteForm = React.forwardRef<SiteFormHandle, Props>(
-  ({ site, handleEditSites, index }, ref) => {
+  ({ site, handleEditSites }, ref) => {
     const siteId = site.simpro_site_id;
 
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -68,23 +68,18 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [site]);
 
-    // Ensure at least 1 contact (primary)
+    // Ensure we always have a primary contact
     useEffect(() => {
-      if (
-        !Array.isArray(site.site_contacts) ||
-        site.site_contacts.length === 0
-      ) {
+      if (!site.primary_contact) {
         handleEditSites(siteId, {
-          site_contacts: [{ ...defaultSiteContact, id: crypto.randomUUID() }],
+          primary_contact: { ...defaultSiteContact, id: crypto.randomUUID() },
         });
       }
-    }, [site.site_contacts, handleEditSites, siteId]);
+    }, [site.primary_contact, handleEditSites, siteId]);
 
-    const contacts = useMemo<SiteContact[]>(
-      () =>
-        Array.isArray(site.site_contacts) && site.site_contacts.length > 0
-          ? site.site_contacts
-          : [{ ...defaultSiteContact, id: crypto.randomUUID() }],
+    // Normalize additional contacts array (0..2)
+    const additionalContacts = useMemo<SiteContact[]>(
+      () => (Array.isArray(site.site_contacts) ? site.site_contacts : []),
       [site.site_contacts]
     );
 
@@ -127,54 +122,59 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
 
     /** Contacts ops */
     const addContact = () => {
-      if (contacts.length >= 3) return;
-      handleEditSites(siteId, {
-        site_contacts: [
-          ...contacts,
-          { ...defaultSiteContact, id: crypto.randomUUID() },
-        ],
-      });
-    };
-
-    const handleChangeContact = (index: number, updated: SiteContact) => {
-      const next = contacts.map((c, i) => (i === index ? updated : c));
+      if (additionalContacts.length >= 2) return; // cap at 2 additional
+      const next = [
+        ...additionalContacts,
+        { ...defaultSiteContact, id: crypto.randomUUID() },
+      ];
       handleEditSites(siteId, { site_contacts: next });
     };
 
-    const handleDeleteContact = (index: number) => {
-      if (index === 0) return; // can't delete primary
-      const next = contacts.filter((_, i) => i !== index);
-      handleEditSites(siteId, {
-        site_contacts: next.length
-          ? next
-          : [{ ...defaultSiteContact, id: crypto.randomUUID() }],
-      });
+    const handleChangePrimary = (updated: SiteContact) => {
+      handleEditSites(siteId, { primary_contact: updated });
+    };
+
+    const handleChangeAdditional = (index: number, updated: SiteContact) => {
+      const next = additionalContacts.map((c, i) =>
+        i === index ? updated : c
+      );
+      handleEditSites(siteId, { site_contacts: next });
+    };
+
+    const handleDeleteAdditional = (index: number) => {
+      const next = additionalContacts.filter((_, i) => i !== index);
+      handleEditSites(siteId, { site_contacts: next });
     };
 
     /** === Validation wiring === */
     const rootRef = useRef<HTMLDivElement>(null);
-    const contactRefs = useRef<Record<string, SiteContactFormHandle | null>>(
+    const primaryRef = useRef<SiteContactFormHandle | null>(null);
+    const additionalRefs = useRef<Record<string, SiteContactFormHandle | null>>(
       {}
     );
-    const setContactRef =
+    const setAdditionalRef =
       (id: string) => (instance: SiteContactFormHandle | null) => {
-        contactRefs.current[id] = instance;
+        additionalRefs.current[id] = instance;
       };
 
     useImperativeHandle(ref, () => ({
       validate: async () => {
         // 1) validate site fields
         const siteOk = await form.trigger();
-        // 2) validate all contact forms
+
+        // 2) validate primary contact
+        const primaryOk = (await primaryRef.current?.validate()) ?? true;
+
+        // 3) validate additional contacts
         const results = await Promise.all(
-          contacts.map(
+          additionalContacts.map(
             (c) =>
-              contactRefs.current[c.id]?.validate() ?? Promise.resolve(true)
+              additionalRefs.current[c.id]?.validate() ?? Promise.resolve(true)
           )
         );
-        const contactsOk = results.every(Boolean);
+        const additionalOk = results.every(Boolean);
 
-        const ok = siteOk && contactsOk;
+        const ok = siteOk && primaryOk && additionalOk;
         if (!ok) {
           rootRef.current?.scrollIntoView({
             behavior: "smooth",
@@ -263,36 +263,54 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
             </form>
           </Form>
 
-          {/* Contacts */}
+          {/* Primary Contact */}
           <div className="flex flex-col gap-4 md:flex-row md:items-start">
             <div className="w-full md:w-1/3">
               <Label className="text-sm">
-                Site Contacts ({contacts.length}/3){" "}
-                <span className="text-red-500">*</span>
+                Primary Contact <span className="text-red-500">*</span>
               </Label>
             </div>
-
             <div className="w-full md:w-2/3 flex flex-col gap-6 flex-shrink-0">
-              {contacts.map((contact, index) => (
+              {site.primary_contact && (
                 <SiteContactForm
-                  key={contact.id}
-                  ref={setContactRef(contact.id)}
-                  contact={contact}
-                  index={index}
-                  isPrimary={index === 0}
-                  handleDelete={() => handleDeleteContact(index)}
-                  handleChange={(updated) =>
-                    handleChangeContact(index, updated)
-                  }
+                  ref={primaryRef}
+                  contact={site.primary_contact}
+                  index={0}
+                  isPrimary
+                  handleDelete={() => {}} // cannot delete primary
+                  handleChange={(updated) => handleChangePrimary(updated)}
                 />
-              ))}
+              )}
             </div>
           </div>
+
+          {/* Additional Contacts */}
+          {additionalContacts.length > 0 && (
+            <div className="flex flex-col gap-4 md:flex-row md:items-start">
+              <div className="w-full md:w-1/3"></div>
+              <div className="w-full md:w-2/3 flex flex-col gap-6 flex-shrink-0">
+                {additionalContacts.map((contact, idx) => (
+                  <SiteContactForm
+                    key={contact.id}
+                    ref={setAdditionalRef(contact.id)}
+                    contact={contact}
+                    index={idx + 1} // display index after primary
+                    isPrimary={false}
+                    handleDelete={() => handleDeleteAdditional(idx)}
+                    handleChange={(updated) =>
+                      handleChangeAdditional(idx, updated)
+                    }
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
           <Button
             type="button"
             variant="secondary"
             onClick={addContact}
-            disabled={contacts.length >= 3}
+            disabled={additionalContacts.length >= 2}
             className="cursor-pointer w-fit ml-auto"
           >
             <PlusIcon className="mr-1" />
