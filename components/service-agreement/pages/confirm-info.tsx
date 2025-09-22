@@ -120,7 +120,7 @@ export default function TermsAndSignature() {
   return (
     <div ref={containerRef} className="w-full mx-auto flex flex-col gap-10">
       <div className="flex flex-col">
-        <Label className="text-2xl xl:text-3xl mb-2 font-normal">
+      <Label className="text-2xl font-medium mb-2">
           Sign Agreement
         </Label>
         <span className="text-lg text-neutral-500">
