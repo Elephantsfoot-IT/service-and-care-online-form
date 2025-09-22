@@ -3,6 +3,7 @@ import { supabase } from "@/lib/service-aggreement-supabase";
 
 import { Resend } from "resend";
 import { serviceAgreementAcceptedEmailHtml } from "@/lib/confirmation-email";
+import { ausYMD } from "@/lib/utils";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -22,6 +23,7 @@ export async function POST(req: Request) {
     .from("service_agreements")
     .update({
       status: "Accepted",
+      updated_at: ausYMD(new Date()),
     })
     .eq("id", id)
     .select()
