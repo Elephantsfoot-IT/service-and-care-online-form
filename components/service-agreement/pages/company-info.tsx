@@ -44,9 +44,9 @@ function CompanyInfo() {
     scrollToTop();
   }, []);
   return (
-    <div className="w-full mx-auto flex flex-col gap-6">
+    <div className="w-full mx-auto flex flex-col gap-6 ">
       <div className="flex flex-col">
-        <Label className="text-2xl mb-1">
+        <Label className="text-2xl xl:text-3xl mb-2 font-normal">
           Customer Information{/* or “Your information” */}
         </Label>
         <span className="text-lg text-neutral-500">
@@ -59,17 +59,20 @@ function CompanyInfo() {
       <BillingDetailsCard ref={billingRef} />
 
       <div className="flex flex-col mt-10">
-        <Label className="text-2xl mb-1">Additional Contacts (Optional)</Label>
+        <Label className="text-2xl xl:text-3xl mb-2 font-normal">
+          Additional Contacts (Optional)
+        </Label>
         <span className="text-lg text-neutral-500">
           Provide optional additional contacts for your business as needed.
-          
         </span>
       </div>
 
       <AdditionalContactsList ref={addlRef} />
 
       <div className="flex flex-col">
-        <Label className="text-2xl mb-1">Site Details</Label>
+        <Label className="text-2xl xl:text-3xl mb-2 font-normal">
+          Site Details
+        </Label>
         <span className="text-lg text-neutral-500">
           Provide the site information associated with this service agreement.
         </span>

@@ -1,4 +1,3 @@
-import { SimproCustomer } from "@/lib/interface";
 import { supabase } from "@/lib/service-aggreement-supabase";
 import { formatInTimeZone } from "date-fns-tz";
 import { NextResponse } from "next/server";
@@ -22,21 +21,9 @@ export async function POST(req: Request) {
       throw new Error("No data found");
     }
 
-    let customers = null as SimproCustomer | null;
-    if (data.simpro_customer_id) {
-      const response = await fetch(
-        `${process.env.SIMPRO_API_URL}/companies/0/customers/companies/${data.simpro_customer_id}?columns=ID,CompanyName,EIN,Address,Phone,Email`,
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.SIMPRO_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      customers = await response.json();
-    }
+    
     return NextResponse.json(
-      { ...data, simpro_customer: customers },
+      { ...data},
       { status: 200 }
     );
     // Add your logic here

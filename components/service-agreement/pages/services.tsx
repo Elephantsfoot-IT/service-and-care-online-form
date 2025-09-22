@@ -25,7 +25,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Input } from "@/components/ui/input";
 import { ServiceSummary } from "../service-summary";
-import { format, formatInTimeZone } from "date-fns-tz";
+import { format } from "date-fns-tz";
 
 /* ---------- Small helpers (do NOT touch your service grids) ---------- */
 
@@ -301,30 +301,12 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
     state.setPage(2);
   };
 
-  const TZ = "Australia/Sydney";
-  const expiry = new Date(state.serviceAgreement?.expire_at ?? new Date());
-
-  // e.g. "21 Sep 2025" in AU time
-  const expiryLabel = formatInTimeZone(expiry, TZ, "dd MMM yyyy");
-
-  // AU start-of-day for today and expiry, then diff in whole days
-  const daysLeft = (() => {
-    const auStartToday = new Date(
-      formatInTimeZone(new Date(), TZ, "yyyy-MM-dd'T'00:00:00XXX")
-    );
-    const auStartExpiry = new Date(
-      formatInTimeZone(expiry, TZ, "yyyy-MM-dd'T'00:00:00XXX")
-    );
-    const diffMs = auStartExpiry.getTime() - auStartToday.getTime();
-    return Math.floor(diffMs / 86_400_000); // 1000*60*60*24
-  })();
-
   if (!state.serviceAgreement) return null;
 
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col ">
-        <Label className="text-2xl mb-1 font-medium">
+        <Label className="text-2xl xl:text-3xl mb-2">
           Service Agreement Form
         </Label>
         <span className="text-base xl:text-lg text-neutral-500 font-normal">
@@ -338,25 +320,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           details and next steps.
         </span>
         <div className="font-medium mt-2 flex flex-row items-center gap-2">
-          {daysLeft < 0 ? (
-            <>
-              This proposal <span className="text-red-600">expired</span> on{" "}
-              <span className="underline">{expiryLabel}</span>.
-            </>
-          ) : daysLeft === 0 ? (
-            <>
-              This proposal expires{" "}
-              <span className="">Today</span> (
-              <span className="underline">{expiryLabel}</span>).
-            </>
-          ) : (
-            <>
-              This proposal expires in{" "}
-              <span className="font-semibold underline">{daysLeft}</span>{" "}
-              {daysLeft === 1 ? "day" : "days"} on{" "}
-              <span className="underline">{expiryLabel}</span>.
-            </>
-          )}
+          *This proposal is valid until
+          <span className="underline">
+            {format(state.serviceAgreement.expire_at, "dd MMM yyyy")}.
+          </span>
         </div>
       </div>
       <SectionShell id="service_agreement_duration">
@@ -384,7 +351,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       </SectionShell>
 
       <div className="flex flex-col mt-10">
-        <Label className="text-2xl mb-1 font-medium">
+        <Label className="text-2xl xl:text-3xl mb-2">
           Build Your Service Plan
         </Label>
         <span className="text-base xl:text-lg text-neutral-500 font-normal">
@@ -1025,7 +992,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           className="flex flex-col gap-6 scroll-mt-[140px] mt-10"
         >
           <div className="flex flex-col">
-            <Label className="text-2xl font-medium">
+            <Label className="text-2xl xl:text-3xl mb-2">
               Complimentary Incentives
             </Label>
             <span className="text-lg text-neutral-500">
@@ -1043,7 +1010,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       )}
       <div className="flex flex-col gap-6 mt-10">
         <div className="flex flex-col">
-          <Label className="text-2xl font-medium">Service Summary</Label>
+          <Label className="text-2xl xl:text-3xl mb-2">Service Summary</Label>
           <span className="text-base xl:text-lg text-neutral-500">
             Review your service plan and the total cost.
           </span>
