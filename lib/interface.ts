@@ -92,6 +92,7 @@ export interface Site {
   buildings: Building[];
   mode: "new" | "existing";
   site_address: Address;
+  primary_contact?: SiteContact;
   site_contacts?: SiteContact[];
 }
 
