@@ -16,7 +16,7 @@ export default function Sider({
 }) {
   const state = useServiceAgreementStore();
   return (
-    <aside className="hidden xl:flex fixed left-0 top-0 z-[99] w-[400px] h-screen bg-neutral-50 overflow-hidden">
+    <aside className="hidden xl:flex fixed left-0 top-0 z-[99] w-[400px] h-screen overflow-hidden">
       <div className="flex flex-col h-full w-full px-10 pb-10 relative rounded-lg relative">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -39,13 +39,13 @@ export default function Sider({
         )}
 
         {/* Pin to bottom-right like your sider */}
-        <BrandCornerShape
+        {/* <BrandCornerShape
           className="absolute bottom-0 -right-1 text-efg-main"
           height={375}
           durationMs={1400}
           loop={false}
           fillAngleDeg={65}
-        />
+        /> */}
 
         <div className="flex flex-col gap-2 mt-auto z-10">
           {/* <div className="text-xs text-neutral-500 font-semibold mb-1">
