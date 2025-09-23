@@ -13,8 +13,8 @@ import { useServiceAgreement } from "@/lib/api";
 import { SECTION_IDS, ServiceAgreement } from "@/lib/interface";
 import { fastScrollToEl, scrollToTop } from "@/lib/utils";
 import { Loader2Icon } from "lucide-react";
-import { notFound, useParams, useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
+import {useParams, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 
 const updateStatus = async (id: string, status: string) => {
