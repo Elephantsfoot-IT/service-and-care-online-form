@@ -300,12 +300,18 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
   if (!state.serviceAgreement) return null;
 
   return (
-    <div className="flex flex-col gap-20 xl:gap-60">
-      <div className="flex flex-col">
-        <Label className="text-2xl font-medium mb-2">
-          Service Agreement Form
-        </Label>
-        <span className="text-base xl:text-lg text-neutral-500 font-normal">
+    <div className="flex flex-col gap-20 sm:gap-30 xl:gap-60">
+      <div className="flex flex-col gap-2">
+        <Label className="text-2xl font-medium">Service Agreement Form</Label>
+
+        <div className="font-medium flex flex-row items-center gap-2">
+          *This proposal is valid until
+          <span className="underline">
+            {format(state.serviceAgreement.expire_at, "dd MMM yyyy")}.
+          </span>
+        </div>
+
+        <span className="text-base xl:text-lg text-neutral-500 font-normal ">
           Thanks for choosing{" "}
           <span className="font-medium text-neutral-700">
             Elephants Foot Service & Care
@@ -315,14 +321,25 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           safe, compliant, and fresh. Once submitted, our team will confirm the
           details and next steps.
         </span>
-        <div className="font-medium mt-2 flex flex-row items-center gap-2">
-          *This proposal is valid until
-          <span className="underline">
-            {format(state.serviceAgreement.expire_at, "dd MMM yyyy")}.
+        {/* ➜ NEW notice block */}
+        <div className="mt-2 text-sm xl:text-base  bg-neutral-100 rounded-md p-3">
+          This form is for{" "}
+          <span className="font-semibold">
+            {state.serviceAgreement?.quote_for}
           </span>
+          . If you are not this customer, please contact us at{" "}
+          <a href="tel:1300435374" className="underline">
+            1300&nbsp;435&nbsp;374
+          </a>{" "}
+          or{" "}
+          <a href="mailto:service@elephantsfoot.com.au" className="underline">
+            service@elephantsfoot.com.au
+          </a>{" "}
+          so we can help you get the right form.
         </div>
-        <div className="p-6 mt-10 border border-input rounded-xl shadow-sm">
-          <div className="text-xl font-medium mb-6 text-foreground">
+
+        <div className="p-6 mt-4 border border-input rounded-xl shadow-sm">
+          <div className="text-lg xl:text-xl font-medium mb-4 ">
             Contract Duration
           </div>
           <div className="flex flex-row items-center gap-6 justify-between">
@@ -330,14 +347,14 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               <Label className="text-sm text-muted-foreground">
                 Start date
               </Label>
-              <span className="text-lg font-medium text-foreground leading-tight">
+              <span className="text-lg font-medium  leading-tight">
                 {format(state.serviceAgreement.start_date, "dd MMM yyyy")}
               </span>
             </div>
             <hr className="flex-1 border-input" />
             <div className="flex flex-col gap-1.5 flex-shrink-0">
               <Label className="text-sm  text-muted-foreground">End date</Label>
-              <span className="text-lg font-medium text-foreground leading-tight">
+              <span className="text-lg font-medium  leading-tight">
                 {format(state.serviceAgreement.end_date, "dd MMM yyyy")}
               </span>
             </div>
