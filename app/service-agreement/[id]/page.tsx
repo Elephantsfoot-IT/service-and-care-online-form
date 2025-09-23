@@ -14,6 +14,7 @@ import { SECTION_IDS, ServiceAgreement } from "@/lib/interface";
 import { fastScrollToEl, scrollToTop } from "@/lib/utils";
 import { Loader2Icon } from "lucide-react";
 import { notFound, useParams, useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 import { Suspense, useEffect, useRef, useState } from "react";
 
 const updateStatus = async (id: string, status: string) => {
@@ -37,7 +38,7 @@ function ServiceAgreementComponent({
 }) {
   /* Store / Query */
   const state = useServiceAgreementStore();
-
+  const router = useRouter();
   const { data, isLoading, error, refetch } = useServiceAgreement(id);
 
   /* Refs / Local State */
@@ -167,7 +168,7 @@ function ServiceAgreementComponent({
     if (!isPreview && data) {
       updateStatus(id, "Opened");
     }
-  }, [id, isPreview,data]);
+  }, [id, isPreview, data]);
 
   /* Early Returns */
   if (isLoading) {
@@ -178,7 +179,8 @@ function ServiceAgreementComponent({
     );
   }
   if (error) {
-    return notFound(); // triggers the matching not-found.tsx
+    router.push('/not-found');
+    return null; // stop rendering
   }
 
   /* Render */
