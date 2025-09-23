@@ -144,14 +144,14 @@ export default function TermsAndSignature() {
   return (
     <div ref={containerRef} className="w-full mx-auto flex flex-col gap-10">
       <div className="flex flex-col">
-        <Label className="text-2xl font-medium mb-2">Sign Agreement</Label>
+        <Label className="text-2xl xl:text-3xl font-normal mb-1">Sign Agreement</Label>
         <span className="text-lg text-neutral-500">
           Read the Terms and Conditions and sign the agreement.
         </span>
       </div>
 
       <div className="flex flex-col">
-        <Label className="text-sm">Terms and Conditions</Label>
+        <Label className="text-sm xl:text-base">Terms and Conditions</Label>
         {/* Terms box */}
         <div className="p-4 md:p-6 2xl:p-8 border border-input rounded-xl shadow-sm w-full max-h-[500px] overflow-y-auto mt-2 bg-white">
           <ServiceAndCareTerms />
@@ -178,7 +178,7 @@ export default function TermsAndSignature() {
                   />
                   <label
                     htmlFor="terms"
-                    className="text-sm font-medium leading-none"
+                    className="text-sm xl:text-base font-medium leading-none"
                   >
                     Accept terms and conditions{" "}
                     <span className="text-red-500">*</span>
@@ -196,7 +196,7 @@ export default function TermsAndSignature() {
             name="signFullName"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel className="w-full md:w-1/3 text-sm">
+                <FormLabel className="w-full md:w-1/3 text-sm xl:text-base">
                   Full name<span className="text-red-500">*</span>
                 </FormLabel>
                 <div className="w-full md:w-2/3">
@@ -224,7 +224,7 @@ export default function TermsAndSignature() {
             name="signTitle"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                <FormLabel className="w-full md:w-1/3 text-sm">
+                <FormLabel className="w-full md:w-1/3 text-sm xl:text-base">
                   Title<span className="text-red-500">*</span>
                 </FormLabel>
                 <div className="w-full md:w-2/3">
@@ -252,10 +252,10 @@ export default function TermsAndSignature() {
       {/* Signature */}
       <div>
         <div className="w-full flex flex-row justify-between items-end">
-          <Label className="text-sm">
+          <Label className="text-sm xl:text-base">
             Signature <span className="text-red-500">*</span>
           </Label>
-          <span className="ml-auto text-sm text-neutral-500">{authDate}</span>
+          <span className="ml-auto text-sm xl:text-base text-neutral-500">{authDate}</span>
         </div>
         <div className="mt-2">
           <SignaturePadComponent
@@ -263,7 +263,7 @@ export default function TermsAndSignature() {
             setTrimmedDataURL={state.setTrimmedDataURL}
             trimmedDataURL={state.trimmedDataURL}
           />
-          <div className="text-sm text-neutral-500 mt-2">
+          <div className="text-sm xl:text-base text-neutral-500 mt-2">
             By providing your electronic signature and initials, you acknowledge
             that they are legally binding, equivalent to a physical signature,
             and signify your agreement to the terms and conditions.

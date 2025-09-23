@@ -140,7 +140,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
           <form className="flex flex-col gap-8">
             {/* Full name */}
             <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-              <Label className="w-full md:w-1/3 text-sm">
+              <Label className="w-full md:w-1/3 text-sm xl:text-base">
                 Full name<span className="text-red-500">*</span>
               </Label>
               <div className="w-full md:w-2/3 flex flex-row space-x-2 flex-shrink-0">
@@ -187,7 +187,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
               name="accountMobile"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                  <FormLabel className="text-sm w-full md:w-1/3" htmlFor="accountMobile">
+                  <FormLabel className="text-sm xl:text-base w-full md:w-1/3" htmlFor="accountMobile">
                     Mobile phone
                   </FormLabel>
                   <div className="w-full md:w-2/3 flex-shrink-0">
@@ -210,7 +210,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
               name="accountPhone"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                  <FormLabel className="text-sm w-full md:w-1/3" htmlFor="accountPhone">
+                  <FormLabel className="text-sm xl:text-base w-full md:w-1/3" htmlFor="accountPhone">
                     Office phone
                   </FormLabel>
                   <div className="w-full md:w-2/3 flex-shrink-0">
@@ -235,7 +235,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
               name="accountEmail"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                  <FormLabel className="text-sm w/full md:w-1/3" htmlFor="accountEmail">
+                  <FormLabel className="text-sm xl:text-base w/full md:w-1/3" htmlFor="accountEmail">
                     Email address<span className="text-red-500">*</span>
                   </FormLabel>
                   <div className="w-full md:w-2/3 flex-shrink-0">
@@ -258,7 +258,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
 
             {/* Postal */}
             <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-              <Label className="text-sm mb-2 w-full md:w-1/3">
+              <Label className="text-sm xl:text-base mb-2 w-full md:w-1/3">
                 Postal address<span className="text-red-500">*</span>
               </Label>
               <div className="w-full md:w-2/3 flex-shrink-0">
@@ -268,7 +268,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                     onCheckedChange={(c: boolean) => handleCopyCompanyToPostal(c)}
                     className="efg-checkbox"
                   />
-                  <label className="text-sm font-medium text-neutral-600">Use Company Address</label>
+                  <label className="text-sm xl:text-base font-medium text-neutral-600">Use Company Address</label>
                 </div>
                 <MultiLineAddressInput<BillingDetailsFormType>
                   fieldNames={{
@@ -287,7 +287,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
 
             {/* Use this contact for */}
             <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-              <Label className="text-sm w-full md:w-1/3">Use this contact for</Label>
+              <Label className="text-sm xl:text-base w-full md:w-1/3">Use this contact for</Label>
               <div className="w-full md:w-2/3 flex flex-col flex-shrink-0">
                 <div className="w-full flex flex-col gap-4">
                   {/* Quote */}
@@ -308,7 +308,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                   if (!checked) { form.setValue("PrimaryQuoteContact", false); onChange("PrimaryQuoteContact", false); }
                                 }}
                               />
-                              <label htmlFor="QuoteContact" className="text-sm leading-none">Quote</label>
+                              <label htmlFor="QuoteContact" className="text-sm xl:text-base leading-none">Quote</label>
                             </div>
                             <FormMessage />
                           </FormItem>
@@ -329,7 +329,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                   checked={field.value}
                                   onCheckedChange={(checked: boolean) => { field.onChange(checked); onChange("PrimaryQuoteContact", checked); }}
                                 />
-                                <label htmlFor="PrimaryQuoteContact" className="text-sm leading-none">Primary</label>
+                                <label htmlFor="PrimaryQuoteContact" className="text-sm xl:text-base leading-none">Primary</label>
                               </div>
                               <FormMessage />
                             </FormItem>
@@ -357,7 +357,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                   if (!checked) { form.setValue("PrimaryJobContact", false); onChange("PrimaryJobContact", false); }
                                 }}
                               />
-                              <label htmlFor="JobContact" className="text-sm leading-none">Job</label>
+                              <label htmlFor="JobContact" className="text-sm xl:text-base leading-none">Job</label>
                             </div>
                             <FormMessage />
                           </FormItem>
@@ -378,7 +378,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                   checked={field.value}
                                   onCheckedChange={(checked: boolean) => { field.onChange(checked); onChange("PrimaryJobContact", checked); }}
                                 />
-                                <label htmlFor="PrimaryJobContact" className="text-sm leading-none">Primary</label>
+                                <label htmlFor="PrimaryJobContact" className="text-sm xl:text-base leading-none">Primary</label>
                               </div>
                               <FormMessage />
                             </FormItem>
@@ -406,7 +406,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                   if (!checked) { form.setValue("PrimaryInvoiceContact", false); onChange("PrimaryInvoiceContact", false); }
                                 }}
                               />
-                              <label htmlFor="InvoiceContact" className="text-sm leading-none">Invoice</label>
+                              <label htmlFor="InvoiceContact" className="text-sm xl:text-base leading-none">Invoice</label>
                             </div>
                             <FormMessage />
                           </FormItem>
@@ -427,7 +427,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                   checked={field.value}
                                   onCheckedChange={(checked: boolean) => { field.onChange(checked); onChange("PrimaryInvoiceContact", checked); }}
                                 />
-                                <label htmlFor="PrimaryInvoiceContact" className="text-sm leading-none">Primary</label>
+                                <label htmlFor="PrimaryInvoiceContact" className="text-sm xl:text-base leading-none">Primary</label>
                               </div>
                               <FormMessage />
                             </FormItem>
@@ -455,7 +455,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                   if (!checked) { form.setValue("PrimaryStatementContact", false); onChange("PrimaryStatementContact", false); }
                                 }}
                               />
-                              <label htmlFor="StatementContact" className="text-sm leading-none">Statement</label>
+                              <label htmlFor="StatementContact" className="text-sm xl:text-base leading-none">Statement</label>
                             </div>
                             <FormMessage />
                           </FormItem>
@@ -476,7 +476,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                   checked={field.value}
                                   onCheckedChange={(checked: boolean) => { field.onChange(checked); onChange("PrimaryStatementContact", checked); }}
                                 />
-                                <label htmlFor="PrimaryStatementContact" className="text-sm leading-none">Primary</label>
+                                <label htmlFor="PrimaryStatementContact" className="text-sm xl:text-base leading-none">Primary</label>
                               </div>
                               <FormMessage />
                             </FormItem>
@@ -487,7 +487,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                   </div>
                 </div>
 
-                <p className="text-sm text-muted-foreground mt-4 ml-1">
+                <p className="text-sm xl:text-base text-muted-foreground mt-4 ml-1">
                   Set the communications this contact receives.
                 </p>
               </div>

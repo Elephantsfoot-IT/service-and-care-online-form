@@ -314,7 +314,7 @@ function MultiLineAddressInput<T extends FieldValues>({
         />
       </div>
 
-      <FormDescription className="text-sm ml-1">
+      <FormDescription className="text-sm xl:text-base ml-1">
         You can either select an address from the suggestions or manually adjust
         it to match your exact location.
       </FormDescription>

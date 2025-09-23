@@ -103,16 +103,16 @@ export const AdditionalContactsList = React.forwardRef<
   return (
     <>
       {state.additionalContacts.length === 0 ? (
-        <div className="text-sm w-full h-40 bg-white border border-input shadow-sm rounded-xl flex flex-col items-center justify-center gap-2 text-center px-4">
+        <div className="text-sm w-full h-60 bg-white border border-input shadow-sm rounded-xl flex flex-col items-center justify-center  text-center px-4">
           <div className="text-base xl:text-lg font-medium">Additional contacts</div>
-          <p className="text-neutral-500">
+          <p className="text-neutral-500 text-sm xl:text-base">
             Add extra people for quotes, jobs, invoices or statements so we can
             reach the right person.
           </p>
           <Button
             variant="outline"
             size="sm"
-            className="mt-1"
+            className="mt-4"
             onClick={handleAddContact}
           >
             <PlusIcon className="mr-1 h-4 w-4" />

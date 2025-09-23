@@ -53,7 +53,7 @@ function ServiceAgreementComponent({
   /* Derived */
   // Disable scroll spy while we're doing a programmatic scroll
   const spiedId = useScrollSpy(SECTION_IDS as unknown as string[], {
-    offset: 120,
+    offset: 170,
     disabled: !!manualActive,
   });
 
@@ -66,12 +66,12 @@ function ServiceAgreementComponent({
     const el = document.getElementById(sectionId);
     if (!el) return;
 
-    fastScrollToEl(el as HTMLElement, { offset: 100, duration: 220 }); // fast
+    fastScrollToEl(el as HTMLElement, { offset: 160, duration: 220 }); // fast
     // after scroll finishes, release manual lock so scroll-spy resumes control
     if (clearTimerRef.current) window.clearTimeout(clearTimerRef.current);
     clearTimerRef.current = window.setTimeout(() => {
       setManualActive(null);
-    }, 250); // a bit longer than duration
+    }, 300); // a bit longer than duration
   };
 
   const selectMore = () => {
@@ -186,7 +186,7 @@ function ServiceAgreementComponent({
     <>
       <Header />
       <Sider activeId={activeId} onJump={onJump} />
-      <div className="pt-10 xl:pt-40 xl:pl-[400px] pb-40 relative">
+      <div className="pt-20 xl:pt-40 xl:pl-[400px] pb-40 relative">
         <ScrollButton />
 
         <div className="px-4 xl:px-20 text-neutral-800 bg-transparent">
@@ -196,7 +196,7 @@ function ServiceAgreementComponent({
             {state.page === 1 && (
               <div
                 className={`${
-                  fadeInStates.fadeIn1 ? "fade-in" : "opacity-0"
+                  fadeInStates.fadeIn1 ? " fade-up fade-up-100" : "opacity-0"
                 } w-full flex flex-col`}
               >
                 <ServicesForm selectMore={selectMore} />
@@ -206,7 +206,7 @@ function ServiceAgreementComponent({
             {state.page === 2 && (
               <div
                 className={`${
-                  fadeInStates.fadeIn2 ? "fade-in" : "opacity-0"
+                  fadeInStates.fadeIn2 ? " fade-up fade-up-100" : "opacity-0"
                 } w-full flex flex-col`}
               >
                 <CompanyInfo />
@@ -216,7 +216,7 @@ function ServiceAgreementComponent({
             {state.page === 3 && (
               <div
                 className={`${
-                  fadeInStates.fadeIn3 ? "fade-in" : "opacity-0"
+                  fadeInStates.fadeIn3 ? " fade-up fade-up-100" : "opacity-0"
                 } w-full flex flex-col`}
               >
                 <ConfirmInfo />

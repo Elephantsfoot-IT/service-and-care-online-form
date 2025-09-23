@@ -113,7 +113,7 @@
 }
 
 @theme {
-  --color-efg-yellow: #ffdb01;
+  --color-efg-yellow: #fcbd2a;
   --color-efg-blue: #1e60ad;
   --color-neutral-75: #f7f7f7;
   --color-efg-main: #fcbd2a;
@@ -162,22 +162,6 @@
   }
 }
 
-@keyframes goUp {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.appear-up {
-  @apply opacity-0;
-  animation: goUp 1s forwards;
-  animation-delay: var(--fade-delay, 0s); /* Default to 0s if not set */
-}
 
 @keyframes fadeIn {
   from {
@@ -375,5 +359,56 @@
   --fade-delay: 0.9s;
 }
 .fade-left-1000 {
+  --fade-delay: 1s;
+}
+
+
+@keyframes fadeUP {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    transform: translateX(0);
+  }
+}
+
+
+.fade-up {
+  @apply opacity-0;
+  animation: fadeUP 1s forwards;
+  animation-delay: var(--fade-delay, 0s); /* Default to 0s if not set */
+}
+
+.fade-up-100 {
+  --fade-delay: 0.1s;
+}
+.fade-up-200 {
+  --fade-delay: 0.2s;
+}
+.fade-up-300 {
+  --fade-delay: 0.3s;
+}
+.fade-up-400 {
+  --fade-delay: 0.4s;
+}
+.fade-up-500 {
+  --fade-delay: 0.5s;
+}
+.fade-up-600 {
+  --fade-delay: 0.6s;
+}
+.fade-up-700 {
+  --fade-delay: 0.7s;
+}
+.fade-up-800 {
+  --fade-delay: 0.8s;
+}
+.fade-up-900 {
+  --fade-delay: 0.9s;
+}
+.fade-up-1000 {
   --fade-delay: 1s;
 }
