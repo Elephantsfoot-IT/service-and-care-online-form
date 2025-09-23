@@ -1,7 +1,7 @@
 const ServiceAndCareTerms = () => {
   return (
-    <div className="space-y-2 text-sm">
-      <div className="text-sm">
+    <div className="space-y-2 text-sm xl:text-base">
+      <div className="text-sm xl:text-base">
         Normal working hours are defined as 8:30am to 4:30pm Monday through
         Friday inclusive, excluding public holidays, Saturdays and Sundays.
         Elephants Foot Service & Care shall be provided reasonable means of
@@ -11,7 +11,7 @@ const ServiceAndCareTerms = () => {
         Elephants Foot Service & Care shall be permitted to start and stop all
         equipment necessary to perform the herein-agreed services.
       </div>
-      <div className="text-sm">
+      <div className="text-sm xl:text-base">
         These terms and conditions are between the parties described in the
         Schedule, together the Parties and each a Party. These terms and
         conditions and the Schedule form the entire agreement under which we

@@ -44,41 +44,44 @@ function CompanyInfo() {
     scrollToTop();
   }, []);
   return (
-    <div className="w-full mx-auto flex flex-col gap-6 ">
-      <div className="flex flex-col">
-      <Label className="text-2xl font-medium mb-2">
-          Customer Information{/* or “Your information” */}
-        </Label>
-        <span className="text-lg text-neutral-500">
-          Review and update your information before continuing.
-        </span>
+    <div className="w-full mx-auto flex flex-col gap-20 ">
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col">
+          <Label className="text-2xl xl:text-3xl font-normal mb-1">
+            Customer Information{/* or “Your information” */}
+          </Label>
+          <span className="text-lg text-neutral-500">
+            Review and update your information before continuing.
+          </span>
+        </div>
+
+        <CompanyDetailsCard ref={companyRef} />
+
+        <BillingDetailsCard ref={billingRef} />
+      </div>
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col mt-10">
+          <Label className="text-2xl xl:text-3xl font-normal mb-1">
+            Additional Contacts 
+          </Label>
+          <span className="text-lg text-neutral-500">
+            Provide optional additional contacts for your business as needed. (Optional)
+          </span>
+        </div>
+
+        <AdditionalContactsList ref={addlRef} />
       </div>
 
-      <CompanyDetailsCard ref={companyRef} />
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col">
+          <Label className="text-2xl xl:text-3xl font-normal mb-1">Site Details</Label>
+          <span className="text-lg text-neutral-500">
+            Provide the site information associated with this service agreement.
+          </span>
+        </div>
 
-      <BillingDetailsCard ref={billingRef} />
-
-      <div className="flex flex-col mt-10">
-      <Label className="text-2xl font-medium mb-2">
-          Additional Contacts (Optional)
-        </Label>
-        <span className="text-lg text-neutral-500">
-          Provide optional additional contacts for your business as needed.
-        </span>
+        <SiteDetailsCard ref={siteRef} />
       </div>
-
-      <AdditionalContactsList ref={addlRef} />
-
-      <div className="flex flex-col">
-      <Label className="text-2xl font-medium mb-2">
-          Site Details
-        </Label>
-        <span className="text-lg text-neutral-500">
-          Provide the site information associated with this service agreement.
-        </span>
-      </div>
-
-      <SiteDetailsCard ref={siteRef} />
 
       {/* Nav */}
       <div className="flex flex-row gap-2 justify-between mt-10">

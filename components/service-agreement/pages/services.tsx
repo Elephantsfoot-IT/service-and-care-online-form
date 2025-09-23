@@ -63,7 +63,7 @@ function SectionHeader({
 }) {
   return (
     <div className="flex flex-col">
-      <div className="text-xl xl:text-2xl font-medium flex flex-row items-center gap-2">
+      <div className="text-2xl xl:text-3xl mb-1 flex flex-row items-center gap-2">
         {title}
         {helpHref && (
           <a
@@ -78,7 +78,7 @@ function SectionHeader({
         )}
       </div>
       {description && (
-        <span className="text-base xl:text-lg text-neutral-500">
+        <span className="text-lg text-neutral-500">
           {description}
         </span>
       )}
@@ -113,20 +113,20 @@ function PricingFooter({
       <div className="space-y-2 w-full sm:max-w-[360px] ml-auto px-6">
         {showDiscount ? (
           <>
-            <div className="flex justify-between text-sm text-red-600">
+            <div className="flex justify-between text-sm xl:text-base text-emerald-600">
               <span>Service discount ({discountPct}%)</span>
               <span>-{formatMoney(discountAmt)}</span>
             </div>
 
             <div className="flex justify-between items-baseline">
-              <span className="text-neutral-600 text-sm font-medium">
+              <span className="text-neutral-600 text-sm xl:text-base font-medium">
                 Annual cost (excl. GST)
               </span>
               <div className="text-right">
-                <div className="text-sm line-through text-neutral-500">
+                <div className="text-sm xl:text-base line-through text-neutral-500">
                   {formatMoney(subtotal)}
                 </div>
-                <div className="text-base font-medium">
+                <div className="text-lg font-medium">
                   {formatMoney(grandTotal)}
                 </div>
               </div>
@@ -134,10 +134,10 @@ function PricingFooter({
           </>
         ) : (
           <div className="flex justify-between items-baseline">
-            <span className="text-neutral-600 text-sm font-medium">
+            <span className="text-neutral-600 text-sm xl:text-base font-medium">
               Annual cost (excl. GST)
             </span>
-            <span className="text-base font-medium">
+            <span className="text-lg font-medium">
               {formatMoney(grandTotal)}
             </span>
           </div>
@@ -171,23 +171,23 @@ function OdourControlFooter({
       <hr className="my-2 border border-input border-dashed" />
       <div className="space-y-2 w-full sm:max-w-[360px] ml-auto px-2">
         {showDiscount && (
-          <div className="flex justify-between text-sm text-emerald-600">
+          <div className="flex justify-between text-sm xl:text-base text-emerald-600">
             <span>Service discount ({discountPct}%)</span>
             <span>-{formatMoney(discountAmt)}</span>
           </div>
         )}
 
         <div className="flex justify-between items-baseline">
-          <span className="text-neutral-600 text-sm font-medium">
+          <span className="text-neutral-600 text-sm xl:text-base font-medium">
             Annual cost (excl. GST)
           </span>
           <div className="text-right">
             {showDiscount && (
-              <div className="text-sm line-through text-neutral-500">
+              <div className="text-sm xl:text-base line-through text-neutral-500">
                 {formatMoney(subtotal)}
               </div>
             )}
-            <div className="text-base font-medium">
+            <div className="text-lg font-medium">
               {formatMoney(grandTotal)}
             </div>
           </div>
@@ -321,7 +321,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           details and next steps.
         </span>
         {/* ➜ NEW notice block */}
-        <div className="mt-2 text-sm xl:text-base  bg-neutral-75 rounded-md p-3">
+        <div className="mt-2 text-sm xl:text-base  bg-neutral-75 rounded-md p-6">
           This form is for{" "}
           <span className="font-semibold">
             {state.serviceAgreement?.quote_for}
@@ -338,23 +338,23 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </div>
 
         <div className="p-6 mt-4 border border-input rounded-xl shadow-sm">
-          <div className="text-lg xl:text-xl font-medium mb-4 ">
+          <div className="text-lg font-medium  mb-4 ">
             Contract Duration
           </div>
           <div className="flex flex-row items-center gap-6 justify-between">
             <div className="flex flex-col gap-1.5 flex-shrink-0">
-              <Label className="text-sm text-muted-foreground">
+              <Label className="text-sm xl:text-base text-muted-foreground">
                 Start date
               </Label>
-              <span className="text-lg font-medium  leading-tight">
+              <span className="text-base xl:text-lg font-medium  leading-tight">
                 {format(state.serviceAgreement.start_date, "dd MMM yyyy")}
               </span>
             </div>
             <hr className="flex-1 border-input" ></hr>
            
             <div className="flex flex-col gap-1.5 flex-shrink-0">
-              <Label className="text-sm  text-muted-foreground">End date</Label>
-              <span className="text-lg font-medium  leading-tight">
+              <Label className="text-sm xl:text-base  text-muted-foreground">End date</Label>
+              <span className="text-base xl:text-lg font-medium  leading-tight">
                 {format(state.serviceAgreement.end_date, "dd MMM yyyy")}
               </span>
             </div>
@@ -382,7 +382,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
             {/* Desktop table */}
             <div className="hidden sm:block w-full bg-neutral-75 rounded-xl p-4">
-              <div className="flex flex-col text-sm min-w-[500px]">
+              <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-3 px-2 py-2">Sites</div>
                   <div className="col-span-1 px-2 py-2">Qty</div>
@@ -393,7 +393,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 {chuteCleaningDetails.items.map((r, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0"
+                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
                   >
                     {r.building_name ? (
                       <div className="col-span-3 px-2 py-2">
@@ -418,7 +418,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
             {/* Mobile list */}
             <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-75 p-4">
-              <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
+              <div className="grid grid-cols-2 gap-2 border-b border-input text-sm xl:text-base">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
                 <div className="col-span-1 text-right px-2 py-2 text-xs">
                   Price
@@ -427,7 +427,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               {chuteCleaningDetails.items.map((r, i) => (
                 <div
                   key={i}
-                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm"
+                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
                 >
                   <div className="w-full px-2 py-2">
                     <div className="flex flex-col gap-1">
@@ -477,7 +477,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
             {/* Desktop table */}
             <div className="hidden sm:block w-full bg-neutral-75 rounded-xl p-4">
-              <div className="flex flex-col text-sm min-w-[500px]">
+              <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-2 px-2 py-2">Sites</div>
                   <div className="col-span-1 px-2 py-2"></div>
@@ -488,7 +488,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 {equipmentMaintenanceDetails.items.map((r, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0"
+                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
                   >
                     <div className="col-span-2 px-2 py-2">
                       <div className="font-medium">{r.site_name}</div>
@@ -508,7 +508,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
             {/* Mobile list */}
             <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-75 p-4">
-              <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
+              <div className="grid grid-cols-2 gap-2 border-b border-input text-sm xl:text-base">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
                 <div className="col-span-1 text-right px-2 py-2 text-xs">
                   Price
@@ -517,7 +517,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               {equipmentMaintenanceDetails.items.map((r, i) => (
                 <div
                   key={`${r.site_id}-${r.building_id}-${i}`}
-                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm"
+                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
                 >
                   <div className="w-full px-2 py-2">
                     <div className="flex flex-col gap-1">
@@ -566,7 +566,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
             {/* Desktop table */}
             <div className="hidden sm:block w-full bg-neutral-75 rounded-xl p-4">
-              <div className="flex flex-col text-sm min-w-[500px]">
+              <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-3 px-2 py-2">Sites</div>
                   <div className="col-span-1 px-2 py-2"></div>
@@ -577,7 +577,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 {selfClosingHopperDoorInspectionDetails.items.map((r, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0"
+                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
                   >
                     <div className="col-span-3 px-2 py-2">
                       <div className="font-medium">{r.site_name}</div>
@@ -595,7 +595,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
             {/* Mobile list */}
             <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-75 p-4">
-              <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
+              <div className="grid grid-cols-2 gap-2 border-b border-input text-sm xl:text-base">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
                 <div className="col-span-1 text-right px-2 py-2 text-xs">
                   Price
@@ -604,7 +604,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               {selfClosingHopperDoorInspectionDetails.items.map((r, i) => (
                 <div
                   key={`${r.site_id}-${r.building_id}-${i}`}
-                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm"
+                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
                 >
                   <div className="w-full px-2 py-2">
                     <div className="flex flex-col gap-1">
@@ -650,7 +650,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
             {/* Desktop table */}
             <div className="hidden sm:block w-full bg-neutral-75 rounded-xl p-4">
-              <div className="flex flex-col text-sm min-w-[500px]">
+              <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-2 px-2 py-2">Sites</div>
                   <div className="col-span-1 px-2 py-2"></div>
@@ -661,7 +661,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 {wasteRoomCleaningDetails.items.map((r, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0"
+                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
                   >
                     <div className="col-span-2 px-2 py-2">
                       <div className="font-medium">{r.site_name}</div>
@@ -679,7 +679,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
             {/* Mobile list */}
             <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-75 p-4">
-              <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
+              <div className="grid grid-cols-2 gap-2 border-b border-input text-sm xl:text-base">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
                 <div className="col-span-1 text-right px-2 py-2 text-xs">
                   Price
@@ -688,7 +688,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               {wasteRoomCleaningDetails.items.map((r, i) => (
                 <div
                   key={`${r.site_id}-${r.building_id}-${i}`}
-                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm"
+                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
                 >
                   <div className="w-full px-2 py-2">
                     <div className="flex flex-col gap-1">
@@ -737,7 +737,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
             {/* Desktop table */}
             <div className="hidden sm:block w-full bg-neutral-75 rounded-xl p-4">
-              <div className="flex flex-col text-sm min-w-[500px]">
+              <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-3 px-2 py-2">Sites</div>
                   <div className="col-span-1 px-2 py-2"></div>
@@ -748,7 +748,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 {binCleaningDetails.items.map((r, i) => (
                   <div
                     key={i}
-                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0"
+                    className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
                   >
                     <div className="col-span-3 px-2 py-2">
                       <div className="font-medium">{r.site_name}</div>
@@ -766,7 +766,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
             {/* Mobile list */}
             <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-75 p-4">
-              <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
+              <div className="grid grid-cols-2 gap-2 border-b border-input text-sm xl:text-base">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
                 <div className="col-span-1 text-right px-2 py-2 text-xs">
                   Price
@@ -775,7 +775,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               {binCleaningDetails.items.map((r, i) => (
                 <div
                   key={`${r.site_id}-${r.building_id}-${i}`}
-                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm"
+                  className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
                 >
                   <div className="w-full px-2 py-2">
                     <div className="flex flex-col gap-1">
@@ -820,7 +820,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             />
 
             {odourQtyError && (
-              <div className="text-sm text-destructive mt-2">
+              <div className="text-sm xl:text-base text-destructive mt-2">
                 Enter the quantity for each location
               </div>
             )}
@@ -832,7 +832,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               return (
                 <>
                   <div className="hidden sm:block w-full bg-neutral-75 rounded-xl p-4">
-                    <div className="flex flex-col text-sm min-w-[640px]">
+                    <div className="flex flex-col text-sm xl:text-base min-w-[640px]">
                       <div className="grid grid-cols-7 gap-2 border-b border-input">
                         <div className="col-span-3 px-2 py-2">Sites</div>
                         <div className="col-span-2 px-2 py-2">Units</div>
@@ -858,7 +858,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                         return (
                           <div
                             key={key}
-                            className="grid grid-cols-7 gap-2 border-b border-input last:border-b-0"
+                            className="grid grid-cols-7 gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
                           >
                             <div className="col-span-3 px-2 py-2">
                               <div className="font-medium">{r.site_name}</div>
@@ -900,7 +900,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
                   {/* Mobile list */}
                   <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-75 p-4 divide-y divide-input">
-                    <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
+                    <div className="grid grid-cols-2 gap-2 border-b border-input text-sm xl:text-base">
                       <div className="col-span-1 px-2 py-2 text-xs">
                         Services
                       </div>
@@ -920,7 +920,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                         odourQtyError && odourNeedsUnits && qty <= 0;
 
                       return (
-                        <div key={key} className="px-2 py-3">
+                        <div key={key} className="px-2 py-3 text-sm xl:text-base">
                           {/* Top: site + building */}
                           <div className="mb-2">
                             <div className="font-medium">{r.site_name}</div>
@@ -1010,7 +1010,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             className="flex flex-col gap-6 scroll-mt-[140px] mt-10"
           >
             <div className="flex flex-col">
-              <Label className="text-2xl font-medium mb-2">
+              <Label className="text-2xl xl:text-3xl font-normal mb-1">
                 Complimentary Incentives
               </Label>
               <span className="text-lg text-neutral-500">
@@ -1029,8 +1029,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
         <div className="flex flex-col gap-6">
           <div className="flex flex-col">
-            <Label className="text-2xl font-medium mb-2">Service Summary</Label>
-            <span className="text-base xl:text-lg text-neutral-500">
+            <Label className="text-2xl xl:text-3xl mb-1">Service Summary</Label>
+            <span className="ttext-lg text-neutral-500">
               Review your service plan and the total cost.
             </span>
           </div>

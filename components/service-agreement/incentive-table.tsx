@@ -17,12 +17,12 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
   }, [serviceCount]);
 
   return (
-    <div className="flex flex-col gap-6 w-full text-sm leading-6 min-w-[820px]">
+    <div className="flex flex-col gap-6 w-full text-sm xl:text-base leading-6 min-w-[900px]">
       {/* Rounded container to match app style */}
       <div className="rounded-lg border border-input shadow-sm overflow-hidden bg-white">
-        <div className="w-full grid grid-cols-9 divide-x divide-input">
+        <div className="w-full grid grid-cols-10 divide-x divide-input">
           {/* Incentives column */}
-          <div className="col-span-3 border-input border-solid">
+          <div className="col-span-4 border-input border-solid">
             <div className="h-40 border-b border-input border-solid font-medium flex justify-start items-center px-2 " />
             <div className="h-14 border-b border-input border-solid flex justify-start items-center px-4 ">
               Price Lock Guarantee (24 Months)

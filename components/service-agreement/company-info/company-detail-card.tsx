@@ -99,7 +99,7 @@ const CompanyDetailsCard = React.forwardRef<CompanyDetailsCardHandle, Props>(fun
               name="abn"
               render={({ field }) => (
                 <FormItem className="flex flex-col md:flex-row md:items-start md:gap-6">
-                  <FormLabel className="text-sm w-full md:w-1/3">
+                  <FormLabel className="text-sm xl:text-base w-full md:w-1/3">
                     ABN<span className="text-red-500">*</span>
                   </FormLabel>
                   <div className="w-full md:w-2/3 flex-shrink-0">
@@ -128,7 +128,7 @@ const CompanyDetailsCard = React.forwardRef<CompanyDetailsCardHandle, Props>(fun
               name="companyName"
               render={({ field }) => (
                 <FormItem className="flex flex-col md:flex-row md:items-start gap-2 md:gap-6">
-                  <FormLabel className="text-sm w-full md:w-1/3">
+                  <FormLabel className="text-sm xl:text-base w-full md:w-1/3">
                     Company name <span className="text-red-500">*</span>
                   </FormLabel>
                   <div className="w-full md:w-2/3 flex-shrink-0">
@@ -142,7 +142,7 @@ const CompanyDetailsCard = React.forwardRef<CompanyDetailsCardHandle, Props>(fun
                         className="efg-input w-full"
                       />
                     </FormControl>
-                    <p className="ml-1 mt-2 text-sm text-neutral-500">
+                    <p className="ml-1 mt-2 text-sm xl:text-base text-neutral-500">
                       If you’re a strata management company, enter your strata plan number prefixed with
                       CTS, SP, or OC (e.g., CTS 12345).
                     </p>
@@ -154,7 +154,7 @@ const CompanyDetailsCard = React.forwardRef<CompanyDetailsCardHandle, Props>(fun
 
             {/* Address */}
             <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-              <Label className="mb-2 text-sm w-full md:w-1/3">
+              <Label className="mb-2 text-sm xl:text-base w-full md:w-1/3">
                 Company address <span className="text-red-500">*</span>
               </Label>
               <div className="w-full md:w-2/3 flex-shrink-0">
