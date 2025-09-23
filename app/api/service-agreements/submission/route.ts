@@ -8,7 +8,7 @@ import { ServiceAgreementStore } from "@/app/service-agreement/service-agreement
 import { convertHtmlToPdfLambda } from "@/lib/api";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-
+const allowedEmails = ["steven.trinh@elephantsfoot.com.au"];
 type AcceptBody = {
   id: string;
   state: ServiceAgreementStore; // <-- typed here
@@ -19,20 +19,21 @@ export async function POST(req: Request) {
 
   const pdf = await convertHtmlToPdfLambda(state);
 
-  await resend.emails.send({
-    to: "steven.trinh@elephantsfoot.com.au", // Recipient email
-    cc: "steven.trinh@enterpriseevolve.com.au",
-    replyTo: process.env.REPLY_TO!,
-    from: process.env.EMAIL_FROM!,
-    subject: "Service Agreement Accepted", // Hardcoded subject
-    html: serviceAgreementAcceptedEmailHtml(),
-    attachments: [
-      {
-        filename: "service-agreement.pdf",
-        path: pdf,
-      },
-    ],
-  });
+  if (allowedEmails.includes(state.accountEmail)) {
+    await resend.emails.send({
+      to: state.accountEmail, // Recipient email
+      replyTo: process.env.REPLY_TO!,
+      from: process.env.EMAIL_FROM!,
+      subject: "Service Agreement Accepted", // Hardcoded subject
+      html: serviceAgreementAcceptedEmailHtml(),
+      attachments: [
+        {
+          filename: "service-agreement.pdf",
+          path: pdf,
+        },
+      ],
+    });
+  }
 
   const { error } = await supabase
     .from("service_agreements")
