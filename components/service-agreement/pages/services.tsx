@@ -304,7 +304,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col">
-        <Label className="text-2xl font-medium mb-2">Service Agreement Form</Label>
+        <Label className="text-2xl font-medium mb-2">
+          Service Agreement Form
+        </Label>
         <span className="text-base xl:text-lg text-neutral-500 font-normal">
           Thanks for choosing{" "}
           <span className="font-medium text-neutral-700">
@@ -348,7 +350,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       </SectionShell>
 
       <div className="flex flex-col mt-10">
-        <Label className="text-2xl font-medium mb-2">Build Your Service Plan</Label>
+        <Label className="text-2xl font-medium mb-2">
+          Build Your Service Plan
+        </Label>
         <span className="text-base xl:text-lg text-neutral-500 font-normal">
           Pick the services you need by setting a frequency.
         </span>
@@ -487,7 +491,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       {r.building_name && <div>{r.building_name}</div>}
                     </div>
                     <div className="col-span-1 px-2 py-2"></div>
-                    <div className="col-span-2 px-2 py-2">{r.equipment_label}</div>
+                    <div className="col-span-2 px-2 py-2">
+                      {r.equipment_label}
+                    </div>
                     <div className="col-span-1 text-right px-2 py-2">
                       {formatMoney(getNumber(r.price))}
                     </div>
@@ -888,7 +894,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                   {/* Mobile list */}
                   <div className="xl:hidden w-full flex flex-col rounded-xl bg-neutral-75 p-4 divide-y divide-input">
                     <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
-                      <div className="col-span-1 px-2 py-2 text-xs">Services</div>
+                      <div className="col-span-1 px-2 py-2 text-xs">
+                        Services
+                      </div>
                       <div className="col-span-1 text-right px-2 py-2 text-xs">
                         Line total
                       </div>
@@ -961,10 +969,18 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                   {/* Pricing footer (units-aware) */}
                   <OdourControlFooter
                     items={odourControlDetails.items.map((r) => {
+                      const frequencyValue =
+                        state.odourControlFrequency === "yearly"
+                          ? 1
+                          : state.odourControlFrequency === "six-monthly"
+                            ? 2
+                            : 4;
                       const key = r.id;
                       const qty = state.odourControlUnits[key] ?? 0;
                       const unitPrice = getNumber(r.price);
-                      return { price: String(unitPrice * qty) };
+                      return {
+                        price: String(unitPrice * qty * frequencyValue),
+                      };
                     })}
                     discountPct={discount}
                     frequency={state.odourControlFrequency}
@@ -978,12 +994,17 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
       {/* Exclusive Benefits */}
       {state.serviceAgreement.incentives && (
-        <section id="rewards" className="flex flex-col gap-6 scroll-mt-[140px] mt-10">
+        <section
+          id="rewards"
+          className="flex flex-col gap-6 scroll-mt-[140px] mt-10"
+        >
           <div className="flex flex-col">
-            <Label className="text-2xl font-medium mb-2">Complimentary Incentives</Label>
+            <Label className="text-2xl font-medium mb-2">
+              Complimentary Incentives
+            </Label>
             <span className="text-lg text-neutral-500">
-              Add services to unlock and redeem complimentary incentives from us — at no
-              extra cost.
+              Add services to unlock and redeem complimentary incentives from us
+              — at no extra cost.
             </span>
           </div>
           <div className="overflow-x-auto p-1">
@@ -1007,7 +1028,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       </div>
 
       {showError && (
-        <div className="text-destructive text-sm">Choose at least 1 service to proceed.</div>
+        <div className="text-destructive text-sm">
+          Choose at least 1 service to proceed.
+        </div>
       )}
 
       {/* Continue */}

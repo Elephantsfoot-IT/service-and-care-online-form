@@ -1,6 +1,7 @@
 import { ServiceAgreement } from "./interface";
 import { useQuery } from "@tanstack/react-query";
 import { Site } from "./interface";
+import { ServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 
 export async function fetchServiceAgreement(
   id: string
@@ -33,17 +34,17 @@ export function useServiceAgreement(id?: string) {
   });
 }
 
-export async function convertHtmlToPdfLambda(sites: Site[]) {
+export async function convertHtmlToPdfLambda(state: ServiceAgreementStore) {
   try {
     const response = await fetch(
-      `https://t4ev4ci4ai.execute-api.ap-southeast-2.amazonaws.com/stg`,
+        process.env.PDF_URL!,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          sites: sites,
+          data: state,
         }),
       }
     );

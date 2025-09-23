@@ -95,12 +95,15 @@ export function ServiceSummary() {
   );
 
   // ✅ Correct odour control computation (units × unitPrice, no multiplier)
+ 
   const odourAnnual = useMemo(() => {
     if (!state.odourControlFrequency) return 0;
     return odourControlDetails.items.reduce((acc, r) => {
+      const frequencyValue =
+      state.odourControlFrequency === "yearly" ? 1 : state.odourControlFrequency === "six-monthly" ? 2 : 4;
       const qty = state.odourControlUnits?.[r.id] ?? 0;
       const unitPrice = getNumber(r.price);
-      return acc + qty * unitPrice;
+      return acc + qty * unitPrice * frequencyValue;
     }, 0);
   }, [
     state.odourControlFrequency,

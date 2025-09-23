@@ -103,8 +103,9 @@ export default function TermsAndSignature() {
         }
         // e.g., state.submitAgreement()
         try {
-          console.log("state", state);
-          // await submitServiceAgreement(state.serviceAgreement?.id, state);
+        
+         
+          await submitServiceAgreement(state.serviceAgreement?.id, state);
           // router.push(`/service-agreement/success`);
           // state.reset();
         } catch (error) {

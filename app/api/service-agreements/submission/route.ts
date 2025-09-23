@@ -19,8 +19,7 @@ export async function POST(req: Request) {
  
 
 
-  const pdf = await convertHtmlToPdfLambda(state.serviceAgreement?.sites || []);
-  console.log(pdf);
+  const pdf = await convertHtmlToPdfLambda(state);
 
   await resend.emails.send({
     to: "steven.trinh@elephantsfoot.com.au", // Recipient email
@@ -37,18 +36,18 @@ export async function POST(req: Request) {
     ],
   });
 
-  // const { data, error } = await supabase
-  //   .from("service_agreements")
-  //   .update({
-  //     status: "Accepted",
-  //     updated_at: ausYMD(new Date()),
-  //   })
-  //   .eq("id", id)
-  //   .select()
-  //   .single();
+  const { error } = await supabase
+    .from("service_agreements")
+    .update({
+      status: "Accepted",
+      updated_at: ausYMD(new Date()),
+    })
+    .eq("id", id)
+    .select()
+    .single();
 
-  // if (error) {
-  //   return NextResponse.json({ error: error.message }, { status: 500 });
-  // }
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
   return NextResponse.json("success", { status: 200 });
 }
