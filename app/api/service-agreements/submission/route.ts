@@ -16,8 +16,6 @@ type AcceptBody = {
 
 export async function POST(req: Request) {
   const { id, state } = (await req.json()) as AcceptBody;
- 
-
 
   const pdf = await convertHtmlToPdfLambda(state);
 
