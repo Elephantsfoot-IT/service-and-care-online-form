@@ -11,6 +11,7 @@ import {
   options,
 } from "@/lib/interface";
 import {
+  cn,
   formatMoney,
   getDiscount,
   getFrequencyValue,
@@ -21,12 +22,22 @@ import {
   scrollToTop,
 } from "@/lib/utils";
 import { Label } from "@radix-ui/react-label";
-import { ArrowRightIcon, InfoIcon } from "lucide-react";
+import {
+  ArrowRightIcon,
+  ChevronDownIcon,
+  InfoIcon,
+  PlusCircleIcon,
+} from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Input } from "@/components/ui/input";
 import { ServiceSummary } from "../service-summary";
 import { format } from "date-fns-tz";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+} from "@/components/ui/accordion";
 
 /* ---------- Small helpers (do NOT touch your service grids) ---------- */
 
@@ -48,40 +59,59 @@ function SectionContent({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-col gap-4 py-8">{children}</div>;
 }
 
-function SectionHeader({
-  title,
-  description,
+function SectionDetails({
+  children,
   helpHref,
-  image,
-  imageAlt,
 }: {
-  title: string;
-  description?: string;
+  children: React.ReactNode;
   helpHref?: string;
-  image?: string;
-  imageAlt?: string;
 }) {
+  const [isOpen, setIsOpen] = useState<string | undefined>(undefined);
+
+  return (
+    <Accordion
+      type="single"
+      collapsible
+      value={isOpen}
+      onValueChange={setIsOpen}
+    >
+      <AccordionItem value="item-1">
+        <div
+          onClick={() => {
+            if (isOpen === "item-1") {
+              setIsOpen(undefined);
+            } else {
+              setIsOpen("item-1");
+            }
+          }}
+          className="text-sm xl:text-base text-efg-yellow mr-1 flex flex-row items-center justify-center gap-1 mt-1  hover:underline hover:text-efg-yellow/80 w-fit cursor-pointer"
+        >
+          Service Details
+          <ChevronDownIcon
+            className={cn(
+              "w-3.5 h-3.5 transition-transform duration-300 ",
+              isOpen === "item-1" ? "rotate-180" : ""
+            )}
+          />
+        </div>
+        <AccordionContent
+          className={cn(
+            "bg-neutral-100 rounded-b-xl rounded-t-xl p-5 mt-1 h-fit accordion-down text-sm xl:text-base"
+          )}
+        >
+          {children}
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  );
+}
+
+function SectionHeader({ title }: { title: string }) {
   return (
     <div className="flex flex-col">
-      <div className="text-2xl xl:text-3xl mb-1 flex flex-row items-center gap-2">
+      <div className="text-2xl xl:text-3xl  flex flex-row items-center gap-2">
         {title}
-        {helpHref && (
-          <a
-            href={helpHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open help in a new tab"
-            className="inline-flex items-center"
-          >
-            <InfoIcon className="size-4 text-neutral-500 hover:text-neutral-700" />
-          </a>
-        )}
       </div>
-      {description && (
-        <span className="text-lg text-neutral-500">
-          {description}
-        </span>
-      )}
     </div>
   );
 }
@@ -187,9 +217,7 @@ function OdourControlFooter({
                 {formatMoney(subtotal)}
               </div>
             )}
-            <div className="text-lg font-medium">
-              {formatMoney(grandTotal)}
-            </div>
+            <div className="text-lg font-medium">{formatMoney(grandTotal)}</div>
           </div>
         </div>
       </div>
@@ -302,7 +330,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
   return (
     <div className="flex flex-col gap-20 sm:gap-30 xl:gap-60">
       <div className="flex flex-col gap-2 ">
-        <Label className="text-6xl  mb-6"><span className="text-efg-main">Service</span> Agreement </Label>
+        <Label className="text-6xl  mb-6">
+          <span className="text-efg-main">Service</span> Agreement{" "}
+        </Label>
         <div className="font-medium flex flex-row items-center gap-2">
           *This proposal is valid until
           <span className="underline">
@@ -338,9 +368,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </div>
 
         <div className="p-6 mt-4 border border-input rounded-xl shadow-sm">
-          <div className="text-lg font-medium  mb-4 ">
-            Contract Duration
-          </div>
+          <div className="text-lg font-medium  mb-4 ">Contract Duration</div>
           <div className="flex flex-row items-center gap-6 justify-between">
             <div className="flex flex-col gap-1.5 flex-shrink-0">
               <Label className="text-sm xl:text-base text-muted-foreground">
@@ -350,10 +378,12 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 {format(state.serviceAgreement.start_date, "dd MMM yyyy")}
               </span>
             </div>
-            <hr className="flex-1 border-input" ></hr>
-           
+            <hr className="flex-1 border-input"></hr>
+
             <div className="flex flex-col gap-1.5 flex-shrink-0">
-              <Label className="text-sm xl:text-base  text-muted-foreground">End date</Label>
+              <Label className="text-sm xl:text-base  text-muted-foreground">
+                End date
+              </Label>
               <span className="text-base xl:text-lg font-medium  leading-tight">
                 {format(state.serviceAgreement.end_date, "dd MMM yyyy")}
               </span>
@@ -365,14 +395,51 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       {/* Chute Cleaning (reference style) */}
       {chuteCleaningDetails.items.length > 0 && (
         <SectionShell id="chute_cleaning">
-          <SectionHeader
-            title="Chute Cleaning"
-            description="Chute cleaning that removes grime, mould, and odours—keeping multi-storey buildings hygienic and safe."
-            helpHref="https://www.elephantsfoot.com.au/chute-cleaning/"
-            image="/Service & Care Icons/Service & Care Cleaning.png"
-            imageAlt="Chute Cleaning"
-          />
-
+          <SectionHeader title="Chute Cleaning" />
+          <SectionDetails helpHref="https://www.elephantsfoot.com.au/chute-cleaning/">
+            <ul className="list-disc pl-6 space-y-1">
+              <li>
+                Attach “Chute Cleaning in Progress” signs to hopper doors to
+                ensure awareness that cleaning is underway.
+              </li>
+              <li>
+                Use an environmentally friendly solution to break down any
+                residue or buildup in the chute.
+              </li>
+              <li>
+                Use high-pressure water to thoroughly clean the chute,
+                dislodging any remaining debris.
+              </li>
+              <li>
+                Wipe down and sanitize the hopper doors to maintain hygiene
+                standards.
+              </li>
+              <li>
+                High-pressure clean discharge hopper to remove any buildup or
+                contaminants.
+              </li>
+              <li>Thoroughly clean all waste equipment.</li>
+              <li>
+                Ensure that the waste room is free of excess water to prevent
+                slips and maintain cleanliness.
+              </li>
+              <li>
+                Use odour-control spray to neutralize any unpleasant smells
+                emanating from the waste chute, ensuring a more pleasant
+                environment.
+              </li>
+              <li>
+                For more information, please visit{" "}
+                <a
+                  href="https://www.elephantsfoot.com.au/chute-cleaning/"
+                  className="underline text-efg-yellow"
+                  target="_blank"
+                >
+                  our website
+                </a>{" "}
+              </li>
+            </ul>
+          </SectionDetails>
           <SectionContent>
             <ServiceFrequency2
               value={state.chuteCleaningFrequency}
@@ -460,13 +527,64 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       {/* Equipment Preventative Maintenance (styled like chute) */}
       {equipmentMaintenanceDetails.items.length > 0 && (
         <SectionShell id="equipment_maintenance">
-          <SectionHeader
-            title="Equipment Preventative Maintenance"
-            description="Keep compactors and related equipment safe, compliant, and efficient."
-            helpHref="https://www.elephantsfoot.com.au/preventative-maintenance/"
-            image="/Service & Care Icons/Service & Care Preventative Maintenance.png"
-            imageAlt="Equipment Preventative Maintenance"
-          />
+          <SectionHeader title="Equipment Preventative Maintenance" />
+          <SectionDetails helpHref="https://www.elephantsfoot.com.au/preventative-maintenance/">
+            <ul className="list-disc pl-6 space-y-2">
+              <li>
+                <strong>EDIVERTER / GARBAGE ROOM</strong>
+                <ul className="list-[circle] pl-6 space-y-1">
+                  <li>
+                    Check/Clean and/or adjust photo sensor &amp; reflector
+                  </li>
+                  <li>Check and clean all limit switches (if applicable)</li>
+                  <li>Check power pack (if applicable)</li>
+                  <li>Check &amp; grease diverter bearings</li>
+                  <li>Check electrical actuator &amp; controls</li>
+                  <li>Check PLC functions &amp; all wiring</li>
+                  <li>Check all electronic sequencing</li>
+                  <li>
+                    Check and adjust the stopping position (if applicable)
+                  </li>
+                  <li>Check safety controls</li>
+                  <li>
+                    Check hopper sliding door, slides, cable condition and
+                    fusible link
+                  </li>
+                  <li>Check turn buckle on hopper</li>
+                  <li>Test operations of entire system</li>
+                  <li>Report on steel welds &amp; structure</li>
+                  <li>Report on housekeeping of garbage room</li>
+                </ul>
+              </li>
+
+              <li>
+                <strong>CAROUSELS &amp; LINEARS</strong>
+                <ul className="list-[circle] pl-6 space-y-1">
+                  <li>Ensure the plastic floor tray is clean</li>
+                  <li>Clean the machine</li>
+                  <li>Check and grease the ram screw rod and nut</li>
+                  <li>Check drive chain tension</li>
+                  <li>Check gearbox mount bolts</li>
+                  <li>Check the plastic floor tray and centre runners</li>
+                  <li>
+                    Check and grease carousel ring gear and motor pinion, adjust
+                    tension if necessary
+                  </li>
+                  <li>Check &amp; grease conveyor track and screw drive</li>
+                </ul>
+              </li>
+              <li>
+                For more information, please visit{" "}
+                <a
+                  href="https://www.elephantsfoot.com.au/preventative-maintenance/"
+                  className="underline text-efg-yellow"
+                  target="_blank"
+                >
+                  our website
+                </a>{" "}
+              </li>
+            </ul>
+          </SectionDetails>
 
           <SectionContent>
             <ServiceFrequency2
@@ -549,13 +667,88 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       {/* Self-Closing Hopper Door Inspection (styled like chute) */}
       {selfClosingHopperDoorInspectionDetails.items.length > 0 && (
         <SectionShell id="hopper_door_inspection">
-          <SectionHeader
-            title="Self-Closing Hopper Door Inspection"
-            description="Chute-door inspections to ensure fire safety and compliance."
-            helpHref="https://www.elephantsfoot.com.au/chute-door-inspection/"
-            image="/Service & Care Icons/Service & Care Door Inspection.png"
-            imageAlt="Self-Closing Hopper Door Inspection"
-          />
+          <SectionHeader title="Self-Closing Hopper Door Inspection" />
+          <SectionDetails helpHref="https://www.elephantsfoot.com.au/chute-door-inspection/">
+            <ul className="list-disc pl-6 space-y-1">
+              <li>
+                <b>Self-Closing Hopper</b> Inspect against drawings that
+                self-closing hoppers have been added, removed or modified. Check
+                overall dimensioning of the self-closing hopper i.e. gaps, leaf
+                and the door frame are in accordance with the relevant test
+                report
+              </li>
+              <li>
+                <b>Screw Mounted Self Closing Hoppers (where applicable)</b>{" "}
+                Inspect to ensure screw fixings are all present and engaged in
+                the frame securely and are in accordance with the relevant test
+                report
+              </li>
+              <li>
+                <b>Hardware General</b>
+                <ul className="list-[circle] pl-6 space-y-1">
+                  <li>
+                    Locksets, latches, closers, pivots and hinges: Inspect all
+                    hardware required for closing and latching is fitted and is
+                    a make and model that has been fire tested for the specific
+                    self-closing hopper.
+                  </li>
+                  <li>
+                    Inspect all hardware is located correctly, securely attached
+                    and operational with the correct fittings in accordance with
+                    the requirements of the relevant test report.
+                  </li>
+                  <li>
+                    Inspect the door leaf and door frame are free from
+                    non-approved fittings, fixings, or attachments and free from
+                    damage caused by relocation of hardware items.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <b>Self-Closing and Self- Latching Function</b>
+                <ul className="list-[circle] pl-6 space-y-1">
+                  <li>
+                    Verify the opening and closing forces are such that the
+                    self-closing hoppers can be easily opened and closed in
+                    normal conditions.
+                  </li>
+                  <li>
+                    Inspect the door leaf and door set is self-closing and
+                    self-latching if appropriate.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <b>Seals</b> Inspect any installed door seals are approved for
+                us on the proprietary door type, functioning as intended and are
+                not damaged.
+              </li>
+              <li>
+                <b>Leaves</b>
+                <ul className="list-[circle] pl-6 space-y-1">
+                  <li>
+                    Inspect panel to ensure it is free of any visible
+                    delamination, and other damage.
+                  </li>
+                  <li>
+                    Inspect that the any perimeter seal is in good condition and
+                    not damaged.
+                  </li>
+                  <li>Inspect door hinges are in</li>
+                </ul>
+              </li>
+              <li>
+                For more information, please visit{" "}
+                <a
+                  href="https://www.elephantsfoot.com.au/chute-door-inspection/"
+                  className="underline text-efg-yellow"
+                  target="_blank"
+                >
+                  our website
+                </a>{" "}
+              </li>
+            </ul>
+          </SectionDetails>
 
           <SectionContent>
             <ServiceFrequency2
@@ -633,14 +826,45 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       {/* Waste Room Pressure Clean (styled like chute) */}
       {wasteRoomCleaningDetails.items.length > 0 && (
         <SectionShell id="waste_room_pressure_clean">
-          <SectionHeader
-            title="Waste Room Pressure Clean"
-            description="High-pressure cleaning for hygienic, odour-free waste rooms."
-            helpHref="https://www.elephantsfoot.com.au/waste-room-restoration/"
-            image="/Service & Care Icons/Service & Care Test Tag.png"
-            imageAlt="Waste Room Pressure Clean"
-          />
-
+          <SectionHeader title="Waste Room Pressure Clean" />
+          <SectionDetails helpHref="https://www.elephantsfoot.com.au/waste-room-restoration/">
+            <ul className="list-disc pl-6 space-y-1">
+              <li>
+                Ensure that all equipment is powered off and disconnected from
+                any power source.
+              </li>
+              <li>
+                Use an environmentally friendly solution to break down any
+                residue or buildup on the equipment.
+              </li>
+              <li>
+                Use high-pressure water to clean the room and waste equipment,
+                dislodging any remaining debris.
+              </li>
+              <li>
+                Rinse the equipment thoroughly with clean water to remove any
+                residue of the cleaning solution.
+              </li>
+              <li>
+                Ensure that all surfaces are thoroughly cleaned and sanitized.
+              </li>
+              <li>
+                Before reactivating the equipment, double-check that all
+                surfaces are dry and free from any residue.
+              </li>
+              <li>Reconnect the power source and test the equipment.</li>
+              <li>
+                For more information, please visit{" "}
+                <a
+                  href="https://www.elephantsfoot.com.au/waste-room-restoration/"
+                  className="underline text-efg-yellow"
+                  target="_blank"
+                >
+                  our website
+                </a>{" "}
+              </li>
+            </ul>
+          </SectionDetails>
           <SectionContent>
             <ServiceFrequency2
               value={state.wasteRoomCleaningFrequency}
@@ -720,14 +944,51 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       {/* Bin Cleaning (styled like chute) */}
       {binCleaningDetails.items.length > 0 && (
         <SectionShell id="bin_cleaning">
-          <SectionHeader
-            title="Bin Cleaning"
-            description="Thorough bin cleaning to reduce odours, pests, and bacteria."
-            helpHref="https://www.elephantsfoot.com.au/service-care/"
-            image="/Service & Care Icons/Service & Care Equipment Replacement.png"
-            imageAlt="Bin Cleaning"
-          />
-
+          <SectionHeader title="Bin Cleaning" />
+          <SectionDetails helpHref="https://www.elephantsfoot.com.au/service-care/">
+            <ul className="list-disc pl-6 space-y-1">
+              <li>
+                Attach “Chute Cleaning in Progress” signs to hopper doors to
+                ensure awareness that cleaning is underway.
+              </li>
+              <li>
+                Use an environmentally friendly solution to break down any
+                residue or buildup in the chute.
+              </li>
+              <li>
+                Use high-pressure water to thoroughly clean the chute,
+                dislodging any remaining debris.
+              </li>
+              <li>
+                Wipe down and sanitize the hopper doors to maintain hygiene
+                standards.
+              </li>
+              <li>
+                High-pressure clean discharge hopper to remove any buildup or
+                contaminants.
+              </li>
+              <li>Thoroughly clean all waste equipment.</li>
+              <li>
+                Ensure that the waste room is free of excess water to prevent
+                slips and maintain cleanliness.
+              </li>
+              <li>
+                Use odour-control spray to neutralize any unpleasant smells
+                emanating from the waste chute, ensuring a more pleasant
+                environment.
+              </li>
+              <li>
+                For more information, please visit{" "}
+                <a
+                  href="https://www.elephantsfoot.com.au/service-care/"
+                  className="underline text-efg-yellow"
+                  target="_blank"
+                >
+                  our website
+                </a>{" "}
+              </li>
+            </ul>
+          </SectionDetails>
           <SectionContent>
             <ServiceFrequency2
               value={state.binCleaningFrequency}
@@ -804,14 +1065,33 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       {/* Odour Control (styled like chute + units) */}
       {odourControlDetails.items.length > 0 && (
         <SectionShell id="odour_control">
-          <SectionHeader
-            title="Odour Control"
-            description="Targeted odour management to keep shared areas fresh."
-            helpHref="https://www.elephantsfoot.com.au/odour-management/"
-            image="/Service & Care Icons/Service & Care Odour Management Box.png"
-            imageAlt="Odour Control"
-          />
-
+          <SectionHeader title="Odour Control" />
+          <SectionDetails helpHref="https://www.elephantsfoot.com.au/odour-management/">
+            <ul className="list-disc pl-6 space-y-1">
+              <li>
+                Ensure system is clean and free of any debris, residue, or
+                damage.
+              </li>
+              <li>Drain remaining solution.</li>
+              <li>{`Pour solution into the odour management system's reservoir or container.`}</li>
+              <li>Carefully inspect for any leaks, spills, or other issues.</li>
+              <li>
+                Test the operation of the odour management system to ensure it
+                is functioning correctly.
+              </li>
+              <li>Inspect program and adjust if required.</li>
+              <li>
+                For more information, please visit{" "}
+                <a
+                  href="https://www.elephantsfoot.com.au/odour-management/"
+                  className="underline text-efg-yellow"
+                  target="_blank"
+                >
+                  our website
+                </a>{" "}
+              </li>
+            </ul>
+          </SectionDetails>
           <SectionContent>
             <ServiceFrequency2
               value={state.odourControlFrequency}
@@ -920,7 +1200,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                         odourQtyError && odourNeedsUnits && qty <= 0;
 
                       return (
-                        <div key={key} className="px-2 py-3 text-sm xl:text-base">
+                        <div
+                          key={key}
+                          className="px-2 py-3 text-sm xl:text-base"
+                        >
                           {/* Top: site + building */}
                           <div className="mb-2">
                             <div className="font-medium">{r.site_name}</div>
