@@ -53,7 +53,7 @@ function ServiceAgreementComponent({
   /* Derived */
   // Disable scroll spy while we're doing a programmatic scroll
   const spiedId = useScrollSpy(SECTION_IDS as unknown as string[], {
-    offset: 120,
+    offset: 170,
     disabled: !!manualActive,
   });
 
@@ -66,12 +66,12 @@ function ServiceAgreementComponent({
     const el = document.getElementById(sectionId);
     if (!el) return;
 
-    fastScrollToEl(el as HTMLElement, { offset: 100, duration: 220 }); // fast
+    fastScrollToEl(el as HTMLElement, { offset: 160, duration: 220 }); // fast
     // after scroll finishes, release manual lock so scroll-spy resumes control
     if (clearTimerRef.current) window.clearTimeout(clearTimerRef.current);
     clearTimerRef.current = window.setTimeout(() => {
       setManualActive(null);
-    }, 250); // a bit longer than duration
+    }, 300); // a bit longer than duration
   };
 
   const selectMore = () => {
