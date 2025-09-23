@@ -52,8 +52,7 @@ export function getNumber(n: string) {
 
 export function getServicesValue(subtotal: number, frequency: string | null) {
   if (!frequency) return 0;
-  const frequencyValue =
-    frequency === "yearly" ? 1 : frequency === "six-monthly" ? 2 : 4;
+  const frequencyValue =getFrequencyValue(frequency)
   return subtotal * frequencyValue;
 }
 
@@ -113,6 +112,11 @@ export const getServiceAnualCost = (services: ServiceByType<ServiceType>[], freq
   const frequencyValue =
     frequency === "yearly" ? 1 : frequency === "six-monthly" ? 2 : 4;
   return services.reduce((acc, service) => acc + getNumber(service.price) * frequencyValue, 0);
+};
+
+export const getFrequencyValue = (frequency: string | null) => {
+  if (!frequency) return 0;
+  return frequency === "yearly" ? 1 : frequency === "six-monthly" ? 2 : 4;
 };
 
 export function formatFullAddress(

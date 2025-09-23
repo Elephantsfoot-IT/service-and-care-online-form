@@ -13,6 +13,7 @@ import {
 import {
   formatMoney,
   getDiscount,
+  getFrequencyValue,
   getNumber,
   getServices,
   getServicesValue,
@@ -841,10 +842,11 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
 
                       {odourControlDetails.items.map((r) => {
+                        const frequencyValue = getFrequencyValue(state.odourControlFrequency);
                         const key = getKey(r);
                         const qty = state.odourControlUnits[key] ?? 0;
                         const unitPrice = getNumber(r.price);
-                        const lineTotal = unitPrice * qty;
+                        const lineTotal = unitPrice * qty * frequencyValue;
                         const invalid =
                           odourQtyError && odourNeedsUnits && qty <= 0;
 
@@ -902,10 +904,11 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
                     </div>
                     {odourControlDetails.items.map((r) => {
+                      const frequencyValue = getFrequencyValue(state.odourControlFrequency);
                       const key = getKey(r);
                       const qty = state.odourControlUnits[key] ?? 0;
                       const unitPrice = getNumber(r.price);
-                      const lineTotal = unitPrice * qty;
+                      const lineTotal = unitPrice * qty * frequencyValue;
                       const invalid =
                         odourQtyError && odourNeedsUnits && qty <= 0;
 
