@@ -167,7 +167,7 @@ function ServiceAgreementComponent({
     if (!isPreview) {
       updateStatus(id, "Opened");
     }
-  }, [state.page, id, isPreview]);
+  }, [id, isPreview]);
 
   /* Early Returns */
   if (isLoading) {
