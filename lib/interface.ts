@@ -78,6 +78,7 @@ export interface ServiceAgreement {
   expire_at: Date;
   company_details?: CompanyInfo;
   billing_details?: BillingDetails;
+  salesperson: string;
 }
 
 export interface Building {
