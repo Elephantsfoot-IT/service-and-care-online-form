@@ -218,7 +218,7 @@ export function ServiceSummary() {
 
               <div className="flex justify-between items-baseline px-4 md:px-6 pb-4 border-b border-input">
                 <span className="text-neutral-700 text-sm xl:text-base font-medium flex flex-col">
-                  Annual cost <span className="font-normal text-xs">(1 year, excl. GST)</span>
+                  Annual cost <span className="font-normal text-xs xl:text-sm">(1 year, excl. GST)</span>
                 </span>
                 <div className="text-right">
                   <div className="text-sm xl:text-base line-through text-neutral-500">
@@ -233,7 +233,7 @@ export function ServiceSummary() {
               <div className="flex justify-between items-baseline px-4 md:px-6 py-6">
                 <span className="text-neutral-700 text-sm xl:text-base font-medium flex flex-col">
                   Contract value{" "}
-                  <span className="font-normal text-xs">(2 years, excl. GST)</span>
+                  <span className="font-normal text-xs xl:text-sm">(2 years, excl. GST)</span>
                 </span>
                 <div className="text-lg font-medium text-neutral-900">
                   {formatMoney(grandTotal * 2)}
@@ -243,9 +243,9 @@ export function ServiceSummary() {
           ) : (
             <>
               <div className="flex justify-between items-baseline px-4 md:px-6 py-6">
-                <span className="text-neutral-700 text-sm font-medium flex flex-col">
+                <span className="text-neutral-700 text-sm xl:text-base font-medium flex flex-col">
                   Annual cost{" "}
-                  <span className="font-normal text-xs">(1 year, excl. GST)</span>
+                  <span className="font-normal text-xs xl:text-sm">(1 year, excl. GST)</span>
                 </span>
                 <span className="text-base font-medium text-neutral-900">
                   {formatMoney(grandTotal)}
@@ -253,9 +253,9 @@ export function ServiceSummary() {
               </div>
 
               <div className="flex justify-between items-baseline border-t border-input px-4 md:px-6 py-6">
-                <span className="text-neutral-700 text-sm font-medium flex flex-col">
+                <span className="text-neutral-700 text-sm xl:text-base font-medium flex flex-col">
                   Contract value{" "}
-                  <span className="font-normal text-xs">(2 years, excl. GST)</span>
+                  <span className="font-normal text-xs xl:text-sm">(2 years, excl. GST)</span>
                 </span>
                 <span className="text-base font-medium text-neutral-900">
                   {formatMoney(grandTotal * 2)}
