@@ -164,10 +164,10 @@ function ServiceAgreementComponent({
   }, [state.page, state.progress]);
 
   useEffect(() => {
-    if (!isPreview) {
+    if (!isPreview && data) {
       updateStatus(id, "Opened");
     }
-  }, [id, isPreview]);
+  }, [id, isPreview,data]);
 
   /* Early Returns */
   if (isLoading) {
