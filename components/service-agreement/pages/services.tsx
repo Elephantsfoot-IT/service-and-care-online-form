@@ -13,6 +13,7 @@ import {
 import {
   formatMoney,
   getDiscount,
+  getFrequencyValue,
   getNumber,
   getServices,
   getServicesValue,
@@ -39,7 +40,7 @@ function SectionShell({
   return (
     <section
       id={id}
-      className="flex flex-col scroll-mt-[140px] bg-transparent  border border-input shadow-sm rounded-xl  bg-white overflow-hidden"
+      className="flex flex-col scroll-mt-[140px] border border-neutral-300 shadow-sm rounded-xl overflow-hidden bg-white p-6"
     >
       {children}
     </section>
@@ -47,9 +48,7 @@ function SectionShell({
 }
 
 function SectionContent({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex flex-col gap-4 py-8 px-4 md:px-6">{children}</div>
-  );
+  return <div className="flex flex-col gap-4 py-8">{children}</div>;
 }
 
 function SectionHeader({
@@ -66,8 +65,8 @@ function SectionHeader({
   imageAlt?: string;
 }) {
   return (
-    <div className="flex flex-col border-b border-input p-6 bg-neutral-50">
-      <div className="text-base xl:text-lg font-medium flex flex-row items-center gap-2 ">
+    <div className="flex flex-col">
+      <div className="text-base xl:text-lg font-medium flex flex-row items-center gap-2">
         {title}
         {helpHref && (
           <a
@@ -113,7 +112,7 @@ function PricingFooter({
 
   return (
     <>
-      <hr className="my-2 border-input border-dashed" />
+      <hr className="my-2 border border-input" />
       <div className="space-y-2 w-full sm:max-w-[360px] ml-auto px-2">
         {showDiscount ? (
           <>
@@ -172,7 +171,7 @@ function OdourControlFooter({
 
   return (
     <>
-      <hr className="my-2 border-input border-dashed" />
+      <hr className="my-2 border border-input" />
       <div className="space-y-2 w-full sm:max-w-[360px] ml-auto px-2">
         {showDiscount && (
           <div className="flex justify-between text-sm text-emerald-600">
@@ -305,7 +304,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex flex-col ">
+      <div className="flex flex-col">
         <Label className="text-2xl font-medium mb-2">
           Service Agreement Form
         </Label>
@@ -326,13 +325,14 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           </span>
         </div>
       </div>
+
       <SectionShell id="service_agreement_duration">
         <SectionHeader
           title="Service Agreement Duration"
           description="The duration of your service agreement."
         />
         <SectionContent>
-          <div className="flex flex-row items-center gap-4 justify-between bg-white ">
+          <div className="flex flex-row items-center gap-4 justify-between">
             <div className="flex flex-col w-fit flex-shrink-0">
               <Label className="text-sm">Start date</Label>
               <span className="text-base font-medium">
@@ -351,7 +351,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
       </SectionShell>
 
       <div className="flex flex-col mt-10">
-      <Label className="text-2xl font-medium mb-2">
+        <Label className="text-2xl font-medium mb-2">
           Build Your Service Plan
         </Label>
         <span className="text-base xl:text-lg text-neutral-500 font-normal">
@@ -378,10 +378,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             />
 
             {/* Desktop table */}
-            <div className="hidden xl:block w-full ">
+            <div className="hidden xl:block w-full bg-neutral-75 rounded-xl p-4">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
-                  <div className="col-span-3 px-2 py-2 ">Sites</div>
+                  <div className="col-span-3 px-2 py-2">Sites</div>
                   <div className="col-span-1 px-2 py-2">Qty</div>
                   <div className="col-span-1 px-2 py-2">Level</div>
                   <div className="col-span-1 text-right px-2 py-2">Price</div>
@@ -414,7 +414,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             </div>
 
             {/* Mobile list */}
-            <div className="xl:hidden w-full flex flex-col">
+            <div className="xl:hidden w-full flex flex-col rounded-xl bg-neutral-75 p-4">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
                 <div className="col-span-1 text-right px-2 py-2 text-xs">
@@ -454,7 +454,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </SectionShell>
       )}
 
-      {/* Equipment Preventative Maintenance (matched styling) */}
+      {/* Equipment Preventative Maintenance (styled like chute) */}
       {equipmentMaintenanceDetails.items.length > 0 && (
         <SectionShell id="equipment_maintenance">
           <SectionHeader
@@ -473,7 +473,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             />
 
             {/* Desktop table */}
-            <div className="hidden xl:block w-full ">
+            <div className="hidden xl:block w-full bg-neutral-75 rounded-xl p-4">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-2 px-2 py-2">Sites</div>
@@ -504,7 +504,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             </div>
 
             {/* Mobile list */}
-            <div className="xl:hidden w-full flex flex-col">
+            <div className="xl:hidden w-full flex flex-col rounded-xl bg-neutral-75 p-4">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
                 <div className="col-span-1 text-right px-2 py-2 text-xs">
@@ -543,7 +543,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </SectionShell>
       )}
 
-      {/* Self-Closing Hopper Door Inspection (matched styling) */}
+      {/* Self-Closing Hopper Door Inspection (styled like chute) */}
       {selfClosingHopperDoorInspectionDetails.items.length > 0 && (
         <SectionShell id="hopper_door_inspection">
           <SectionHeader
@@ -562,7 +562,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             />
 
             {/* Desktop table */}
-            <div className="hidden xl:block w-full ">
+            <div className="hidden xl:block w-full bg-neutral-75 rounded-xl p-4">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-3 px-2 py-2">Sites</div>
@@ -591,7 +591,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             </div>
 
             {/* Mobile list */}
-            <div className="xl:hidden w-full flex flex-col">
+            <div className="xl:hidden w-full flex flex-col rounded-xl bg-neutral-75 p-4">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
                 <div className="col-span-1 text-right px-2 py-2 text-xs">
@@ -627,7 +627,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </SectionShell>
       )}
 
-      {/* Waste Room Pressure Clean (matched styling) */}
+      {/* Waste Room Pressure Clean (styled like chute) */}
       {wasteRoomCleaningDetails.items.length > 0 && (
         <SectionShell id="waste_room_pressure_clean">
           <SectionHeader
@@ -646,7 +646,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             />
 
             {/* Desktop table */}
-            <div className="hidden xl:block w-full ">
+            <div className="hidden xl:block w-full bg-neutral-75 rounded-xl p-4">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-2 px-2 py-2">Sites</div>
@@ -675,7 +675,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             </div>
 
             {/* Mobile list */}
-            <div className="xl:hidden w-full flex flex-col">
+            <div className="xl:hidden w-full flex flex-col rounded-xl bg-neutral-75 p-4">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
                 <div className="col-span-1 text-right px-2 py-2 text-xs">
@@ -714,7 +714,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </SectionShell>
       )}
 
-      {/* Bin Cleaning (matched styling) */}
+      {/* Bin Cleaning (styled like chute) */}
       {binCleaningDetails.items.length > 0 && (
         <SectionShell id="bin_cleaning">
           <SectionHeader
@@ -733,7 +733,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             />
 
             {/* Desktop table */}
-            <div className="hidden xl:block w-full ">
+            <div className="hidden xl:block w-full bg-neutral-75 rounded-xl p-4">
               <div className="flex flex-col text-sm min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-3 px-2 py-2">Sites</div>
@@ -762,7 +762,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             </div>
 
             {/* Mobile list */}
-            <div className="xl:hidden w-full flex flex-col">
+            <div className="xl:hidden w-full flex flex-col rounded-xl bg-neutral-75 p-4">
               <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                 <div className="col-span-1 px-2 py-2 text-xs">Services</div>
                 <div className="col-span-1 text-right px-2 py-2 text-xs">
@@ -798,7 +798,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </SectionShell>
       )}
 
-      {/* Odour Control (matched styling + units) */}
+      {/* Odour Control (styled like chute + units) */}
       {odourControlDetails.items.length > 0 && (
         <SectionShell id="odour_control">
           <SectionHeader
@@ -828,7 +828,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               // Desktop table
               return (
                 <>
-                  <div className="hidden xl:block w-full">
+                  <div className="hidden xl:block w-full bg-neutral-75 rounded-xl p-4">
                     <div className="flex flex-col text-sm min-w-[640px]">
                       <div className="grid grid-cols-7 gap-2 border-b border-input">
                         <div className="col-span-3 px-2 py-2">Sites</div>
@@ -842,10 +842,11 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
 
                       {odourControlDetails.items.map((r) => {
+                        const frequencyValue = getFrequencyValue(state.odourControlFrequency);
                         const key = getKey(r);
                         const qty = state.odourControlUnits[key] ?? 0;
                         const unitPrice = getNumber(r.price);
-                        const lineTotal = unitPrice * qty;
+                        const lineTotal = unitPrice * qty * frequencyValue;
                         const invalid =
                           odourQtyError && odourNeedsUnits && qty <= 0;
 
@@ -893,7 +894,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                   </div>
 
                   {/* Mobile list */}
-                  <div className="xl:hidden w-full flex flex-col  divide-y divide-input">
+                  <div className="xl:hidden w-full flex flex-col rounded-xl bg-neutral-75 p-4 divide-y divide-input">
                     <div className="grid grid-cols-2 gap-2 border-b border-input text-sm">
                       <div className="col-span-1 px-2 py-2 text-xs">
                         Services
@@ -903,10 +904,11 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
                     </div>
                     {odourControlDetails.items.map((r) => {
+                      const frequencyValue = getFrequencyValue(state.odourControlFrequency);
                       const key = getKey(r);
                       const qty = state.odourControlUnits[key] ?? 0;
                       const unitPrice = getNumber(r.price);
-                      const lineTotal = unitPrice * qty;
+                      const lineTotal = unitPrice * qty * frequencyValue;
                       const invalid =
                         odourQtyError && odourNeedsUnits && qty <= 0;
 
@@ -970,10 +972,18 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                   {/* Pricing footer (units-aware) */}
                   <OdourControlFooter
                     items={odourControlDetails.items.map((r) => {
+                      const frequencyValue =
+                        state.odourControlFrequency === "yearly"
+                          ? 1
+                          : state.odourControlFrequency === "six-monthly"
+                            ? 2
+                            : 4;
                       const key = r.id;
                       const qty = state.odourControlUnits[key] ?? 0;
                       const unitPrice = getNumber(r.price);
-                      return { price: String(unitPrice * qty) };
+                      return {
+                        price: String(unitPrice * qty * frequencyValue),
+                      };
                     })}
                     discountPct={discount}
                     frequency={state.odourControlFrequency}
@@ -992,7 +1002,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           className="flex flex-col gap-6 scroll-mt-[140px] mt-10"
         >
           <div className="flex flex-col">
-          <Label className="text-2xl font-medium mb-2">
+            <Label className="text-2xl font-medium mb-2">
               Complimentary Incentives
             </Label>
             <span className="text-lg text-neutral-500">
@@ -1008,9 +1018,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           </div>
         </section>
       )}
+
       <div className="flex flex-col gap-6 mt-10">
         <div className="flex flex-col">
-        <Label className="text-2xl font-medium mb-2">Service Summary</Label>
+          <Label className="text-2xl font-medium mb-2">Service Summary</Label>
           <span className="text-base xl:text-lg text-neutral-500">
             Review your service plan and the total cost.
           </span>
