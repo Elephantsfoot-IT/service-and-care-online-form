@@ -113,7 +113,7 @@ function PricingFooter({
       <div className="space-y-2 w-full sm:max-w-[360px] ml-auto px-6">
         {showDiscount ? (
           <>
-            <div className="flex justify-between text-sm text-emerald-600">
+            <div className="flex justify-between text-sm text-red-600">
               <span>Service discount ({discountPct}%)</span>
               <span>-{formatMoney(discountAmt)}</span>
             </div>
@@ -301,9 +301,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
   return (
     <div className="flex flex-col gap-20 sm:gap-30 xl:gap-60">
-      <div className="flex flex-col gap-2">
-        <Label className="text-2xl font-medium">Service Agreement Form</Label>
-
+      <div className="flex flex-col gap-2 ">
+        <Label className="text-6xl  mb-6"><span className="text-efg-main">Service</span> Agreement </Label>
         <div className="font-medium flex flex-row items-center gap-2">
           *This proposal is valid until
           <span className="underline">
@@ -322,7 +321,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           details and next steps.
         </span>
         {/* ➜ NEW notice block */}
-        <div className="mt-2 text-sm xl:text-base  bg-neutral-100 rounded-md p-3">
+        <div className="mt-2 text-sm xl:text-base  bg-neutral-75 rounded-md p-3">
           This form is for{" "}
           <span className="font-semibold">
             {state.serviceAgreement?.quote_for}
@@ -351,7 +350,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 {format(state.serviceAgreement.start_date, "dd MMM yyyy")}
               </span>
             </div>
-            <hr className="flex-1 border-input" />
+            <hr className="flex-1 border-input" ></hr>
+           
             <div className="flex flex-col gap-1.5 flex-shrink-0">
               <Label className="text-sm  text-muted-foreground">End date</Label>
               <span className="text-lg font-medium  leading-tight">
