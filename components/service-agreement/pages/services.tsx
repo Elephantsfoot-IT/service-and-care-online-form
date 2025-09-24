@@ -355,7 +355,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           details and next steps.
         </span>
         {/* ➜ NEW notice block */}
-        <div className="mt-2 text-sm xl:text-base  bg-neutral-75 rounded-md p-6">
+        <div className="mt-2 text-sm xl:text-base  bg-neutral-75 rounded-xl p-6">
           This form is for{" "}
           <span className="font-semibold">
             {state.serviceAgreement?.quote_for}
@@ -371,9 +371,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           so we can help you get the right form.
         </div>
 
-        <div className="p-6 mt-4 border border-input rounded-xl shadow-sm">
-          <div className="text-lg font-medium  mb-4 ">Contract Duration</div>
-          <div className="flex flex-row items-center gap-6 justify-between">
+        <div className=" mt-4 border border-input rounded-xl shadow-sm">
+          <div className="text-lg font-medium bg-neutral-75 p-6 rounded-t-xl border-b border-input">Contract Duration</div>
+          <div className="flex flex-row items-center gap-6 justify-between p-6">
             <div className="flex flex-col gap-1.5 flex-shrink-0">
               <Label className="text-sm xl:text-base text-muted-foreground">
                 Start date
