@@ -14,6 +14,9 @@ const allowedEmails = [
   "triffon.loizides@elephantsfoot.com.au",
   "digital@elephantsfoot.com.au",
   "service@elephantsfoot.com.au",
+  "laura.harrison@elephantsfoot.com.au",
+  "ea@elephantsfoot.com.au",
+  "julian.saidi@elephantsfoot.com.au",
 ];
 type AcceptBody = {
   id: string;
