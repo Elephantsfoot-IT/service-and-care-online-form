@@ -49,7 +49,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
           </div>
 
           {/* Basic tier */}
-          <div className="col-span-2 transition-all duration-300 relative">
+          <div className="col-span-2 transition-all duration-300 relative" data-col="basic">
             {currentTier === "basic" && (
               <div className="pointer-events-none absolute inset-0 z-0 border border-neutral-300 bg-neutral-300/10" />
             )}
@@ -142,7 +142,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
           </div>
 
           {/* Essential tier */}
-          <div className="col-span-2 transition-all duration-300 relative">
+          <div className="col-span-2 transition-all duration-300 relative" data-col="essential">
             {currentTier === "essential" && (
               <div className="pointer-events-none absolute inset-0 z-30 border border-[#ffdb01] bg-[#ffdb01]/5" />
             )}
@@ -222,7 +222,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
           </div>
 
           {/* Pro tier */}
-          <div className="col-span-2 transition-all duration-300 relative">
+          <div className="col-span-2 transition-all duration-300 relative" data-col="premium">
             {currentTier === "premium" && (
               <div className="pointer-events-none absolute inset-0 z-30 border border-[#1e60ad] bg-blue-400/5 rounded-br-lg" />
             )}

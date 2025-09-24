@@ -38,6 +38,7 @@ import {
   AccordionContent,
   AccordionItem,
 } from "@/components/ui/accordion";
+import { HorizontalScroller } from "../scroll-indicator";
 
 /* ---------- Small helpers (do NOT touch your service grids) ---------- */
 
@@ -126,7 +127,7 @@ function PricingFooter({
   items: Array<{ price: string }>;
   frequency: string | null;
   discountPct: number;
-  incentives:boolean;
+  incentives: boolean;
 }) {
   const base = items.reduce((acc, r) => acc + getNumber(r.price), 0);
   const subtotal = getServicesValue(base || 0, frequency); // annualised for this section
@@ -188,7 +189,7 @@ function OdourControlFooter({
   items: Array<{ price: string }>;
   discountPct: number;
   frequency: MaybeOption;
-  incentives:boolean;
+  incentives: boolean;
 }) {
   if (!frequency) {
     return null;
@@ -254,6 +255,13 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
     state.selfClosingHopperDoorInspectionFrequency,
     state.binCleaningFrequency,
   ]);
+
+  const desiredTier = useMemo(() => {
+    if (numberOfServices === 3) return "basic";
+    if (numberOfServices > 3 && numberOfServices < 6) return "essential";
+    if (numberOfServices >= 6) return "premium";
+    return "";
+  }, [numberOfServices]);
 
   useEffect(() => {
     scrollToTop();
@@ -372,7 +380,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </div>
 
         <div className=" mt-4 border border-input rounded-xl shadow-sm">
-          <div className="text-lg font-medium bg-neutral-75 p-6 rounded-t-xl border-b border-input">Contract Duration</div>
+          <div className="text-lg font-medium bg-neutral-75 p-6 rounded-t-xl border-b border-input">
+            Contract Duration
+          </div>
           <div className="flex flex-row items-center gap-6 justify-between p-6">
             <div className="flex flex-col gap-1.5 flex-shrink-0">
               <Label className="text-sm xl:text-base text-muted-foreground">
@@ -1311,12 +1321,21 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                 us — at no extra cost.
               </span>
             </div>
-            <div className="overflow-x-auto p-1">
-              <IncentiveTable
-                serviceCount={numberOfServices}
-                selectMore={selectMore}
-              />
-            </div>
+
+            <HorizontalScroller
+              initialTargetSelector={
+                desiredTier ? `[data-col="${desiredTier}"]` : undefined
+              }
+              scrollKey={desiredTier} // re-focus if tier changes
+              className="p-1"
+            >
+              <div className="min-w-[900px]">
+                <IncentiveTable
+                  serviceCount={numberOfServices}
+                  selectMore={selectMore}
+                />
+              </div>
+            </HorizontalScroller>
           </section>
         )}
 
