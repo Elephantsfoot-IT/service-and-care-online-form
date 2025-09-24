@@ -9,6 +9,7 @@ import ConfirmInfo from "@/components/service-agreement/pages/confirm-info";
 import ServicesForm from "@/components/service-agreement/pages/services";
 import ScrollButton from "@/components/service-agreement/scroll-button";
 import { useScrollSpy } from "@/components/service-agreement/scroll-spy";
+import ServiceAgreementProgress from "@/components/service-agreement/service-agreement-progress";
 import Sider from "@/components/sider";
 import { useServiceAgreement } from "@/lib/api";
 import { SECTION_IDS, ServiceAgreement } from "@/lib/interface";
@@ -187,12 +188,12 @@ function ServiceAgreementComponent({
     <>
       <Header />
       <Sider activeId={activeId} onJump={onJump} />
-      <div className="pt-20 xl:pt-40 xl:pl-[400px] pb-40 relative">
+      <div className="pt-14 xl:pt-40 xl:pl-[400px] pb-40 relative">
         <ScrollButton />
 
         <div className="px-4 xl:px-20 text-neutral-800 bg-transparent">
-          <div className="w-full flex flex-col items-center font-sans flex-grow gap-8 max-w-screen-lg mx-auto">
-            {/* {<ServiceAgreementProgress></ServiceAgreementProgress>} */}
+          <div className="w-full flex flex-col items-center font-sans flex-grow gap-14 max-w-screen-lg mx-auto">
+            {<ServiceAgreementProgress></ServiceAgreementProgress>}
 
             {state.page === 1 && (
               <div
