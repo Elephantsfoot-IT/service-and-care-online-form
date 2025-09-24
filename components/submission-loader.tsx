@@ -35,7 +35,7 @@ export default function SubmissionLoader({ show }: { show: boolean }) {
       className="
         fixed inset-0 z-[2147483647]   /* effectively 'infinite' */
         flex items-center justify-center flex-col 
-        bg-white 
+        bg-white px-2
       "
     >
       <div className="flex items-center justify-center flex-col fade-up translate-y-[-100px]">
@@ -44,7 +44,7 @@ export default function SubmissionLoader({ show }: { show: boolean }) {
           {` We’re processing your submission`}
         </p>
         <p className="text-base text-neutral-500">
-          Please stay on this page while we finish up.
+          Please stay on this page.
         </p>
       </div>
     </div>,
