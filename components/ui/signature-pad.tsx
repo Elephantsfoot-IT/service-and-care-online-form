@@ -51,8 +51,8 @@ const SignaturePadComponent = ({
     const pad = new SignaturePad(canvas, {
       backgroundColor: "rgba(255,255,255,0)",
       penColor: "#111",
-      minWidth: 3,
-      maxWidth:3,
+      minWidth: 2,
+      maxWidth:2,
       throttle: 16, // ~1 frame
     });
     signaturePadRef.current = pad;
