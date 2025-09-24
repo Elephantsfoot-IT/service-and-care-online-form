@@ -13,6 +13,7 @@ const allowedEmails = [
   "nitesh.singh@elephantsfoot.com.au",
   "triffon.loizides@elephantsfoot.com.au",
   "digital@elephantsfoot.com.au",
+  "service@elephantsfoot.com.au",
 ];
 type AcceptBody = {
   id: string;
