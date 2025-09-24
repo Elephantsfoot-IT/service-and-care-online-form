@@ -121,15 +121,17 @@ function PricingFooter({
   items,
   frequency,
   discountPct,
+  incentives,
 }: {
   items: Array<{ price: string }>;
   frequency: string | null;
   discountPct: number;
+  incentives:boolean;
 }) {
   const base = items.reduce((acc, r) => acc + getNumber(r.price), 0);
   const subtotal = getServicesValue(base || 0, frequency); // annualised for this section
   const hasTotal = subtotal > 0;
-  const showDiscount = discountPct > 0 && hasTotal;
+  const showDiscount = discountPct > 0 && hasTotal && incentives;
   const discountAmt = showDiscount ? (subtotal * discountPct) / 100 : 0;
   const grandTotal = subtotal - discountAmt;
 
@@ -181,10 +183,12 @@ function OdourControlFooter({
   items, // [{ price: string }] where price is already units * unitPrice
   discountPct,
   frequency,
+  incentives,
 }: {
   items: Array<{ price: string }>;
   discountPct: number;
   frequency: MaybeOption;
+  incentives:boolean;
 }) {
   if (!frequency) {
     return null;
@@ -192,7 +196,7 @@ function OdourControlFooter({
   const subtotal = items.reduce((acc, r) => acc + getNumber(r.price), 0);
   if (subtotal === 0) return null;
 
-  const showDiscount = discountPct > 0;
+  const showDiscount = discountPct > 0 && incentives;
   const discountAmt = showDiscount ? (subtotal * discountPct) / 100 : 0;
   const grandTotal = subtotal - discountAmt;
 
@@ -519,6 +523,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               items={chuteCleaningDetails.items}
               frequency={state.chuteCleaningFrequency}
               discountPct={discount}
+              incentives={state.serviceAgreement.incentives}
             />
           </SectionContent>
         </SectionShell>
@@ -659,6 +664,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               items={equipmentMaintenanceDetails.items}
               frequency={state.equipmentMaintenanceFrequency}
               discountPct={discount}
+              incentives={state.serviceAgreement.incentives}
             />
           </SectionContent>
         </SectionShell>
@@ -818,6 +824,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               items={selfClosingHopperDoorInspectionDetails.items}
               frequency={state.selfClosingHopperDoorInspectionFrequency}
               discountPct={discount}
+              incentives={state.serviceAgreement.incentives}
             />
           </SectionContent>
         </SectionShell>
@@ -936,6 +943,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               items={wasteRoomCleaningDetails.items}
               frequency={state.wasteRoomCleaningFrequency}
               discountPct={discount}
+              incentives={state.serviceAgreement.incentives}
             />
           </SectionContent>
         </SectionShell>
@@ -1057,6 +1065,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               items={binCleaningDetails.items}
               frequency={state.binCleaningFrequency}
               discountPct={discount}
+              incentives={state.serviceAgreement.incentives}
             />
           </SectionContent>
         </SectionShell>
@@ -1277,6 +1286,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     })}
                     discountPct={discount}
                     frequency={state.odourControlFrequency}
+                    incentives={state.serviceAgreement.incentives}
                   />
                 </>
               );

@@ -122,7 +122,7 @@ export function ServiceSummary() {
     odourAnnual;
 
   const discountAmt = discountPct ? (subtotal * discountPct) / 100 : 0;
-  const grandTotal = subtotal - discountAmt;
+  const grandTotal = state.serviceAgreement?.incentives ? subtotal - discountAmt : subtotal;
 
   // Clean, headerless row
   const Row = ({
@@ -209,7 +209,7 @@ export function ServiceSummary() {
 
         {/* Totals */}
         <div>
-          {discountPct > 0 ? (
+          {(discountPct > 0 && state.serviceAgreement?.incentives ) ? (
             <>
               <div className="flex justify-between text-sm xl:text-base text-emerald-600 px-4 md:px-6 pt-4 ">
                 <span>Service discount ({discountPct}%)</span>
