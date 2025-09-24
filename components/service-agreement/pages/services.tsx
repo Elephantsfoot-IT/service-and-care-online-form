@@ -346,7 +346,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
         <span className="text-base xl:text-lg text-neutral-500 font-normal ">
           Thanks for choosing{" "}
-          <span className="font-medium text-neutral-700">
+          <span className="font-medium text-neutral-800">
             Elephants Foot Service & Care
           </span>
           . This form captures your sites and the services/frequencies you’d
@@ -648,7 +648,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       {r.building_name && (
                         <div className="text-xs">{r.building_name}</div>
                       )}
-                      <div className="text-xs text-neutral-700">
+                      <div className="text-xs text-neutral-800">
                         Equipment: {r.equipment_label}
                       </div>
                     </div>
@@ -927,7 +927,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       {r.building_name && (
                         <div className="text-xs">{r.building_name}</div>
                       )}
-                      <div className="text-xs text-neutral-700">
+                      <div className="text-xs text-neutral-800">
                         Area: {r.area_label}
                       </div>
                     </div>

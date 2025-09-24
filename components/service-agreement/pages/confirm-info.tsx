@@ -35,6 +35,7 @@ import SignaturePadComponent from "@/components/ui/signature-pad";
 import { scrollToTop } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import SubmissionLoader from "@/components/submission-loader";
 
 const submitServiceAgreement = async (
   id: string,
@@ -104,8 +105,7 @@ export default function TermsAndSignature() {
         // e.g., state.submitAgreement()
         try {
           await submitServiceAgreement(state.serviceAgreement?.id, state);
-          // router.push(`/service-agreement/success`);
-          // state.reset();
+          router.push(`/service-agreement/success`);
         } catch (error) {
           toast.error("Failed to submit service agreement");
         }
@@ -137,6 +137,10 @@ export default function TermsAndSignature() {
   useEffect(() => {
     scrollToTop();
   }, []);
+
+  if (isSubmitting) {
+    return <SubmissionLoader show={true} />;
+  }
 
   /* ------------------------------ JSX ------------------------------ */
   return (

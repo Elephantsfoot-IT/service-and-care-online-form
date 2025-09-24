@@ -217,7 +217,7 @@ export function ServiceSummary() {
               </div>
 
               <div className="flex justify-between items-baseline px-4 md:px-6 pb-4 border-b border-input">
-                <span className="text-neutral-700 text-sm xl:text-base font-medium flex flex-col">
+                <span className="text-neutral-800 text-sm xl:text-base font-medium flex flex-col">
                   Annual cost <span className="font-normal text-xs xl:text-sm">(1 year, excl. GST)</span>
                 </span>
                 <div className="text-right">
@@ -231,7 +231,7 @@ export function ServiceSummary() {
               </div>
 
               <div className="flex justify-between items-baseline px-4 md:px-6 py-6">
-                <span className="text-neutral-700 text-sm xl:text-base font-medium flex flex-col">
+                <span className="text-neutral-800 text-sm xl:text-base font-medium flex flex-col">
                   Contract value{" "}
                   <span className="font-normal text-xs xl:text-sm">(2 years, excl. GST)</span>
                 </span>
@@ -243,7 +243,7 @@ export function ServiceSummary() {
           ) : (
             <>
               <div className="flex justify-between items-baseline px-4 md:px-6 py-6">
-                <span className="text-neutral-700 text-sm xl:text-base font-medium flex flex-col">
+                <span className="text-neutral-800 text-sm xl:text-base font-medium flex flex-col">
                   Annual cost{" "}
                   <span className="font-normal text-xs xl:text-sm">(1 year, excl. GST)</span>
                 </span>
@@ -253,7 +253,7 @@ export function ServiceSummary() {
               </div>
 
               <div className="flex justify-between items-baseline border-t border-input px-4 md:px-6 py-6">
-                <span className="text-neutral-700 text-sm xl:text-base font-medium flex flex-col">
+                <span className="text-neutral-800 text-sm xl:text-base font-medium flex flex-col">
                   Contract value{" "}
                   <span className="font-normal text-xs xl:text-sm">(2 years, excl. GST)</span>
                 </span>

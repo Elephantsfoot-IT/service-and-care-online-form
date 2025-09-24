@@ -186,7 +186,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
                       size="sm"
                       className={cn(
                         "mt-2 w-full",
-                        "bg-[#ffdb01] hover:bg-[#ffdb01]/90 border-b-[#ffdb01] text-neutral-700"
+                        "bg-[#ffdb01] hover:bg-[#ffdb01]/90 border-b-[#ffdb01] text-neutral-800"
                       )}
                       onClick={selectMore}
                     >
@@ -261,7 +261,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
                           "text-sm",
                           currentTier === "premium"
                             ? "text-white/80"
-                            : "text-neutral-700"
+                            : "text-neutral-800"
                         )}
                       >
                         services required

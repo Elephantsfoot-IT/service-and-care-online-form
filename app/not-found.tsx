@@ -15,11 +15,11 @@ function NotFound() {
             />
           </div>
 
-          <h1 className="text-2xl font-semibold text-neutral-900">
+          <h1 className="text-2xl font-medium text-neutral-800">
              Form Not Found
           </h1>
 
-          <p className="mt-3 text-base text-neutral-600">
+          <p className=" text-base text-neutral-500">
             This form is invalid, expired, or may have already
             been completed.
           </p>

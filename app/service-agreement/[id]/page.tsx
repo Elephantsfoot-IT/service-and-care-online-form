@@ -2,6 +2,7 @@
 
 /* ------------------------------ Imports ------------------------------ */
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
+import GlobalOverlay from "@/components/global-loader";
 import Header from "@/components/header";
 import CompanyInfo from "@/components/service-agreement/pages/company-info";
 import ConfirmInfo from "@/components/service-agreement/pages/confirm-info";
@@ -173,9 +174,7 @@ function ServiceAgreementComponent({
   /* Early Returns */
   if (isLoading) {
     return (
-      <div className="w-full min-h-screen flex items-center justify-center">
-        <Loader2Icon className="size-20 animate-spin text-efg-yellow" />
-      </div>
+      <GlobalOverlay show={true} />
     );
   }
   if (error) {
@@ -241,9 +240,7 @@ export default function ServiceAgreementPage() {
   return (
     <Suspense
       fallback={
-        <div className="w-full min-h-screen flex items-center justify-center">
-          <Loader2Icon className="size-20 animate-spin text-efg-yellow" />
-        </div>
+        <GlobalOverlay show={true} />
       }
     >
       <ServiceAgreementComponent id={id} isPreview={isPreview} />

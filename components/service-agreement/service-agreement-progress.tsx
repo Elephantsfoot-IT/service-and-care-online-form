@@ -7,7 +7,7 @@ function ServiceAgreementProgress() {
   return (
     <>
       <div className="w-full flex flex-col gap-2 mr-auto xl:hidden max-w-[200px]">
-       {/* <div className="text-sm text-neutral-700 font-medium">{state.page}/7</div> */}
+       {/* <div className="text-sm text-neutral-800 font-medium">{state.page}/7</div> */}
        <Progress value={value} className="bg-neutral-200" />
       </div>
     </>

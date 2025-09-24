@@ -5,7 +5,7 @@ import { Loader2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-export default function GlobalOverlay({ show }: { show: boolean }) {
+export default function SubmissionLoader({ show }: { show: boolean }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -34,12 +34,17 @@ export default function GlobalOverlay({ show }: { show: boolean }) {
       aria-live="assertive"
       className="
         fixed inset-0 z-[2147483647]   /* effectively 'infinite' */
-        flex items-center justify-center flex-col gap-2
+        flex items-center justify-center flex-col 
         bg-white
       "
     >
-      <Loader2Icon className="size-20 animate-spin text-efg-yellow mb-2" />
-      
+      <Loader2Icon className="size-20 animate-spin text-efg-yellow mb-4" />
+      <p className="text-2xl text-neutral-800 font-medium">
+       {` We’re processing your submission`}
+      </p>
+      <p className="text-base text-neutral-500">
+        Please stay on this page while we finish up.
+      </p>
     </div>,
     document.body
   );
