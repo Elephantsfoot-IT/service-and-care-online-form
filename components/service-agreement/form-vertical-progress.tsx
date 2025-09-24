@@ -33,7 +33,7 @@ const steps: Step[] = [
   // { page: 6, label: "Review Details",    Icon: ListCheckIcon,         fadeClass: "fade-right fade-right-600" },
   {
     page: 3,
-    label: "Sign Agreement",
+    label: "Review & Sign Agreement",
     Icon: SignatureIcon,
     fadeClass: "fade-right fade-right-300",
   },

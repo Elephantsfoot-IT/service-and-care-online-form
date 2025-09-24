@@ -368,15 +368,14 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           <span className="font-semibold">
             {state.serviceAgreement?.quote_for}
           </span>
-          . If you are not this customer, please contact us at{" "}
+          . If this isn’t you, please contact us at{" "}
           <a href="tel:1300435374" className="underline">
             1300&nbsp;435&nbsp;374
           </a>{" "}
           or{" "}
           <a href="mailto:service@elephantsfoot.com.au" className="underline">
             service@elephantsfoot.com.au
-          </a>{" "}
-          so we can help you get the right form.
+          </a>
         </div>
 
         <div className=" mt-4 border border-input rounded-xl shadow-sm">
