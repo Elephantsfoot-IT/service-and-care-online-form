@@ -38,8 +38,9 @@ export default function GlobalOverlay({ show }: { show: boolean }) {
         bg-white
       "
     >
-      <Loader2Icon className="size-20 animate-spin text-efg-yellow mb-2" />
-      
+      <div className="translate-y-[-100px]">
+        <Loader2Icon className="size-20 animate-spin text-efg-yellow mb-2" />
+      </div>
     </div>,
     document.body
   );
