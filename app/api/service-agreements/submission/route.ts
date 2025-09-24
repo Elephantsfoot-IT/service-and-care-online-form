@@ -8,7 +8,12 @@ import { ServiceAgreementStore } from "@/app/service-agreement/service-agreement
 import { convertHtmlToPdfLambda } from "@/lib/api";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const allowedEmails = ["steven.trinh@elephantsfoot.com.au"];
+const allowedEmails = [
+  "steven.trinh@elephantsfoot.com.au",
+  "nitesh.singh@elephantsfoot.com.au",
+  "triffon.loizides@elephantsfoot.com.au",
+  "digital@elephantsfoot.com.au",
+];
 type AcceptBody = {
   id: string;
   state: ServiceAgreementStore; // <-- typed here
