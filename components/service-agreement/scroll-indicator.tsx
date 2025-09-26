@@ -80,7 +80,7 @@ export function HorizontalScroller({
       {/* Scroller */}
       <div
         ref={ref}
-        className="overflow-x-auto scroll-smooth"
+        className="overflow-x-auto scroll-smooth rounded-lg border border-input shadow-sm"
         role="region"
         aria-label="Scrollable incentive tiers"
       >

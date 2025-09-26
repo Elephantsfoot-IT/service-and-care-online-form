@@ -1328,7 +1328,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               scrollKey={desiredTier} // re-focus if tier changes
               className="p-1"
             >
-              <div className="min-w-[900px]">
+              <div className="min-w-[900px] ">
                 <IncentiveTable
                   serviceCount={numberOfServices}
                   selectMore={selectMore}
