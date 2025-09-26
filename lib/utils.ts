@@ -161,3 +161,9 @@ export function ausYMD(input: string | Date | undefined | null): string | null {
   if (!d) return null;
   return formatInTimeZone(d, "Australia/Sydney", "yyyy-MM-dd HH:mm:ss");
 }
+
+export function ausDate(input: string | Date | undefined | null): string | null {
+  const d = toDate(input);
+  if (!d) return null;
+  return formatInTimeZone(d, "Australia/Sydney", "HH:mm, dd MMM yyyy");
+}

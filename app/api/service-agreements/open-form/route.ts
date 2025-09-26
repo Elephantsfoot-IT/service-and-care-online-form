@@ -24,7 +24,7 @@ export async function PUT(request: NextRequest) {
     created_at: updatedYMD,
     service_agreement_id: id,
     type: "opened",
-    title: "Form Opened by Customer",
+    title: "Service Agreement Opened by Customer",
     description: "",
     author: "System",
   });

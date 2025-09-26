@@ -3,7 +3,7 @@ import { supabase } from "@/lib/service-aggreement-supabase";
 
 import { Resend } from "resend";
 import { serviceAgreementAcceptedEmailHtml } from "@/lib/confirmation-email";
-import { ausYMD } from "@/lib/utils";
+import { ausDate, ausYMD } from "@/lib/utils";
 import { ServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { convertHtmlToPdfLambda } from "@/lib/api";
 
@@ -48,7 +48,11 @@ export async function POST(req: Request) {
     .from("service_agreements")
     .update({
       status: "Accepted",
+      full_name: state.signFullName,
+      title: state.signTitle,
+      signature: state.trimmedDataURL,
       updated_at: ausYMD(new Date()),
+      accepted_at: ausYMD(new Date()),
     })
     .eq("id", id)
     .select()
@@ -57,5 +61,19 @@ export async function POST(req: Request) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
+  const { error: logError } = await supabase.from("log").insert({
+    created_at: ausYMD(new Date()),
+    service_agreement_id: id,
+    type: "accepted",
+    title: "Service Agreement Accepted by Customer",
+    description: `Service Agreement Signed by ${state.signFullName} at ${ausDate(new Date())}`,
+    author: "System",
+  });
+
+  if (logError) {
+    return NextResponse.json({ error: logError.message }, { status: 500 });
+  }
+
   return NextResponse.json("success", { status: 200 });
 }
