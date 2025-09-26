@@ -14,15 +14,13 @@ import Sider from "@/components/sider";
 import { useServiceAgreement } from "@/lib/api";
 import { SECTION_IDS, ServiceAgreement } from "@/lib/interface";
 import { fastScrollToEl, scrollToTop } from "@/lib/utils";
-import { Loader2Icon } from "lucide-react";
-import {useParams, useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 
-const updateStatus = async (id: string, status: string) => {
-  const response = await fetch("/api/service-agreements/update-status", {
+const openForm = async (id: string) => {
+  const response = await fetch("/api/service-agreements/open-form", {
     method: "PUT",
-    body: JSON.stringify({ id, status }),
+    body: JSON.stringify({ id }),
   });
   if (!response.ok) {
     throw new Error("Failed to update service agreement status");
@@ -168,7 +166,7 @@ function ServiceAgreementComponent({
 
   useEffect(() => {
     if (!isPreview && data) {
-      updateStatus(id, "Opened");
+      openForm(id);
     }
   }, [id, isPreview, data]);
 

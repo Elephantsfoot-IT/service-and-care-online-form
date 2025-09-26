@@ -8,44 +8,74 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-  Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import MultiLineAddressInput from "@/components/ui/multi-line-address-input";
 
 /* ---------------- Schema ---------------- */
-const billingSchema = z.object({
-  accountFirstName: z.string().min(1, { message: "First name cannot be empty" }),
-  accountLastName: z.string().min(1, { message: "Last name cannot be empty" }),
-  accountEmail: z.string().email({ message: "Please enter a valid email address." }),
-  accountPhone: z.string().regex(/^[+]?[0-9]+$/, {
-    message: "Phone number can only contain digits and an optional '+' at the beginning.",
-  }).optional().or(z.literal("")),
-  accountMobile: z.string().regex(/^(\+614|04)\d{8}$/, {
-    message: "Phone must start with '04' or '+614' and have 8 digits after.",
-  }).optional().or(z.literal("")),
-  QuoteContact: z.boolean(),
-  JobContact: z.boolean(),
-  InvoiceContact: z.boolean(),
-  StatementContact: z.boolean(),
-  PrimaryStatementContact: z.boolean(),
-  PrimaryInvoiceContact: z.boolean(),
-  PrimaryJobContact: z.boolean(),
-  PrimaryQuoteContact: z.boolean(),
-  postalStreetAddress: z.string().min(1, { message: "Postal street address cannot be empty" }),
-  postalCity: z.string().min(1, { message: "Postal city cannot be empty" }),
-  postalState: z.string().min(1, { message: "Postal state cannot be empty" }),
-  postalPostcode: z.string().regex(/^\d{4}$/, { message: "Business postcode must be exactly 4 digits" }),
-  postalCountry: z.string(),
-}).superRefine((data, ctx) => {
-  const hasAnyPhone = Boolean(data.accountPhone) || Boolean(data.accountMobile);
-  if (!hasAnyPhone) {
-    const msg = "At least one contact number (Office phone or Mobile phone) must be provided.";
-    ctx.addIssue({ code: "custom", message: msg, path: ["accountMobile"] });
-    ctx.addIssue({ code: "custom", message: msg, path: ["accountPhone"] });
-  }
-});
+const billingSchema = z
+  .object({
+    accountFirstName: z
+      .string()
+      .min(1, { message: "First name cannot be empty" }),
+    accountLastName: z
+      .string()
+      .min(1, { message: "Last name cannot be empty" }),
+    accountEmail: z
+      .string()
+      .email({ message: "Please enter a valid email address." }),
+    accountPhone: z
+      .string()
+      .regex(/^[+]?[0-9]+$/, {
+        message:
+          "Phone number can only contain digits and an optional '+' at the beginning.",
+      })
+      .optional()
+      .or(z.literal("")),
+    accountMobile: z
+      .string()
+      .regex(/^(\+614|04)\d{8}$/, {
+        message:
+          "Phone must start with '04' or '+614' and have 8 digits after.",
+      })
+      .optional()
+      .or(z.literal("")),
+    QuoteContact: z.boolean(),
+    JobContact: z.boolean(),
+    InvoiceContact: z.boolean(),
+    StatementContact: z.boolean(),
+    PrimaryStatementContact: z.boolean(),
+    PrimaryInvoiceContact: z.boolean(),
+    PrimaryJobContact: z.boolean(),
+    PrimaryQuoteContact: z.boolean(),
+    postalStreetAddress: z
+      .string()
+      .min(1, { message: "Postal street address cannot be empty" }),
+    postalCity: z.string().min(1, { message: "Postal city cannot be empty" }),
+    postalState: z.string().min(1, { message: "Postal state cannot be empty" }),
+    postalPostcode: z.string().regex(/^\d{4}$/, {
+      message: "Business postcode must be exactly 4 digits",
+    }),
+    postalCountry: z.string(),
+  })
+  .superRefine((data, ctx) => {
+    const hasAnyPhone =
+      Boolean(data.accountPhone) || Boolean(data.accountMobile);
+    if (!hasAnyPhone) {
+      const msg =
+        "At least one contact number (Office phone or Mobile phone) must be provided.";
+      ctx.addIssue({ code: "custom", message: msg, path: ["accountMobile"] });
+      ctx.addIssue({ code: "custom", message: msg, path: ["accountPhone"] });
+    }
+  });
 
 export type BillingDetailsFormType = z.infer<typeof billingSchema>;
 
@@ -57,88 +87,93 @@ type Props = {
   className?: string;
 };
 
-const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(function BillingDetailsCard(
-  _props,
-  ref
-) {
-  const state = useServiceAgreementStore();
+const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(
+  function BillingDetailsCard(_props, ref) {
+    const state = useServiceAgreementStore();
 
-  /* ---------- 1) Snapshot ONLY from Zustand for defaults ---------- */
-  const defaultValues: BillingDetailsFormType = {
-    accountFirstName: state.accountFirstName ?? "",
-    accountLastName:  state.accountLastName ?? "",
-    accountEmail:     state.accountEmail ?? "",
-    accountPhone:     state.accountPhone ?? "",
-    accountMobile:    state.accountMobile ?? "",
-    QuoteContact: !!state.QuoteContact,
-    JobContact: !!state.JobContact,
-    InvoiceContact: !!state.InvoiceContact,
-    StatementContact: !!state.StatementContact,
-    PrimaryStatementContact: !!state.PrimaryStatementContact,
-    PrimaryInvoiceContact: !!state.PrimaryInvoiceContact,
-    PrimaryJobContact: !!state.PrimaryJobContact,
-    PrimaryQuoteContact: !!state.PrimaryQuoteContact,
-    postalStreetAddress: state.postalStreetAddress ?? "",
-    postalCity:          state.postalCity ?? "",
-    postalState:         state.postalState ?? "",
-    postalPostcode:      state.postalPostcode ?? "",
-    postalCountry:       state.postalCountry ?? "",
-  };
+    /* ---------- 1) Snapshot ONLY from Zustand for defaults ---------- */
+    const defaultValues: BillingDetailsFormType = {
+      accountFirstName: state.accountFirstName ?? "",
+      accountLastName: state.accountLastName ?? "",
+      accountEmail: state.accountEmail ?? "",
+      accountPhone: state.accountPhone ?? "",
+      accountMobile: state.accountMobile ?? "",
+      QuoteContact: !!state.QuoteContact,
+      JobContact: !!state.JobContact,
+      InvoiceContact: !!state.InvoiceContact,
+      StatementContact: !!state.StatementContact,
+      PrimaryStatementContact: !!state.PrimaryStatementContact,
+      PrimaryInvoiceContact: !!state.PrimaryInvoiceContact,
+      PrimaryJobContact: !!state.PrimaryJobContact,
+      PrimaryQuoteContact: !!state.PrimaryQuoteContact,
+      postalStreetAddress: state.postalStreetAddress ?? "",
+      postalCity: state.postalCity ?? "",
+      postalState: state.postalState ?? "",
+      postalPostcode: state.postalPostcode ?? "",
+      postalCountry: state.postalCountry ?? "",
+    };
 
-  const form = useForm<BillingDetailsFormType>({
-    resolver: zodResolver(billingSchema),
-    mode: "onChange",
-    defaultValues,           // ← hydrates from store when this component mounts
-    shouldUnregister: false, // keep values for conditional fields
-  });
+    const form = useForm<BillingDetailsFormType>({
+      resolver: zodResolver(billingSchema),
+      mode: "onChange",
+      defaultValues, // ← hydrates from store when this component mounts
+      shouldUnregister: false, // keep values for conditional fields
+    });
 
-  /* ---------- 2) Single writer: every change updates Zustand ---------- */
-  const onChange = (field: keyof BillingDetailsFormType, value: string | boolean) => {
-    if (typeof value === "boolean") state.updateFieldBoolean(field as string, value);
-    else state.updateField(field as string, value);
-  };
+    /* ---------- 2) Single writer: every change updates Zustand ---------- */
+    const onChange = (
+      field: keyof BillingDetailsFormType,
+      value: string | boolean
+    ) => {
+      if (typeof value === "boolean")
+        state.updateFieldBoolean(field as string, value);
+      else state.updateField(field as string, value);
+    };
 
-  const handleCopyCompanyToPostal = (checked: boolean) => {
-    state.setSameAddress(checked); // note: your store uses `sameAddres` (typo) – keep as-is if needed
-    if (checked) {
-      form.setValue("postalStreetAddress", state.businessStreetAddress);
-      form.setValue("postalCity", state.businessCity);
-      form.setValue("postalPostcode", state.businessPostcode);
-      form.setValue("postalState", state.businessState);
-      onChange("postalStreetAddress", state.businessStreetAddress);
-      onChange("postalCity", state.businessCity);
-      onChange("postalPostcode", state.businessPostcode);
-      onChange("postalState", state.businessState);
-    }
-  };
-
-  /* ---------- 3) Expose validate to parent ---------- */
-  React.useImperativeHandle(ref, () => ({
-    handleSubmit: async () => {
-      const ok = await form.trigger();
-      if (!ok) {
-        const firstErrorName = Object.keys(form.formState.errors)[0];
-        if (firstErrorName) {
-          const el = document.querySelector(`[name="${firstErrorName}"]`) as HTMLElement | null;
-          el?.focus();
-          el?.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
+    const handleCopyCompanyToPostal = (checked: boolean) => {
+      state.setSameAddress(checked); // note: your store uses `sameAddres` (typo) – keep as-is if needed
+      if (checked) {
+        form.setValue("postalStreetAddress", state.businessStreetAddress);
+        form.setValue("postalCity", state.businessCity);
+        form.setValue("postalPostcode", state.businessPostcode);
+        form.setValue("postalState", state.businessState);
+        onChange("postalStreetAddress", state.businessStreetAddress);
+        onChange("postalCity", state.businessCity);
+        onChange("postalPostcode", state.businessPostcode);
+        onChange("postalState", state.businessState);
       }
-      return ok;
-    },
-  }), [form]);
+    };
 
-  /* ---------- UI ---------- */
-  return (
-    <div className="flex flex-col w-full mx-auto rounded-xl border border-input shadow-sm overflow-hidden">
-      <div className="flex flex-row justify-between w-full items-center py-8 px-4 md:px-6 border-b border-input bg-neutral-50">
-        <Label className="text-base xl:text-lg">Billing Information</Label>
-      </div>
+    /* ---------- 3) Expose validate to parent ---------- */
+    React.useImperativeHandle(
+      ref,
+      () => ({
+        handleSubmit: async () => {
+          const ok = await form.trigger();
+          if (!ok) {
+            const firstErrorName = Object.keys(form.formState.errors)[0];
+            if (firstErrorName) {
+              const el = document.querySelector(
+                `[name="${firstErrorName}"]`
+              ) as HTMLElement | null;
+              el?.focus();
+              el?.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+          }
+          return ok;
+        },
+      }),
+      [form]
+    );
 
-      <div className="py-8 px-4 md:px-6 flex flex-col gap-6">
+    /* ---------- UI ---------- */
+    return (
+      <div className="flex flex-col gap-6">
         <Form {...form}>
           <form className="flex flex-col gap-8">
             {/* Full name */}
+            <hr className="border-input border-dashed w-full" />
+
             <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
               <Label className="w-full md:w-1/3 text-sm xl:text-base">
                 Full name<span className="text-red-500">*</span>
@@ -153,7 +188,10 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                         <Input
                           placeholder="First name"
                           {...field}
-                          onChange={(e) => { field.onChange(e); onChange("accountFirstName", e.target.value); }}
+                          onChange={(e) => {
+                            field.onChange(e);
+                            onChange("accountFirstName", e.target.value);
+                          }}
                           className="efg-input"
                         />
                       </FormControl>
@@ -161,6 +199,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="accountLastName"
@@ -170,7 +209,10 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                         <Input
                           placeholder="Last name"
                           {...field}
-                          onChange={(e) => { field.onChange(e); onChange("accountLastName", e.target.value); }}
+                          onChange={(e) => {
+                            field.onChange(e);
+                            onChange("accountLastName", e.target.value);
+                          }}
                           className="efg-input"
                         />
                       </FormControl>
@@ -180,6 +222,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                 />
               </div>
             </div>
+            <hr className="border-input border-dashed w-full" />
 
             {/* Phones */}
             <FormField
@@ -187,7 +230,10 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
               name="accountMobile"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                  <FormLabel className="text-sm xl:text-base w-full md:w-1/3" htmlFor="accountMobile">
+                  <FormLabel
+                    className="text-sm xl:text-base w-full md:w-1/3"
+                    htmlFor="accountMobile"
+                  >
                     Mobile phone
                   </FormLabel>
                   <div className="w-full md:w-2/3 flex-shrink-0">
@@ -195,7 +241,10 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                       <Input
                         maxLength={13}
                         {...field}
-                        onChange={(e) => { field.onChange(e); onChange("accountMobile", e.target.value); }}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          onChange("accountMobile", e.target.value);
+                        }}
                         className="efg-input"
                         inputMode="tel"
                       />
@@ -205,12 +254,17 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                 </FormItem>
               )}
             />
+            <hr className="border-input border-dashed w-full" />
+
             <FormField
               control={form.control}
               name="accountPhone"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                  <FormLabel className="text-sm xl:text-base w-full md:w-1/3" htmlFor="accountPhone">
+                  <FormLabel
+                    className="text-sm xl:text-base w-full md:w-1/3"
+                    htmlFor="accountPhone"
+                  >
                     Office phone
                   </FormLabel>
                   <div className="w-full md:w-2/3 flex-shrink-0">
@@ -218,7 +272,10 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                       <Input
                         maxLength={13}
                         {...field}
-                        onChange={(e) => { field.onChange(e); onChange("accountPhone", e.target.value); }}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          onChange("accountPhone", e.target.value);
+                        }}
                         className="efg-input"
                         inputMode="tel"
                       />
@@ -228,6 +285,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                 </FormItem>
               )}
             />
+            <hr className="border-input border-dashed w-full" />
 
             {/* Email */}
             <FormField
@@ -235,7 +293,10 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
               name="accountEmail"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-                  <FormLabel className="text-sm xl:text-base w/full md:w-1/3" htmlFor="accountEmail">
+                  <FormLabel
+                    className="text-sm xl:text-base w/full md:w-1/3"
+                    htmlFor="accountEmail"
+                  >
                     Email address<span className="text-red-500">*</span>
                   </FormLabel>
                   <div className="w-full md:w-2/3 flex-shrink-0">
@@ -243,18 +304,23 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                       <Input
                         placeholder="you@example.com"
                         {...field}
-                        onChange={(e) => { field.onChange(e); onChange("accountEmail", e.target.value); }}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          onChange("accountEmail", e.target.value);
+                        }}
                         className="efg-input"
                       />
                     </FormControl>
                     <FormMessage />
                     <FormDescription className="ml-1 mt-2">
-                      We will send the signed service agreement document to this email address.
+                      We will send the signed service agreement document to this
+                      email address.
                     </FormDescription>
                   </div>
                 </FormItem>
               )}
             />
+            <hr className="border-input border-dashed w-full" />
 
             {/* Postal */}
             <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
@@ -264,11 +330,15 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
               <div className="w-full md:w-2/3 flex-shrink-0">
                 <div className="flex items-center space-x-2 mb-4">
                   <Checkbox
-                    checked={state.sameAddres}         
-                    onCheckedChange={(c: boolean) => handleCopyCompanyToPostal(c)}
+                    checked={state.sameAddres}
+                    onCheckedChange={(c: boolean) =>
+                      handleCopyCompanyToPostal(c)
+                    }
                     className="efg-checkbox"
                   />
-                  <label className="text-sm xl:text-base font-medium text-neutral-600">Use Company Address</label>
+                  <label className="text-sm xl:text-base font-medium text-neutral-600">
+                    Use Company Address
+                  </label>
                 </div>
                 <MultiLineAddressInput<BillingDetailsFormType>
                   fieldNames={{
@@ -278,16 +348,21 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                     postcode: "postalPostcode",
                     country: "postalCountry",
                   }}
-                  handleChange={(f, v) => onChange(f as keyof BillingDetailsFormType, v)}
+                  handleChange={(f, v) =>
+                    onChange(f as keyof BillingDetailsFormType, v)
+                  }
                   stateSelectValue={form.watch("postalState")}
                   disabled={state.sameAddres}
                 />
               </div>
             </div>
+            <hr className="border-input border-dashed w-full" />
 
             {/* Use this contact for */}
             <div className="flex flex-col gap-2 md:flex-row md:items-start md:gap-6">
-              <Label className="text-sm xl:text-base w-full md:w-1/3">Use this contact for</Label>
+              <Label className="text-sm xl:text-base w-full md:w-1/3">
+                Use this contact for
+              </Label>
               <div className="w-full md:w-2/3 flex flex-col flex-shrink-0">
                 <div className="w-full flex flex-col gap-4">
                   {/* Quote */}
@@ -304,11 +379,20 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                 className="efg-checkbox"
                                 checked={field.value}
                                 onCheckedChange={(checked: boolean) => {
-                                  field.onChange(checked); onChange("QuoteContact", checked);
-                                  if (!checked) { form.setValue("PrimaryQuoteContact", false); onChange("PrimaryQuoteContact", false); }
+                                  field.onChange(checked);
+                                  onChange("QuoteContact", checked);
+                                  if (!checked) {
+                                    form.setValue("PrimaryQuoteContact", false);
+                                    onChange("PrimaryQuoteContact", false);
+                                  }
                                 }}
                               />
-                              <label htmlFor="QuoteContact" className="text-sm xl:text-base leading-none">Quote</label>
+                              <label
+                                htmlFor="QuoteContact"
+                                className="text-sm xl:text-base leading-none"
+                              >
+                                Quote
+                              </label>
                             </div>
                             <FormMessage />
                           </FormItem>
@@ -327,9 +411,17 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                   id="PrimaryQuoteContact"
                                   className="efg-checkbox"
                                   checked={field.value}
-                                  onCheckedChange={(checked: boolean) => { field.onChange(checked); onChange("PrimaryQuoteContact", checked); }}
+                                  onCheckedChange={(checked: boolean) => {
+                                    field.onChange(checked);
+                                    onChange("PrimaryQuoteContact", checked);
+                                  }}
                                 />
-                                <label htmlFor="PrimaryQuoteContact" className="text-sm xl:text-base leading-none">Primary</label>
+                                <label
+                                  htmlFor="PrimaryQuoteContact"
+                                  className="text-sm xl:text-base leading-none"
+                                >
+                                  Primary
+                                </label>
                               </div>
                               <FormMessage />
                             </FormItem>
@@ -353,11 +445,20 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                 className="efg-checkbox"
                                 checked={field.value}
                                 onCheckedChange={(checked: boolean) => {
-                                  field.onChange(checked); onChange("JobContact", checked);
-                                  if (!checked) { form.setValue("PrimaryJobContact", false); onChange("PrimaryJobContact", false); }
+                                  field.onChange(checked);
+                                  onChange("JobContact", checked);
+                                  if (!checked) {
+                                    form.setValue("PrimaryJobContact", false);
+                                    onChange("PrimaryJobContact", false);
+                                  }
                                 }}
                               />
-                              <label htmlFor="JobContact" className="text-sm xl:text-base leading-none">Job</label>
+                              <label
+                                htmlFor="JobContact"
+                                className="text-sm xl:text-base leading-none"
+                              >
+                                Job
+                              </label>
                             </div>
                             <FormMessage />
                           </FormItem>
@@ -376,9 +477,17 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                   id="PrimaryJobContact"
                                   className="efg-checkbox"
                                   checked={field.value}
-                                  onCheckedChange={(checked: boolean) => { field.onChange(checked); onChange("PrimaryJobContact", checked); }}
+                                  onCheckedChange={(checked: boolean) => {
+                                    field.onChange(checked);
+                                    onChange("PrimaryJobContact", checked);
+                                  }}
                                 />
-                                <label htmlFor="PrimaryJobContact" className="text-sm xl:text-base leading-none">Primary</label>
+                                <label
+                                  htmlFor="PrimaryJobContact"
+                                  className="text-sm xl:text-base leading-none"
+                                >
+                                  Primary
+                                </label>
                               </div>
                               <FormMessage />
                             </FormItem>
@@ -402,11 +511,23 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                 className="efg-checkbox"
                                 checked={field.value}
                                 onCheckedChange={(checked: boolean) => {
-                                  field.onChange(checked); onChange("InvoiceContact", checked);
-                                  if (!checked) { form.setValue("PrimaryInvoiceContact", false); onChange("PrimaryInvoiceContact", false); }
+                                  field.onChange(checked);
+                                  onChange("InvoiceContact", checked);
+                                  if (!checked) {
+                                    form.setValue(
+                                      "PrimaryInvoiceContact",
+                                      false
+                                    );
+                                    onChange("PrimaryInvoiceContact", false);
+                                  }
                                 }}
                               />
-                              <label htmlFor="InvoiceContact" className="text-sm xl:text-base leading-none">Invoice</label>
+                              <label
+                                htmlFor="InvoiceContact"
+                                className="text-sm xl:text-base leading-none"
+                              >
+                                Invoice
+                              </label>
                             </div>
                             <FormMessage />
                           </FormItem>
@@ -425,9 +546,17 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                   id="PrimaryInvoiceContact"
                                   className="efg-checkbox"
                                   checked={field.value}
-                                  onCheckedChange={(checked: boolean) => { field.onChange(checked); onChange("PrimaryInvoiceContact", checked); }}
+                                  onCheckedChange={(checked: boolean) => {
+                                    field.onChange(checked);
+                                    onChange("PrimaryInvoiceContact", checked);
+                                  }}
                                 />
-                                <label htmlFor="PrimaryInvoiceContact" className="text-sm xl:text-base leading-none">Primary</label>
+                                <label
+                                  htmlFor="PrimaryInvoiceContact"
+                                  className="text-sm xl:text-base leading-none"
+                                >
+                                  Primary
+                                </label>
                               </div>
                               <FormMessage />
                             </FormItem>
@@ -451,11 +580,23 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                 className="efg-checkbox"
                                 checked={field.value}
                                 onCheckedChange={(checked: boolean) => {
-                                  field.onChange(checked); onChange("StatementContact", checked);
-                                  if (!checked) { form.setValue("PrimaryStatementContact", false); onChange("PrimaryStatementContact", false); }
+                                  field.onChange(checked);
+                                  onChange("StatementContact", checked);
+                                  if (!checked) {
+                                    form.setValue(
+                                      "PrimaryStatementContact",
+                                      false
+                                    );
+                                    onChange("PrimaryStatementContact", false);
+                                  }
                                 }}
                               />
-                              <label htmlFor="StatementContact" className="text-sm xl:text-base leading-none">Statement</label>
+                              <label
+                                htmlFor="StatementContact"
+                                className="text-sm xl:text-base leading-none"
+                              >
+                                Statement
+                              </label>
                             </div>
                             <FormMessage />
                           </FormItem>
@@ -474,9 +615,20 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
                                   id="PrimaryStatementContact"
                                   className="efg-checkbox"
                                   checked={field.value}
-                                  onCheckedChange={(checked: boolean) => { field.onChange(checked); onChange("PrimaryStatementContact", checked); }}
+                                  onCheckedChange={(checked: boolean) => {
+                                    field.onChange(checked);
+                                    onChange(
+                                      "PrimaryStatementContact",
+                                      checked
+                                    );
+                                  }}
                                 />
-                                <label htmlFor="PrimaryStatementContact" className="text-sm xl:text-base leading-none">Primary</label>
+                                <label
+                                  htmlFor="PrimaryStatementContact"
+                                  className="text-sm xl:text-base leading-none"
+                                >
+                                  Primary
+                                </label>
                               </div>
                               <FormMessage />
                             </FormItem>
@@ -495,9 +647,9 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(fun
           </form>
         </Form>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
 
 BillingDetailsCard.displayName = "BillingDetailsCard";
 export default BillingDetailsCard;

@@ -44,7 +44,7 @@ function CompanyInfo() {
     scrollToTop();
   }, []);
   return (
-    <div className="w-full mx-auto flex flex-col gap-20 ">
+    <div className="w-full mx-auto flex flex-col gap-20 xl:gap-32 ">
       <div className="flex flex-col gap-6">
         <div className="flex flex-col">
           <Label className="text-2xl xl:text-3xl font-normal mb-1">
@@ -56,16 +56,30 @@ function CompanyInfo() {
         </div>
 
         <CompanyDetailsCard ref={companyRef} />
+      </div>
+
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col">
+          <Label className="text-2xl xl:text-3xl font-normal mb-1">
+            Billing Details
+          </Label>
+          <span className="text-lg text-neutral-500">
+            Provide the billing information associated with this service
+            agreement.
+          </span>
+        </div>
 
         <BillingDetailsCard ref={billingRef} />
       </div>
+
       <div className="flex flex-col gap-6">
-        <div className="flex flex-col mt-10">
+        <div className="flex flex-col ">
           <Label className="text-2xl xl:text-3xl font-normal mb-1">
-            Additional Contacts 
+            Additional Contacts
           </Label>
           <span className="text-lg text-neutral-500">
-            Provide optional additional contacts for your business as needed. (Optional)
+            Provide optional additional contacts for your business as needed.
+            (Optional)
           </span>
         </div>
 
@@ -74,7 +88,9 @@ function CompanyInfo() {
 
       <div className="flex flex-col gap-6">
         <div className="flex flex-col">
-          <Label className="text-2xl xl:text-3xl font-normal mb-1">Site Details</Label>
+          <Label className="text-2xl xl:text-3xl font-normal mb-1">
+            Site Details
+          </Label>
           <span className="text-lg text-neutral-500">
             Provide the site information associated with this service agreement.
           </span>
@@ -84,7 +100,7 @@ function CompanyInfo() {
       </div>
 
       {/* Nav */}
-      <div className="flex flex-row gap-2 justify-between mt-10">
+      <div className="flex flex-row gap-2 justify-between ">
         <Button
           variant="outline"
           onClick={goBack}
