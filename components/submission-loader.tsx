@@ -39,13 +39,15 @@ export default function SubmissionLoader({ show }: { show: boolean }) {
       "
     >
       <div className="flex items-center justify-center flex-col fade-up translate-y-[-100px]">
-        <Loader2Icon className="size-20 animate-spin text-efg-yellow mb-4 " />
+        <img
+          src="/service-and-care-loading-logo.gif"
+          alt="Loading"
+          className="w-20 mb-6"
+        />
         <p className="text-2xl text-neutral-800 font-medium">
           {` We’re processing your submission`}
         </p>
-        <p className="text-base text-neutral-500">
-          Please stay on this page.
-        </p>
+        <p className="text-base text-neutral-500">Please stay on this page.</p>
       </div>
     </div>,
     document.body

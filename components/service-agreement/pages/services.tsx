@@ -1,9 +1,16 @@
 // ServicesForm.tsx
 "use client";
 
+import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import IncentiveTable from "@/components/service-agreement/incentive-table";
 import ServiceFrequency2 from "@/components/service-agreement/service-frequency-2";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   GetServicesReturnTyped,
   MaybeOption,
@@ -22,23 +29,14 @@ import {
   scrollToTop,
 } from "@/lib/utils";
 import { Label } from "@radix-ui/react-label";
-import {
-  ArrowRightIcon,
-  ChevronDownIcon,
-  InfoIcon,
-  PlusCircleIcon,
-} from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
-import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
-import { Input } from "@/components/ui/input";
-import { ServiceSummary } from "../service-summary";
 import { format } from "date-fns-tz";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-} from "@/components/ui/accordion";
+  ArrowRightIcon,
+  ChevronDownIcon
+} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { HorizontalScroller } from "../scroll-indicator";
+import { ServiceSummary } from "../service-summary";
 
 /* ---------- Small helpers (do NOT touch your service grids) ---------- */
 

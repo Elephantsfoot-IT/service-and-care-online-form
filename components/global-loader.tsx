@@ -39,7 +39,7 @@ export default function GlobalOverlay({ show }: { show: boolean }) {
       "
     >
       <div className="translate-y-[-100px]">
-        <Loader2Icon className="size-20 animate-spin text-efg-yellow mb-2" />
+      <img src="/service-and-care-loading-logo.gif" alt="Loading" className="w-20 mb-6" />
       </div>
     </div>,
     document.body
