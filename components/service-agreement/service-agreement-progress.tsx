@@ -9,7 +9,6 @@ function ServiceAgreementProgress() {
     <>
       <div className="flex flex-col gap-2 mr-auto xl:hidden w-2/3">
         <Progress value={value} className="bg-neutral-200" />
-        
       </div>
     </>
   );

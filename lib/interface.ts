@@ -221,3 +221,42 @@ export type GetServicesReturnTyped<T extends ServiceType> = {
   type: T;
   items: Array<WithContext<ServiceByType<T>>>;
 };
+
+
+export interface Address {
+  Address: string;
+  City: string;
+  State: string;
+  PostalCode: string;
+  Country: string;
+}
+
+export interface CustomerRequest {
+  CompanyName: string;
+  Phone: string;
+  Address: Address;
+  BillingAddress: Address;
+  CustomerType: string;
+  Archived: boolean;
+  Email: string;
+  EIN: string;
+
+}
+
+
+export interface CustomerContactRequest {
+  GivenName: string;
+  FamilyName: string;
+  Email: string;
+  CellPhone: string;
+  Position: string;
+  QuoteContact: boolean;
+  JobContact: boolean;
+  InvoiceContact: boolean;
+  StatementContact: boolean;
+  PrimaryStatementContact?: boolean;
+  PrimaryInvoiceContact?: boolean;
+  PrimaryJobContact?: boolean;
+  PrimaryQuoteContact?: boolean;
+}
+

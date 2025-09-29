@@ -105,6 +105,7 @@ export default function TermsAndSignature() {
         // e.g., state.submitAgreement()
         try {
           await submitServiceAgreement(state.serviceAgreement?.id, state);
+          toast.success("Service agreement submitted");
           router.push(`/service-agreement/success`);
         } catch (error) {
           toast.error("Failed to submit service agreement");
@@ -138,12 +139,11 @@ export default function TermsAndSignature() {
     scrollToTop();
   }, []);
 
-  if (isSubmitting) {
-    return <SubmissionLoader show={true} />;
-  }
 
   /* ------------------------------ JSX ------------------------------ */
   return (
+    <>
+    <SubmissionLoader show={isSubmitting} />
     <div ref={containerRef} className="w-full mx-auto flex flex-col gap-10">
       <div className="flex flex-col">
         <Label className="text-2xl xl:text-3xl font-normal mb-1">Review & Sign Agreement</Label>
@@ -291,6 +291,7 @@ export default function TermsAndSignature() {
           {isSubmitting ? <Loader2Icon className="size-4 animate-spin" /> : "Submit"}
         </Button>
       </div>
-    </div>
+    </div></>
+    
   );
 }

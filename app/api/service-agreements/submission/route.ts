@@ -1,12 +1,19 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/service-aggreement-supabase";
-
+import { ServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
+import {
+  base64FromUrl,
+  convertHtmlToPdfLambda,
+  createCustomer,
+  createCustomerBillingContact,
+  createMultipleContact,
+  editCustomer,
+  handleSites,
+  uploadPdfToSimPro,
+} from "@/lib/api";
 import { Resend } from "resend";
 import { serviceAgreementAcceptedEmailHtml } from "@/lib/confirmation-email";
 import { ausDate, ausYMD } from "@/lib/utils";
-import { ServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
-import { convertHtmlToPdfLambda } from "@/lib/api";
-import { log } from "console";
+import { supabase } from "@/lib/service-aggreement-supabase";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const allowedEmails = [
@@ -21,7 +28,7 @@ const allowedEmails = [
 ];
 type AcceptBody = {
   id: string;
-  state: ServiceAgreementStore; // <-- typed here
+  state: ServiceAgreementStore;
 };
 
 export async function POST(req: Request) {
@@ -29,6 +36,26 @@ export async function POST(req: Request) {
 
   const pdf = await convertHtmlToPdfLambda(state);
 
+  let return_id: number | null = null;
+
+  if (state.serviceAgreement?.simpro_customer_id) {
+    return_id = await editCustomer(state);
+  } else {
+    return_id = await createCustomer(state);
+  }
+  
+  if (return_id) {
+    await createCustomerBillingContact(state, return_id.toString());
+    await createMultipleContact(state, return_id.toString());
+    await handleSites(state, return_id.toString());
+  }
+
+  if (return_id) {
+    const base64 = await base64FromUrl(pdf);
+    await uploadPdfToSimPro(return_id.toString(), base64);
+  }
+
+ 
   if (allowedEmails.includes(state.accountEmail)) {
     await resend.emails.send({
       to: state.accountEmail, // Recipient email
@@ -90,7 +117,10 @@ export async function POST(req: Request) {
     });
 
     if (signatureError) {
-      return NextResponse.json({ error: signatureError.message }, { status: 500 });
+      return NextResponse.json(
+        { error: signatureError.message },
+        { status: 500 }
+      );
     }
   }
 
