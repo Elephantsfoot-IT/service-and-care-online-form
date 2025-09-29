@@ -30,10 +30,7 @@ import {
 } from "@/lib/utils";
 import { Label } from "@radix-ui/react-label";
 import { format } from "date-fns-tz";
-import {
-  ArrowRightIcon,
-  ChevronDownIcon
-} from "lucide-react";
+import { ArrowRightIcon, ChevronDownIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { HorizontalScroller } from "../scroll-indicator";
 import { ServiceSummary } from "../service-summary";
@@ -339,18 +336,12 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
   return (
     <div className="flex flex-col gap-20 sm:gap-30 xl:gap-60">
-      <div className="flex flex-col gap-2 ">
-        <Label className="text-6xl  mb-6">
+      <div className="flex flex-col">
+        <Label className="text-6xl ">
           <span className="text-efg-main">Service</span> Agreement{" "}
         </Label>
-        <div className="font-medium flex flex-row items-center gap-2">
-          *This proposal is valid until
-          <span className="underline">
-            {format(state.serviceAgreement.expire_at, "dd MMM yyyy")}.
-          </span>
-        </div>
 
-        <span className="text-base xl:text-lg text-neutral-500 font-normal ">
+        <span className="text-base xl:text-lg text-neutral-500 font-normal mt-6">
           Thanks for choosing{" "}
           <span className="font-medium text-neutral-800">
             Elephants Foot Service & Care
@@ -361,14 +352,26 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           details and next steps.
         </span>
         {/* ➜ NEW notice block */}
-        <div className="mt-2 text-sm xl:text-base  bg-neutral-75 rounded-xl p-6">
-          This form is for{" "}
-          <span className="font-semibold">
-            {state.serviceAgreement?.quote_for}
-          </span>
-          . If this isn’t you, please contact us at{" "}
+
+        <div className="mt-2 text-sm xl:text-base bg-neutral-75 rounded-xl p-6 flex flex-col gap-2 mt-6">
+          <div className="flex flex-row">
+            <div className="w-1/3 flex-shrink-0 font-medium">Customer</div>
+            <div className="w-2/3 flex-shrink-0">
+              {state.serviceAgreement?.quote_for}
+            </div>
+          </div>
+
+          <div className="flex flex-row">
+            <div className="w-1/3 flex-shrink-0 font-medium">Valid until</div>
+            <div className="w-2/3 flex-shrink-0">
+              {format(state.serviceAgreement.expire_at, "EEE, dd/MM/yyyy")}
+            </div>
+          </div>
+        </div>
+        <div className="mt-1 ml-1 text-sm xl:text-base text-neutral-500">
+          If this isn’t you, please contact us at{" "}
           <a href="tel:1300435374" className="underline">
-            1300&nbsp;435&nbsp;374
+            1300 435 374
           </a>{" "}
           or{" "}
           <a href="mailto:service@elephantsfoot.com.au" className="underline">
@@ -376,7 +379,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           </a>
         </div>
 
-        <div className=" mt-4 border border-input rounded-xl shadow-sm">
+        <div className=" mt-4 border border-input rounded-xl shadow-sm mt-6">
           <div className="text-lg font-medium bg-neutral-75 p-6 rounded-t-xl border-b border-input">
             Contract Duration
           </div>
