@@ -6,6 +6,7 @@ import { serviceAgreementAcceptedEmailHtml } from "@/lib/confirmation-email";
 import { ausDate, ausYMD } from "@/lib/utils";
 import { ServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { convertHtmlToPdfLambda } from "@/lib/api";
+import { log } from "console";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const allowedEmails = [
@@ -48,9 +49,6 @@ export async function POST(req: Request) {
     .from("service_agreements")
     .update({
       status: "Accepted",
-      full_name: state.signFullName,
-      title: state.signTitle,
-      signature: state.trimmedDataURL,
       updated_at: ausYMD(new Date()),
       accepted_at: ausYMD(new Date()),
     })
@@ -62,17 +60,38 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  const { error: logError } = await supabase.from("log").insert({
-    created_at: ausYMD(new Date()),
-    service_agreement_id: id,
-    type: "accepted",
-    title: "Service Agreement Accepted by Customer",
-    description: `Service Agreement Signed by ${state.signFullName} at ${ausDate(new Date())}`,
-    author: "System",
-  });
+  const { data: logData, error: logError } = await supabase
+    .from("log")
+    .insert({
+      created_at: ausYMD(new Date()),
+      service_agreement_id: id,
+      type: "accepted",
+      title: "Service Agreement Accepted by Customer",
+      description: `Service Agreement Signed by ${state.signFullName} at ${ausDate(
+        new Date()
+      )}`,
+      author: "System",
+    })
+    .select("id") // tell Supabase to return the id column
+    .single(); // we know it’s only one row
 
   if (logError) {
     return NextResponse.json({ error: logError.message }, { status: 500 });
+  }
+
+  if (logData.id) {
+    const { error: signatureError } = await supabase.from("signature").insert({
+      created_at: ausYMD(new Date()),
+      full_name: state.signFullName,
+      title: state.signTitle,
+      signature: state.trimmedDataURL,
+      log_id: logData.id,
+      service_agreement_id: id,
+    });
+
+    if (signatureError) {
+      return NextResponse.json({ error: signatureError.message }, { status: 500 });
+    }
   }
 
   return NextResponse.json("success", { status: 200 });
