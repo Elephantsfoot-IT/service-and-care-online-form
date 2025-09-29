@@ -38,7 +38,7 @@ export default function GlobalOverlay({ show }: { show: boolean }) {
         bg-white
       "
     >
-      <div className="translate-y-[-100px]">
+      <div className="xl:translate-y-[-100px]">
       <img src="/service-and-care-loading-logo.gif" alt="Loading" className="w-20 mb-6" />
       </div>
     </div>,

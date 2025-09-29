@@ -38,7 +38,7 @@ export default function SubmissionLoader({ show }: { show: boolean }) {
         bg-white px-2
       "
     >
-      <div className="flex items-center justify-center flex-col fade-up translate-y-[-100px]">
+      <div className="flex items-center justify-center flex-col fade-up xl:translate-y-[-100px]">
         <img
           src="/service-and-care-loading-logo.gif"
           alt="Loading"
