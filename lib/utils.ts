@@ -1,7 +1,9 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {
+  ChuteCleaningService,
   GetServicesReturnTyped,
+  HopperDoorInspectionService,
   ServiceByType,
   ServiceType,
   Site,
@@ -114,6 +116,14 @@ export const getServiceAnualCost = (services: ServiceByType<ServiceType>[], freq
   return services.reduce((acc, service) => acc + getNumber(service.price) * frequencyValue, 0);
 };
 
+export const getServiceAnualCostChute = (services: ChuteCleaningService[] | HopperDoorInspectionService[] , frequency: string | null) => {
+  if (!frequency) return 0;
+  const frequencyValue =
+    frequency === "yearly" ? 1 : frequency === "six-monthly" ? 2 : 4;
+  return services.reduce((acc, service) => acc + getNumber(service.price) * frequencyValue * getNumber(service.chutes), 0);
+};
+
+
 export const getFrequencyValue = (frequency: string | null) => {
   if (!frequency) return 0;
   return frequency === "yearly" ? 1 : frequency === "six-monthly" ? 2 : 4;
@@ -166,4 +176,8 @@ export function ausDate(input: string | Date | undefined | null): string | null 
   const d = toDate(input);
   if (!d) return null;
   return formatInTimeZone(d, "Australia/Sydney", "HH:mm, dd MMM yyyy");
+}
+
+export function getTotalPrice (price:number, chute:number) {
+  return price * chute;
 }

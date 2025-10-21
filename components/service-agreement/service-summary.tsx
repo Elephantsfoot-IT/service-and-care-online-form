@@ -10,6 +10,7 @@ import {
   getServices,
   getNumber,
   getFrequencyValue,
+  getServiceAnualCostChute,
 } from "@/lib/utils";
 import { useMemo } from "react";
 
@@ -74,7 +75,7 @@ export function ServiceSummary() {
      All services use getServiceAnualCost(..., frequency) EXCEPT
      Odour Control: it is strictly SUM(units × unitPrice) with NO
      frequency multiplier. If frequency is not selected -> 0. */
-  const chuteAnnual = getServiceAnualCost(
+  const chuteAnnual = getServiceAnualCostChute(
     chuteCleaningDetails.items,
     state.chuteCleaningFrequency
   );
@@ -82,7 +83,7 @@ export function ServiceSummary() {
     equipmentMaintenanceDetails.items,
     state.equipmentMaintenanceFrequency
   );
-  const hopperAnnual = getServiceAnualCost(
+  const hopperAnnual = getServiceAnualCostChute(
     selfClosingHopperDoorInspectionDetails.items,
     state.selfClosingHopperDoorInspectionFrequency
   );

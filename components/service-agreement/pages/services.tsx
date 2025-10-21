@@ -25,6 +25,7 @@ import {
   getNumber,
   getServices,
   getServicesValue,
+  getTotalPrice,
   normalizeQty,
   scrollToTop,
 } from "@/lib/utils";
@@ -135,6 +136,67 @@ function PricingFooter({
     return null;
   }
 
+  return (
+    <>
+      <hr className="my-2 border border-input border-dashed" />
+      <div className="space-y-2 w-full sm:max-w-[360px] ml-auto px-6">
+        {showDiscount ? (
+          <>
+            <div className="flex justify-between text-sm xl:text-base text-emerald-600">
+              <span>Service discount ({discountPct}%)</span>
+              <span>-{formatMoney(discountAmt)}</span>
+            </div>
+
+            <div className="flex justify-between items-baseline">
+              <span className="text-neutral-600 text-sm xl:text-base font-medium">
+                Annual cost (excl. GST)
+              </span>
+              <div className="text-right">
+                <div className="text-sm xl:text-base line-through text-neutral-500">
+                  {formatMoney(subtotal)}
+                </div>
+                <div className="text-lg font-medium">
+                  {formatMoney(grandTotal)}
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="flex justify-between items-baseline">
+            <span className="text-neutral-600 text-sm xl:text-base font-medium">
+              Annual cost (excl. GST)
+            </span>
+            <span className="text-lg font-medium">
+              {formatMoney(grandTotal)}
+            </span>
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
+
+function ChuteFooter({
+  items,
+  frequency,
+  discountPct,
+  incentives,
+}: {
+  items: Array<{ price: string , chutes: string }>;
+  frequency: string | null;
+  discountPct: number;
+  incentives: boolean;
+}) {
+  const base = items.reduce((acc, r) => acc + (getNumber(r.price)*getNumber(r.chutes)), 0);
+  const subtotal = getServicesValue(base || 0, frequency); // annualised for this section
+  const hasTotal = subtotal > 0;
+  const showDiscount = discountPct > 0 && hasTotal && incentives;
+  const discountAmt = showDiscount ? (subtotal * discountPct) / 100 : 0;
+  const grandTotal = subtotal - discountAmt;
+
+  if (grandTotal === 0) {
+    return null;
+  }
   return (
     <>
       <hr className="my-2 border border-input border-dashed" />
@@ -466,9 +528,11 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-3 px-2 py-2">Sites</div>
-                  <div className="col-span-1 px-2 py-2">Qty</div>
                   <div className="col-span-1 px-2 py-2">Level</div>
-                  <div className="col-span-1 text-right px-2 py-2">Price</div>
+                  <div className="col-span-1 px-2 py-2">Chutes</div>
+                  <div className="col-span-1 text-right px-2 py-2">
+                    Price per chute
+                  </div>
                 </div>
 
                 {chuteCleaningDetails.items.map((r, i) => (
@@ -486,9 +550,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                         {r.site_name}
                       </div>
                     )}
-
-                    <div className="col-span-1 px-2 py-2">{r.chutes}</div>
                     <div className="col-span-1 px-2 py-2">{r.levels}</div>
+                    <div className="col-span-1 px-2 py-2">{r.chutes}</div>
                     <div className="col-span-1 text-right px-2 py-2">
                       {formatMoney(getNumber(r.price))}
                     </div>
@@ -529,7 +592,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               ))}
             </div>
 
-            <PricingFooter
+            <ChuteFooter
               items={chuteCleaningDetails.items}
               frequency={state.chuteCleaningFrequency}
               discountPct={discount}
@@ -778,9 +841,11 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
                 <div className="grid grid-cols-6 gap-2 border-b border-input">
                   <div className="col-span-3 px-2 py-2">Sites</div>
-                  <div className="col-span-1 px-2 py-2"></div>
-                  <div className="col-span-1 px-2 py-2"></div>
-                  <div className="col-span-1 text-right px-2 py-2">Price</div>
+                  <div className="col-span-1 px-2 py-2">Level</div>
+                  <div className="col-span-1 px-2 py-2">Chutes</div>
+                  <div className="col-span-1 text-right px-2 py-2">
+                    Price per chute
+                  </div>
                 </div>
 
                 {selfClosingHopperDoorInspectionDetails.items.map((r, i) => (
@@ -788,12 +853,18 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                     key={i}
                     className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
                   >
-                    <div className="col-span-3 px-2 py-2">
-                      <div className="font-medium">{r.site_name}</div>
-                      {r.building_name && <div>{r.building_name}</div>}
-                    </div>
-                    <div className="col-span-1 px-2 py-2"></div>
-                    <div className="col-span-1 px-2 py-2"></div>
+                    {r.building_name ? (
+                      <div className="col-span-3 px-2 py-2">
+                        <div className="font-medium">{r.site_name}</div>
+                        <div>{r.building_name}</div>
+                      </div>
+                    ) : (
+                      <div className="col-span-3 px-2 py-2 font-medium">
+                        {r.site_name}
+                      </div>
+                    )}
+                    <div className="col-span-1 px-2 py-2">{r.levels}</div>
+                    <div className="col-span-1 px-2 py-2">{r.chutes}</div>
                     <div className="col-span-1 text-right px-2 py-2">
                       {formatMoney(getNumber(r.price))}
                     </div>
@@ -830,7 +901,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               ))}
             </div>
 
-            <PricingFooter
+            <ChuteFooter
               items={selfClosingHopperDoorInspectionDetails.items}
               frequency={state.selfClosingHopperDoorInspectionFrequency}
               discountPct={discount}
