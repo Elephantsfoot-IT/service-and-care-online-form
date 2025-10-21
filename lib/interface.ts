@@ -124,6 +124,8 @@ export type EquipmentMaintenanceService = ServiceBase & {
 
 export type HopperDoorInspectionService = ServiceBase & {
   type: "hopper_door_inspection";
+  levels: string;
+  chutes: string;
   price: string;
 };
 
