@@ -16,7 +16,7 @@ export default function Sider({
 }) {
   const state = useServiceAgreementStore();
   return (
-    <aside className="hidden xl:flex fixed left-0 top-0 z-[99] w-[400px] h-screen overflow-hidden">
+    <aside className="hidden xl:flex fixed left-0 top-0 z-99 w-[400px] h-screen overflow-hidden">
       <div className="flex flex-col h-full w-full px-10 pb-10 relative rounded-lg relative">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img

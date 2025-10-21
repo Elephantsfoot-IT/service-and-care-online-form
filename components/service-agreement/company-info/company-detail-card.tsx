@@ -116,7 +116,7 @@ const CompanyDetailsCard = React.forwardRef<CompanyDetailsCardHandle, Props>(
                   <FormLabel className="text-sm xl:text-base w-full md:w-1/3">
                     ABN<span className="text-red-500">*</span>
                   </FormLabel>
-                  <div className="w-full md:w-2/3 flex-shrink-0">
+                  <div className="w-full md:w-2/3 shrink-0">
                     <FormControl>
                       <Input
                         placeholder="11222333444"
@@ -146,7 +146,7 @@ const CompanyDetailsCard = React.forwardRef<CompanyDetailsCardHandle, Props>(
                   <FormLabel className="text-sm xl:text-base w-full md:w-1/3">
                     Company name <span className="text-red-500">*</span>
                   </FormLabel>
-                  <div className="w-full md:w-2/3 flex-shrink-0">
+                  <div className="w-full md:w-2/3 shrink-0">
                     <FormControl>
                       <Input
                         {...field}
@@ -174,7 +174,7 @@ const CompanyDetailsCard = React.forwardRef<CompanyDetailsCardHandle, Props>(
               <Label className="mb-2 text-sm xl:text-base w-full md:w-1/3">
                 Company address <span className="text-red-500">*</span>
               </Label>
-              <div className="w-full md:w-2/3 flex-shrink-0">
+              <div className="w-full md:w-2/3 shrink-0">
                 <MultiLineAddressInput<CustomerDetailsFormType>
                   fieldNames={{
                     street: "businessStreetAddress",

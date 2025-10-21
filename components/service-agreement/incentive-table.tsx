@@ -224,7 +224,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
           {/* Pro tier */}
           <div className="col-span-2 transition-all duration-300 relative" data-col="premium">
             {currentTier === "premium" && (
-              <div className="pointer-events-none absolute inset-0 z-30 border border-[#1e60ad] bg-blue-400/5 rounded-br-lg" />
+              <div className="pointer-events-none absolute inset-0 z-30 border border-efg-blue bg-blue-400/5 rounded-br-lg" />
             )}
 
             {/* PRO */}
@@ -232,7 +232,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
               className={cn(
                 "h-40 border-solid relative transition-all duration-300",
                 currentTier === "premium"
-                  ? "bg-[#1e60ad] text-white border-b-[#1e60ad]"
+                  ? "bg-efg-blue text-white border-b-efg-blue"
                   : "border-b border-input"
               )}
             >
@@ -286,7 +286,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
                       size="sm"
                       className={cn(
                         "mt-2 w-full",
-                        "bg-[#1e60ad] hover:bg-[#1e60ad]/90 text-white  border-b-[#1e60ad]"
+                        "bg-efg-blue hover:bg-efg-blue/90 text-white  border-b-efg-blue"
                       )}
                       onClick={selectMore}
                     >

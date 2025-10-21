@@ -26,7 +26,7 @@ const TIERS: TierConfig[] = [
     unlockServices: 3,
     headerClassesWhenActive: "text-foreground",
     cardClassesWhenActive:
-      "shadow-xl bg-gradient-to-tr from-neutral-300/50 to-neutral-300/10 border border-neutral-300 ring-2 ring-neutral-300",
+      "shadow-xl bg-linear-to-tr from-neutral-300/50 to-neutral-300/10 border border-neutral-300 ring-2 ring-neutral-300",
     dimWhenHigher: true,
     benefits: [
       "Price Lock Guarantee (24 Months)",
@@ -40,7 +40,7 @@ const TIERS: TierConfig[] = [
     unlockServices: 4,
     headerClassesWhenActive: "text-neutral-800",
     cardClassesWhenActive:
-      "shadow-xl bg-gradient-to-tr from-yellow-300/50 to-yellow-300/10 from-[50%] border border-[#ffdb01] ring-2 ring-[#ffdb01]",
+      "shadow-xl bg-linear-to-tr from-yellow-300/50 to-yellow-300/10 from-50% border border-[#ffdb01] ring-2 ring-[#ffdb01]",
     dimWhenHigher: true,
     benefits: [
       "Price Lock Guarantee (24 Months)",
@@ -57,7 +57,7 @@ const TIERS: TierConfig[] = [
     unlockServices: 6,
     headerClassesWhenActive: "text-white",
     cardClassesWhenActive:
-      "shadow-xl bg-gradient-to-tr from-blue-400/50 to-blue-500/10 from-[40%] border border-[#1e60ad] ring-2 ring-[#1e60ad] text-white",
+      "shadow-xl bg-linear-to-tr from-blue-400/50 to-blue-500/10 from-40% border border-efg-blue ring-2 ring-efg-blue text-white",
     benefits: [
       "Price Lock Guarantee (24 Months)",
       "Priority Response Within 8 Hours",
@@ -139,7 +139,7 @@ function TierCard({
             "w-full mt-auto mb-8 cursor-pointer",
             tier.id === "basic" && "bg-neutral-300 text-neutral-800 hover:bg-neutral-300/90",
             tier.id === "essential" && "bg-[#ffdb01] text-neutral-800 hover:bg-[#ffdb01]/90 ",
-            tier.id === "pro" && "bg-[#1e60ad] text-white hover:bg-[#1e60ad]/90"
+            tier.id === "pro" && "bg-efg-blue text-white hover:bg-efg-blue/90"
           )}
         >
           <LockKeyholeIcon className="mr-2" />

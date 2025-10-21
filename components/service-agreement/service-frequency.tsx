@@ -56,12 +56,12 @@ const STYLES: Record<
       "data-[state=checked]:bg-transparent data-[state=checked]:border-transparent data-[state=checked]:text-neutral-800 shadow-none",
   },
   quarterly: {
-    border: "border-[#1e60ad]",
-    solid: "bg-[#1e60ad]",
-    tint: "bg-[#1e60ad]/10",
-    divide: "divide-[#1e60ad]",
+    border: "border-efg-blue",
+    solid: "bg-efg-blue",
+    tint: "bg-efg-blue/10",
+    divide: "divide-efg-blue",
     color: "text-white",
-    subtext1Color: "text-[#1e60ad]",
+    subtext1Color: "text-efg-blue",
     subtext1SelectedColor: "text-white",
     subtext2Color: "text-neutral-800",
     subtext2SelectedColor: "text-neutral-800",
@@ -88,7 +88,7 @@ const SELECT_BTN: Record<Option, { base: string; selected: string }> = {
     // primary: filled even when unselected (drives selection)
     base: "border border-neutral-300 text-neutral-800 hover:bg-neutral-100",
     // filled when selected (same family, slightly darker is fine)
-    selected: "bg-[#1e60ad] text-white border-[#1e60ad]",
+    selected: "bg-efg-blue text-white border-efg-blue",
   },
 };
 

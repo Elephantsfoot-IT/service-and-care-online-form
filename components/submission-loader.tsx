@@ -33,7 +33,7 @@ export default function SubmissionLoader({ show }: { show: boolean }) {
       aria-busy="true"
       aria-live="assertive"
       className="
-        fixed inset-0 z-[2147483647]   /* effectively 'infinite' */
+        fixed inset-0 z-2147483647   /* effectively 'infinite' */
         flex items-center justify-center flex-col 
         bg-white px-2
       "

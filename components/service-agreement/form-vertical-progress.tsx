@@ -66,7 +66,7 @@ function FormVerticalProgress() {
                 isLocked ? "cursor-not-allowed" : "cursor-pointer"
               )}
             >
-              <div className="size-10 border border-input rounded-lg flex items-center justify-center shadow-xs bg-white flex-shrink-0">
+              <div className="size-10 border border-input rounded-lg flex items-center justify-center shadow-xs bg-white shrink-0">
                 <Icon className="size-4.5 text-neutral-600" />
               </div>
               <div

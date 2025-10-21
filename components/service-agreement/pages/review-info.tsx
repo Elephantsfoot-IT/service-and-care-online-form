@@ -468,7 +468,7 @@ function ServicesList() {
         {/* Frequency: xs, dim when not selected */}
 
         {/* Amount: base + semibold, right-aligned (highlight) */}
-        <div className="w-fit flex-shrink-0 text-right text-sm font-medium text-neutral-900">
+        <div className="w-fit shrink-0 text-right text-sm font-medium text-neutral-900">
           {formatMoney(amount)}
         </div>
       </div>

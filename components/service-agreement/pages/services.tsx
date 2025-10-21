@@ -355,15 +355,15 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
         <div className="mt-2 text-sm xl:text-base bg-neutral-75 rounded-xl p-6 flex flex-col gap-2 mt-6">
           <div className="flex flex-row">
-            <div className="w-1/3 flex-shrink-0 font-medium">Customer</div>
-            <div className="w-2/3 flex-shrink-0">
+            <div className="w-1/3 shrink-0 font-medium">Customer</div>
+            <div className="w-2/3 shrink-0">
               {state.serviceAgreement?.quote_for}
             </div>
           </div>
 
           <div className="flex flex-row">
-            <div className="w-1/3 flex-shrink-0 font-medium">Valid until</div>
-            <div className="w-2/3 flex-shrink-0">
+            <div className="w-1/3 shrink-0 font-medium">Valid until</div>
+            <div className="w-2/3 shrink-0">
               {format(state.serviceAgreement.expire_at, "EEE, dd/MM/yyyy")}
             </div>
           </div>
@@ -384,7 +384,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             Contract Duration
           </div>
           <div className="flex flex-row items-center gap-6 justify-between p-6">
-            <div className="flex flex-col gap-1.5 flex-shrink-0">
+            <div className="flex flex-col gap-1.5 shrink-0">
               <Label className="text-sm xl:text-base text-muted-foreground">
                 Start date
               </Label>
@@ -394,7 +394,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
             </div>
             <hr className="flex-1 border-input"></hr>
 
-            <div className="flex flex-col gap-1.5 flex-shrink-0">
+            <div className="flex flex-col gap-1.5 shrink-0">
               <Label className="text-sm xl:text-base  text-muted-foreground">
                 End date
               </Label>
@@ -522,7 +522,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
                     </div>
                   </div>
-                  <div className="text-right px-2 py-2 w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 w-fit shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -663,7 +663,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
                     </div>
                   </div>
-                  <div className="text-right px-2 py-2 w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 w-fit shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -823,7 +823,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       )}
                     </div>
                   </div>
-                  <div className="text-right px-2 py-2 w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 w-fit shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -942,7 +942,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       </div>
                     </div>
                   </div>
-                  <div className="text-right px-2 py-2 w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 w-fit shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>
@@ -1064,7 +1064,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
                       )}
                     </div>
                   </div>
-                  <div className="text-right px-2 py-2 w-fit flex-shrink-0">
+                  <div className="text-right px-2 py-2 w-fit shrink-0">
                     {formatMoney(getNumber(r.price))}
                   </div>
                 </div>

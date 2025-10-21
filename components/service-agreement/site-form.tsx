@@ -217,7 +217,7 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
                   control={form.control}
                   name="siteName"
                   render={({ field }) => (
-                    <FormItem className="w-full md:w-2/3 flex flex-col space-x-2 flex-shrink-0">
+                    <FormItem className="w-full md:w-2/3 flex flex-col space-x-2 shrink-0">
                       <FormControl>
                         <Input
                           {...field}
@@ -240,7 +240,7 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
                 <Label className="mb-2 text-sm w-full md:w-1/3">
                   Company address <span className="text-red-500">*</span>
                 </Label>
-                <div className="w-full md:w-2/3 flex-shrink-0">
+                <div className="w-full md:w-2/3 shrink-0">
                   <MultiLineAddressInput<SiteFormType>
                     fieldNames={{
                       street: "Address",
@@ -270,7 +270,7 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
                 Primary Contact <span className="text-red-500">*</span>
               </Label>
             </div>
-            <div className="w-full md:w-2/3 flex flex-col gap-6 flex-shrink-0">
+            <div className="w-full md:w-2/3 flex flex-col gap-6 shrink-0">
               {site.primary_contact && (
                 <SiteContactForm
                   ref={primaryRef}
@@ -288,7 +288,7 @@ const SiteForm = React.forwardRef<SiteFormHandle, Props>(
           {additionalContacts.length > 0 && (
             <div className="flex flex-col gap-4 md:flex-row md:items-start">
               <div className="w-full md:w-1/3"></div>
-              <div className="w-full md:w-2/3 flex flex-col gap-6 flex-shrink-0">
+              <div className="w-full md:w-2/3 flex flex-col gap-6 shrink-0">
                 {additionalContacts.map((contact, idx) => (
                   <SiteContactForm
                     key={contact.id}

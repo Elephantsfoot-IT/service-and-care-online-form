@@ -178,7 +178,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(
               <Label className="w-full md:w-1/3 text-sm xl:text-base">
                 Full name<span className="text-red-500">*</span>
               </Label>
-              <div className="w-full md:w-2/3 flex flex-row space-x-2 flex-shrink-0">
+              <div className="w-full md:w-2/3 flex flex-row space-x-2 shrink-0">
                 <FormField
                   control={form.control}
                   name="accountFirstName"
@@ -236,7 +236,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(
                   >
                     Mobile phone
                   </FormLabel>
-                  <div className="w-full md:w-2/3 flex-shrink-0">
+                  <div className="w-full md:w-2/3 shrink-0">
                     <FormControl>
                       <Input
                         maxLength={13}
@@ -267,7 +267,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(
                   >
                     Office phone
                   </FormLabel>
-                  <div className="w-full md:w-2/3 flex-shrink-0">
+                  <div className="w-full md:w-2/3 shrink-0">
                     <FormControl>
                       <Input
                         maxLength={13}
@@ -299,7 +299,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(
                   >
                     Email address<span className="text-red-500">*</span>
                   </FormLabel>
-                  <div className="w-full md:w-2/3 flex-shrink-0">
+                  <div className="w-full md:w-2/3 shrink-0">
                     <FormControl>
                       <Input
                         placeholder="you@example.com"
@@ -327,7 +327,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(
               <Label className="text-sm xl:text-base mb-2 w-full md:w-1/3">
                 Postal address<span className="text-red-500">*</span>
               </Label>
-              <div className="w-full md:w-2/3 flex-shrink-0">
+              <div className="w-full md:w-2/3 shrink-0">
                 <div className="flex items-center space-x-2 mb-4">
                   <Checkbox
                     checked={state.sameAddres}
@@ -363,7 +363,7 @@ const BillingDetailsCard = React.forwardRef<BillingDetailsCardHandle, Props>(
               <Label className="text-sm xl:text-base w-full md:w-1/3">
                 Use this contact for
               </Label>
-              <div className="w-full md:w-2/3 flex flex-col flex-shrink-0">
+              <div className="w-full md:w-2/3 flex flex-col shrink-0">
                 <div className="w-full flex flex-col gap-4">
                   {/* Quote */}
                   <div className="flex flex-row gap-2">

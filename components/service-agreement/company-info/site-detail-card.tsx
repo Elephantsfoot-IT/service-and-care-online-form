@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useRef, useImperativeHandle } from "react";
-import SiteForm, { SiteFormHandle } from "@/components/service-agreement/site-form";
+import SiteForm, {
+  SiteFormHandle,
+} from "@/components/service-agreement/site-form";
 import { useServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { Site } from "@/lib/interface";
 
@@ -22,10 +24,9 @@ function SiteDetailsCardImpl(
 
   // Refs to child SiteForms keyed by site id
   const formRefs = useRef<Record<string, SiteFormHandle | null>>({});
-  const setSiteRef =
-    (id: string) => (instance: SiteFormHandle | null) => {
-      formRefs.current[id] = instance;
-    };
+  const setSiteRef = (id: string) => (instance: SiteFormHandle | null) => {
+    formRefs.current[id] = instance;
+  };
 
   // Expose handleSubmit to parent
   const handleSubmit = async (): Promise<boolean> => {
@@ -73,14 +74,16 @@ function SiteDetailsCardImpl(
       return merged;
     });
 
-    useServiceAgreementStore.getState().setServiceAgreement({ ...prev, sites: nextSites });
+    useServiceAgreementStore
+      .getState()
+      .setServiceAgreement({ ...prev, sites: nextSites });
   };
 
   return (
     <div className="flex flex-col gap-6">
       {state.serviceAgreement.sites.map((site, index) => (
         <SiteForm
-        index={index}
+          index={index}
           key={site.simpro_site_id}
           ref={setSiteRef(site.simpro_site_id)}
           site={site}
@@ -91,9 +94,10 @@ function SiteDetailsCardImpl(
   );
 }
 
-const SiteDetailsCard = React.forwardRef<SiteDetailsCardHandle, SiteDetailsCardProps>(
-  SiteDetailsCardImpl
-);
+const SiteDetailsCard = React.forwardRef<
+  SiteDetailsCardHandle,
+  SiteDetailsCardProps
+>(SiteDetailsCardImpl);
 SiteDetailsCard.displayName = "SiteDetailsCard";
 
 export default SiteDetailsCard;

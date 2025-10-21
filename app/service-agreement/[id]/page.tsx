@@ -190,7 +190,7 @@ function ServiceAgreementComponent({
         <ScrollButton />
 
         <div className="px-4 xl:px-20 text-neutral-800 bg-transparent">
-          <div className="w-full flex flex-col items-center font-sans flex-grow gap-14 max-w-screen-lg mx-auto">
+          <div className="w-full flex flex-col items-center font-sans grow gap-14 max-w-(--breakpoint-lg) mx-auto">
             {<ServiceAgreementProgress></ServiceAgreementProgress>}
 
             {state.page === 1 && (

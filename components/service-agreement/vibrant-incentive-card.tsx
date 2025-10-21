@@ -13,7 +13,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
         className={cn(
           "rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-200 flex flex-col",
           currentTier === "basic"
-            ? "shadow-xl bg-gradient-to-br from-[#d4d4d4] via-[#d4d4d4]/90 to-[#d4d4d4]/80"
+            ? "shadow-xl bg-linear-to-br from-[#d4d4d4] via-[#d4d4d4]/90 to-[#d4d4d4]/80"
             : "border border-neutral-100 "
         )}
       >
@@ -64,7 +64,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
         className={cn(
           " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-300 flex flex-col",
           currentTier === "essential"
-            ? "shadow-xl bg-gradient-to-br from-[#ffdb01] via-[#ffdb01]/80 to-[#ffdb01]/70 border border-transparent text-neutral-800"
+            ? "shadow-xl bg-linear-to-br from-[#ffdb01] via-[#ffdb01]/80 to-[#ffdb01]/70 border border-transparent text-neutral-800"
             : "border border-neutral-100"
         )}
       >
@@ -129,7 +129,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
         className={cn(
           " rounded-2xl p-4 flex-1 shadow-md min-h-[550px] min-w-[300px] w-full h-fit appear-up fade-up-400 flex flex-col",
           currentTier === "pro"
-            ? "shadow-xl bg-gradient-to-br from-[#1e60ad]  via-[#1e60ad]/95  to-[#1e60ad]/90 text-white border border-transparent"
+            ? "shadow-xl bg-linear-to-br from-efg-blue  via-efg-blue/95  to-efg-blue/90 text-white border border-transparent"
             : "border border-neutral-100"
         )}
       >
@@ -185,7 +185,7 @@ function VibrantIncentiveCard({ currentTier }: IncentiveCardProps) {
         {currentTier != "pro" && (
           <Button
             className={cn(
-              "relative bg-[#1e60ad] text-white hover:bg-[#1e60ad]/90 cursor-pointer w-full mt-auto mb-8 "
+              "relative bg-efg-blue text-white hover:bg-efg-blue/90 cursor-pointer w-full mt-auto mb-8 "
             )}
           >
             <LockKeyholeIcon></LockKeyholeIcon> Unlock Tier
