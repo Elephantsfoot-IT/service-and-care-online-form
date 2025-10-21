@@ -49,6 +49,7 @@ export function getServices<T extends ServiceType>(
 }
 
 export function getNumber(n: string) {
+  if (!n) return 0;
   return Number(n.replace(/[^0-9.]/g, ""));
 }
 
