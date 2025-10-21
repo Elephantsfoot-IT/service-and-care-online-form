@@ -13,7 +13,7 @@ import ServiceAgreementProgress from "@/components/service-agreement/service-agr
 import Sider from "@/components/sider";
 import { useServiceAgreement } from "@/lib/api";
 import { SECTION_IDS, ServiceAgreement } from "@/lib/interface";
-import { fastScrollToEl, scrollToTop } from "@/lib/utils";
+import { fastScrollToEl, getNumber, scrollToTop } from "@/lib/utils";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 
@@ -153,6 +153,18 @@ function ServiceAgreementComponent({
       state.setSelfClosingHopperDoorInspectionFrequency(data.pre_selection.selfClosingHopperDoorInspectionFrequency);
       state.setBinCleaningFrequency(data.pre_selection.binCleaningFrequency);
     }
+    if (data.sites){
+      data.sites.forEach((site) => {
+        site.buildings.forEach((building) => {
+          building.services.forEach((service) => {
+            if (service.type === "odour_control") {
+              state.setOdourControlUnit(service.id, getNumber(service.default_qty || "0"));
+            }
+          });
+        });
+      });
+    }
+    
   }, [data]);
   
   useEffect(() => {
