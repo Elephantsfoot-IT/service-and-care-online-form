@@ -144,6 +144,15 @@ function ServiceAgreementComponent({
     };
   
     Object.entries(fields).forEach(([k, v]) => state.updateField(k, v ?? ""));
+
+    if (data.pre_selection){
+      state.setChuteCleaningFrequency(data.pre_selection.chuteCleaningFrequency);
+      state.setEquipmentMaintenanceFrequency(data.pre_selection.equipmentMaintenanceFrequency);
+      state.setWasteRoomCleaningFrequency(data.pre_selection.wasteRoomCleaningFrequency);
+      state.setOdourControlFrequency(data.pre_selection.odourControlFrequency);
+      state.setSelfClosingHopperDoorInspectionFrequency(data.pre_selection.selfClosingHopperDoorInspectionFrequency);
+      state.setBinCleaningFrequency(data.pre_selection.binCleaningFrequency);
+    }
   }, [data]);
   
   useEffect(() => {
