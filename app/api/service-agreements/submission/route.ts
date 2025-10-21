@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/service-aggreement-supabase";
-
 import { Resend } from "resend";
 import { serviceAgreementAcceptedEmailHtml } from "@/lib/confirmation-email";
 import { ausDate, ausYMD } from "@/lib/utils";
 import { ServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { convertHtmlToPdfLambda } from "@/lib/api";
-import { log } from "console";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const allowedEmails = [

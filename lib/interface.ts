@@ -79,6 +79,7 @@ export interface ServiceAgreement {
   company_details?: CompanyInfo;
   billing_details?: BillingDetails;
   salesperson: string;
+  pre_selection?: PreSelectionInfoType;
 }
 
 export interface Building {
@@ -223,3 +224,14 @@ export type GetServicesReturnTyped<T extends ServiceType> = {
   type: T;
   items: Array<WithContext<ServiceByType<T>>>;
 };
+
+
+
+export interface PreSelectionInfoType {
+  chuteCleaningFrequency: MaybeOption;
+  equipmentMaintenanceFrequency: MaybeOption;
+  wasteRoomCleaningFrequency: MaybeOption;
+  odourControlFrequency: MaybeOption;
+  selfClosingHopperDoorInspectionFrequency: MaybeOption;
+  binCleaningFrequency: MaybeOption;
+}
