@@ -140,6 +140,7 @@ export type WasteRoomPressureCleanService = ServiceBase & {
 export type OdourControlService = ServiceBase & {
   type: "odour_control";
   price: string;
+  default_qty: string;
 };
 
 export type BinCleaningService = ServiceBase & {
