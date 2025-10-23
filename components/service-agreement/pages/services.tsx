@@ -198,7 +198,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </div>
 
         {/* Contract duration card */}
-        <div className=" mt-4 border border-input rounded-xl shadow-sm mt-6">
+        <div className=" mt-4 border border-input rounded-xl  mt-6">
           <div className="text-lg font-medium bg-neutral-75 p-6 rounded-t-xl border-b border-input">
             Contract Duration
           </div>
