@@ -11,6 +11,7 @@ import {
   getNumber,
   getFrequencyValue,
   getServiceAnualCostChute,
+  getServiceAnualCostEquipment,
 } from "@/lib/utils";
 import { useMemo } from "react";
 
@@ -79,7 +80,7 @@ export function ServiceSummary() {
     chuteCleaningDetails.items,
     state.chuteCleaningFrequency
   );
-  const equipAnnual = getServiceAnualCost(
+  const equipAnnual = getServiceAnualCostEquipment(
     equipmentMaintenanceDetails.items,
     state.equipmentMaintenanceFrequency
   );

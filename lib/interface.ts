@@ -120,6 +120,7 @@ export type EquipmentMaintenanceService = ServiceBase & {
   type: "equipment_maintenance";
   equipment: string;
   equipment_label: string;
+  quantity: string;
   price: string;
 };
 
