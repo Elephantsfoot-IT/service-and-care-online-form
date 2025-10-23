@@ -486,7 +486,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           </div>
 
           <div className="flex flex-row">
-            <div className="w-1/3 flex-shrink-0 font-medium">Valid until</div>
+            <div className="w-1/3 flex-shrink-0 font-medium">Offer Expiry Date</div>
             <div className="w-2/3 flex-shrink-0">
               {format(state.serviceAgreement.expire_at, "EEE, dd/MM/yyyy")}
             </div>
@@ -510,7 +510,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           <div className="flex flex-row items-center gap-6 justify-between p-6">
             <div className="flex flex-col gap-1.5 flex-shrink-0">
               <Label className="text-sm xl:text-base text-muted-foreground">
-                Start date
+                Contract Start Date
               </Label>
               <span className="text-base xl:text-lg font-medium  leading-tight">
                 {format(state.serviceAgreement.start_date, "dd MMM yyyy")}
@@ -520,7 +520,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
             <div className="flex flex-col gap-1.5 flex-shrink-0">
               <Label className="text-sm xl:text-base  text-muted-foreground">
-                End date
+                Contract End Date
               </Label>
               <span className="text-base xl:text-lg font-medium  leading-tight">
                 {format(state.serviceAgreement.end_date, "dd MMM yyyy")}
