@@ -106,7 +106,7 @@ export default function TermsAndSignature() {
         try {
           await submitServiceAgreement(state.serviceAgreement?.id, state);
           router.push(`/service-agreement/success`);
-          console.log(state.odourControlUnits);
+          // console.log(state.odourControlUnits);
         } catch (error) {
           toast.error("Failed to submit service agreement");
         }
