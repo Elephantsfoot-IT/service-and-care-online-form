@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {
+  BinCleaningService,
   ChuteCleaningService,
   EquipmentMaintenanceService,
   GetServicesReturnTyped,
@@ -125,7 +126,7 @@ export const getServiceAnualCostChute = (services: ChuteCleaningService[] | Hopp
   return services.reduce((acc, service) => acc + getNumber(service.price) * frequencyValue * getNumber(service.chutes), 0);
 };
 
-export const getServiceAnualCostEquipment= (services: EquipmentMaintenanceService[] , frequency: string | null) => {
+export const getServiceAnualCostEquipment= (services: EquipmentMaintenanceService[] | BinCleaningService[] , frequency: string | null) => {
   if (!frequency) return 0;
   const frequencyValue =
     frequency === "yearly" ? 1 : frequency === "six-monthly" ? 2 : 4;

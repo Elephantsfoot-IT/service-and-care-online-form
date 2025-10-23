@@ -146,6 +146,8 @@ export type OdourControlService = ServiceBase & {
 
 export type BinCleaningService = ServiceBase & {
   type: "bin_cleaning";
+  bin_size?: string;
+  quantity: string;
   price: string;
 };
 
