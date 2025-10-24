@@ -92,13 +92,13 @@ export function ServiceSummary() {
     wasteRoomCleaningDetails.items,
     state.wasteRoomCleaningFrequency
   );
-  const binAnnual = getServiceAnualCost(
+  const binAnnual = getServiceAnualCostEquipment(
     binCleaningDetails.items,
     state.binCleaningFrequency
   );
 
   // ✅ Correct odour control computation (units × unitPrice, no multiplier)
- 
+
   const odourAnnual = useMemo(() => {
     if (!state.odourControlFrequency) return 0;
     return odourControlDetails.items.reduce((acc, r) => {
@@ -124,7 +124,9 @@ export function ServiceSummary() {
     odourAnnual;
 
   const discountAmt = discountPct ? (subtotal * discountPct) / 100 : 0;
-  const grandTotal = state.serviceAgreement?.incentives ? subtotal - discountAmt : subtotal;
+  const grandTotal = state.serviceAgreement?.incentives
+    ? subtotal - discountAmt
+    : subtotal;
 
   // Clean, headerless row
   const Row = ({
@@ -144,15 +146,19 @@ export function ServiceSummary() {
     return (
       <div className="flex items-center justify-between gap-4 px-4 md:px-6 py-4 transition-colors">
         <div className="min-w-0">
-          <div className="text-sm xl:text-base  text-neutral-900 truncate">{label}</div>
+          <div className="text-sm xl:text-base  text-neutral-900 truncate">
+            {label}
+          </div>
         </div>
-        <div className="text-sm xl:text-base text-neutral-900">{formatMoney(amount)}</div>
+        <div className="text-sm xl:text-base text-neutral-900">
+          {formatMoney(amount)}
+        </div>
       </div>
     );
   };
 
   return (
-    <section className="flex flex-col border border-input rounded-lg shadow-sm overflow-hidden bg-white">
+    <section className="flex flex-col border border-input rounded-lg overflow-hidden bg-white">
       <div className="divide-y divide-input">
         <Row
           label="Chute Cleaning"
@@ -211,7 +217,7 @@ export function ServiceSummary() {
 
         {/* Totals */}
         <div>
-          {(discountPct > 0 && state.serviceAgreement?.incentives ) ? (
+          {discountPct > 0 && state.serviceAgreement?.incentives ? (
             <>
               <div className="flex justify-between text-sm xl:text-base text-emerald-600 px-4 md:px-6 pt-4 ">
                 <span>Service discount ({discountPct}%)</span>
@@ -220,7 +226,10 @@ export function ServiceSummary() {
 
               <div className="flex justify-between items-baseline px-4 md:px-6 pb-4 border-b border-input">
                 <span className="text-neutral-800 text-sm xl:text-base font-medium flex flex-col">
-                  Annual cost <span className="font-normal text-xs xl:text-sm">(1 year, excl. GST)</span>
+                  Annual cost{" "}
+                  <span className="font-normal text-xs xl:text-sm">
+                    (1 year, excl. GST)
+                  </span>
                 </span>
                 <div className="text-right">
                   <div className="text-sm xl:text-base line-through text-neutral-500">
@@ -235,7 +244,9 @@ export function ServiceSummary() {
               <div className="flex justify-between items-baseline px-4 md:px-6 py-6">
                 <span className="text-neutral-800 text-sm xl:text-base font-medium flex flex-col">
                   Contract value{" "}
-                  <span className="font-normal text-xs xl:text-sm">(2 years, excl. GST)</span>
+                  <span className="font-normal text-xs xl:text-sm">
+                    (2 years, excl. GST)
+                  </span>
                 </span>
                 <div className="text-lg font-medium text-neutral-900">
                   {formatMoney(grandTotal * 2)}
@@ -247,7 +258,9 @@ export function ServiceSummary() {
               <div className="flex justify-between items-baseline px-4 md:px-6 py-6">
                 <span className="text-neutral-800 text-sm xl:text-base font-medium flex flex-col">
                   Annual cost{" "}
-                  <span className="font-normal text-xs xl:text-sm">(1 year, excl. GST)</span>
+                  <span className="font-normal text-xs xl:text-sm">
+                    (1 year, excl. GST)
+                  </span>
                 </span>
                 <span className="text-base font-medium text-neutral-900">
                   {formatMoney(grandTotal)}
@@ -257,7 +270,9 @@ export function ServiceSummary() {
               <div className="flex justify-between items-baseline border-t border-input px-4 md:px-6 py-6">
                 <span className="text-neutral-800 text-sm xl:text-base font-medium flex flex-col">
                   Contract value{" "}
-                  <span className="font-normal text-xs xl:text-sm">(2 years, excl. GST)</span>
+                  <span className="font-normal text-xs xl:text-sm">
+                    (2 years, excl. GST)
+                  </span>
                 </span>
                 <span className="text-base font-medium text-neutral-900">
                   {formatMoney(grandTotal * 2)}

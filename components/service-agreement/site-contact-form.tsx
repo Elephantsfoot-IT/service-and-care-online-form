@@ -100,7 +100,7 @@ const SiteContactForm = React.forwardRef<
   return (
     <div
       ref={rootRef}
-      className="flex flex-col w-full rounded-xl shadow-sm border border-input overflow-hidden"
+      className="flex flex-col w-full rounded-xl border border-input overflow-hidden"
     >
       {/* Heading */}
       <div className="flex flex-row justify-between w-full items-center py-8 px-4 md:px-6 border-b border-input bg-neutral-50">
