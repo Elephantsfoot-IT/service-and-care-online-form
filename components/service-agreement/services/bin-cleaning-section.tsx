@@ -79,14 +79,36 @@ export default function BinCleaningSection({
       <SectionDetails>
         {/* (unchanged list, trimmed) */}
         <ul className="list-disc pl-6 space-y-1">
-          <li>Attach “Chute Cleaning in Progress” signs...</li>
-          <li>Use an environmentally friendly solution...</li>
-          <li>Use high-pressure water to thoroughly clean...</li>
-          <li>Wipe down and sanitize the hopper doors...</li>
-          <li>High-pressure clean discharge hopper...</li>
+          <li>
+            Attach “Chute Cleaning in Progress” signs to hopper doors to ensure
+            awareness that cleaning is underway.
+          </li>
+          <li>
+            Use an environmentally friendly solution to break down any residue
+            or buildup in the chute.
+          </li>
+          <li>
+            Use high-pressure water to thoroughly clean the chute, dislodging
+            any remaining debris.
+          </li>
+          <li>
+            Wipe down and sanitize the hopper doors to maintain hygiene
+            standards.
+          </li>
+          <li>
+            High-pressure clean discharge hopper to remove any buildup or
+            contaminants.
+          </li>
           <li>Thoroughly clean all waste equipment.</li>
-          <li>Ensure that the waste room is free of excess water...</li>
-          <li>Use odour-control spray to neutralize smells...</li>
+          <li>
+            Ensure that the waste room is free of excess water to prevent slips
+            and maintain cleanliness.
+          </li>
+          <li>
+            Use odour-control spray to neutralize any unpleasant smells
+            emanating from the waste chute, ensuring a more pleasant
+            environment.
+          </li>
           <li>
             For more information, please visit{" "}
             <a
@@ -95,7 +117,7 @@ export default function BinCleaningSection({
               target="_blank"
             >
               our website
-            </a>
+            </a>{" "}
           </li>
         </ul>
       </SectionDetails>
@@ -164,7 +186,10 @@ export default function BinCleaningSection({
                     key={index}
                     className="flex flex-row gap-2 last:border-b-0 text-sm w-full justify-between items-center pl-1"
                   >
-                   <div>{item.quantity} × {item.bin_size} {Number(item.quantity) > 1 ? `bins` : `bin`}</div>
+                    <div>
+                      {item.quantity} × {item.bin_size}{" "}
+                      {Number(item.quantity) > 1 ? `bins` : `bin`}
+                    </div>
                     <div className="text-right w-fit flex-shrink-0">
                       {formatMoney(getNumber(item.price))}
                     </div>

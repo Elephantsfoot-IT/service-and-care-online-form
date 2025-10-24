@@ -33,14 +33,36 @@ export default function ChuteCleaningSection({
       <SectionHeader title="Chute Cleaning" />
       <SectionDetails>
         <ul className="list-disc pl-6 space-y-1">
-          <li>Attach “Chute Cleaning in Progress” signs to hopper doors...</li>
-          <li>Use an environmentally friendly solution...</li>
-          <li>Use high-pressure water to thoroughly clean the chute...</li>
-          <li>Wipe down and sanitize the hopper doors...</li>
-          <li>High-pressure clean discharge hopper...</li>
+          <li>
+            Attach “Chute Cleaning in Progress” signs to hopper doors to ensure
+            awareness that cleaning is underway.
+          </li>
+          <li>
+            Use an environmentally friendly solution to break down any residue
+            or buildup in the chute.
+          </li>
+          <li>
+            Use high-pressure water to thoroughly clean the chute, dislodging
+            any remaining debris.
+          </li>
+          <li>
+            Wipe down and sanitize the hopper doors to maintain hygiene
+            standards.
+          </li>
+          <li>
+            High-pressure clean discharge hopper to remove any buildup or
+            contaminants.
+          </li>
           <li>Thoroughly clean all waste equipment.</li>
-          <li>Ensure that the waste room is free of excess water...</li>
-          <li>Use odour-control spray to neutralize smells...</li>
+          <li>
+            Ensure that the waste room is free of excess water to prevent slips
+            and maintain cleanliness.
+          </li>
+          <li>
+            Use odour-control spray to neutralize any unpleasant smells
+            emanating from the waste chute, ensuring a more pleasant
+            environment.
+          </li>
           <li>
             For more information, please visit{" "}
             <a
@@ -117,14 +139,13 @@ export default function ChuteCleaningSection({
                 {r.site_name} {r.building_name && `- ${r.building_name}`}
               </div>
               <div className="flex flex-row gap-2 items-center justify-between text-sm pl-1">
-          
-                  <div className="flex flex-col gap-1">
-                    <div className="flex flex-row gap-2 items-center">
-                      <div className="">{r.levels} Levels</div> -
-                      <div className="">{r.chutes} Chutes</div>
-                    </div>
+                <div className="flex flex-col gap-1">
+                  <div className="flex flex-row gap-2 items-center">
+                    <div className="">{r.levels} Levels</div> -
+                    <div className="">{r.chutes} Chutes</div>
                   </div>
-                
+                </div>
+
                 <div className="text-right px-2 py-2 w-fit flex-shrink-0">
                   {formatMoney(getNumber(r.price))}
                 </div>

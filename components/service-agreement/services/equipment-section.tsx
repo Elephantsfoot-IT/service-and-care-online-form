@@ -129,7 +129,7 @@ export default function EquipmentMaintenanceSection({
               target="_blank"
             >
               our website
-            </a>
+            </a>{" "}
           </li>
         </ul>
       </SectionDetails>

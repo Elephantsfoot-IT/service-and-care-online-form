@@ -1,20 +1,15 @@
 "use client";
 
-import {
-  SectionShell,
-  SectionHeader,
-  SectionDetails,
-  SectionContent,
-} from "./service-helper";
 import ServiceFrequency2 from "@/components/service-agreement/service-frequency-2";
 import { Input } from "@/components/ui/input";
-import {
-  formatMoney,
-  getFrequencyValue,
-  getNumber,
-  normalizeQty,
-} from "@/lib/utils";
 import { GetServicesReturnTyped, MaybeOption, options } from "@/lib/interface";
+import { formatMoney, getNumber, normalizeQty } from "@/lib/utils";
+import {
+  SectionContent,
+  SectionDetails,
+  SectionHeader,
+  SectionShell,
+} from "./service-helper";
 
 function OdourControlFooter({
   items, // price already units * unitPrice
@@ -94,11 +89,16 @@ export default function OdourControlSection({
       <SectionDetails>
         {/* (unchanged content) */}
         <ul className="list-disc pl-6 space-y-1">
-          <li>Ensure system is clean and free of debris...</li>
+          <li>
+            Ensure system is clean and free of any debris, residue, or damage.
+          </li>
           <li>Drain remaining solution.</li>
-          <li>Pour solution into the reservoir.</li>
-          <li>Inspect for any leaks, spills, or other issues.</li>
-          <li>Test the operation of the system.</li>
+          <li>{`Pour solution into the odour management system's reservoir or container.`}</li>
+          <li>Carefully inspect for any leaks, spills, or other issues.</li>
+          <li>
+            Test the operation of the odour management system to ensure it is
+            functioning correctly.
+          </li>
           <li>Inspect program and adjust if required.</li>
           <li>
             For more information, please visit{" "}
@@ -108,7 +108,7 @@ export default function OdourControlSection({
               target="_blank"
             >
               our website
-            </a>
+            </a>{" "}
           </li>
         </ul>
       </SectionDetails>
