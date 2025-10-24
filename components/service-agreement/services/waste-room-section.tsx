@@ -32,18 +32,30 @@ export default function WasteRoomPressureCleanSection({
     <SectionShell id="waste_room_pressure_clean">
       <SectionHeader title="Waste Room Pressure Clean" />
       <SectionDetails>
-        {/* (unchanged content) */}
         <ul className="list-disc pl-6 space-y-1">
-          <li>Ensure that all equipment is powered off and disconnected...</li>
           <li>
-            Use an environmentally friendly solution to break down residue...
+            Ensure that all equipment is powered off and disconnected from any
+            power source.
           </li>
-          <li>Use high-pressure water to clean the room and equipment...</li>
-          <li>Rinse the equipment thoroughly...</li>
+          <li>
+            Use an environmentally friendly solution to break down any residue
+            or buildup on the equipment.
+          </li>
+          <li>
+            Use high-pressure water to clean the room and waste equipment,
+            dislodging any remaining debris.
+          </li>
+          <li>
+            Rinse the equipment thoroughly with clean water to remove any
+            residue of the cleaning solution.
+          </li>
           <li>
             Ensure that all surfaces are thoroughly cleaned and sanitized.
           </li>
-          <li>Before reactivating the equipment, double-check dryness...</li>
+          <li>
+            Before reactivating the equipment, double-check that all surfaces
+            are dry and free from any residue.
+          </li>
           <li>Reconnect the power source and test the equipment.</li>
           <li>
             For more information, please visit{" "}
@@ -53,7 +65,7 @@ export default function WasteRoomPressureCleanSection({
               target="_blank"
             >
               our website
-            </a>
+            </a>{" "}
           </li>
         </ul>
       </SectionDetails>
@@ -115,14 +127,12 @@ export default function WasteRoomPressureCleanSection({
                 {r.site_name} {r.building_name && `- ${r.building_name}`}
               </div>
               <div className="flex flex-row gap-2 items-center justify-between text-sm pl-1">
-          
-                  <div className="flex flex-col gap-1">
-                    <div className="flex flex-row gap-2 items-center">
-                      <div className="">{r.area_label}</div> 
-          
-                    </div>
+                <div className="flex flex-col gap-1">
+                  <div className="flex flex-row gap-2 items-center">
+                    <div className="">{r.area_label}</div>
                   </div>
-                
+                </div>
+
                 <div className="text-right px-2 py-2 w-fit flex-shrink-0">
                   {formatMoney(getNumber(r.price))}
                 </div>
