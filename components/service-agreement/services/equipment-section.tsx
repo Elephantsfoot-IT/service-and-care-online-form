@@ -144,9 +144,8 @@ export default function EquipmentMaintenanceSection({
         {/* Desktop */}
         <div className="hidden sm:block w-full bg-neutral-75 rounded-xl p-4">
           <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
-            <div className="grid grid-cols-6 border-b border-input py-2 px-2">
+            <div className="grid grid-cols-6 border-b border-input py-2 px-2 text-sm">
               <div className="col-span-2 ">Sites</div>
-
               <div className="col-span-2 ">Equipment</div>
               <div className="col-span-1">Quantity</div>
               <div className="col-span-1 text-right ">

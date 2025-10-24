@@ -64,7 +64,7 @@ export default function ChuteCleaningSection({
         {/* Desktop */}
         <div className="hidden sm:block w-full bg-neutral-75 rounded-xl p-4">
           <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
-            <div className="grid grid-cols-6 gap-2 border-b border-input">
+            <div className="grid grid-cols-6 gap-2 border-b border-input text-sm">
               <div className="col-span-3 px-2 py-2">Sites</div>
               <div className="col-span-1 px-2 py-2">Level</div>
               <div className="col-span-1 px-2 py-2">Chutes</div>

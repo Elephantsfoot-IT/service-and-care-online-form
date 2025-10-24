@@ -68,25 +68,29 @@ export default function WasteRoomPressureCleanSection({
         {/* Desktop */}
         <div className="hidden sm:block w-full bg-neutral-75 rounded-xl p-4">
           <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
-            <div className="grid grid-cols-6 gap-2 border-b border-input">
-              <div className="col-span-2 px-2 py-2">Sites</div>
-              <div className="col-span-1 px-2 py-2"></div>
-              <div className="col-span-2 px-2 py-2">Area</div>
-              <div className="col-span-1 text-right px-2 py-2">Price</div>
+            <div className="grid grid-cols-6 gap-2 border-b border-input text-sm py-2 px-2">
+              <div className="col-span-2 ">Sites</div>
+              <div className="col-span-1 "></div>
+              <div className="col-span-2 ">Area</div>
+              <div className="col-span-1 text-right ">
+                Price per room <br></br> (excl. GST)
+              </div>
             </div>
 
             {details.items.map((r, i) => (
               <div
                 key={i}
-                className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
+                className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0 text-sm xl:text-base px-2 py-2"
               >
-                <div className="col-span-2 px-2 py-2">
-                  <div className="font-medium">{r.site_name}</div>
-                  {r.building_name && <div>{r.building_name}</div>}
+                <div className="col-span-2 flex flex-col gap-1">
+                  <div className="text-sm xl:text-base font-medium">
+                    {r.site_name}
+                  </div>
+                  <div className="text-xs xl:text-sm">{r.building_name}</div>
                 </div>
-                <div className="col-span-1 px-2 py-2"></div>
-                <div className="col-span-2 px-2 py-2">{r.area_label}</div>
-                <div className="col-span-1 text-right px-2 py-2">
+                <div className="col-span-1"></div>
+                <div className="col-span-2">{r.area_label}</div>
+                <div className="col-span-1 text-right">
                   {formatMoney(getNumber(r.price))}
                 </div>
               </div>
@@ -95,29 +99,33 @@ export default function WasteRoomPressureCleanSection({
         </div>
 
         {/* Mobile */}
-        <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-75 p-4">
+        <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-75 px-2 py-4">
           <div className="grid grid-cols-2 gap-2 border-b border-input text-sm xl:text-base">
             <div className="col-span-1 px-2 py-2 text-xs">Services</div>
-            <div className="col-span-1 text-right px-2 py-2 text-xs">Price</div>
+            <div className="col-span-1 text-right px-2 py-2 text-xs">
+              Price per chute <br></br> (excl. GST)
+            </div>
           </div>
           {details.items.map((r, i) => (
             <div
-              key={`${r.site_id}-${r.building_id}-${i}`}
-              className="flex flex-row gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
+              key={i}
+              className="flex flex-col border-b border-input last:border-b-0 py-2 px-2"
             >
-              <div className="w-full px-2 py-2">
-                <div className="flex flex-col gap-1">
-                  <div className="font-medium">{r.site_name}</div>
-                  {r.building_name && (
-                    <div className="text-xs">{r.building_name}</div>
-                  )}
-                  <div className="text-xs text-neutral-800">
-                    Area: {r.area_label}
-                  </div>
-                </div>
+              <div className="font-medium text-sm">
+                {r.site_name} {r.building_name && `- ${r.building_name}`}
               </div>
-              <div className="text-right px-2 py-2 w-fit flex-shrink-0">
-                {formatMoney(getNumber(r.price))}
+              <div className="flex flex-row gap-2 items-center justify-between text-sm pl-1">
+          
+                  <div className="flex flex-col gap-1">
+                    <div className="flex flex-row gap-2 items-center">
+                      <div className="">{r.area_label}</div> 
+          
+                    </div>
+                  </div>
+                
+                <div className="text-right px-2 py-2 w-fit flex-shrink-0">
+                  {formatMoney(getNumber(r.price))}
+                </div>
               </div>
             </div>
           ))}

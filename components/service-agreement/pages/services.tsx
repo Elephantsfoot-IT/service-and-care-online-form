@@ -293,7 +293,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               <Label className="text-2xl xl:text-3xl font-normal mb-1">
                 Complimentary Incentives
               </Label>
-              <span className="text-lg text-neutral-500">
+              <span className="text-base xl:text-lg text-neutral-500">
                 Add services to unlock and redeem complimentary incentives from
                 us — at no extra cost.
               </span>
