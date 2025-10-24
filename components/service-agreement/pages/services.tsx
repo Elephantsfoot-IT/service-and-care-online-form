@@ -168,14 +168,14 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
         {/* Customer summary */}
         <div className="mt-2 text-sm xl:text-base bg-neutral-75 rounded-xl p-6 flex flex-col gap-2 mt-6">
-          <div className="flex flex-row">
+          <div className="flex flex-row gap-6">
             <div className="w-1/3 flex-shrink-0 font-medium">Customer</div>
             <div className="w-2/3 flex-shrink-0">
               {state.serviceAgreement?.quote_for}
             </div>
           </div>
 
-          <div className="flex flex-row">
+          <div className="flex flex-row gap-6">
             <div className="w-1/3 flex-shrink-0 font-medium">
               Offer Expiry Date
             </div>
@@ -199,7 +199,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
         {/* Contract duration card */}
         <div className=" mt-4 border border-input rounded-xl  mt-6">
-          <div className="text-lg font-medium bg-neutral-75 p-6 rounded-t-xl border-b border-input">
+          <div className="text-sm xl:text-base font-medium bg-neutral-75 p-6 rounded-t-xl border-b border-input">
             Contract Duration
           </div>
           <div className="flex flex-row items-center gap-6 justify-between p-6">
