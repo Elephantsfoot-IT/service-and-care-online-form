@@ -45,7 +45,7 @@ export function SectionDetails({
             className={cn("w-3.5 h-3.5 transition-transform duration-300", isOpen === "item-1" ? "rotate-180" : "")}
           />
         </div>
-        <AccordionContent className={cn("bg-neutral-100 rounded-b-xl rounded-t-xl p-5 mt-1 h-fit accordion-down text-sm xl:text-base")}>
+        <AccordionContent className={cn("bg-neutral-50 border border-input rounded-b-xl rounded-t-xl p-5 mt-1 h-fit accordion-down text-sm xl:text-base")}>
           {children}
         </AccordionContent>
       </AccordionItem>

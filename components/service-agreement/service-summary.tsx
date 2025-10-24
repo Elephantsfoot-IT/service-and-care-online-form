@@ -158,7 +158,7 @@ export function ServiceSummary() {
   };
 
   return (
-    <section className="flex flex-col border border-input rounded-lg shadow-sm overflow-hidden bg-white">
+    <section className="flex flex-col border border-input rounded-lg overflow-hidden bg-white">
       <div className="divide-y divide-input">
         <Row
           label="Chute Cleaning"

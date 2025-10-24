@@ -167,7 +167,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </span>
 
         {/* Customer summary */}
-        <div className="mt-2 text-sm xl:text-base bg-neutral-75 rounded-xl p-6 flex flex-col gap-2 mt-6">
+        <div className="mt-2 text-sm xl:text-base bg-neutral-50 rounded-xl p-6 flex flex-col gap-2 mt-6 border border-input">
           <div className="flex flex-row gap-6">
             <div className="w-1/3 flex-shrink-0 font-medium">Customer</div>
             <div className="w-2/3 flex-shrink-0">
@@ -186,7 +186,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </div>
 
         {/* Support contacts */}
-        <div className="mt-1 ml-1 text-sm xl:text-base text-neutral-500">
+        <div className="mt-2 ml-1 text-sm xl:text-base text-neutral-500">
           If this isn’t you, please contact us at{" "}
           <a href="tel:1300435374" className="underline">
             1300 435 374
@@ -199,7 +199,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
         {/* Contract duration card */}
         <div className=" mt-4 border border-input rounded-xl  mt-6">
-          <div className="text-sm xl:text-base font-medium bg-neutral-75 p-6 rounded-t-xl border-b border-input">
+          <div className="text-sm xl:text-base font-medium bg-neutral-50 p-6 rounded-t-xl border-b border-input">
             Contract Duration
           </div>
           <div className="flex flex-row items-center gap-6 justify-between p-6">

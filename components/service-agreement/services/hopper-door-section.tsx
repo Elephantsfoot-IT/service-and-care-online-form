@@ -48,7 +48,7 @@ export default function HopperDoorInspectionSection({
         <ServiceFrequency2 value={frequency} onChange={onChangeFrequency} options={options} />
 
         {/* Desktop */}
-        <div className="hidden sm:block w-full bg-neutral-75 rounded-xl p-4">
+        <div className="hidden sm:block w-full bg-neutral-50 rounded-xl p-4 border border-input">
           <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
             <div className="grid grid-cols-6 gap-2 border-b border-input text-sm">
               <div className="col-span-3 px-2 py-2">Sites</div>
@@ -86,7 +86,7 @@ export default function HopperDoorInspectionSection({
           </div>
         </div>
          {/* Mobile */}
-         <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-75 px-2 py-4">
+         <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-50 px-2 py-4 border border-input">
           <div className="grid grid-cols-2 gap-2 border-b border-input text-sm xl:text-base">
             <div className="col-span-1 px-2 py-2 text-xs">Services</div>
             <div className="col-span-1 text-right px-2 py-2 text-xs">

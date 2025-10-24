@@ -142,7 +142,7 @@ export default function EquipmentMaintenanceSection({
         />
 
         {/* Desktop */}
-        <div className="hidden sm:block w-full bg-neutral-75 rounded-xl p-4">
+        <div className="hidden sm:block w-full bg-neutral-50 rounded-xl p-4 border border-input">
           <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
             <div className="grid grid-cols-6 border-b border-input py-2 px-2 text-sm">
               <div className="col-span-2 ">Sites</div>
@@ -179,7 +179,7 @@ export default function EquipmentMaintenanceSection({
           </div>
         </div>
 
-        <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-75 px-2 py-4 gap-3 divide-y divide-input">
+        <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-50 px-2 py-4 gap-3 divide-y divide-input border border-input">
           <div className="grid grid-cols-3 gap-2 text-xs pb-2 px-2">
             <div className="col-span-1">Services</div>
             <div className="col-span-2 text-right">
