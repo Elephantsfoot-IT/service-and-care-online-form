@@ -120,8 +120,8 @@ export default function ChuteCleaningSection({
           
                   <div className="flex flex-col gap-1">
                     <div className="flex flex-row gap-2 items-center">
-                      <div className="">{r.levels} × Levels</div>
-                      <div className="">{r.chutes} × Chutes</div>
+                      <div className="">{r.levels} Levels</div> -
+                      <div className="">{r.chutes} Chutes</div>
                     </div>
                   </div>
                 

@@ -74,7 +74,8 @@ export default function EquipmentMaintenanceSection({
       return an.localeCompare(bn);
     });
   }, [details.items]);
-  console.log(groupedByBuilding);
+  if (details.items.length === 0) return null;
+
   return (
     <SectionShell id="equipment_maintenance">
       <SectionHeader title="Equipment Preventative Maintenance" />
@@ -145,10 +146,12 @@ export default function EquipmentMaintenanceSection({
           <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
             <div className="grid grid-cols-6 border-b border-input py-2 px-2">
               <div className="col-span-2 ">Sites</div>
-      
+
               <div className="col-span-2 ">Equipment</div>
               <div className="col-span-1">Quantity</div>
-              <div className="col-span-1 text-right ">Price per system <br></br> (excl. GST)</div>
+              <div className="col-span-1 text-right ">
+                Price per system <br></br> (excl. GST)
+              </div>
             </div>
             {groupedByBuilding.map((b, i) => (
               <div
@@ -156,8 +159,10 @@ export default function EquipmentMaintenanceSection({
                 className="grid grid-cols-6 w-full px-2 p-2 border-b border-input last:border-b-0"
               >
                 <div className="col-span-2 flex flex-col gap-1">
-                 <div className="text-sm xl:text-base font-medium">{b.siteName}</div>
-                 <div className="text-xs xl:text-sm">{b.buildingName}</div>
+                  <div className="text-sm xl:text-base font-medium">
+                    {b.siteName}
+                  </div>
+                  <div className="text-xs xl:text-sm">{b.buildingName}</div>
                 </div>
                 <div className="col-span-4 flex flex-col gap-1">
                   {b.items.map((item, index) => (
@@ -194,7 +199,7 @@ export default function EquipmentMaintenanceSection({
                     className="flex flex-row gap-2 last:border-b-0 text-sm w-full justify-between items-center pl-1"
                   >
                     <div className="">
-                      {item.quantity} x {item.equipment_label}
+                      {item.quantity} × {item.equipment_label}
                     </div>
                     <div className="text-right w-fit flex-shrink-0">
                       {formatMoney(getNumber(item.price))}
