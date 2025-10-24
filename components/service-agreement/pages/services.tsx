@@ -146,7 +146,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
   // Render
   // ------------------------------------------------------------------
   return (
-    <div className="flex flex-col gap-20 sm:gap-30 xl:gap-60">
+    <div className="flex flex-col gap-40 xl:gap-60">
       {/* --------------------------------------------------------------
           Page header + customer and contract meta
       -------------------------------------------------------------- */}
