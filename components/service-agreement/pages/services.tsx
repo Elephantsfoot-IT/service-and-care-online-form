@@ -180,7 +180,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
               Proposal Expiry Date
             </div>
             <div className="w-2/3 flex-shrink-0">
-              {format(state.serviceAgreement.expire_at, "EEE, dd/MM/yyyy")}
+              {format(state.serviceAgreement.expire_at, "dd/MM/yyyy")}
             </div>
           </div>
         </div>

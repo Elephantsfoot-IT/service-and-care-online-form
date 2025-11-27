@@ -30,7 +30,7 @@ const items = [
     label: "Waste Room Pressure Clean",
     img: "/service-icon/tag.svg",
   },
-  { id: "bin_cleaning", label: "Bin Cleaning", img: "/service-icon/bin.svg" },
+  { id: "bin_cleaning", label: "Wheelie Bin Cleaning", img: "/service-icon/bin.svg" },
   {
     id: "odour_control",
     label: "Odour Control",

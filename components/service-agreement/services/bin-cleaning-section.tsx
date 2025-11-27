@@ -75,49 +75,30 @@ export default function BinCleaningSection({
   if (details.items.length === 0) return null;
   return (
     <SectionShell id="bin_cleaning">
-      <SectionHeader title="Bin Cleaning" />
+      <SectionHeader title="Wheelie Bin Cleaning" />
       <SectionDetails>
-        {/* (unchanged list, trimmed) */}
         <ul className="list-disc pl-6 space-y-1">
           <li>
-            Attach “Chute Cleaning in Progress” signs to hopper doors to ensure
-            awareness that cleaning is underway.
+            Assess the bin’s condition, noting any damages or specific areas
+            requiring attention.
+          </li>
+          <li>Remove any excess waste in the bin.</li>
+          <li>
+            High-pressure clean to remove grime, dirt and residue from the
+            interior and exterior surfaces.
           </li>
           <li>
-            Use an environmentally friendly solution to break down any residue
-            or buildup in the chute.
+            Manually scrub any stubborn stains, particularly around handles,
+            lids and base areas.
+          </li>
+          <li>Apply disinfectants to eliminate bacteria and reduce odours.</li>
+          <li>
+            Use an eco-friendly deodorising agent to leave the bin smelling
+            fresh.
           </li>
           <li>
-            Use high-pressure water to thoroughly clean the chute, dislodging
-            any remaining debris.
-          </li>
-          <li>
-            Wipe down and sanitize the hopper doors to maintain hygiene
-            standards.
-          </li>
-          <li>
-            High-pressure clean discharge hopper to remove any buildup or
-            contaminants.
-          </li>
-          <li>Thoroughly clean all waste equipment.</li>
-          <li>
-            Ensure that the waste room is free of excess water to prevent slips
-            and maintain cleanliness.
-          </li>
-          <li>
-            Use odour-control spray to neutralize any unpleasant smells
-            emanating from the waste chute, ensuring a more pleasant
-            environment.
-          </li>
-          <li>
-            For more information, please visit{" "}
-            <a
-              href="https://www.elephantsfoot.com.au/service-care/"
-              className="underline text-efg-yellow"
-              target="_blank"
-            >
-              our website
-            </a>{" "}
+            Provide a report on the cleaning, noting any damages or
+            recommendations for repair.
           </li>
         </ul>
       </SectionDetails>

@@ -197,7 +197,7 @@ export function ServiceSummary() {
           }
         />
         <Row
-          label="Bin Cleaning"
+          label="Wheelie Bin Cleaning"
           freq={state.binCleaningFrequency}
           amount={binAnnual}
           show={
