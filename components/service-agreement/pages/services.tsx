@@ -177,7 +177,7 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
           <div className="flex flex-row gap-6">
             <div className="w-1/3 flex-shrink-0 font-medium">
-              Offer Expiry Date
+              Proposal Expiry Date
             </div>
             <div className="w-2/3 flex-shrink-0">
               {format(state.serviceAgreement.expire_at, "EEE, dd/MM/yyyy")}
