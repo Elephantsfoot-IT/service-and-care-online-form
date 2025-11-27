@@ -227,7 +227,6 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
               <div className="pointer-events-none absolute inset-0 z-30 border border-[#1e60ad] bg-blue-400/5 rounded-br-lg" />
             )}
 
-            {/* PRO */}
             <div
               className={cn(
                 "h-40 border-solid relative transition-all duration-300",
