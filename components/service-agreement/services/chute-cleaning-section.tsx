@@ -191,7 +191,7 @@ export default function ChuteCleaningSection({
                         className="grid grid-cols-6 gap-2"
                       >
                         {
-                          <div className="px-2 text-neutral-700 col-span-3">
+                          <div className="px-2 text-neutral-700 font-medium col-span-3">
                             {b.building_name}
                           </div>
                         }
@@ -199,7 +199,7 @@ export default function ChuteCleaningSection({
                         {b.items.map((r, i) => (
                           <div
                             key={i}
-                            className="grid grid-cols-3 gap-2 border-b border-input last:border-b-0 col-span-3"
+                            className="grid grid-cols-3 gap-2 border-b border-input last:border-b-0 col-span-3 text-neutral-700"
                           >
                             <div className="col-span-1 px-2 ">{r.levels}</div>
                             <div className="col-span-1 px-2 ">{r.chutes}</div>
@@ -229,16 +229,19 @@ export default function ChuteCleaningSection({
 
           {/* Grouped Structure */}
           {groupedBySite.map((site) => (
-            <div key={site.site_id} className="py-3 flex flex-col gap-2 border-b border-input last:border-b-0">
+            <div
+              key={site.site_id}
+              className="py-3 flex flex-col gap-2 border-b border-input last:border-b-0"
+            >
               {/* SITE */}
               <div className="font-semibold text-sm px-2">{site.site_name}</div>
 
               {/* BUILDINGS */}
               {site.buildings.map((b) => (
-                <div key={b.building_id} className="py-1">
+                <div key={b.building_id} className="">
                   {/* BUILDING NAME */}
                   {b.building_name && (
-                    <div className="text-sm font-medium text-neutral-700 px-2">
+                    <div className="text-sm font-medium text-neutral-700 px-2 mb-1">
                       {b.building_name}
                     </div>
                   )}
@@ -247,7 +250,7 @@ export default function ChuteCleaningSection({
                   {b.items.map((r, i) => (
                     <div
                       key={i}
-                      className="flex flex-col border-b border-input last:border-b-0 2 px-2"
+                      className="flex flex-col border-b border-input last:border-b-0 2 px-2 text-neutral-700"
                     >
                       <div className="flex flex-row gap-2 items-center justify-between text-sm">
                         <div>{r.levels} Levels</div>

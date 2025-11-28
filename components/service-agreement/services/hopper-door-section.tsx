@@ -10,6 +10,7 @@ import {
 import ServiceFrequency2 from "@/components/service-agreement/service-frequency-2";
 import { GetServicesReturnTyped, MaybeOption, options } from "@/lib/interface";
 import { formatMoney, getNumber } from "@/lib/utils";
+import { useMemo } from "react";
 
 type Props = {
   details: GetServicesReturnTyped<"hopper_door_inspection">;
@@ -26,7 +27,63 @@ export default function HopperDoorInspectionSection({
   discount,
   incentives,
 }: Props) {
-  if (details.items.length === 0) return null;
+  const groupedBySite = useMemo(() => {
+    type Raw = (typeof details.items)[number];
+
+    const siteMap = new Map<
+      string, // site_id
+      {
+        site_id: string;
+        site_name: string;
+        buildings: Map<
+          string, // building_id or placeholder
+          {
+            building_id: string;
+            building_name: string | null;
+            items: Raw[];
+          }
+        >;
+      }
+    >();
+
+    for (const r of details.items) {
+      const siteId = r.site_id;
+      const siteName = r.site_name;
+
+      const buildingId = r.building_id || "__no_building__";
+      const buildingName = r.building_name ?? null;
+
+      // Create site entry if missing
+      if (!siteMap.has(siteId)) {
+        siteMap.set(siteId, {
+          site_id: siteId,
+          site_name: siteName,
+          buildings: new Map(),
+        });
+      }
+
+      const siteEntry = siteMap.get(siteId)!;
+
+      // Create building under site if missing
+      if (!siteEntry.buildings.has(buildingId)) {
+        siteEntry.buildings.set(buildingId, {
+          building_id: buildingId,
+          building_name: buildingName,
+          items: [],
+        });
+      }
+
+      siteEntry.buildings.get(buildingId)!.items.push(r);
+    }
+
+    // Return clean structured array
+    return Array.from(siteMap.values()).map((site) => ({
+      site_id: site.site_id,
+      site_name: site.site_name,
+      buildings: Array.from(site.buildings.values()),
+    }));
+  }, [details]);
+  if (groupedBySite.length === 0) return null;
 
   return (
     <SectionShell id="hopper_door_inspection">
@@ -131,60 +188,117 @@ export default function HopperDoorInspectionSection({
               </div>
             </div>
 
-            {details.items.map((r, i) => (
+            {groupedBySite.map((site) => (
               <div
-                key={i}
-                className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0 "
+                key={site.site_id}
+                className="border-b border-input py-3 flex flex-col gap-2 last:border-b-0"
               >
-                {r.building_name ? (
-                  <div className="col-span-3 px-2 py-2 flex flex-col gap-1">
-                    <div className="font-medium text-sm xl:text-base">
-                      {r.site_name}
+                {/* Buildings */}
+                {site.buildings.length === 1 ? (
+                  <>
+                    <div className="grid grid-cols-6 gap-2">
+                      {
+                        <div className="px-2 font-semibold text-base col-span-3">
+                          {site.site_name}
+                        </div>
+                      }
+
+                      {site.buildings[0].items.map((r, i) => (
+                        <div
+                          key={i}
+                          className="grid grid-cols-3 gap-2 border-b border-input last:border-b-0 col-span-3"
+                        >
+                          <div className="col-span-1 px-2 ">{r.levels}</div>
+                          <div className="col-span-1 px-2 ">{r.chutes}</div>
+                          <div className="col-span-1 text-right px-2 ">
+                            {formatMoney(getNumber(r.price))}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    <div className="text-xs xl:text-sm">{r.building_name}</div>
-                  </div>
+                  </>
                 ) : (
-                  <div className="col-span-3 px-2 py-2 font-medium">
-                    {r.site_name}
-                  </div>
+                  <>
+                    <div className="px-2 font-semibold text-base col-span-3">
+                      {site.site_name}
+                    </div>
+                    {site.buildings.map((b) => (
+                      <div
+                        key={b.building_id}
+                        className="grid grid-cols-6 gap-2"
+                      >
+                        {
+                          <div className="px-2 text-neutral-700 font-medium col-span-3">
+                            {b.building_name}
+                          </div>
+                        }
+
+                        {b.items.map((r, i) => (
+                          <div
+                            key={i}
+                            className="grid grid-cols-3 gap-2 border-b border-input last:border-b-0 col-span-3 text-neutral-700"
+                          >
+                            <div className="col-span-1 px-2 ">{r.levels}</div>
+                            <div className="col-span-1 px-2 ">{r.chutes}</div>
+                            <div className="col-span-1 text-right px-2 ">
+                              {formatMoney(getNumber(r.price))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </>
                 )}
-                <div className="col-span-1 px-2 py-2">{r.levels}</div>
-                <div className="col-span-1 px-2 py-2">{r.chutes}</div>
-                <div className="col-span-1 text-right px-2 py-2">
-                  {formatMoney(getNumber(r.price))}
-                </div>
               </div>
             ))}
           </div>
         </div>
-        {/* Mobile */}
+
         <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-50 px-2 py-4 border border-input">
+          {/* Header */}
           <div className="grid grid-cols-2 gap-2 border-b border-input text-sm xl:text-base">
             <div className="col-span-1 px-2 py-2 text-xs">Services</div>
             <div className="col-span-1 text-right px-2 py-2 text-xs">
-              Price per chute <br></br> (excl. GST)
+              Price per chute <br /> (excl. GST)
             </div>
           </div>
-          {details.items.map((r, i) => (
-            <div
-              key={i}
-              className="flex flex-col border-b border-input last:border-b-0 py-2 px-2"
-            >
-              <div className="font-medium text-sm">
-                {r.site_name} {r.building_name && `- ${r.building_name}`}
-              </div>
-              <div className="flex flex-row gap-2 items-center justify-between text-sm pl-1">
-                <div className="flex flex-col gap-1">
-                  <div className="flex flex-row gap-2 items-center">
-                    <div className="">{r.levels} Levels</div> -
-                    <div className="">{r.chutes} Chutes</div>
-                  </div>
-                </div>
 
-                <div className="text-right px-2 py-2 w-fit flex-shrink-0">
-                  {formatMoney(getNumber(r.price))}
+          {/* Grouped Structure */}
+          {groupedBySite.map((site) => (
+            <div
+              key={site.site_id}
+              className="py-3 flex flex-col gap-2 border-b border-input last:border-b-0"
+            >
+              {/* SITE */}
+              <div className="font-semibold text-sm px-2">{site.site_name}</div>
+
+              {/* BUILDINGS */}
+              {site.buildings.map((b) => (
+                <div key={b.building_id} className="">
+                  {/* BUILDING NAME */}
+                  {b.building_name && (
+                    <div className="text-sm font-medium text-neutral-700 px-2 mb-1">
+                      {b.building_name}
+                    </div>
+                  )}
+
+                  {/* SERVICES */}
+                  {b.items.map((r, i) => (
+                    <div
+                      key={i}
+                      className="flex flex-col border-b border-input last:border-b-0 2 px-2 text-neutral-700"
+                    >
+                      <div className="flex flex-row gap-2 items-center justify-between text-sm">
+                        <div>{r.levels} Levels</div>
+                        <div>{r.chutes} Chutes</div>
+                        <div className="text-right px-2 w-fit flex-shrink-0">
+                          {formatMoney(getNumber(r.price))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
+              ))}
             </div>
           ))}
         </div>
