@@ -146,12 +146,11 @@ export default function OdourControlSection({
     const current = odourUnits[key] ?? 0;
     setUnit(key, current + 1);
   };
-  
+
   const decrement = (key: string) => {
     const current = odourUnits[key] ?? 0;
     setUnit(key, Math.max(0, current - 1)); // never below 0
   };
-  
 
   return (
     <SectionShell id="odour_control">
@@ -197,68 +196,158 @@ export default function OdourControlSection({
         )}
 
         {/* Desktop */}
+        {/* Desktop */}
         <div className="hidden sm:block w-full bg-neutral-50 rounded-xl p-4 border border-input">
           <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
             <div className="grid grid-cols-6 gap-2 border-b border-input text-sm">
-              <div className="col-span-4 px-2 py-2">Sites</div>
-              <div className="col-span-1 px-2 py-2">Units</div>
+              <div className="col-span-3 px-2 py-2">Sites</div>
+              <div className="col-span-2 px-2 py-2">Units</div>
               <div className="col-span-1 px-2 py-2 text-right">
                 Price per unit <br></br> (excl. GST)
               </div>
             </div>
 
-            {details.items.map((r) => {
-              const key = r.id;
-              const qty = odourUnits[key] ?? 0;
-              const unitPrice = getNumber(r.price);
-              const invalid = odourQtyError && odourNeedsUnits && qty <= 0;
-
-              return (
-                <div
-                  key={key}
-                  className="grid grid-cols-6 gap-2 border-b border-input last:border-b-0 text-sm xl:text-base"
-                >
-                  {r.building_name ? (
-                    <div className="col-span-4 px-2 py-2 flex flex-col gap-1">
-                      <div className="font-medium text-sm xl:text-base">
-                        {r.site_name}
+            {groupedBySite.map((site) => (
+              <div
+                key={site.site_id}
+                className="border-b border-input py-3 flex flex-col gap-2 last:border-b-0"
+              >
+                {/* Buildings */}
+                {site.buildings.length === 1 ? (
+                  <>
+                    <div className="grid grid-cols-6 gap-2">
+                      <div className="px-2 font-semibold text-base col-span-3">
+                        {site.site_name}
                       </div>
-                      <div className="text-xs xl:text-sm">
-                        {r.building_name}
+
+                      {site.buildings[0].items.map((r) => {
+                        const key = r.id;
+                        const qty = odourUnits[key] ?? 0;
+                        const unitPrice = getNumber(r.price);
+                        const invalid =
+                          odourQtyError && odourNeedsUnits && qty <= 0;
+
+                        return (
+                          <div
+                            key={key}
+                            className="grid grid-cols-3 gap-2 border-b border-input last:border-b-0 col-span-3"
+                          >
+                            <div className="col-span-2 px-2">
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="has-[>svg]:px-1"
+                                  onClick={() => decrement(key)}
+                                >
+                                  <MinusIcon className="size-4" />
+                                </Button>
+                                <Input
+                                  type="text"
+                                  value={qty}
+                                  onChange={(e) =>
+                                    setUnit(
+                                      key,
+                                      Number(
+                                        normalizeQty(e.currentTarget.value)
+                                      )
+                                    )
+                                  }
+                                  aria-invalid={invalid}
+                                  className={`h-8 w-14 flex-shrink-0 efg-input ${invalid ? "border-destructive focus-visible:ring-destructive" : ""}`}
+                                />
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="has-[>svg]:px-1"
+                                  onClick={() => increment(key)}
+                                >
+                                  <PlusIcon className="size-4" />
+                                </Button>
+                              </div>
+                            </div>
+                            <div className="col-span-1 text-right px-2">
+                              {formatMoney(unitPrice)}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="px-2 font-semibold text-base">
+                      {site.site_name}
+                    </div>
+                    {site.buildings.map((b) => (
+                      <div
+                        key={b.building_id}
+                        className="grid grid-cols-6 gap-2"
+                      >
+                        <div className="px-2 text-neutral-700 font-medium col-span-3">
+                          {b.building_name}
+                        </div>
+
+                        {b.items.map((r) => {
+                          const key = r.id;
+                          const qty = odourUnits[key] ?? 0;
+                          const unitPrice = getNumber(r.price);
+                          const invalid =
+                            odourQtyError && odourNeedsUnits && qty <= 0;
+
+                          return (
+                            <div
+                              key={key}
+                              className="grid grid-cols-3 gap-2 border-b border-input last:border-b-0 col-span-3 text-neutral-700"
+                            >
+                              <div className="col-span-2 px-2">
+                                <div className="flex items-center gap-2">
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="has-[>svg]:px-1"
+                                    onClick={() => decrement(key)}
+                                  >
+                                    <MinusIcon className="size-4" />
+                                  </Button>
+                                  <Input
+                                    type="text"
+                                    value={qty}
+                                    onChange={(e) =>
+                                      setUnit(
+                                        key,
+                                        Number(
+                                          normalizeQty(e.currentTarget.value)
+                                        )
+                                      )
+                                    }
+                                    aria-invalid={invalid}
+                                    className={`h-8 w-14 flex-shrink-0 efg-input ${invalid ? "border-destructive focus-visible:ring-destructive" : ""}`}
+                                  />
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="has-[>svg]:px-1"
+                                    onClick={() => increment(key)}
+                                  >
+                                    <PlusIcon className="size-4" />
+                                  </Button>
+                                </div>
+                              </div>
+                              <div className="col-span-1 text-right px-2">
+                                {formatMoney(unitPrice)}
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
-                    </div>
-                  ) : (
-                    <div className="col-span-4 px-2 py-2 font-medium">
-                      {r.site_name}
-                    </div>
-                  )}
-
-                  <div className="col-span-1 px-2 py-2">
-                    <div className="flex items-center gap-2">
-                      <Input
-                        type="text"
-                        value={qty}
-                        onChange={(e) =>
-                          setUnit(
-                            key,
-                            Number(normalizeQty(e.currentTarget.value))
-                          )
-                        }
-                        aria-invalid={invalid}
-                        className={`h-8 w-16 efg-input ${invalid ? "border-destructive focus-visible:ring-destructive" : ""}`}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col-span-1 px-2 py-2 text-right">
-                    {formatMoney(unitPrice)}
-                  </div>
-                </div>
-              );
-            })}
+                    ))}
+                  </>
+                )}
+              </div>
+            ))}
           </div>
         </div>
-
         {/* Mobile */}
         <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-50 px-2 py-4 border border-input">
           {/* Header */}
@@ -325,7 +414,7 @@ export default function OdourControlSection({
                                 )
                               }
                               aria-invalid={invalid}
-                              className={`h-8 w-14 efg-input ${
+                              className={`h-8 w-14 flex-shrink-0 efg-input ${
                                 invalid
                                   ? "border-destructive focus-visible:ring-destructive"
                                   : ""
