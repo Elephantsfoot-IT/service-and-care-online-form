@@ -206,7 +206,7 @@ export default function HopperDoorInspectionSection({
                       {site.buildings[0].items.map((r, i) => (
                         <div
                           key={i}
-                          className="grid grid-cols-3 gap-2 border-b border-input last:border-b-0 col-span-3"
+                          className="grid grid-cols-3 gap-2 border-b border-input last:border-b-0 col-span-3 text-neutral-700"
                         >
                           <div className="col-span-1 px-2 ">{r.levels}</div>
                           <div className="col-span-1 px-2 ">{r.chutes}</div>

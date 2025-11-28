@@ -266,7 +266,7 @@ export default function OdourControlSection({
                                 </Button>
                               </div>
                             </div>
-                            <div className="col-span-1 text-right px-2">
+                            <div className="col-span-1 text-right px-2 text-neutral-700">
                               {formatMoney(unitPrice)}
                             </div>
                           </div>
@@ -334,7 +334,7 @@ export default function OdourControlSection({
                                   </Button>
                                 </div>
                               </div>
-                              <div className="col-span-1 text-right px-2">
+                              <div className="col-span-1 text-right px-2 text-neutral-700">
                                 {formatMoney(unitPrice)}
                               </div>
                             </div>
