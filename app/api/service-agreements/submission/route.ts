@@ -1,10 +1,9 @@
-import { NextResponse } from "next/server";
-import { supabase } from "@/lib/service-aggreement-supabase";
-import { Resend } from "resend";
-import { serviceAgreementAcceptedEmailHtml } from "@/lib/confirmation-email";
-import { ausDate, ausYMD } from "@/lib/utils";
 import { ServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
-import { convertHtmlToPdfLambda } from "@/lib/api";
+import { serviceAgreementAcceptedEmailHtml } from "@/lib/confirmation-email";
+import { supabase } from "@/lib/service-aggreement-supabase";
+import { ausDate, ausYMD } from "@/lib/utils";
+import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const allowedEmails = [
@@ -25,7 +24,14 @@ type AcceptBody = {
 export async function POST(req: Request) {
   const { id, state } = (await req.json()) as AcceptBody;
 
-  const pdf = await convertHtmlToPdfLambda(state);
+  const baseUrl =process.env.INTERNAL_BASE_URL!;
+  const pdfRes = await fetch(`${baseUrl}/api/generate-pdf`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data:state }),
+  });
+  if (!pdfRes.ok) throw new Error("PDF generation failed");
+  const { result: pdf } = await pdfRes.json();
 
   if (allowedEmails.includes(state.accountEmail)) {
     await resend.emails.send({
@@ -36,7 +42,7 @@ export async function POST(req: Request) {
       html: serviceAgreementAcceptedEmailHtml(),
       attachments: [
         {
-          filename: "service-agreement.pdf",
+          filename: "Elephants-Foot-Service-Agreement.pdf",
           path: pdf,
         },
       ],
@@ -88,7 +94,10 @@ export async function POST(req: Request) {
     });
 
     if (signatureError) {
-      return NextResponse.json({ error: signatureError.message }, { status: 500 });
+      return NextResponse.json(
+        { error: signatureError.message },
+        { status: 500 }
+      );
     }
   }
 

@@ -1,7 +1,7 @@
-import { ServiceAgreement } from "./interface";
-import { useQuery } from "@tanstack/react-query";
-import { Site } from "./interface";
+
 import { ServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
+import { useQuery } from "@tanstack/react-query";
+import { ServiceAgreement } from "./interface";
 
 export async function fetchServiceAgreement(
   id: string
@@ -34,31 +34,3 @@ export function useServiceAgreement(id?: string) {
   });
 }
 
-export async function convertHtmlToPdfLambda(state: ServiceAgreementStore) {
-  try {
-    const response = await fetch(
-        process.env.PDF_URL!,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: state,
-        }),
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(
-        `getPDF Failed: ${response.status} ${response.statusText}`
-      );
-    }
-
-    const data = await response.json();
-    return data.result;
-  } catch (error) {
-    console.error("Error getPDF:", error);
-    throw error;
-  }
-}
