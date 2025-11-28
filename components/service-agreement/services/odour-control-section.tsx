@@ -10,6 +10,9 @@ import {
   SectionHeader,
   SectionShell,
 } from "./service-helper";
+import { useMemo } from "react";
+import { Button } from "@/components/ui/button";
+import { MinusIcon, PlusIcon } from "lucide-react";
 
 function OdourControlFooter({
   items, // price already units * unitPrice
@@ -81,7 +84,74 @@ export default function OdourControlSection({
   odourUnits,
   setUnit,
 }: Props) {
-  if (details.items.length === 0) return null;
+  const groupedBySite = useMemo(() => {
+    type Raw = (typeof details.items)[number];
+
+    const siteMap = new Map<
+      string, // site_id
+      {
+        site_id: string;
+        site_name: string;
+        buildings: Map<
+          string, // building_id or placeholder
+          {
+            building_id: string;
+            building_name: string | null;
+            items: Raw[];
+          }
+        >;
+      }
+    >();
+
+    for (const r of details.items) {
+      const siteId = r.site_id;
+      const siteName = r.site_name;
+
+      const buildingId = r.building_id || "__no_building__";
+      const buildingName = r.building_name ?? null;
+
+      // Create site entry if missing
+      if (!siteMap.has(siteId)) {
+        siteMap.set(siteId, {
+          site_id: siteId,
+          site_name: siteName,
+          buildings: new Map(),
+        });
+      }
+
+      const siteEntry = siteMap.get(siteId)!;
+
+      // Create building under site if missing
+      if (!siteEntry.buildings.has(buildingId)) {
+        siteEntry.buildings.set(buildingId, {
+          building_id: buildingId,
+          building_name: buildingName,
+          items: [],
+        });
+      }
+
+      siteEntry.buildings.get(buildingId)!.items.push(r);
+    }
+
+    // Return clean structured array
+    return Array.from(siteMap.values()).map((site) => ({
+      site_id: site.site_id,
+      site_name: site.site_name,
+      buildings: Array.from(site.buildings.values()),
+    }));
+  }, [details]);
+  if (groupedBySite.length === 0) return null;
+
+  const increment = (key: string) => {
+    const current = odourUnits[key] ?? 0;
+    setUnit(key, current + 1);
+  };
+  
+  const decrement = (key: string) => {
+    const current = odourUnits[key] ?? 0;
+    setUnit(key, Math.max(0, current - 1)); // never below 0
+  };
+  
 
   return (
     <SectionShell id="odour_control">
@@ -191,49 +261,99 @@ export default function OdourControlSection({
 
         {/* Mobile */}
         <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-50 px-2 py-4 border border-input">
+          {/* Header */}
           <div className="grid grid-cols-2 gap-2 border-b border-input text-sm xl:text-base px-2 py-2">
-            <div className="col-span-1  text-xs">Services</div>
-            <div className="col-span-1 text-right  text-xs">
-              Price per unit <br></br> (excl. GST)
+            <div className="col-span-1 text-xs">Services</div>
+            <div className="col-span-1 text-right text-xs">
+              Price per unit <br /> (excl. GST)
             </div>
           </div>
-          {details.items.map((r) => {
-            const key = r.id;
-            const qty = odourUnits[key] ?? 0;
-            const unitPrice = getNumber(r.price);
-            const invalid = odourQtyError && odourNeedsUnits && qty <= 0;
 
-            return (
-              <div key={key} className="px-2 py-2">
-                <div className="font-medium text-sm">
-                  {r.site_name} {r.building_name && `- ${r.building_name}`}
+          {/* Grouped Structure */}
+          {groupedBySite.map((site) => (
+            <div
+              key={site.site_id}
+              className="py-3 flex flex-col gap-2 border-b border-input last:border-b-0"
+            >
+              {/* SITE */}
+              <div className="font-semibold text-sm px-2">{site.site_name}</div>
+
+              {/* BUILDINGS */}
+              {site.buildings.map((b) => (
+                <div key={b.building_id}>
+                  {/* BUILDING NAME */}
+                  {b.building_name && (
+                    <div className="text-sm font-medium text-neutral-700 px-2 mb-1">
+                      {b.building_name}
+                    </div>
+                  )}
+
+                  {/* SERVICES (items inside building) */}
+                  {b.items.map((r) => {
+                    const key = r.id;
+                    const qty = odourUnits[key] ?? 0;
+                    const unitPrice = getNumber(r.price);
+                    const invalid =
+                      odourQtyError && odourNeedsUnits && qty <= 0;
+
+                    return (
+                      <div
+                        key={key}
+                        className="flex flex-col border-b border-input last:border-b-0 px-2 py-2 text-neutral-700"
+                      >
+                        {/* Service Label? (Your version doesn't show one — so we skip it) */}
+
+                        <div className="flex items-center justify-between gap-3 mt-1 pl-1">
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="has-[>svg]:px-1"
+                              onClick={() => decrement(key)}
+                            >
+                              <MinusIcon className="size-4" />
+                            </Button>
+                            <Input
+                              id={`odour-units-${key}`}
+                              inputMode="numeric"
+                              type="text"
+                              value={qty}
+                              onChange={(e) =>
+                                setUnit(
+                                  key,
+                                  Number(normalizeQty(e.currentTarget.value))
+                                )
+                              }
+                              aria-invalid={invalid}
+                              className={`h-8 w-14 efg-input ${
+                                invalid
+                                  ? "border-destructive focus-visible:ring-destructive"
+                                  : ""
+                              }`}
+                            />
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="has-[>svg]:px-1"
+                              onClick={() => increment(key)}
+                            >
+                              <PlusIcon className="size-4" />
+                            </Button>
+                          </div>
+
+                          <div className="text-right">
+                            <div className="text-sm">
+                              {formatMoney(unitPrice)}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-
-                <div className="flex items-center justify-between gap-3 mt-2 pl-1">
-                  <div className="flex items-center gap-2">
-                    <Input
-                      id={`odour-units-${key}`}
-                      inputMode="numeric"
-                      type="text"
-                      value={qty}
-                      onChange={(e) =>
-                        setUnit(
-                          key,
-                          Number(normalizeQty(e.currentTarget.value))
-                        )
-                      }
-                      aria-invalid={invalid}
-                      className={`h-8 w-20 efg-input ${invalid ? "border-destructive focus-visible:ring-destructive" : ""}`}
-                    />
-                  </div>
-
-                  <div className="text-right">
-                    <div className="text-sm">{formatMoney(unitPrice)}</div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+              ))}
+            </div>
+          ))}
         </div>
 
         <OdourControlFooter
