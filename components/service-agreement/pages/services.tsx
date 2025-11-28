@@ -168,18 +168,18 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
 
         {/* Customer summary */}
         <div className="mt-2 text-sm xl:text-base bg-neutral-50 rounded-xl p-6 flex flex-col gap-2 mt-6 border border-input">
-          <div className="flex flex-row gap-6">
-            <div className="w-1/3 flex-shrink-0 font-medium">Customer</div>
-            <div className="w-2/3 flex-shrink-0">
+          <div className="flex flex-col sm:flex-row sm:gap-6">
+            <div className="sm:w-1/3 flex-shrink-0 text-neutral-700">Customer</div>
+            <div className="sm:w-2/3 flex-shrink-0 font-medium">
               {state.serviceAgreement?.quote_for}
             </div>
           </div>
 
-          <div className="flex flex-row gap-6">
-            <div className="w-1/3 flex-shrink-0 font-medium">
+          <div className="flex flex-col sm:flex-row sm:gap-6">
+            <div className="sm:w-1/3 flex-shrink-0 text-neutral-700">
               Proposal Expiry Date
             </div>
-            <div className="w-2/3 flex-shrink-0">
+            <div className="sm:w-2/3 flex-shrink-0  font-medium">
               {format(state.serviceAgreement.expire_at, "dd/MM/yyyy")}
             </div>
           </div>
