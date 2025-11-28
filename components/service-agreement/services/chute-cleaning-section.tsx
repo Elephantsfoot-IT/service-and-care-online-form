@@ -219,32 +219,47 @@ export default function ChuteCleaningSection({
 
         {/* Mobile */}
         <div className="sm:hidden w-full flex flex-col rounded-xl bg-neutral-50 px-2 py-4 border border-input">
+          {/* Header */}
           <div className="grid grid-cols-2 gap-2 border-b border-input text-sm xl:text-base">
             <div className="col-span-1 px-2 py-2 text-xs">Services</div>
             <div className="col-span-1 text-right px-2 py-2 text-xs">
-              Price per chute <br></br> (excl. GST)
+              Price per chute <br /> (excl. GST)
             </div>
           </div>
-          {details.items.map((r, i) => (
-            <div
-              key={i}
-              className="flex flex-col border-b border-input last:border-b-0 py-2 px-2"
-            >
-              <div className="font-medium text-sm">
-                {r.site_name} {r.building_name && `- ${r.building_name}`}
-              </div>
-              <div className="flex flex-row gap-2 items-center justify-between text-sm pl-1">
-                <div className="flex flex-col gap-1">
-                  <div className="flex flex-row gap-2 items-center">
-                    <div className="">{r.levels} Levels</div> -
-                    <div className="">{r.chutes} Chutes</div>
-                  </div>
-                </div>
 
-                <div className="text-right px-2 py-2 w-fit flex-shrink-0">
-                  {formatMoney(getNumber(r.price))}
+          {/* Grouped Structure */}
+          {groupedBySite.map((site) => (
+            <div key={site.site_id} className="py-3 flex flex-col gap-2 border-b border-input last:border-b-0">
+              {/* SITE */}
+              <div className="font-semibold text-sm px-2">{site.site_name}</div>
+
+              {/* BUILDINGS */}
+              {site.buildings.map((b) => (
+                <div key={b.building_id} className="py-1">
+                  {/* BUILDING NAME */}
+                  {b.building_name && (
+                    <div className="text-sm font-medium text-neutral-700 px-2">
+                      {b.building_name}
+                    </div>
+                  )}
+
+                  {/* SERVICES */}
+                  {b.items.map((r, i) => (
+                    <div
+                      key={i}
+                      className="flex flex-col border-b border-input last:border-b-0 2 px-2"
+                    >
+                      <div className="flex flex-row gap-2 items-center justify-between text-sm">
+                        <div>{r.levels} Levels</div>
+                        <div>{r.chutes} Chutes</div>
+                        <div className="text-right px-2 w-fit flex-shrink-0">
+                          {formatMoney(getNumber(r.price))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
+              ))}
             </div>
           ))}
         </div>
