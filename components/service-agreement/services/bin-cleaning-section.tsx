@@ -27,16 +27,22 @@ export default function BinCleaningSection({
   discount,
   incentives,
 }: Props) {
-  const groupedByBuilding = useMemo(() => {
-    type Item = (typeof details.items)[number];
-    const byBuilding = new Map<
-      string,
+  const groupedBySite = useMemo(() => {
+    type Raw = (typeof details.items)[number];
+
+    const siteMap = new Map<
+      string, // site_id
       {
-        siteId: string;
-        siteName: string;
-        buildingId: string;
-        buildingName: string | null; // null/empty means "no building label"
-        items: Item[];
+        site_id: string;
+        site_name: string;
+        buildings: Map<
+          string, // building_id or placeholder
+          {
+            building_id: string;
+            building_name: string | null;
+            items: Raw[];
+          }
+        >;
       }
     >();
 
@@ -44,43 +50,50 @@ export default function BinCleaningSection({
       const siteId = r.site_id;
       const siteName = r.site_name;
 
-      // Normalise "no building" so it still groups
       const buildingId = r.building_id || "__no_building__";
       const buildingName = r.building_name ?? null;
 
-      // Key ensures uniqueness across sites
-      const key = `${siteId}::${buildingId}`;
+      // Create site entry if missing
+      if (!siteMap.has(siteId)) {
+        siteMap.set(siteId, {
+          site_id: siteId,
+          site_name: siteName,
+          buildings: new Map(),
+        });
+      }
 
-      if (!byBuilding.has(key)) {
-        byBuilding.set(key, {
-          siteId,
-          siteName,
-          buildingId,
-          buildingName,
+      const siteEntry = siteMap.get(siteId)!;
+
+      // Create building under site if missing
+      if (!siteEntry.buildings.has(buildingId)) {
+        siteEntry.buildings.set(buildingId, {
+          building_id: buildingId,
+          building_name: buildingName,
           items: [],
         });
       }
-      byBuilding.get(key)!.items.push(r);
+
+      siteEntry.buildings.get(buildingId)!.items.push(r);
     }
 
-    // Sort by site name, then building name (empty first)
-    return Array.from(byBuilding.values()).sort((a, b) => {
-      const s = a.siteName.localeCompare(b.siteName);
-      if (s !== 0) return s;
-      const an = a.buildingName ?? "";
-      const bn = b.buildingName ?? "";
-      return an.localeCompare(bn);
-    });
-  }, [details.items]);
-  if (details.items.length === 0) return null;
+    // Return clean structured array
+    return Array.from(siteMap.values()).map((site) => ({
+      site_id: site.site_id,
+      site_name: site.site_name,
+      buildings: Array.from(site.buildings.values()),
+    }));
+  }, [details]);
+
+  if (groupedBySite.length === 0) return null;
+
   return (
     <SectionShell id="bin_cleaning">
       <SectionHeader title="Wheelie Bin Cleaning" />
       <SectionDetails>
         <ul className="list-disc pl-6 space-y-1">
           <li>
-            Assess the bin’s condition, noting any damages or specific areas
-            requiring attention.
+           {` Assess the bin's condition, noting any damages or specific areas
+            requiring attention.`}
           </li>
           <li>Remove any excess waste in the bin.</li>
           <li>
@@ -115,34 +128,92 @@ export default function BinCleaningSection({
           <div className="flex flex-col text-sm xl:text-base min-w-[500px]">
             <div className="grid grid-cols-6 border-b border-input py-2 px-2 text-sm">
               <div className="col-span-3 ">Sites</div>
-              <div className="col-span-1 ">Bin Size</div>
-              <div className="col-span-1">Quantity</div>
-              <div className="col-span-1 text-right ">
-                Price per bin <br></br> (excl. GST)
+              <div className="col-span-1 ">Quantity</div>
+              <div className="col-span-2 text-right ">
+                Total Price <br></br> (excl. GST)
               </div>
             </div>
-            {groupedByBuilding.map((b, i) => (
+
+            {groupedBySite.map((site) => (
               <div
-                key={i}
-                className="grid grid-cols-6 w-full px-2 p-2 border-b border-input last:border-b-0"
+                key={site.site_id}
+                className="border-b border-input last:border-b-0"
               >
-                <div className="col-span-3 flex flex-col gap-1">
-                  <div className="text-sm xl:text-base font-medium">
-                    {b.siteName}
-                  </div>
-                  <div className="text-xs xl:text-sm">{b.buildingName}</div>
-                </div>
-                <div className="col-span-3 flex flex-col gap-1">
-                  {b.items.map((item, index) => (
-                    <div key={index} className="grid grid-cols-3">
-                      <div className="col-span-1">{item.bin_size}</div>
-                      <div className="col-span-1">{item.quantity}</div>
-                      <div className="col-span-1 text-right flex-shrink-0">
-                        {formatMoney(getNumber(item.price))}
+                {site.buildings.length === 1 ? (
+                  // Single building - show site name, then totals
+                  <div className="grid grid-cols-6 w-full px-2 p-2">
+                    <div className="col-span-3 flex flex-col gap-1">
+                      <div className="text-sm xl:text-base font-medium">
+                        {site.site_name}
+                      </div>
+                      <div className="text-xs xl:text-sm">
+                        {site.buildings[0].building_name}
                       </div>
                     </div>
-                  ))}
-                </div>
+                    <div className="col-span-3 flex items-center">
+                      <div className="grid grid-cols-3 w-full">
+                        <div className="col-span-1">
+                          {site.buildings[0].items.reduce(
+                            (sum, item) => sum + getNumber(item.quantity),
+                            0
+                          )}
+                        </div>
+                        <div className="col-span-2 text-right">
+                          {formatMoney(
+                            site.buildings[0].items.reduce(
+                              (sum, item) =>
+                                sum +
+                                getNumber(item.price) * getNumber(item.quantity),
+                              0
+                            )
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  // Multiple buildings - show site name, then each building
+                  <>
+                    <div className="px-2 pt-2">
+                      <div className="text-sm xl:text-base font-semibold">
+                        {site.site_name}
+                      </div>
+                    </div>
+                    {site.buildings.map((b) => (
+                      <div
+                        key={b.building_id}
+                        className="grid grid-cols-6 w-full px-2 pb-2"
+                      >
+                        <div className="col-span-3 flex flex-col gap-1">
+                          <div className="text-sm xl:text-base font-medium text-neutral-700">
+                            {b.building_name}
+                          </div>
+                        </div>
+                        <div className="col-span-3 flex items-center">
+                          <div className="grid grid-cols-3 w-full">
+                            <div className="col-span-1">
+                              {b.items.reduce(
+                                (sum, item) => sum + getNumber(item.quantity),
+                                0
+                              )}
+                            </div>
+                            <div className="col-span-2 text-right">
+                              {formatMoney(
+                                b.items.reduce(
+                                  (sum, item) =>
+                                    sum +
+                                    getNumber(item.price) *
+                                      getNumber(item.quantity),
+                                  0
+                                )
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                )}
               </div>
             ))}
           </div>
@@ -153,30 +224,45 @@ export default function BinCleaningSection({
           <div className="grid grid-cols-3 gap-2 text-xs pb-2 px-2">
             <div className="col-span-1">Services</div>
             <div className="col-span-2 text-right">
-              Price per system <br></br> (excl. GST)
+              Total Price <br></br> (excl. GST)
             </div>
           </div>
-          {groupedByBuilding.map((b, i) => (
-            <div key={i} className="flex flex-col w-full px-2 pb-2">
-              <div className="font-medium text-sm">
-                {b.siteName} {b.buildingName && `- ${b.buildingName}`}
-              </div>
-              <div className="flex flex-col w-full gap-2 mt-2">
-                {b.items.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-row gap-2 last:border-b-0 text-sm w-full justify-between items-center pl-1"
-                  >
+          {groupedBySite.map((site) => (
+            <div key={site.site_id} className="flex flex-col w-full px-2 pb-2">
+              <div className="font-semibold text-sm">{site.site_name}</div>
+              {site.buildings.map((b) => (
+                <div key={b.building_id} className="mt-2">
+                  {b.building_name && (
+                    <div className="font-medium text-sm text-neutral-700 mb-1">
+                      {b.building_name}
+                    </div>
+                  )}
+                  <div className="flex flex-row gap-2 text-sm w-full justify-between items-center pl-2">
                     <div>
-                      {item.quantity} × {item.bin_size}{" "}
-                      {Number(item.quantity) > 1 ? `bins` : `bin`}
+                      {b.items.reduce(
+                        (sum, item) => sum + getNumber(item.quantity),
+                        0
+                      )}{" "}
+                      {b.items.reduce(
+                        (sum, item) => sum + getNumber(item.quantity),
+                        0
+                      ) === 1
+                        ? "bin"
+                        : "bins"}
                     </div>
                     <div className="text-right w-fit flex-shrink-0">
-                      {formatMoney(getNumber(item.price))}
+                      {formatMoney(
+                        b.items.reduce(
+                          (sum, item) =>
+                            sum +
+                            getNumber(item.price) * getNumber(item.quantity),
+                          0
+                        )
+                      )}
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           ))}
         </div>

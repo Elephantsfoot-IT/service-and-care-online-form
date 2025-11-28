@@ -250,7 +250,7 @@ export default function ChuteCleaningSection({
                   {b.items.map((r, i) => (
                     <div
                       key={i}
-                      className="flex flex-col border-b border-input last:border-b-0 2 px-2 text-neutral-700"
+                      className="flex flex-col border-b border-input last:border-b-0 2 pl-4 text-neutral-700"
                     >
                       <div className="flex flex-row gap-2 items-center justify-between text-sm">
                         <div>{r.levels} Levels</div>

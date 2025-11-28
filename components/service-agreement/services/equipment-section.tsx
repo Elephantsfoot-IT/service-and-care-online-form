@@ -179,7 +179,9 @@ export default function EquipmentMaintenanceSection({
                     <div className="col-span-4 flex flex-col gap-1 text-neutral-700">
                       {site.buildings[0].items.map((item, index) => (
                         <div key={index} className="grid grid-cols-4">
-                          <div className="col-span-2">{item.equipment_label}</div>
+                          <div className="col-span-2">
+                            {item.equipment_label}
+                          </div>
                           <div className="col-span-1">{item.quantity}</div>
                           <div className="col-span-1 text-right flex-shrink-0">
                             {formatMoney(getNumber(item.price))}
@@ -209,7 +211,9 @@ export default function EquipmentMaintenanceSection({
                         <div className="col-span-4 flex flex-col gap-1 text-neutral-700">
                           {b.items.map((item, index) => (
                             <div key={index} className="grid grid-cols-4">
-                              <div className="col-span-2">{item.equipment_label}</div>
+                              <div className="col-span-2">
+                                {item.equipment_label}
+                              </div>
                               <div className="col-span-1">{item.quantity}</div>
                               <div className="col-span-1 text-right flex-shrink-0">
                                 {formatMoney(getNumber(item.price))}
@@ -248,10 +252,11 @@ export default function EquipmentMaintenanceSection({
                     {b.items.map((item, index) => (
                       <div
                         key={index}
-                        className="flex flex-row gap-2 last:border-b-0 text-sm w-full justify-between items-center pl-1"
+                        className="flex flex-row gap-2 last:border-b-0 text-sm w-full justify-between items-center pl-2"
                       >
-                        <div className="">
-                          {item.quantity} × {item.equipment_label}
+                        <div className="">{item.equipment_label}</div>
+                        <div className="text-right w-fit flex-shrink-0">
+                          {item.quantity} ×
                         </div>
                         <div className="text-right w-fit flex-shrink-0">
                           {formatMoney(getNumber(item.price))}
