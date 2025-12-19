@@ -40,9 +40,9 @@ export default function SubmissionLoader({ show }: { show: boolean }) {
     >
       <div className="flex items-center justify-center flex-col fade-up xl:translate-y-[-100px]">
         <img
-          src="/service-and-care-loading-logo.gif"
+          src="/loading.gif"
           alt="Loading"
-          className="w-20 mb-6"
+          className="w-50 mb-6"
         />
         <p className="text-2xl text-neutral-800 font-medium">
           {` We’re processing your submission`}

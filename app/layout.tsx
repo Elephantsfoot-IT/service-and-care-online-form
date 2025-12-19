@@ -14,7 +14,7 @@ export default function RootLayout({
         <link
           rel="icon"
           type="image/svg+xml"
-          href="/ef-service-care-logomark.svg"
+          href="/new-emblem.svg"
         />
       </head>
       <body

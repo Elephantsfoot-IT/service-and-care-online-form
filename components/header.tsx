@@ -8,9 +8,9 @@ export default function Header() {
       <div className="w-full max-w-screen-lg mx-auto">
         {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/logo/Elephants FootService Care Dark.svg"
+        src="/logo/dark-logo.png"
         alt="EFG Service and Care"
-        className="w-[150px] h-auto"
+        className="w-[200px] h-auto"
       />
       </div>
       

@@ -56,7 +56,7 @@ export async function POST(req: Request) {
       replyTo: process.env.REPLY_TO!,
       from: process.env.EMAIL_FROM!,
       subject: "Service Agreement Accepted", // Hardcoded subject
-      html: serviceAgreementAcceptedEmailHtml(),
+      html: serviceAgreementAcceptedEmailHtml({customerName: `${state.accountFirstName}`}),
       attachments: [
         {
           filename: "Elephants-Foot-Service-Agreement.pdf",

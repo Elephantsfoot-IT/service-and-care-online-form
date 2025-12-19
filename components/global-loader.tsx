@@ -39,7 +39,7 @@ export default function GlobalOverlay({ show }: { show: boolean }) {
       "
     >
       <div className="xl:translate-y-[-100px]">
-      <img src="/service-and-care-loading-logo.gif" alt="Loading" className="w-20 mb-6" />
+      <img src="/loading.gif" alt="Loading" className="w-50 mb-6" />
       </div>
     </div>,
     document.body

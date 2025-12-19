@@ -20,9 +20,9 @@ export default function Sider({
       <div className="flex flex-col h-full w-full px-10 pb-10 relative rounded-lg relative">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/logo/Elephants FootService Care Dark.svg"
+          src="/logo/dark-logo.png"
           alt="EFG Service and Care"
-          className="w-[150px] h-auto absolute top-10 left-10"
+          className="w-[230px] h-auto absolute top-10 left-10"
         />
 
 
