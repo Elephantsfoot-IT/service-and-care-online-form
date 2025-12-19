@@ -63,7 +63,7 @@ function FloatingIncentives({ serviceCount }: IncentiveTableProps) {
   return (
     <div
       className={cn(
-        "fade-up fade-up-300 sticky bottom-2 left-0 right-0 w-full h-18 border border-input bg-white z-50 rounded-xl grid grid-cols-10 divide-x divide-input shadow-sm overflow-hidden transition-all duration-500 ease-in-out",
+        "fade-up fade-up-300 sticky bottom-2 left-0 right-0 w-full border border-input bg-white z-50 rounded-xl hidden xl:grid grid-cols-10 divide-x divide-input shadow-xs overflow-hidden transition-all duration-500 ease-in-out",
         shouldFade 
           ? "opacity-0 translate-y-full pointer-events-none invisible" 
           : "opacity-100 translate-y-0 visible"

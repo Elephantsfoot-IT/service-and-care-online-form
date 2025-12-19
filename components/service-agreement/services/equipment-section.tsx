@@ -254,11 +254,11 @@ export default function EquipmentMaintenanceSection({
                         key={index}
                         className="flex flex-row gap-2 last:border-b-0 text-sm w-full justify-between items-center pl-2"
                       >
-                        <div className="">{item.equipment_label}</div>
-                        <div className="text-right w-fit flex-shrink-0">
+                        <div className="flex-2">{item.equipment_label}</div>
+                        <div className="text-right w-fit flex-shrink-0 flex-1">
                           {item.quantity} ×
                         </div>
-                        <div className="text-right w-fit flex-shrink-0">
+                        <div className="text-right w-fit flex-shrink-0 flex-1">
                           {formatMoney(getNumber(item.price))}
                         </div>
                       </div>
