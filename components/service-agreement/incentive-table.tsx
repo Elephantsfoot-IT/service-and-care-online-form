@@ -84,7 +84,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
 
                   {serviceCount < 3 ? (
                     <div className="flex items-baseline gap-2">
-                      <span className="font-medium leading-none text-3xl">
+                      <span className="font-medium leading-none text-2xl">
                         3
                       </span>
                       <span className="text-sm text-neutral-600">
@@ -166,7 +166,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
 
                   {serviceCount < 4 ? (
                     <div className="flex items-baseline gap-2">
-                      <span className="font-medium leading-none text-3xl">
+                      <span className="font-medium leading-none text-2xl">
                         4
                       </span>
                       <span className="text-sm text-neutral-600">
@@ -224,7 +224,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
           {/* Pro tier */}
           <div className="col-span-2 transition-all duration-300 relative" data-col="premium">
             {currentTier === "premium" && (
-              <div className="pointer-events-none absolute inset-0 z-30 border border-[#1e60ad] bg-blue-400/5 rounded-br-lg" />
+              <div className="pointer-events-none absolute inset-0 z-30 border border-[#1e60ad] bg-blue-400/5 rounded-br-xl" />
             )}
 
             <div
@@ -252,7 +252,7 @@ function IncentiveTable({ serviceCount, selectMore }: IncentiveTableProps) {
 
                   {serviceCount < 6 ? (
                     <div className="flex items-baseline gap-2">
-                      <span className="font-medium leading-none text-3xl">
+                      <span className="font-medium leading-none text-2xl">
                         6
                       </span>
                       <span

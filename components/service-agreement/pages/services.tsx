@@ -18,6 +18,7 @@ import EquipmentMaintenanceSection from "../services/equipment-section";
 import HopperDoorInspectionSection from "../services/hopper-door-section";
 import OdourControlSection from "../services/odour-control-section";
 import WasteRoomPressureCleanSection from "../services/waste-room-section";
+import FloatingIncentives from "../floating-incentive";
 
 function ServicesForm({ selectMore }: { selectMore: () => void }) {
   const state = useServiceAgreementStore();
@@ -146,7 +147,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
   // Render
   // ------------------------------------------------------------------
   return (
-    <div className="flex flex-col gap-30">
+    <div className="flex flex-col gap-30 relative">
+  
       {/* --------------------------------------------------------------
           Page header + customer and contract meta
       -------------------------------------------------------------- */}
@@ -329,6 +331,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           <ServiceSummary />
         </div>
 
+
+
         {/* Validation message */}
         {showError && (
           <div className="text-destructive text-sm">
@@ -347,6 +351,8 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           </Button>
         </div>
       </div>
+
+      <FloatingIncentives serviceCount={numberOfServices} selectMore={selectMore} />
     </div>
   );
 }
