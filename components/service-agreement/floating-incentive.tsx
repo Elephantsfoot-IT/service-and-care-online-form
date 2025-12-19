@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface IncentiveTableProps {
@@ -7,6 +7,9 @@ interface IncentiveTableProps {
 }
 
 function FloatingIncentives({ serviceCount }: IncentiveTableProps) {
+  const [isSectionInView, setIsSectionInView] = useState(false);
+  const [hasScrolledPast, setHasScrolledPast] = useState(false);
+
   const currentTier = useMemo(() => {
     if (serviceCount < 3) return undefined;
     if (serviceCount < 4) return "basic";
@@ -14,18 +17,63 @@ function FloatingIncentives({ serviceCount }: IncentiveTableProps) {
     return "premium";
   }, [serviceCount]);
 
+  useEffect(() => {
+    const rewardsSection = document.getElementById("rewards");
+    if (!rewardsSection) return;
+
+    const checkVisibility = () => {
+      const rect = rewardsSection.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      
+      // Check if section is in view (any part of it is visible)
+      const isInView = rect.top < viewportHeight && rect.bottom > 0;
+      // Check if section has been scrolled past (entire section is above viewport)
+      const isPast = rect.bottom < 0;
+      
+      setIsSectionInView(isInView);
+      setHasScrolledPast(isPast);
+    };
+
+    const observer = new IntersectionObserver(
+      () => {
+        checkVisibility();
+      },
+      {
+        threshold: [0, 0.1, 0.5, 1],
+        rootMargin: "-50px 0px 0px 0px", // Trigger slightly before section enters view
+      }
+    );
+
+    observer.observe(rewardsSection);
+    
+    // Also check on scroll for more responsive updates
+    window.addEventListener("scroll", checkVisibility, { passive: true });
+    checkVisibility(); // Initial check
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", checkVisibility);
+    };
+  }, []);
+
   if (serviceCount === 0) return null;
 
+  const shouldFade = isSectionInView || hasScrolledPast;
+
   return (
-    <div className="fade-up fade-up-300 sticky bottom-2 left-0 right-0 w-full h-24 border border-input bg-white z-50 rounded-xl grid grid-cols-10 divide-x divide-input shadow-sm overflow-hidden">
+    <div
+      className={cn(
+        "fade-up fade-up-300 sticky bottom-2 left-0 right-0 w-full h-18 border border-input bg-white z-50 rounded-xl grid grid-cols-10 divide-x divide-input shadow-sm overflow-hidden transition-all duration-500 ease-in-out",
+        shouldFade 
+          ? "opacity-0 translate-y-full pointer-events-none invisible" 
+          : "opacity-100 translate-y-0 visible"
+      )}
+    >
       <div className="col-span-4 p-4 flex flex-col ">
         <span className="uppercase tracking-wide font-semibold text-sm">
           Complimentary Incentives
         </span>
-        <span className="text-sm text-neutral-500">
-          Add services to unlock and redeem complimentary incentives from us —
-          at no extra cost.
-        </span>
+       
       </div>
       
       {/* Basic tier */}
