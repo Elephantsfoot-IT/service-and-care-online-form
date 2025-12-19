@@ -42,9 +42,9 @@ export default function SubmissionLoader({ show }: { show: boolean }) {
         <img
           src="/loading.gif"
           alt="Loading"
-          className="w-50 mb-6"
+          className="w-50"
         />
-        <p className="text-2xl text-neutral-800 font-medium">
+        <p className="text-2xl text-neutral-800 font-medium ">
           {` We’re processing your submission`}
         </p>
         <p className="text-base text-neutral-500">Please stay on this page.</p>

@@ -12,6 +12,11 @@ export function serviceAgreementAcceptedEmailHtml(opts?: {
     endDate,
   } = opts || {};
 
+  // Use public site URL for assets so they load correctly in email clients
+  const baseUrl = process.env.INTERNAL_BASE_URL!;
+  const logoUrl = `${baseUrl}/logo/light-logo.png`
+   
+
   return `<!doctype html>
 <html>
   <head>
@@ -26,7 +31,7 @@ export function serviceAgreementAcceptedEmailHtml(opts?: {
             <!-- Logo -->
             <tr>
               <td align="center" style="padding-bottom:32px;">
-                <img width="260" src="http://cdn.mcauto-images-production.sendgrid.net/007b4c94093af38a/ddf001f2-9461-45f4-9220-32acceb4bf46/2515x967.png" alt="Elephants Foot Service & Care" style="display:block;">
+                <img width="260" src="${logoUrl}" alt="Elephants Foot Service & Care" style="display:block;">
               </td>
             </tr>
 

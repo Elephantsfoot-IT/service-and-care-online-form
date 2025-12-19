@@ -139,7 +139,7 @@ export default function TermsAndSignature() {
     scrollToTop();
   }, []);
 
-  if (isSubmitting) {
+  if (true) {
     return <SubmissionLoader show={true} />;
   }
 
