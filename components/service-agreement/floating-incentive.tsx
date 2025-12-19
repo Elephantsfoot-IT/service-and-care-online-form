@@ -73,6 +73,8 @@ function FloatingIncentives({ serviceCount }: IncentiveTableProps) {
         <span className="uppercase tracking-wide font-semibold text-sm">
           Complimentary Incentives
         </span>
+        <span className="text-sm text-neutral-500">  Add services to unlock and redeem complimentary incentives from
+        us — at no extra cost.</span>
        
       </div>
       

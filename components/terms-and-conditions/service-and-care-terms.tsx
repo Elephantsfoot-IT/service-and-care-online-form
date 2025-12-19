@@ -44,7 +44,7 @@ const ServiceAndCareTerms = () => {
           ol.level-1 > li::before {
             content: counter(lvl1) ".";
             position: absolute;
-            left: -20px;
+            left: -25px;
             width: 1em;
             text-align: left;
             font-weight: bold;
@@ -65,7 +65,7 @@ const ServiceAndCareTerms = () => {
           ol.level-2 > li::before {
             content: counter(lvl1) "." counter(lvl2);
             position: absolute;
-            left: -20px;
+            left: -25px;
             text-align: left;
             font-weight: normal;
           }
@@ -84,7 +84,7 @@ const ServiceAndCareTerms = () => {
           ol.level-3 > li::before {
             content: "(" counter(lvl3, lower-alpha) ")";
             position: absolute;
-            left: -22px;
+            left: -25px;
             width: 1em;
             text-align: left;
             font-weight: 600;
@@ -525,6 +525,13 @@ const ServiceAndCareTerms = () => {
                 </ol>
               </li>
             </ol>
+          </li>
+          <li>
+            <strong>CONTRACT START DATE</strong>
+            <p>
+              The contract term shall commence on the date this Agreement is
+              signed and shall continue for a fixed term of two 2 years.
+            </p>
           </li>
         </ol>
       </div>

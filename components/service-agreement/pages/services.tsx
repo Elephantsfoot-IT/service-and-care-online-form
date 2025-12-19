@@ -148,7 +148,6 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
   // ------------------------------------------------------------------
   return (
     <div className="flex flex-col gap-30 relative">
-  
       {/* --------------------------------------------------------------
           Page header + customer and contract meta
       -------------------------------------------------------------- */}
@@ -171,7 +170,9 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         {/* Customer summary */}
         <div className="mt-2 text-sm xl:text-base bg-neutral-50 rounded-xl p-6 flex flex-col gap-2 mt-6 border border-input">
           <div className="flex flex-col sm:flex-row sm:gap-6">
-            <div className="sm:w-1/3 flex-shrink-0 text-neutral-700">Customer</div>
+            <div className="sm:w-1/3 flex-shrink-0 text-neutral-700">
+              Customer
+            </div>
             <div className="sm:w-2/3 flex-shrink-0 font-medium">
               {state.serviceAgreement?.quote_for}
             </div>
@@ -204,23 +205,30 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
           <div className="text-sm xl:text-base font-medium bg-neutral-50 p-6 rounded-t-xl border-b border-input">
             Contract Duration
           </div>
-          <div className="flex flex-row items-center gap-6 justify-between p-6">
-            <div className="flex flex-col gap-1.5 flex-shrink-0">
-              <Label className="text-sm xl:text-base text-muted-foreground">
-                Contract Start Date
-              </Label>
-              <span className="text-base xl:text-lg font-medium  leading-tight">
-                {format(state.serviceAgreement.start_date, "dd MMM yyyy")}
-              </span>
+          <div className="p-6 flex flex-col gap-3">
+            <div className="flex flex-row items-center gap-6 justify-between ">
+              <div className="flex flex-col gap-1.5 flex-shrink-0">
+                <Label className="text-sm xl:text-base text-muted-foreground">
+                  Contract Start Date
+                </Label>
+                <span className="text-base xl:text-lg font-medium  leading-tight">
+                  {format(state.serviceAgreement.start_date, "dd MMM yyyy")}
+                </span>
+              </div>
+              <hr className="flex-1 border-input" />
+              <div className="flex flex-col gap-1.5 flex-shrink-0">
+                <Label className="text-sm xl:text-base  text-muted-foreground">
+                  Contract End Date
+                </Label>
+                <span className="text-base xl:text-lg font-medium  leading-tight">
+                  {format(state.serviceAgreement.end_date, "dd MMM yyyy")}
+                </span>
+              </div>
             </div>
-            <hr className="flex-1 border-input" />
-            <div className="flex flex-col gap-1.5 flex-shrink-0">
-              <Label className="text-sm xl:text-base  text-muted-foreground">
-                Contract End Date
-              </Label>
-              <span className="text-base xl:text-lg font-medium  leading-tight">
-                {format(state.serviceAgreement.end_date, "dd MMM yyyy")}
-              </span>
+            <div className="text-neutral-500">
+              *The dates shown above are indicative only. The contract term
+              shall commence on the date of agreement signature and continue for
+              two 2 years.
             </div>
           </div>
         </div>
@@ -321,17 +329,13 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         {/* Summary */}
         <div className="flex flex-col gap-6">
           <div className="flex flex-col">
-            <Label className="text-2xl xl:text-3xl mb-1">
-              Service Summary
-            </Label>
+            <Label className="text-2xl xl:text-3xl mb-1">Service Summary</Label>
             <span className="ttext-lg text-neutral-500">
               Review your service plan and the total cost.
             </span>
           </div>
           <ServiceSummary />
         </div>
-
-
 
         {/* Validation message */}
         {showError && (
@@ -352,7 +356,10 @@ function ServicesForm({ selectMore }: { selectMore: () => void }) {
         </div>
       </div>
 
-      <FloatingIncentives serviceCount={numberOfServices} selectMore={selectMore} />
+      <FloatingIncentives
+        serviceCount={numberOfServices}
+        selectMore={selectMore}
+      />
     </div>
   );
 }

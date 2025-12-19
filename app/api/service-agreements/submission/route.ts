@@ -1,7 +1,7 @@
 import { ServiceAgreementStore } from "@/app/service-agreement/service-agreement-store";
 import { serviceAgreementAcceptedEmailHtml } from "@/lib/confirmation-email";
 import { supabase } from "@/lib/service-aggreement-supabase";
-import { ausDate, ausYMD } from "@/lib/utils";
+import { ausDate, ausDateOnly, ausYMD } from "@/lib/utils";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
@@ -24,11 +24,28 @@ type AcceptBody = {
 export async function POST(req: Request) {
   const { id, state } = (await req.json()) as AcceptBody;
 
+  // Calculate start_date (today) and end_date (2 years from today)
+  const today = new Date();
+  const endDate = new Date(today);
+  endDate.setFullYear(endDate.getFullYear() + 2);
+
+  // Update state with new dates for PDF generation
+  const updatedState = {
+    ...state,
+    serviceAgreement: state.serviceAgreement
+      ? {
+          ...state.serviceAgreement,
+          start_date: today,
+          end_date: endDate,
+        }
+      : null,
+  };
+
   const baseUrl =process.env.INTERNAL_BASE_URL!;
   const pdfRes = await fetch(`${baseUrl}/api/generate-pdf`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ data:state }),
+    body: JSON.stringify({ data: updatedState }),
   });
   if (!pdfRes.ok) throw new Error("PDF generation failed");
   const { result: pdf } = await pdfRes.json();
@@ -55,6 +72,8 @@ export async function POST(req: Request) {
       status: "Accepted",
       updated_at: ausYMD(new Date()),
       accepted_at: ausYMD(new Date()),
+      start_date: ausDateOnly(today),
+      end_date: ausDateOnly(endDate),
     })
     .eq("id", id)
     .select()

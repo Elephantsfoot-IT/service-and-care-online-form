@@ -147,9 +147,11 @@ export default function TermsAndSignature() {
   return (
     <div ref={containerRef} className="w-full mx-auto flex flex-col gap-10">
       <div className="flex flex-col">
-        <Label className="text-2xl xl:text-3xl font-normal mb-1">Review & Sign Agreement</Label>
+        <Label className="text-2xl xl:text-3xl font-normal mb-1">
+          Review & Sign Agreement
+        </Label>
         <span className="text-lg text-neutral-500">
-        Read the Terms & Conditions, then accept and sign to proceed.
+          Read the Terms & Conditions, then accept and sign to proceed.
         </span>
       </div>
 
@@ -258,7 +260,9 @@ export default function TermsAndSignature() {
           <Label className="text-sm xl:text-base">
             Signature <span className="text-red-500">*</span>
           </Label>
-          <span className="ml-auto text-sm xl:text-base text-neutral-500">{authDate}</span>
+          <span className="ml-auto text-sm xl:text-base text-neutral-500">
+            {authDate}
+          </span>
         </div>
         <div className="mt-2">
           <SignaturePadComponent
@@ -268,8 +272,9 @@ export default function TermsAndSignature() {
           />
           <div className="text-sm xl:text-base text-neutral-500 mt-2">
             By providing your electronic signature and initials, you acknowledge
-            that they are legally binding, equivalent to a physical signature,
-            and signify your agreement to the terms and conditions.
+            that they are legally binding and equivalent to a physical
+            signature, and that the contract term shall commence on the date of
+            agreement signature and continue for two 2 years, 
           </div>
         </div>
       </div>
@@ -289,7 +294,11 @@ export default function TermsAndSignature() {
           variant="efg"
           disabled={isSubmitting}
         >
-          {isSubmitting ? <Loader2Icon className="size-4 animate-spin" /> : "Submit"}
+          {isSubmitting ? (
+            <Loader2Icon className="size-4 animate-spin" />
+          ) : (
+            "Submit"
+          )}
         </Button>
       </div>
     </div>
